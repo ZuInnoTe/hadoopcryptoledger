@@ -7,7 +7,7 @@ This repository will provide various components to read crypto ledgers, such as 
 * a set Hive Serdes to read transactions from crypto ledgers, such as the Bitcoin blockchain, with Hive by representing them as normal tables. These tables can then be joined with other tables containing other relevant information, such as stock market movements or weather patterns. The following Hive Serde are available
  * Bitcoin
   * BitcoinBlockHiveSerde: Represents information about BitcoinBlock(s) in a table. Does NOT include the transactions.
-  * BitcoinTransactionHiveSerde: Represents information about 
+  * BitcoinTransactionHiveSerde: Represents information about transactions. Can be linked to a BitcoinBlock table via block timestamp and/or hashMerkleRoot
   * Hint: It is recommended to create a flat (sorted) table in ORC format (compressed Snappy or Zlib) by joining two tables created using the aforementioned Serdes. This enables fast interactive analytics on Hive.
 
 If you want to test it:
