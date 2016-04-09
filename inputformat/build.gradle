@@ -1,0 +1,61 @@
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'maven-publish'
+sourceCompatibility = 1.7
+version = '1.0'
+compileJava.options.encoding = 'UTF-8'
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'ZuInnoTe - Hadoop CryptoLedger Analytics Library', 'Implementation-Version': version
+    } 
+    baseName = 'hadoopcryptoledger'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId 'org.zuinnote.hadoop'
+            artifactId 'hadoopcryptoledger'
+            version '1.0.0'
+
+            from components.java
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+
+configurations {
+	provided
+}
+
+sourceSets {
+    main.compileClasspath += configurations.provided
+    test.compileClasspath += configurations.provided
+    test.runtimeClasspath += configurations.provided
+}
+
+javadoc.classpath += configurations.provided
+
+
+task hadoopCryptoLedgerJavaDocs(type: Javadoc) {
+  source = sourceSets.main.java
+}
+
+dependencies {
+    // hadoop libraries
+   provided("org.apache.hadoop:hadoop-common:2.7.0")
+   provided("org.apache.hadoop:hadoop-mapreduce-client-common:2.7.0")
+   // log4j2
+   provided("org.apache.logging.log4j:log4j-api:2.4.1")
+   // test
+   testCompile group: 'junit', name: 'junit', version: '4.+'
+}
+
+
+

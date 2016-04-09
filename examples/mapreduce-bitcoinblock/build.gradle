@@ -1,0 +1,52 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+
+
+sourceCompatibility = 1.7
+version = '1.0'
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Example - MR job for analysing Bitcoin data using hadoopcryptoledger', 'Implementation-Version': version
+    }
+ 
+    baseName = 'example-hcl-mr-bitcoinblock'
+    version = '0.1.0'
+   // note this builds one fat jar and it is not recommended for production use - just for illustration purpose
+   from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+
+configurations {
+	provided
+}
+
+sourceSets {
+    main.compileClasspath += configurations.provided
+    test.compileClasspath += configurations.provided
+    test.runtimeClasspath += configurations.provided
+}
+
+dependencies {
+   // hadoop lib for driver
+     provided("org.apache.hadoop:hadoop-client:2.7.0")
+    // hadoop common for map/reduce task
+   compile("org.zuinnote.hadoop:hadoopcryptoledger:1.0.0")
+    // hadoop crypto ledger library
+    compile("com.google.code.gson:gson:2.2.4")
+    testCompile group: 'junit', name: 'junit', version: '4.+'
+}
+
+
+uploadArchives {
+    repositories {
+       flatDir {
+           dirs 'repos'
+       }
+    }
+}
