@@ -245,7 +245,7 @@ public BitcoinTransaction[] parseTransactions(ByteBuffer rawByteBuffer,long noOf
 			BitcoinTransactionOutput[] listOfOutputs = new BitcoinTransactionOutput[currentTransactionOutput.size()];
 			listOfOutputs=currentTransactionOutput.toArray(listOfOutputs);
 		// add transaction
-		resultTransactions.add(new BitcoinTransaction(currentVersion,currentInCounterVarInt,listOfInputs,listOfOutputs,currentTransactionLockTime));
+		resultTransactions.add(new BitcoinTransaction(currentVersion,currentInCounterVarInt,listOfInputs,currentOutCounterVarInt,listOfOutputs,currentTransactionLockTime));
 	}
 	BitcoinTransaction[] result = new BitcoinTransaction[resultTransactions.size()];
 	result=resultTransactions.toArray(result);
@@ -321,6 +321,39 @@ public ByteBuffer readRawBlock() throws BitcoinBlockReadException, IOException {
 		result.put(fullBlock);
 	}
 	result.order(ByteOrder.LITTLE_ENDIAN);	
+	return result;
+}
+
+/**
+* This function is used to read from a raw Bitcoin block some identifier. Note: Does not change ByteBuffer position
+*
+* @param rawByteBuffer ByteBuffer as read by readRawBlock
+* @return byte array containing hashMerkleRoot and prevHashBlock
+*
+*/
+public byte[] getKeyFromRawBlock (ByteBuffer rawByteBuffer)  {
+	rawByteBuffer.mark();
+	byte[] magicNo=new byte[4];
+	byte[] hashMerkleRoot=new byte[32];
+	byte[] hashPrevBlock=new byte[32];
+	// magic no (skip)
+	rawByteBuffer.get(magicNo,0,4);
+	// blocksize (skip)
+	int currentBlockSize=rawByteBuffer.getInt();
+	// version (skip)
+	int currentVersion=rawByteBuffer.getInt();
+	// hashPrevBlock
+	rawByteBuffer.get(hashPrevBlock,0,32);
+	// hashMerkleRoot
+	rawByteBuffer.get(hashMerkleRoot,0,32);
+	byte[] result=new byte[hashMerkleRoot.length+hashPrevBlock.length];
+	for (int i=0;i<hashMerkleRoot.length;i++) {
+		result[i]=hashMerkleRoot[i];
+	}
+	for (int j=0;j<hashPrevBlock.length;j++) {
+		result[j+hashMerkleRoot.length]=hashPrevBlock[j];
+	}
+	rawByteBuffer.reset();
 	return result;
 }
 

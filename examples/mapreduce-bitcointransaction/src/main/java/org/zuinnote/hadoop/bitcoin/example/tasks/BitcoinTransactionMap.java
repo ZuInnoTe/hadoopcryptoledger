@@ -16,7 +16,7 @@
 
 
 /**
- * Simple Mapper for counting the number of Bitcoin transactions in a file on HDFS
+ * Simple Mapper for counting the total number of Bitcoin transaction inputs of all Bitcoin transactions
  */
 package org.zuinnote.hadoop.bitcoin.example.tasks;
 
@@ -32,11 +32,11 @@ import org.zuinnote.hadoop.bitcoin.format.*;
 
 import java.util.*;
 
-	 public  class BitcoinBlockMap  extends MapReduceBase implements Mapper<BytesWritable, BitcoinBlock, Text, IntWritable> {
-	    private final static Text defaultKey = new Text("Transaction Count:");
-	    public void map(BytesWritable key, BitcoinBlock value, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
-	    	// get the number of transactions
-	    	 output.collect(defaultKey, new IntWritable(value.getTransactions().length));
+	 public  class BitcoinTransactionMap  extends MapReduceBase implements Mapper<BytesWritable, BitcoinTransaction, Text, IntWritable> {
+	    private final static Text defaultKey = new Text("Transaction Input Count:");
+	    public void map(BytesWritable key, BitcoinTransaction value, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
+	    	// get the number of inputs to transaction
+	    	 output.collect(defaultKey, new IntWritable(value.getListOfInputs().length));
 	    	 }
 	    
 	    }

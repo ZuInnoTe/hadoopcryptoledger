@@ -28,14 +28,25 @@ public class BitcoinTransaction implements Serializable {
 	
 private int version;
 private byte[] inCounter;
+private byte[] outCounter;
 private BitcoinTransactionInput[] listOfInputs;
 private BitcoinTransactionOutput[] listOfOutputs;
 private int lockTime;
 
-public BitcoinTransaction(int version, byte[] inCounter, BitcoinTransactionInput[] listOfInputs, BitcoinTransactionOutput[] listOfOutputs, int lockTime) {
+public BitcoinTransaction() {
+	this.version=0;
+	this.inCounter=new byte[0];
+	this.outCounter=new byte[0];
+	this.listOfInputs=new BitcoinTransactionInput[0];
+	this.listOfOutputs=new BitcoinTransactionOutput[0];
+	this.lockTime=0;
+}
+
+public BitcoinTransaction(int version, byte[] inCounter, BitcoinTransactionInput[] listOfInputs, byte[] outCounter, BitcoinTransactionOutput[] listOfOutputs, int lockTime) {
 	this.version=version;
 	this.inCounter=inCounter;
 	this.listOfInputs=listOfInputs;
+	this.outCounter=outCounter;
 	this.listOfOutputs=listOfOutputs;
 	this.lockTime=lockTime;
 }
@@ -52,12 +63,26 @@ public BitcoinTransactionInput[] getListOfInputs() {
 	return this.listOfInputs;
 }
 
+public byte[] getOutCounter() {
+	return this.outCounter;
+}
+
 public BitcoinTransactionOutput[] getListOfOutputs() {
 	return this.listOfOutputs;
 }
 
 public int getLockTime() {
 	return this.lockTime;
+}
+
+public void set(BitcoinTransaction newTransaction) {
+	this.version=newTransaction.getVersion();
+	this.inCounter=newTransaction.getInCounter();
+	this.listOfInputs=newTransaction.getListOfInputs();
+	this.outCounter=newTransaction.getOutCounter();
+	this.listOfOutputs=newTransaction.getListOfOutputs();
+	this.lockTime=newTransaction.getLockTime();
+	
 }
 
 }

@@ -41,16 +41,16 @@ import org.apache.hadoop.mapred.Reporter;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
 
-public class BitcoinBlockFileInputFormat extends FileInputFormat<BytesWritable,BitcoinBlock> implements JobConfigurable  {
+public class BitcoinTransactionFileInputFormat extends FileInputFormat<BytesWritable,BitcoinTransaction> implements JobConfigurable  {
 
-private static final Log LOG = LogFactory.getLog(BitcoinBlockFileInputFormat.class.getName());
+private static final Log LOG = LogFactory.getLog(BitcoinTransactionFileInputFormat.class.getName());
 private CompressionCodecFactory compressionCodecs = null;
 
 
-public RecordReader<BytesWritable,BitcoinBlock> getRecordReader(InputSplit split, JobConf job, Reporter reporter) throws IOException {
+public RecordReader<BytesWritable,BitcoinTransaction> getRecordReader(InputSplit split, JobConf job, Reporter reporter) throws IOException {
 	/** Create reader **/
 	try {
-		return new BitcoinBlockRecordReader( (FileSplit) split,job,reporter);
+		return new BitcoinTransactionRecordReader( (FileSplit) split,job,reporter);
 	} catch (HadoopCryptoLedgerConfigurationException e) {
 		// log
 		LOG.error(e);
@@ -81,10 +81,6 @@ public void configure(JobConf conf) {
     return codec instanceof SplittableCompressionCodec;
 
   }
-
-
-
-
 
 
 }

@@ -42,6 +42,20 @@ public static long convertSignedIntToUnsigned(int signedInt) {
 }
 
 
+/**
+*
+* Converts an int to a byte array
+*
+* @param intToConvert int that should be converted into a byte array
+*
+* @return byte array corresponding to int
+*
+**/
+public static byte[] convertIntToByteArray(int intToConvert) {
+	return ByteBuffer.allocate(4).putInt(intToConvert).array();
+}
+
+
 
 /**
 * Converts a variable length integer (https://en.bitcoin.it/wiki/Protocol_documentation#Variable_length_integer) from a ByteBuffer to long

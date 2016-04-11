@@ -7,10 +7,10 @@ sourceCompatibility = 1.7
 version = '1.0'
 jar {
     manifest {
-        attributes 'Implementation-Title': 'Example - MR job (BitcoinBlock) for analysing Bitcoin data using hadoopcryptoledger', 'Implementation-Version': version
+        attributes 'Implementation-Title': 'Example - MR job (BitcoinTransaction) for analysing Bitcoin data using hadoopcryptoledger', 'Implementation-Version': version
     }
  
-    baseName = 'example-hcl-mr-bitcoinblock'
+    baseName = 'example-hcl-mr-bitcointransaction'
     version = '0.1.0'
    // note this builds one fat jar and it is not recommended for production use - just for illustration purpose
    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }

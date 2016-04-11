@@ -16,11 +16,12 @@
 
 package org.zuinnote.hadoop.bitcoin.format;
 
+
+
 import org.zuinnote.hadoop.bitcoin.format.exception.HadoopCryptoLedgerConfigurationException;
 import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
 
 import java.io.IOException;
-
 
 
 import org.apache.hadoop.fs.FileSystem;
@@ -40,17 +41,18 @@ import org.apache.hadoop.mapred.Reporter;
 
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
+;
 
-public class BitcoinBlockFileInputFormat extends FileInputFormat<BytesWritable,BitcoinBlock> implements JobConfigurable  {
 
-private static final Log LOG = LogFactory.getLog(BitcoinBlockFileInputFormat.class.getName());
+public class BitcoinRawBlockFileInputFormat extends FileInputFormat<BytesWritable,BytesWritable> implements JobConfigurable  {
+
+private static final Log LOG = LogFactory.getLog(BitcoinRawBlockFileInputFormat.class.getName());
 private CompressionCodecFactory compressionCodecs = null;
 
-
-public RecordReader<BytesWritable,BitcoinBlock> getRecordReader(InputSplit split, JobConf job, Reporter reporter) throws IOException {
+public RecordReader<BytesWritable,BytesWritable> getRecordReader(InputSplit split, JobConf job, Reporter reporter)  throws IOException {
 	/** Create reader **/
 	try {
-		return new BitcoinBlockRecordReader( (FileSplit) split,job,reporter);
+		return new BitcoinRawBlockRecordReader( (FileSplit) split,job,reporter);
 	} catch (HadoopCryptoLedgerConfigurationException e) {
 		// log
 		LOG.error(e);
@@ -60,7 +62,6 @@ public RecordReader<BytesWritable,BitcoinBlock> getRecordReader(InputSplit split
 	}
 	return null;
 }
-
 
 
 public void configure(JobConf conf) {
@@ -81,10 +82,6 @@ public void configure(JobConf conf) {
     return codec instanceof SplittableCompressionCodec;
 
   }
-
-
-
-
 
 
 }
