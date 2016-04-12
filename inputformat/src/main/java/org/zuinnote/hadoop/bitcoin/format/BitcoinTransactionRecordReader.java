@@ -199,7 +199,7 @@ public boolean next(BytesWritable key, BitcoinTransaction value) throws IOExcept
 			newKey[j+hashMerkleRoot.length]=hashPrevBlock[j];
 		}
 		for (int k=0;k<transactionCounter.length;k++) {
-			newKey[k+hashMerkleRoot.length+hashPrevBlock.length]=hashPrevBlock[k];
+			newKey[k+hashMerkleRoot.length+hashPrevBlock.length]=transactionCounter[k];
 		}
 		key.set(newKey,0,newKey.length);
 		value.set(currentBitcoinBlock.getTransactions()[currentTransactionCounterInBlock]);
