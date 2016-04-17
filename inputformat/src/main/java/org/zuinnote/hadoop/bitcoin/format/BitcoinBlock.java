@@ -16,16 +16,19 @@
 
 package org.zuinnote.hadoop.bitcoin.format;
 
-import java.io.Serializable;
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
+
+import org.apache.hadoop.io.Writable;
 
 
 /**
-* This class is an object storing relevant fields of a Bitcoin Block 
+* This class is an object storing relevant fields of a Bitcoin Block. 
 */
 
-public class BitcoinBlock implements Serializable {
+public class BitcoinBlock implements Writable {
 
-private static final long serialVersionUID = 2496910837284090693L;
 
 private int blockSize;
 private byte[] magicNo;
@@ -113,5 +116,17 @@ public void set(BitcoinBlock newBitcoinBlock) {
 	this.hashMerkleRoot=newBitcoinBlock.getHashMerkleRoot();
 	this.transactions=newBitcoinBlock.getTransactions();
 }
+
+/** Writable **/
+
+  @Override
+  public void write(DataOutput dataOutput) throws IOException {
+    throw new UnsupportedOperationException("write unsupported");
+  }
+
+  @Override
+  public void readFields(DataInput dataInput) throws IOException {
+    throw new UnsupportedOperationException("readFields unsupported");
+  }
 
 }

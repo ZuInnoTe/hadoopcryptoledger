@@ -16,15 +16,15 @@
 
 package org.zuinnote.hadoop.bitcoin.format;
 
-import java.io.Serializable;
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
+
+import org.apache.hadoop.io.Writable;
 
 
-public class BitcoinTransaction implements Serializable {
+public class BitcoinTransaction implements Writable {
 
-/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5384663937499435810L;
 	
 private int version;
 private byte[] inCounter;
@@ -84,5 +84,17 @@ public void set(BitcoinTransaction newTransaction) {
 	this.lockTime=newTransaction.getLockTime();
 	
 }
+
+/** Writable **/
+
+  @Override
+  public void write(DataOutput dataOutput) throws IOException {
+    throw new UnsupportedOperationException("write unsupported");
+  }
+
+  @Override
+  public void readFields(DataInput dataInput) throws IOException {
+    throw new UnsupportedOperationException("readFields unsupported");
+  }
 
 }

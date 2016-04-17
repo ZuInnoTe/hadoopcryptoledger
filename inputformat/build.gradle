@@ -7,7 +7,7 @@ compileJava.options.encoding = 'UTF-8'
 
 jar {
     manifest {
-        attributes 'Implementation-Title': 'ZuInnoTe - Hadoop CryptoLedger Analytics Library', 'Implementation-Version': version
+        attributes 'Implementation-Title': 'ZuInnoTe - Hadoop CryptoLedger Analytics Library - Inputformat', 'Implementation-Version': version
     } 
     baseName = 'hadoopcryptoledger'
 }
