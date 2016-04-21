@@ -9,14 +9,14 @@ jar {
     manifest {
         attributes 'Implementation-Title': 'ZuInnoTe - Hadoop CryptoLedger Analytics Library - Inputformat', 'Implementation-Version': version
     } 
-    baseName = 'hadoopcryptoledger'
+    baseName = 'hadoopcryptoledger-fileformat'
 }
 
 publishing {
     publications {
         maven(MavenPublication) {
             groupId 'org.zuinnote.hadoop'
-            artifactId 'hadoopcryptoledger'
+            artifactId 'hadoopcryptoledger-fileformat'
             version '1.0.0'
 
             from components.java
