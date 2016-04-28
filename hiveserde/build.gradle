@@ -1,0 +1,73 @@
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'maven-publish'
+
+sourceCompatibility = 1.7
+version = '1.0'
+compileJava.options.encoding = 'UTF-8'
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'ZuInnoTe - Hadoop CryptoLedger Analytics Library - Serde', 'Implementation-Version': version
+    }
+ 
+    baseName = 'hadoopcryptoledger-hive'
+    version = '1.0.0'
+   // note this builds one fat jar and it is not recommended for production use - just for illustration purpose
+   from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId 'org.zuinnote.hadoop'
+            artifactId 'hadoopcryptoledger-hive'
+            version '1.0.0'
+            from components.java
+        }
+    }
+}
+
+
+repositories {
+    mavenCentral()
+    // workaround for certain dependencies of hive-exec
+    maven {
+    	url "http://conjars.org/repo"
+    }
+
+    mavenLocal()
+}
+
+
+configurations {
+	provided
+}
+
+sourceSets {
+    main.compileClasspath += configurations.provided
+    test.compileClasspath += configurations.provided
+    test.runtimeClasspath += configurations.provided
+}
+
+dependencies {
+   // hadoop lib for driver
+     provided("org.apache.hadoop:hadoop-client:2.7.0")
+       // hadoop crypto ledger library
+   compile("org.zuinnote.hadoop:hadoopcryptoledger-fileformat:1.0.0")
+    // hive serde API
+   provided("org.apache.hive:hive-serde:1.2.0")
+   provided("org.apache.hive:hive-exec:1.2.0")
+   // log4j2
+   provided("org.apache.logging.log4j:log4j-api:2.4.1")
+    testCompile group: 'junit', name: 'junit', version: '4.+'
+}
+
+
+uploadArchives {
+    repositories {
+       flatDir {
+           dirs 'repos'
+       }
+    }
+}
