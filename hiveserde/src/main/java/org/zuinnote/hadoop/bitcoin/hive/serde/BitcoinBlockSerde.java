@@ -65,7 +65,6 @@ public class BitcoinBlockSerde extends AbstractDeserializer implements Vectorize
 private static final Log LOG = LogFactory.getLog(BitcoinBlockSerde.class.getName());
 private List<String> columnNames;
 private ObjectInspector bitcoinBlockObjectInspector;
-private SerDeStats stats;
 
 /** Deserializer **/
 
@@ -123,7 +122,8 @@ public ObjectInspector getObjectInspector() {
 }
 
 public SerDeStats getSerDeStats() {
-	return this.stats;
+	// not supported
+	return null;
 }
 
 public Class<? extends Writable> getSerializedClass() {
@@ -131,10 +131,7 @@ public Class<? extends Writable> getSerializedClass() {
 }
 
 public void initialize(Configuration conf, Properties tbl) {
-   // ignore columnNames, we will always return everything
-   this.columnNames = Arrays.asList(tbl.getProperty(serdeConstants.LIST_COLUMNS).split(","));
-   // initialize Serrde Stats
-   this.stats = new SerDeStats();
+
    // get objectinspector with introspection for class BitcoinBlockStruct to reuse functionality
     bitcoinBlockObjectInspector = ObjectInspectorFactory
         .getReflectionObjectInspector(BitcoinBlockStruct.class,
