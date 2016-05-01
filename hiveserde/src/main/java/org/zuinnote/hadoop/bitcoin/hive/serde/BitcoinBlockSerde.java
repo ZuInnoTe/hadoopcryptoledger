@@ -66,6 +66,7 @@ private static final Log LOG = LogFactory.getLog(BitcoinBlockSerde.class.getName
 private List<String> columnNames;
 private ObjectInspector bitcoinBlockObjectInspector;
 
+
 /** Deserializer **/
 
 public Object deserialize(Writable blob) {
@@ -148,7 +149,7 @@ public void initialize(Configuration conf, Properties tbl, Properties partitionP
 /** VectorizedSerde **/
 
 public void deserializeVector(Object rowBlob, int rowsInBlob, VectorizedRowBatch reuseBatch) throws SerDeException {
-
+	// nothing to do here
 }
        
 
