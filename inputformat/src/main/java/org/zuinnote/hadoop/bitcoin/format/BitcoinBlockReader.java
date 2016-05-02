@@ -42,6 +42,7 @@ private boolean useDirectBuffer=false;
 
 private boolean filterSpecificMagic=false;
 private byte[][] specificMagicByteArray;
+private ByteBuffer preAllocatedDirectByteBuffer;
 
 private BufferedInputStream bin;
 private int position=0;
@@ -62,6 +63,9 @@ public BitcoinBlockReader(InputStream in, int maxSizeBitcoinBlock, int bufferSiz
 	this.useDirectBuffer=useDirectBuffer;
 	if (specificMagicByteArray!=null) this.filterSpecificMagic=true;
 	this.bin=new BufferedInputStream(in,bufferSize);
+	if (this.useDirectBuffer==true) { // in case of a DirectByteBuffer we do allocation only once for the maximum size of one block, otherwise we will have a high cost for reallocation
+		preAllocatedDirectByteBuffer=ByteBuffer.allocateDirect(this.maxSizeBitcoinBlock);
+	}
 }
 
 
@@ -317,7 +321,9 @@ public ByteBuffer readRawBlock() throws BitcoinBlockReadException, IOException {
 	if (this.useDirectBuffer==false) {
 	 	result=ByteBuffer.wrap(fullBlock);	
 	} else {
-		result=ByteBuffer.allocateDirect(fullBlock.length);
+		preAllocatedDirectByteBuffer.clear(); // clear out old bytebuffer
+		preAllocatedDirectByteBuffer.limit(fullBlock.length); // limit the bytebuffer
+		result=preAllocatedDirectByteBuffer;
 		result.put(fullBlock);
 	}
 	result.order(ByteOrder.LITTLE_ENDIAN);	
