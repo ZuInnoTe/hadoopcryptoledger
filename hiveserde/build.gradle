@@ -11,7 +11,7 @@ jar {
         attributes 'Implementation-Title': 'ZuInnoTe - Hadoop CryptoLedger Analytics Library - Serde', 'Implementation-Version': version
     }
  
-    baseName = 'hadoopcryptoledger-hive'
+    baseName = 'hadoopcryptoledger-hiveserde'
     version = '1.0.0'
    // note this builds one fat jar and it is not recommended for production use - just for illustration purpose
    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
@@ -21,7 +21,7 @@ publishing {
     publications {
         maven(MavenPublication) {
             groupId 'org.zuinnote.hadoop'
-            artifactId 'hadoopcryptoledger-hive'
+            artifactId 'hadoopcryptoledger-hiveserde'
             version '1.0.0'
             from components.java
         }
