@@ -44,8 +44,10 @@ public class BitcoinBlockCounterDriver  {
  public static void main(String[] args) throws Exception {
     JobConf conf = new JobConf(BitcoinBlockCounterDriver.class);
     conf.setJobName("example-hadoop-bitcoin-transactioncounter-job");
+    conf.setMapOutputKeyClass(Text.class);
+    conf.setMapOutputValueClass(IntWritable.class);
     conf.setOutputKeyClass(Text.class);
-    conf.setOutputValueClass(IntWritable.class);
+    conf.setOutputValueClass(LongWritable.class);
         
     conf.setMapperClass(BitcoinBlockMap.class);
     conf.setReducerClass(BitcoinBlockReducer.class);
