@@ -52,14 +52,14 @@ public class SparkBitcoinBlockCounter  {
     // read bitcoin data from HDFS
     JavaPairRDD<BytesWritable, BitcoinBlock> bitcoinBlocksRDD = sc.hadoopFile(args[0], BitcoinBlockFileInputFormat.class, BytesWritable.class, BitcoinBlock.class, 2);
     // extract the no transactions / block (map)
-    JavaPairRDD<String, Integer> noOfTransactionPair = bitcoinBlocksRDD.mapToPair(new PairFunction<Tuple2<BytesWritable,BitcoinBlock>, String, Integer>() {
-	public Tuple2<String, Integer> call(Tuple2<BytesWritable,BitcoinBlock> tupleBlock) {
-		return new Tuple2<String, Integer>("No of transactions: ",tupleBlock._2().getTransactions().length); 
+    JavaPairRDD<String, Long> noOfTransactionPair = bitcoinBlocksRDD.mapToPair(new PairFunction<Tuple2<BytesWritable,BitcoinBlock>, String, Long>() {
+	public Tuple2<String, Long> call(Tuple2<BytesWritable,BitcoinBlock> tupleBlock) {
+		return new Tuple2<String, Long>("No of transactions: ",new Long(tupleBlock._2().getTransactions().length)); 
 	}
     });
    // combine the results from all blocks
-   JavaPairRDD<String, Integer> totalCount = noOfTransactionPair.reduceByKey(new Function2<Integer, Integer, Integer>() {
-	public Integer call(Integer a, Integer b) { 
+   JavaPairRDD<String, Long> totalCount = noOfTransactionPair.reduceByKey(new Function2<Long, Long, Long>() {
+	public Long call(Long a, Long b) { 
 		return a+b;
 	}
    });
