@@ -29,15 +29,15 @@ import org.apache.hadoop.mapred.*;
 import org.apache.hadoop.io.*;
 import java.util.*;
 
-public class BitcoinBlockReducer extends MapReduceBase implements Reducer<Text, IntWritable, Text, IntWritable> {
+public class BitcoinBlockReducer extends MapReduceBase implements Reducer<Text, IntWritable, Text, LongWritable> {
 
-   public void reduce(Text key, Iterator<IntWritable> values, OutputCollector<Text, IntWritable> output, Reporter reporter)
+   public void reduce(Text key, Iterator<IntWritable> values, OutputCollector<Text, LongWritable> output, Reporter reporter)
      throws IOException {
-       int sum = 0;
+       long sum = 0;
        while (values.hasNext()) {
            sum += values.next().get();
        }
-       output.collect(key, new IntWritable(sum));
+       output.collect(key, new LongWritable(sum));
    }
 }
 
