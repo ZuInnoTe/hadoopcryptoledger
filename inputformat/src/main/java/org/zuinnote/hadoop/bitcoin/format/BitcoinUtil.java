@@ -19,10 +19,17 @@ package org.zuinnote.hadoop.bitcoin.format;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
 import java.util.Arrays;
 import java.util.Date;
 
 import javax.xml.bind.DatatypeConverter; // Hex Converter for configuration options
+
+import java.security.MessageDigest; // needed for SHA2-256 calculation
+import java.security.NoSuchAlgorithmException;
 
 
 public class BitcoinUtil {
@@ -56,20 +63,19 @@ public static byte[] convertIntToByteArray(int intToConvert) {
 }
 
 
-
 /**
-* Converts a variable length integer (https://en.bitcoin.it/wiki/Protocol_documentation#Variable_length_integer) from a ByteBuffer to long
 *
-* @param byteBuffer Bytebuffer where to read from the variable length integer
-* 
-* @return long corresponding to variable length integer. Please note that it is signed long and not unsigned long as int the Bitcoin specification. Should be in practice not relevant.
+* Converts a long to a byte array
 *
-*/
-public static long convertVarIntByteBufferToLong(ByteBuffer byteBuffer) {
-	byte[] varIntByteArray=convertVarIntByteBufferToByteArray(byteBuffer);
-	return getVarInt(varIntByteArray);
-	
+* @param longToConvert long that should be converted into a byte array
+*
+* @return byte array corresponding to long
+*
+**/
+public static byte[] convertLongToByteArray(long longToConvert) {
+	return ByteBuffer.allocate(8).putLong(longToConvert).array();
 }
+
 
 
 
@@ -91,6 +97,23 @@ public static byte[] convertVarIntByteBufferToByteArray(ByteBuffer byteBuffer) {
 	byteBuffer.get(varInt,1,varIntSize-1);
 	return varInt;
 }
+
+
+
+/**
+* Converts a variable length integer (https://en.bitcoin.it/wiki/Protocol_documentation#Variable_length_integer) from a ByteBuffer to long
+*
+* @param byteBuffer Bytebuffer where to read from the variable length integer
+* 
+* @return long corresponding to variable length integer. Please note that it is signed long and not unsigned long as int the Bitcoin specification. Should be in practice not relevant.
+*
+*/
+public static long convertVarIntByteBufferToLong(ByteBuffer byteBuffer) {
+	byte[] varIntByteArray=convertVarIntByteBufferToByteArray(byteBuffer);
+	return getVarInt(varIntByteArray);
+	
+}
+
 
 /**
 * Converts a variable length integer (https://en.bitcoin.it/wiki/Protocol_documentation#Variable_length_integer) to long
@@ -184,6 +207,18 @@ public static byte[] convertHexStringToByteArray(String hexString) {
 }
 
 
+/**
+* Converts a Byte Array to Hex String. Only used for configuration not for parsing. Hex String is in format of xsd:hexBinary
+*
+* @param byteArray byte array to convert
+*
+* @return String in Hex format corresponding to byteArray
+*
+*/
+public static String convertByteArrayToHexString(byte[] byteArray) {
+    return DatatypeConverter.printHexBinary(byteArray);
+}
+
 
 /**
 * Converts an int to a date
@@ -194,20 +229,7 @@ public static byte[] convertHexStringToByteArray(String hexString) {
 *
 */
 public static Date convertIntToDate(int dateInt) {
-    return new Date(dateInt*1000);
-}
-
-
-/**
-* Converts a Bitcoin script in byte format to a (human) readable String.
-*
-* @param script script in a byte array
-*
-* @return String with a human readable script or null in case of invalid/non-parseable script (e.g. unknown opcodes etc.)
-*
-*/
-public static String convertByteScriptToReadableString(byte[] script) {
-	return "";
+    return new Date(dateInt*1000L);
 }
 
 
@@ -229,5 +251,50 @@ public static boolean compareMagics (byte[] magic1,byte[] magic2) {
 	return true;	
 
 }
+
+
+
+/**
+* Calculates the double SHA256-Hash of a transaction in little endian format. This could be used for certain analysis scenario where one want to investigate the referenced transaction used as an input for a Transaction. Furthermore, it can be used as a unique identifier of the transaction
+*
+*
+* @param transaction The BitcoinTransaction of which we want to calculate the hash
+*
+* @return byte array containing the hash of the transaction
+*
+*/
+public static byte[] getTransactionHash(BitcoinTransaction transaction) throws NoSuchAlgorithmException, IOException{
+	// convert transaction to byte array
+	ByteArrayOutputStream transactionBAOS = new ByteArrayOutputStream();
+	
+	byte[] version = reverseByteArray(convertIntToByteArray(transaction.getVersion()));
+	transactionBAOS.write(version);
+	byte[] inCounter = transaction.getInCounter();
+	transactionBAOS.write(inCounter);
+	for (int i=0;i<transaction.getListOfInputs().length;i++) {
+		transactionBAOS.write(transaction.getListOfInputs()[i].getPrevTransactionHash());
+		transactionBAOS.write(reverseByteArray(convertIntToByteArray(new Long(transaction.getListOfInputs()[i].getPreviousTxOutIndex()).intValue())));
+		transactionBAOS.write(transaction.getListOfInputs()[i].getTxInScriptLength());
+		transactionBAOS.write(transaction.getListOfInputs()[i].getTxInScript());
+		transactionBAOS.write(reverseByteArray(convertIntToByteArray(new Long(transaction.getListOfInputs()[i].getSeqNo()).intValue())));
+	}
+	byte[] outCounter = transaction.getOutCounter();
+	transactionBAOS.write(outCounter);
+	for (int j=0;j<transaction.getListOfOutputs().length;j++) {
+		transactionBAOS.write(reverseByteArray(convertLongToByteArray(transaction.getListOfOutputs()[j].getValue())));		
+		transactionBAOS.write(transaction.getListOfOutputs()[j].getTxOutScriptLength());
+		transactionBAOS.write(transaction.getListOfOutputs()[j].getTxOutScript());
+	}	
+	byte[] lockTime=reverseByteArray(convertIntToByteArray(transaction.getLockTime()));
+	transactionBAOS.write(lockTime);
+	byte[] transactionByteArray= transactionBAOS.toByteArray();
+	MessageDigest digest = MessageDigest.getInstance("SHA-256");
+	byte[] firstRoundHash = digest.digest(transactionByteArray);
+	byte[] secondRoundHash = digest.digest(firstRoundHash);
+	byte[] finalHash = reverseByteArray(secondRoundHash);
+	return finalHash;
+}
+
+
 
 }
