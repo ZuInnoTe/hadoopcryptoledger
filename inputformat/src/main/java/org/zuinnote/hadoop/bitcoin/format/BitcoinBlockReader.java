@@ -325,6 +325,7 @@ public ByteBuffer readRawBlock() throws BitcoinBlockReadException, IOException {
 		preAllocatedDirectByteBuffer.limit(fullBlock.length); // limit the bytebuffer
 		result=preAllocatedDirectByteBuffer;
 		result.put(fullBlock);
+		result.flip(); // put in read mode
 	}
 	result.order(ByteOrder.LITTLE_ENDIAN);	
 	return result;
