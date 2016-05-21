@@ -30,10 +30,12 @@ import javax.xml.bind.DatatypeConverter; // Hex Converter for configuration opti
 
 import java.security.MessageDigest; // needed for SHA2-256 calculation
 import java.security.NoSuchAlgorithmException;
+import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.Log;
 
 
 public class BitcoinUtil {
-
+private static final Log LOG = LogFactory.getLog(BitcoinUtil.class.getName());
 
 /**
 * Converts a signed int to an unsigned (long)
