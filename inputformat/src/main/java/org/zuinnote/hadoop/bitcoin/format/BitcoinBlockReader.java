@@ -26,7 +26,8 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 import java.util.ArrayList;
-
+import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.Log;
 
 /**
 * This class reads Bitcoin blocks (in raw network format) from an input stream and returns Java objects of the class BitcoinBlock. It reuses code from the LineRecordReader due to its robustness and well-tested functionality.
@@ -35,6 +36,7 @@ import java.util.ArrayList;
 
 public class BitcoinBlockReader {
 
+private static final Log LOG = LogFactory.getLog(BitcoinBlockReader.class.getName());
 
 private int bufferSize=0;
 private int maxSizeBitcoinBlock=0; 
