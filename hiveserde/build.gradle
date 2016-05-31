@@ -1,6 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: 'maven-publish'
+apply plugin: 'jacoco'
 
 sourceCompatibility = 1.7
 version = '1.0'
@@ -39,6 +40,14 @@ repositories {
     mavenLocal()
 }
 
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled true
+    }
+}
+
+
 
 configurations {
 	provided
@@ -63,6 +72,10 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.+'
 }
 
+
+task hadoopCryptoLedgerJavaDocs(type: Javadoc) {
+  source = sourceSets.main.java
+}
 
 uploadArchives {
     repositories {
