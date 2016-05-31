@@ -113,24 +113,23 @@ public BitcoinBlockRecordReader(FileSplit split,JobConf job, Reporter reporter) 
     start = split.getStart();
     end = start + split.getLength();
     final Path file = split.getPath();
-    /** experimental. While a blockchain is not compressed, the user may decide to store it in (any) compressed format in Hadoop **/
     compressionCodecs = new CompressionCodecFactory(job);
-    codec = compressionCodecs.getCodec(file);
+    codec = new CompressionCodecFactory(job).getCodec(file);
     final FileSystem fs = file.getFileSystem(job);
     fileIn = fs.open(file);
     // open stream
-      if (isCompressedInput()) { // decompress
+     if (isCompressedInput()) { // decompress
       	decompressor = CodecPool.getDecompressor(codec);
       	if (codec instanceof SplittableCompressionCodec) {
-        	final SplitCompressionInputStream cIn =((SplittableCompressionCodec)codec).createInputStream(fileIn, decompressor, start, end,SplittableCompressionCodec.READ_MODE.BYBLOCK);
+        	SplitCompressionInputStream cIn =((SplittableCompressionCodec)codec).createInputStream(fileIn, decompressor, start, end,SplittableCompressionCodec.READ_MODE.CONTINUOUS);
 		bbr = new BitcoinBlockReader(cIn, this.maxSizeBitcoinBlock,this.bufferSize,this.specificMagicByteArray,this.useDirectBuffer);  
 		start = cIn.getAdjustedStart();
        		end = cIn.getAdjustedEnd();
         	filePosition = cIn; // take pos from compressed stream
-      } else {
-	bbr = new BitcoinBlockReader(codec.createInputStream(fileIn,decompressor), this.maxSizeBitcoinBlock,this.bufferSize,this.specificMagicByteArray,this.useDirectBuffer);
-        filePosition = fileIn;
-      }
+      	} else {
+		bbr = new BitcoinBlockReader(codec.createInputStream(fileIn,decompressor), this.maxSizeBitcoinBlock,this.bufferSize,this.specificMagicByteArray,this.useDirectBuffer);
+        	filePosition = fileIn;
+      	}
     } else {
       fileIn.seek(start);
       bbr = new BitcoinBlockReader(fileIn, this.maxSizeBitcoinBlock,this.bufferSize,this.specificMagicByteArray,this.useDirectBuffer);  
@@ -138,6 +137,7 @@ public BitcoinBlockRecordReader(FileSplit split,JobConf job, Reporter reporter) 
     }
     // initialize reader
     this.pos=start;
+		
     // seek to block start (for the case a block overlaps a split)
     bbr.seekBlockStart();
 }
@@ -181,6 +181,7 @@ public boolean next(BytesWritable key, BitcoinBlock value) throws IOException {
 		BitcoinBlock dataBlock=null;
 		try {
 			dataBlock=bbr.readBlock();
+			
 		} catch (BitcoinBlockReadException e) {
 			// log
 			LOG.error(e);
@@ -197,7 +198,7 @@ public boolean next(BytesWritable key, BitcoinBlock value) throws IOException {
 		}
 		key.set(newKey,0,newKey.length);
 		value.set(dataBlock);
-		this.pos=fileIn.getPos();
+		this.pos=getFilePosition();
 		return true;
 	}
 	return false;
@@ -212,7 +213,7 @@ public boolean next(BytesWritable key, BitcoinBlock value) throws IOException {
 */
 
 private long getFilePosition() throws IOException {
-long retVal;
+long retVal=0;
 if (isCompressedInput() && null != filePosition) {
       retVal = filePosition.getPos();
 } else {

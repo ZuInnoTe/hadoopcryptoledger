@@ -112,16 +112,15 @@ public BitcoinTransactionRecordReader(FileSplit split,JobConf job, Reporter repo
     start = split.getStart();
     end = start + split.getLength();
     final Path file = split.getPath();
-    /** experimental. While a blockchain is not compressed, the user may decide to store it in (any) compressed format in Hadoop **/
-    compressionCodecs = new CompressionCodecFactory(job);
-    codec = compressionCodecs.getCodec(file);
+     compressionCodecs = new CompressionCodecFactory(job);
+    codec = new CompressionCodecFactory(job).getCodec(file);
     final FileSystem fs = file.getFileSystem(job);
     fileIn = fs.open(file);
     // open stream
       if (isCompressedInput()) { // decompress
       	decompressor = CodecPool.getDecompressor(codec);
       	if (codec instanceof SplittableCompressionCodec) {
-        	final SplitCompressionInputStream cIn =((SplittableCompressionCodec)codec).createInputStream(fileIn, decompressor, start, end,SplittableCompressionCodec.READ_MODE.BYBLOCK);
+        	final SplitCompressionInputStream cIn =((SplittableCompressionCodec)codec).createInputStream(fileIn, decompressor, start, end,SplittableCompressionCodec.READ_MODE.CONTINUOUS);
 		bbr = new BitcoinBlockReader(cIn, this.maxSizeBitcoinBlock,this.bufferSize,this.specificMagicByteArray,this.useDirectBuffer);  
 		start = cIn.getAdjustedStart();
        		end = cIn.getAdjustedEnd();
@@ -204,7 +203,7 @@ public boolean next(BytesWritable key, BitcoinTransaction value) throws IOExcept
 		key.set(newKey,0,newKey.length);
 		value.set(currentBitcoinBlock.getTransactions()[currentTransactionCounterInBlock]);
 		currentTransactionCounterInBlock++;
-		this.pos=fileIn.getPos();
+		this.pos=getFilePosition();
 		return true;
 	}
 	return false;

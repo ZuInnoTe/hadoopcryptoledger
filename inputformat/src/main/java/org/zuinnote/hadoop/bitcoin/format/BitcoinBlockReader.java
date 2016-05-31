@@ -133,9 +133,13 @@ public void seekBlockStart() throws BitcoinBlockReadException,IOException {
 		if (this.maxSizeBitcoinBlock<blockSize) throw new BitcoinBlockReadException("Error: Cannot seek to a block start, because no valid block found. Max bitcoin block size is smaller than current block size.");
 		int blockSizeInt=new Long(blockSize).intValue();
 		byte[] blockRead=new byte[blockSizeInt];
-		long readByte=this.bin.read(blockRead,0,blockSizeInt);
-		if (readByte!=blockSize) throw new BitcoinBlockReadException("Error: Cannot seek to a block start, because no valid block found. Cannot skip to end of block");
-		
+		long readByte=0;
+		long totalByteRead=0;
+		while ((readByte=this.bin.read(blockRead,0,blockSizeInt))>-1) {
+			totalByteRead+=readByte;
+			if (totalByteRead>=blockSize) break;
+		}
+		if (totalByteRead!=blockSize) throw new BitcoinBlockReadException("Error: Cannot seek to a block start, because no valid block found. Cannot skip to end of block");
 		this.bin.reset();
 		fullBlock=true;
 	}
@@ -317,8 +321,13 @@ public ByteBuffer readRawBlock() throws BitcoinBlockReadException, IOException {
 	// read full block into ByteBuffer
 	int blockSizeInt=new Long(blockSize).intValue();
 	byte[] fullBlock=new byte[blockSizeInt];
-	int fullBlockReadSize=this.bin.read(fullBlock,0,blockSizeInt);
-	if (fullBlockReadSize!=blockSize) throw new BitcoinBlockReadException("Error: Could not read full block");
+	long readByte=0;
+	long totalByteRead=0;
+	while ((readByte=this.bin.read(fullBlock,0,blockSizeInt))>-1) {
+			totalByteRead+=readByte;
+			if (totalByteRead>=blockSize) break;
+	}
+	if (totalByteRead!=blockSize) throw new BitcoinBlockReadException("Error: Could not read full block");
 	ByteBuffer result = null;
 	if (this.useDirectBuffer==false) {
 	 	result=ByteBuffer.wrap(fullBlock);	
