@@ -178,13 +178,7 @@ public abstract boolean next(K key, V value) throws IOException;
 */
 
 public long getFilePosition() throws IOException {
-long retVal;
-if (isCompressedInput() && null != filePosition) {
-      retVal = filePosition.getPos();
-} else {
-      retVal = pos;
-}
-  return retVal;
+	return  filePosition.getPos();
 }
 
 /**
@@ -241,7 +235,7 @@ private boolean  isCompressedInput() {
 */
 
 public  synchronized long getPos() throws IOException {
-	return pos;
+	return filePosition.getPos();
 }
 
 /*
