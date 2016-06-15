@@ -183,6 +183,8 @@ private static Reporter reporter = Reporter.NULL;
   }
 
 
+
+
   @Test
   public void readBitcoinRawBlockInputFormatGenesisBlock() throws IOException {
     JobConf job = new JobConf(defaultConf);
