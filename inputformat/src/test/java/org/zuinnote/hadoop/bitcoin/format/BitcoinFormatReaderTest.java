@@ -39,6 +39,8 @@ public class BitcoinFormatReaderTest {
 private static final int DEFAULT_BUFFERSIZE=64*1024;
 private static final int DEFAULT_MAXSIZE_BITCOINBLOCK=1 * 1024 * 1024;
 private static final byte[][] DEFAULT_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB4,(byte)0xD9}};
+private static final byte[][] TESTNET3_MAGIC = {{(byte)0x0B,(byte)0x11,(byte)0x09,(byte)0x07}};
+private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB4,(byte)0xD9},{(byte)0x0B,(byte)0x11,(byte)0x09,(byte)0x07}};
 
  @Test
   public void checkTestDataGenesisBlockAvailable() {
@@ -107,6 +109,43 @@ private static final byte[][] DEFAULT_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB4
 	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
 	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
   }
+
+ @Test
+  public void checkTestDataTestnet3GenesisBlockAvailable() {
+	ClassLoader classLoader = getClass().getClassLoader();
+	String fileName="testnet3genesis.blk";
+	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
+	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	File file = new File(fileNameGenesis);
+	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
+	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+  }
+
+
+ @Test
+  public void checkTestDataTestnet3Version4BlockAvailable() {
+	ClassLoader classLoader = getClass().getClassLoader();
+	String fileName="testnet3version4.blk";
+	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
+	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	File file = new File(fileNameGenesis);
+	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
+	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+  }
+
+
+
+ @Test
+  public void checkTestDataMultiNetAvailable() {
+	ClassLoader classLoader = getClass().getClassLoader();
+	String fileName="multinet.blk";
+	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
+	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	File file = new File(fileNameGenesis);
+	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
+	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+  }
+
 
 
   @Test
@@ -215,6 +254,76 @@ private static final byte[][] DEFAULT_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB4
 	}
   }
 
+@Test
+  public void parseTestNet3GenesisBlockAsBitcoinRawBlockHeap() throws FileNotFoundException, IOException, BitcoinBlockReadException {
+	ClassLoader classLoader = getClass().getClassLoader();
+	String fileName="testnet3genesis.blk";
+	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
+	File file = new File(fileNameGenesis);
+	BitcoinBlockReader bbr = null;
+	boolean direct=false;
+	try {
+		FileInputStream fin = new FileInputStream(file);
+		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.TESTNET3_MAGIC,direct);
+		ByteBuffer genesisByteBuffer = bbr.readRawBlock();
+		assertFalse("Raw TestNet3 Genesis Block is HeapByteBuffer", genesisByteBuffer.isDirect());
+		assertEquals("Raw TestNet3 Genesis block has a size of 293 bytes", 293, genesisByteBuffer.limit());
+		
+	} finally {
+		if (bbr!=null) 
+			bbr.close();
+	}
+  }
+
+  @Test
+  public void parseTestNet3Version4BlockAsBitcoinRawBlockHeap()  throws FileNotFoundException, IOException, BitcoinBlockReadException {
+    ClassLoader classLoader = getClass().getClassLoader();
+	String fileName="testnet3version4.blk";
+	String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+	File file = new File(fileNameBlock);
+	BitcoinBlockReader bbr = null;
+	boolean direct=false;
+	try {
+		FileInputStream fin = new FileInputStream(file);
+		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.TESTNET3_MAGIC,direct);
+		ByteBuffer version4ByteBuffer = bbr.readRawBlock();
+		assertFalse("Random TestNet3 Version 4 Raw Block is HeapByteBuffer", version4ByteBuffer.isDirect());
+		assertEquals("Random TestNet3 Version 4 Raw Block has a size of 749.041 bytes", 749041, version4ByteBuffer.limit());
+		
+	} finally {
+		if (bbr!=null) 
+			bbr.close();
+	}
+  }
+
+
+@Test
+  public void parseMultiNetAsBitcoinRawBlockHeap() throws FileNotFoundException, IOException, BitcoinBlockReadException {
+	ClassLoader classLoader = getClass().getClassLoader();
+	String fileName="multinet.blk";
+	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
+	File file = new File(fileNameGenesis);
+	BitcoinBlockReader bbr = null;
+	boolean direct=false;
+	try {
+		FileInputStream fin = new FileInputStream(file);
+		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.MULTINET_MAGIC,direct);
+		ByteBuffer firstMultinetByteBuffer = bbr.readRawBlock();
+		assertFalse("First MultiNetBlock is HeapByteBuffer", firstMultinetByteBuffer.isDirect());
+		assertEquals("First MultiNetBlock has a size of 293 bytes", 293, firstMultinetByteBuffer.limit());
+		ByteBuffer secondMultinetByteBuffer = bbr.readRawBlock();
+		assertFalse("Second MultiNetBlock is HeapByteBuffer", secondMultinetByteBuffer.isDirect());
+		assertEquals("Second MultiNetBlock has a size of 191.198 bytes", 191198, secondMultinetByteBuffer.limit());
+		ByteBuffer thirdMultinetByteBuffer = bbr.readRawBlock();
+		assertFalse("Third MultiNetBlock is HeapByteBuffer", thirdMultinetByteBuffer.isDirect());
+		assertEquals("Third MultiNetBlock has a size of 749.041 bytes", 749041, thirdMultinetByteBuffer.limit());
+
+		
+	} finally {
+		if (bbr!=null) 
+			bbr.close();
+	}
+  }
 
   @Test
   public void parseGenesisBlockAsBitcoinRawBlockDirect() throws FileNotFoundException, IOException, BitcoinBlockReadException {
@@ -321,6 +430,77 @@ private static final byte[][] DEFAULT_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB4
 	}
   }
 
+@Test
+  public void parseTestNet3GenesisBlockAsBitcoinRawBlockDirect() throws FileNotFoundException, IOException, BitcoinBlockReadException {
+	ClassLoader classLoader = getClass().getClassLoader();
+	String fileName="testnet3genesis.blk";
+	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
+	File file = new File(fileNameGenesis);
+	BitcoinBlockReader bbr = null;
+	boolean direct=true;
+	try {
+		FileInputStream fin = new FileInputStream(file);
+		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.TESTNET3_MAGIC,direct);
+		ByteBuffer genesisByteBuffer = bbr.readRawBlock();
+		assertTrue("Raw TestNet3 Genesis Block is DirectByteBuffer", genesisByteBuffer.isDirect());
+		assertEquals("Raw TestNet3 Genesis block has a size of 293 bytes", 293, genesisByteBuffer.limit());
+		
+	} finally {
+		if (bbr!=null) 
+			bbr.close();
+	}
+  }
+
+  @Test
+  public void parseTestNet3Version4BlockAsBitcoinRawBlockDirect()  throws FileNotFoundException, IOException, BitcoinBlockReadException {
+    ClassLoader classLoader = getClass().getClassLoader();
+	String fileName="testnet3version4.blk";
+	String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+	File file = new File(fileNameBlock);
+	BitcoinBlockReader bbr = null;
+	boolean direct=true;
+	try {
+		FileInputStream fin = new FileInputStream(file);
+		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.TESTNET3_MAGIC,direct);
+		ByteBuffer version4ByteBuffer = bbr.readRawBlock();
+		assertTrue("Random TestNet3 Version 4 Raw Block is DirectByteBuffer", version4ByteBuffer.isDirect());
+		assertEquals("Random TestNet3  Version 4 Raw Block has a size of 749.041 bytes", 749041, version4ByteBuffer.limit());
+		
+	} finally {
+		if (bbr!=null) 
+			bbr.close();
+	}
+  }
+
+@Test
+  public void parseMultiNetAsBitcoinRawBlockDirect() throws FileNotFoundException, IOException, BitcoinBlockReadException {
+	ClassLoader classLoader = getClass().getClassLoader();
+	String fileName="multinet.blk";
+	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
+	File file = new File(fileNameGenesis);
+	BitcoinBlockReader bbr = null;
+	boolean direct=true;
+	try {
+		FileInputStream fin = new FileInputStream(file);
+		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.MULTINET_MAGIC,direct);
+		ByteBuffer firstMultinetByteBuffer = bbr.readRawBlock();
+		assertTrue("First MultiNetBlock is DirectByteBuffer", firstMultinetByteBuffer.isDirect());
+		assertEquals("First MultiNetBlock has a size of 293 bytes", 293, firstMultinetByteBuffer.limit());
+		ByteBuffer secondMultinetByteBuffer = bbr.readRawBlock();
+		assertTrue("Second MultiNetBlock is DirectByteBuffer", secondMultinetByteBuffer.isDirect());
+		assertEquals("Second MultiNetBlock has a size of 191.198 bytes", 191198, secondMultinetByteBuffer.limit());
+		ByteBuffer thirdMultinetByteBuffer = bbr.readRawBlock();
+		assertTrue("Third MultiNetBlock is DirectByteBuffer", thirdMultinetByteBuffer.isDirect());
+		assertEquals("Third MultiNetBlock has a size of 749.041 bytes", 749041, thirdMultinetByteBuffer.limit());
+
+		
+	} finally {
+		if (bbr!=null) 
+			bbr.close();
+	}
+  }
+
+
   @Test
   public void parseGenesisBlockAsBitcoinBlockHeap() throws FileNotFoundException, IOException, BitcoinBlockReadException {
 	ClassLoader classLoader = getClass().getClassLoader();
@@ -338,6 +518,30 @@ private static final byte[][] DEFAULT_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB4
 		assertEquals("Genesis Block must contain exactly one transaction with one input and script length 77", 77, theBitcoinBlock.getTransactions()[0].getListOfInputs()[0].getTxInScript().length);
 		assertEquals("Genesis Block must contain exactly one transaction with one output", 1, theBitcoinBlock.getTransactions()[0].getListOfOutputs().length);
 		assertEquals("Genesis Block must contain exactly one transaction with one output and script length 67", 67, theBitcoinBlock.getTransactions()[0].getListOfOutputs()[0].getTxOutScript().length);
+	} finally {
+		if (bbr!=null) 
+			bbr.close();
+	}
+  }
+
+
+  @Test
+  public void parseTestNet3GenesisBlockAsBitcoinBlockHeap() throws FileNotFoundException, IOException, BitcoinBlockReadException {
+	ClassLoader classLoader = getClass().getClassLoader();
+	String fileName="testnet3genesis.blk";
+	String fullFileNameString=classLoader.getResource("testdata/"+fileName).getFile();	
+	File file = new File(fullFileNameString);
+	BitcoinBlockReader bbr = null;
+	boolean direct=false;
+	try {
+		FileInputStream fin = new FileInputStream(file);
+		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.TESTNET3_MAGIC,direct);
+		BitcoinBlock theBitcoinBlock = bbr.readBlock();
+		assertEquals("TestNet3 Genesis Block must contain exactly one transaction", 1, theBitcoinBlock.getTransactions().length);
+		assertEquals("TestNet3 Genesis Block must contain exactly one transaction with one input", 1, theBitcoinBlock.getTransactions()[0].getListOfInputs().length);
+		assertEquals("TestNet3 Genesis Block must contain exactly one transaction with one input and script length 77", 77, theBitcoinBlock.getTransactions()[0].getListOfInputs()[0].getTxInScript().length);
+		assertEquals("TestNet3 Genesis Block must contain exactly one transaction with one output", 1, theBitcoinBlock.getTransactions()[0].getListOfOutputs().length);
+		assertEquals("TestNet3 Genesis Block must contain exactly one transaction with one output and script length 67", 67, theBitcoinBlock.getTransactions()[0].getListOfOutputs()[0].getTxOutScript().length);
 	} finally {
 		if (bbr!=null) 
 			bbr.close();
@@ -436,6 +640,63 @@ private static final byte[][] DEFAULT_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB4
 	}
   }
 
+  @Test
+  public void parseTestNet3Version4BlockAsBitcoinBlockHeap() throws FileNotFoundException, IOException, BitcoinBlockReadException {
+            ClassLoader classLoader = getClass().getClassLoader();
+	String fileName="testnet3version4.blk";
+	String fullFileNameString=classLoader.getResource("testdata/"+fileName).getFile();	
+	File file = new File(fullFileNameString);
+	BitcoinBlockReader bbr = null;
+	boolean direct=false;
+	try {
+		FileInputStream fin = new FileInputStream(file);
+		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.TESTNET3_MAGIC,direct);
+		BitcoinBlock theBitcoinBlock = bbr.readBlock();
+		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions", 3299, theBitcoinBlock.getTransactions().length);
+		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one input", 1, theBitcoinBlock.getTransactions()[0].getListOfInputs().length);
+		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one input and script length 35", 35, theBitcoinBlock.getTransactions()[0].getListOfInputs()[0].getTxInScript().length);
+		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one outputs", 1, theBitcoinBlock.getTransactions()[0].getListOfOutputs().length);
+		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one output and the first output script length 25", 25, theBitcoinBlock.getTransactions()[0].getListOfOutputs()[0].getTxOutScript().length);
+	} finally {
+		if (bbr!=null) 
+			bbr.close();
+	}
+  }
+
+@Test
+  public void parseMultiNetBlockAsBitcoinBlockHeap() throws FileNotFoundException, IOException, BitcoinBlockReadException {
+	ClassLoader classLoader = getClass().getClassLoader();
+	String fileName="multinet.blk";
+	String fullFileNameString=classLoader.getResource("testdata/"+fileName).getFile();	
+	File file = new File(fullFileNameString);
+	BitcoinBlockReader bbr = null;
+	boolean direct=false;
+	try {
+		FileInputStream fin = new FileInputStream(file);
+		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.MULTINET_MAGIC,direct);
+		BitcoinBlock firstBitcoinBlock = bbr.readBlock();
+		assertEquals("First MultiNet Block must contain exactly one transaction", 1, firstBitcoinBlock.getTransactions().length);
+		assertEquals("First MultiNet Block must contain exactly one transaction with one input", 1, firstBitcoinBlock.getTransactions()[0].getListOfInputs().length);
+		assertEquals("First MultiNet Block must contain exactly one transaction with one input and script length 77", 77, firstBitcoinBlock.getTransactions()[0].getListOfInputs()[0].getTxInScript().length);
+		assertEquals("First MultiNet Block must contain exactly one transaction with one output", 1, firstBitcoinBlock.getTransactions()[0].getListOfOutputs().length);
+		assertEquals("First MultiNet Block must contain exactly one transaction with one output and script length 67", 67, firstBitcoinBlock.getTransactions()[0].getListOfOutputs()[0].getTxOutScript().length);
+		BitcoinBlock secondBitcoinBlock = bbr.readBlock();
+		assertEquals("Second MultiNet Block must contain exactly 343 transactions", 343, secondBitcoinBlock.getTransactions().length);
+		assertEquals("Second MultiNet Block must contain exactly 343 transactions of which the first has one input", 1, secondBitcoinBlock.getTransactions()[0].getListOfInputs().length);
+		assertEquals("Second MultiNet Block must contain exactly 343 transactions of which the first has one input and script length 40", 40, secondBitcoinBlock.getTransactions()[0].getListOfInputs()[0].getTxInScript().length);
+		assertEquals("Second MultiNet Block must contain exactly 343 transactions of which the first has one output", 1, secondBitcoinBlock.getTransactions()[0].getListOfOutputs().length);
+		assertEquals("Second MultiNet Block must contain exactly 343 transactions of which the first has one output and script length 25", 25, secondBitcoinBlock.getTransactions()[0].getListOfOutputs()[0].getTxOutScript().length);
+		BitcoinBlock thirdBitcoinBlock = bbr.readBlock();
+		assertEquals("Third MultiNet Block must contain exactly 3299 transactions", 3299, thirdBitcoinBlock.getTransactions().length);
+		assertEquals("Third MultiNet Block must contain exactly 3299 transactions of which the first has one input", 1, thirdBitcoinBlock.getTransactions()[0].getListOfInputs().length);
+		assertEquals("Third MultiNet Block must contain exactly 3299 transactions of which the first has one input and script length 35", 35, thirdBitcoinBlock.getTransactions()[0].getListOfInputs()[0].getTxInScript().length);
+		assertEquals("Third MultiNet Block must contain exactly 3299 transactions of which the first has one outputs", 1, thirdBitcoinBlock.getTransactions()[0].getListOfOutputs().length);
+		assertEquals("Third MultiNet Block must contain exactly 3299 transactions of which the first has one output and the first output script length 25", 25, thirdBitcoinBlock.getTransactions()[0].getListOfOutputs()[0].getTxOutScript().length);
+	} finally {
+		if (bbr!=null) 
+			bbr.close();
+	}
+  }
 
   @Test
   public void parseGenesisBlockAsBitcoinBlockDirect() throws FileNotFoundException, IOException, BitcoinBlockReadException {
@@ -459,6 +720,31 @@ private static final byte[][] DEFAULT_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB4
 			bbr.close();
 	}
   }
+
+
+  @Test
+  public void parseTestNet3GenesisBlockAsBitcoinBlockDirect() throws FileNotFoundException, IOException, BitcoinBlockReadException {
+    ClassLoader classLoader = getClass().getClassLoader();
+	String fileName="testnet3genesis.blk";
+	String fullFileNameString=classLoader.getResource("testdata/"+fileName).getFile();	
+	File file = new File(fullFileNameString);
+	BitcoinBlockReader bbr = null;
+	boolean direct=true;
+	try {
+		FileInputStream fin = new FileInputStream(file);
+		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.TESTNET3_MAGIC,direct);
+		BitcoinBlock theBitcoinBlock = bbr.readBlock();
+		assertEquals("TestNet3 Genesis Block must contain exactly one transaction", 1, theBitcoinBlock.getTransactions().length);
+		assertEquals("TestNet3 Genesis Block must contain exactly one transaction with one input", 1, theBitcoinBlock.getTransactions()[0].getListOfInputs().length);
+		assertEquals("TestNet3 Genesis Block must contain exactly one transaction with one input and script length 77", 77, theBitcoinBlock.getTransactions()[0].getListOfInputs()[0].getTxInScript().length);
+		assertEquals("TestNet3 Genesis Block must contain exactly one transaction with one output", 1, theBitcoinBlock.getTransactions()[0].getListOfOutputs().length);
+		assertEquals("TestNet3 Genesis Block must contain exactly one transaction with one output and script length 67", 67, theBitcoinBlock.getTransactions()[0].getListOfOutputs()[0].getTxOutScript().length);
+	} finally {
+		if (bbr!=null) 
+			bbr.close();
+	}
+  }
+
 
   @Test
   public void parseVersion1BlockAsBitcoinBlockDirect() throws FileNotFoundException, IOException, BitcoinBlockReadException {
@@ -553,6 +839,63 @@ private static final byte[][] DEFAULT_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB4
   }
 
 
+  @Test
+  public void parseTestNet3Version4BlockAsBitcoinBlockDirect() throws FileNotFoundException, IOException, BitcoinBlockReadException {
+            ClassLoader classLoader = getClass().getClassLoader();
+	String fileName="testnet3version4.blk";
+	String fullFileNameString=classLoader.getResource("testdata/"+fileName).getFile();	
+	File file = new File(fullFileNameString);
+	BitcoinBlockReader bbr = null;
+	boolean direct=true;
+	try {
+		FileInputStream fin = new FileInputStream(file);
+		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.TESTNET3_MAGIC,direct);
+		BitcoinBlock theBitcoinBlock = bbr.readBlock();
+		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions", 3299, theBitcoinBlock.getTransactions().length);
+		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one input", 1, theBitcoinBlock.getTransactions()[0].getListOfInputs().length);
+		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one input and script length 35", 35, theBitcoinBlock.getTransactions()[0].getListOfInputs()[0].getTxInScript().length);
+		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one outputs", 1, theBitcoinBlock.getTransactions()[0].getListOfOutputs().length);
+		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one output and the first output script length 25", 25, theBitcoinBlock.getTransactions()[0].getListOfOutputs()[0].getTxOutScript().length);
+	} finally {
+		if (bbr!=null) 
+			bbr.close();
+	}
+  }
+
+@Test
+  public void parseMultiNetBlockAsBitcoinBlockDirect() throws FileNotFoundException, IOException, BitcoinBlockReadException {
+	ClassLoader classLoader = getClass().getClassLoader();
+	String fileName="multinet.blk";
+	String fullFileNameString=classLoader.getResource("testdata/"+fileName).getFile();	
+	File file = new File(fullFileNameString);
+	BitcoinBlockReader bbr = null;
+	boolean direct=true;
+	try {
+		FileInputStream fin = new FileInputStream(file);
+		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.MULTINET_MAGIC,direct);
+		BitcoinBlock firstBitcoinBlock = bbr.readBlock();
+		assertEquals("First MultiNet Block must contain exactly one transaction", 1, firstBitcoinBlock.getTransactions().length);
+		assertEquals("First MultiNet Block must contain exactly one transaction with one input", 1, firstBitcoinBlock.getTransactions()[0].getListOfInputs().length);
+		assertEquals("First MultiNet Block must contain exactly one transaction with one input and script length 77", 77, firstBitcoinBlock.getTransactions()[0].getListOfInputs()[0].getTxInScript().length);
+		assertEquals("First MultiNet Block must contain exactly one transaction with one output", 1, firstBitcoinBlock.getTransactions()[0].getListOfOutputs().length);
+		assertEquals("First MultiNet Block must contain exactly one transaction with one output and script length 67", 67, firstBitcoinBlock.getTransactions()[0].getListOfOutputs()[0].getTxOutScript().length);
+		BitcoinBlock secondBitcoinBlock = bbr.readBlock();
+		assertEquals("Second MultiNet Block must contain exactly 343 transactions", 343, secondBitcoinBlock.getTransactions().length);
+		assertEquals("Second MultiNet Block must contain exactly 343 transactions of which the first has one input", 1, secondBitcoinBlock.getTransactions()[0].getListOfInputs().length);
+		assertEquals("Second MultiNet Block must contain exactly 343 transactions of which the first has one input and script length 40", 40, secondBitcoinBlock.getTransactions()[0].getListOfInputs()[0].getTxInScript().length);
+		assertEquals("Second MultiNet Block must contain exactly 343 transactions of which the first has one output", 1, secondBitcoinBlock.getTransactions()[0].getListOfOutputs().length);
+		assertEquals("Second MultiNet Block must contain exactly 343 transactions of which the first has one output and script length 25", 25, secondBitcoinBlock.getTransactions()[0].getListOfOutputs()[0].getTxOutScript().length);
+		BitcoinBlock thirdBitcoinBlock = bbr.readBlock();
+		assertEquals("Third MultiNet Block must contain exactly 3299 transactions", 3299, thirdBitcoinBlock.getTransactions().length);
+		assertEquals("Third MultiNet Block must contain exactly 3299 transactions of which the first has one input", 1, thirdBitcoinBlock.getTransactions()[0].getListOfInputs().length);
+		assertEquals("Third MultiNet Block must contain exactly 3299 transactions of which the first has one input and script length 35", 35, thirdBitcoinBlock.getTransactions()[0].getListOfInputs()[0].getTxInScript().length);
+		assertEquals("Third MultiNet Block must contain exactly 3299 transactions of which the first has one outputs", 1, thirdBitcoinBlock.getTransactions()[0].getListOfOutputs().length);
+		assertEquals("Third MultiNet Block must contain exactly 3299 transactions of which the first has one output and the first output script length 25", 25, thirdBitcoinBlock.getTransactions()[0].getListOfOutputs()[0].getTxOutScript().length);
+	} finally {
+		if (bbr!=null) 
+			bbr.close();
+	}
+  }
 
   @Test
   public void seekBlockStartHeap()  throws FileNotFoundException, IOException, BitcoinBlockReadException {
