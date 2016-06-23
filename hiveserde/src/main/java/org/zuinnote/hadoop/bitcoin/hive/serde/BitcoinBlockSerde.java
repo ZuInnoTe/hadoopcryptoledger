@@ -63,7 +63,6 @@ import org.apache.commons.logging.Log;
 public class BitcoinBlockSerde extends AbstractDeserializer implements VectorizedSerde {
 
 private static final Log LOG = LogFactory.getLog(BitcoinBlockSerde.class.getName());
-private List<String> columnNames;
 private ObjectInspector bitcoinBlockObjectInspector;
 
 
