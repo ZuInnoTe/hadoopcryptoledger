@@ -18,19 +18,39 @@ package org.zuinnote.hadoop.bitcoin.hive.udf;
 
 import org.apache.hadoop.io.BytesWritable; 
 import org.apache.hadoop.io.Text; 
-
+import org.apache.hadoop.hive.ql.exec.Description;
 import org.apache.hadoop.hive.ql.exec.UDF;
 
 import org.zuinnote.hadoop.bitcoin.format.*;
 
-public class BitcoinScriptPaymentPatternAnalyzerUDF extends UDF {
 
+import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.Log;
+
+import javax.xml.bind.DatatypeConverter;
+
+/*
+* UDF to extract the destination  (cf. https://en.bitcoin.it/wiki/Transaction#general_format_.28inside_a_block.29_of_each_input_of_a_transaction_-_Txin)
+*
+* CREATE TEMPORARY FUNCTION hclBitcoinScriptPattern as 'org.zuinnote.hadoop.bitcoin.hive.udf.BitcoinScriptPaymentPatternAnalyzerUDF';
+*
+*/
+@Description(
+	name = "hclBitcoinScriptPattern",
+	value = "_FUNC_(BINARY) - extracts information about the destination of a transaction based on txOutScript",
+	extended = "Example:\n" +
+	"  > SELECT hclBitcoinScriptPattern(expout.txoutscript) FROM (select * from BitcoinBlockchain LATERAL VIEW explode(transactions) exploded_transactions as exptran) transaction_table LATERAL VIEW explode (exptran.listofoutputs) exploded_outputs as expout;\n")
+
+public class BitcoinScriptPaymentPatternAnalyzerUDF extends UDF {
+private static final Log LOG = LogFactory.getLog(BitcoinScriptPaymentPatternAnalyzerUDF.class.getName());
  /**
  ** Analyzes txOutScript (ScriptPubKey) of an output of a Bitcoin Transaction to determine the payment destination
 *
 */
   public Text evaluate(BytesWritable input) {
     if (input==null) return null;
-    return new Text(BitcoinScriptPatternParser.getPaymentDestination(input.getBytes()));
+    String paymentDestination = BitcoinScriptPatternParser.getPaymentDestination(input.copyBytes());
+    if (paymentDestination==null) return null;
+    return new Text(new String(paymentDestination));
   }
 }
