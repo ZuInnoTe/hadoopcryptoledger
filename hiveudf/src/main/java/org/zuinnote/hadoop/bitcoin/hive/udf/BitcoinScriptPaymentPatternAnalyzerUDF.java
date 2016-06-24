@@ -51,6 +51,6 @@ private static final Log LOG = LogFactory.getLog(BitcoinScriptPaymentPatternAnal
     if (input==null) return null;
     String paymentDestination = BitcoinScriptPatternParser.getPaymentDestination(input.copyBytes());
     if (paymentDestination==null) return null;
-    return new Text(new String(paymentDestination));
+    return new Text(paymentDestination);
   }
 }
