@@ -30,6 +30,7 @@ import org.apache.hadoop.util.*;
 
 
 import scala.Tuple2;
+import org.apache.hadoop.conf.*;
 import org.apache.spark.api.java.*;
 import org.apache.spark.api.java.function.*;
 import org.apache.spark.SparkConf;
@@ -49,8 +50,14 @@ public class SparkBitcoinBlockCounter  {
  public static void main(String[] args) throws Exception {
     SparkConf conf = new SparkConf().setAppName("Spark BitcoinBlock Analytics (hadoopcryptoledger)");
     JavaSparkContext sc = new JavaSparkContext(conf); 
+    // create Hadoop Configuration
+    JobConf hadoopConf= new JobConf();
+    FileInputFormat.addInputPath(hadoopConf, new Path(args[0]));
+      /** Set as an example some of the options to configure the Bitcoin fileformat **/
+     /** Find here all configuration options: https://github.com/ZuInnoTe/hadoopcryptoledger/wiki/Hadoop-File-Format **/
+    hadoopConf.set("hadoopcryptoledger.bitcoinblockinputformat.filter.magic","F9BEB4D9");
     // read bitcoin data from HDFS
-    JavaPairRDD<BytesWritable, BitcoinBlock> bitcoinBlocksRDD = sc.hadoopFile(args[0], BitcoinBlockFileInputFormat.class, BytesWritable.class, BitcoinBlock.class, 2);
+    JavaPairRDD<BytesWritable, BitcoinBlock> bitcoinBlocksRDD = sc.hadoopRDD(hadoopConf, BitcoinBlockFileInputFormat.class, BytesWritable.class, BitcoinBlock.class, 2);
     // extract the no transactions / block (map)
     JavaPairRDD<String, Long> noOfTransactionPair = bitcoinBlocksRDD.mapToPair(new PairFunction<Tuple2<BytesWritable,BitcoinBlock>, String, Long>() {
 	public Tuple2<String, Long> call(Tuple2<BytesWritable,BitcoinBlock> tupleBlock) {
