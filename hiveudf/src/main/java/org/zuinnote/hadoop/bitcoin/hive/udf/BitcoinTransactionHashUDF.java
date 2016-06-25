@@ -36,7 +36,6 @@ import org.apache.hadoop.hive.serde2.objectinspector.StructField;
 import org.apache.hadoop.hive.serde2.objectinspector.StructObjectInspector;
 
 import org.zuinnote.hadoop.bitcoin.format.*;
-import org.zuinnote.hadoop.bitcoin.hive.serde.struct.*;
 
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
@@ -44,6 +43,8 @@ import org.apache.commons.logging.Log;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
+import java.util.List;
+import java.util.ArrayList;
 
 /*
 * Generic UDF to calculate the hash value of a transaction. It can be used to create a graph of transactions (cf. https://en.bitcoin.it/wiki/Transaction#general_format_.28inside_a_block.29_of_each_input_of_a_transaction_-_Txin)
@@ -92,22 +93,8 @@ public Object evaluate(DeferredObject[] arguments) throws HiveException {
 	if (arguments==null) return null;
 	if (arguments.length!=1) return null;
 	BitcoinTransaction bitcoinTransaction=null;
-	if (arguments[0].get() instanceof BitcoinTransactionStruct) { // this happens if the table is in the original file format
-		BitcoinTransactionStruct bitcoinTransactionStruct = (BitcoinTransactionStruct)arguments[0].get();
-		// convert to BitcoinTransaction
-		BitcoinTransactionInput[] bitcoinTransactionInputArray = new BitcoinTransactionInput[bitcoinTransactionStruct.listOfInputs.size()];
-		for (int i=0;i<bitcoinTransactionInputArray.length;i++) {
-			BitcoinTransactionInputStruct currentInputStruct = bitcoinTransactionStruct.listOfInputs.get(i);
-			BitcoinTransactionInput currentInput = new BitcoinTransactionInput(currentInputStruct.prevTransactionHash,currentInputStruct.previousTxOutIndex,currentInputStruct.txInScriptLength,currentInputStruct.txInScript,currentInputStruct.seqNo);
-			bitcoinTransactionInputArray[i]=currentInput;
-		}
-		BitcoinTransactionOutput[] bitcoinTransactionOutputArray = new BitcoinTransactionOutput[bitcoinTransactionStruct.listOfOutputs.size()];
-		for (int i=0;i<bitcoinTransactionOutputArray.length;i++) {
-			BitcoinTransactionOutputStruct currentOutputStruct = bitcoinTransactionStruct.listOfOutputs.get(i);
-			BitcoinTransactionOutput currentOutput = new BitcoinTransactionOutput(currentOutputStruct.value,currentOutputStruct.txOutScriptLength,currentOutputStruct.txOutScript);
-			bitcoinTransactionOutputArray[i]=currentOutput;
-		}
-	 bitcoinTransaction = new BitcoinTransaction(bitcoinTransactionStruct.version,bitcoinTransactionStruct.inCounter,bitcoinTransactionInputArray,bitcoinTransactionStruct.outCounter,bitcoinTransactionOutputArray,bitcoinTransactionStruct.lockTime);
+	if (arguments[0].get() instanceof BitcoinTransaction) { // this happens if the table is in the original file format
+		 bitcoinTransaction = (BitcoinTransaction)arguments[0].get();
 	} else { // this happens if the table has been imported into a more optimized analytics format, such as ORC. However, usually we expect that the first case will be used mostly (the hash is generated during extraction from the input format)
 		// check if all bitcointransaction fields are available <struct<version:int,incounter:binary,outcounter:binary,listofinputs:array<struct<prevtransactionhash:binary,previoustxoutindex:bigint,txinscriptlength:binary,txinscript:binary,seqno:bigint>>,listofoutputs:array<struct<value:bigint,txoutscriptlength:binary,txoutscript:binary>>,locktime:int>
 		Object originalObject=arguments[0].get();
@@ -129,7 +116,7 @@ public Object evaluate(DeferredObject[] arguments) throws HiveException {
 		ListObjectInspector loiInputs=(ListObjectInspector)listofinputsSF.getFieldObjectInspector();
 		int loiInputsLength=loiInputs.getListLength(listofinputsObject);
 		StructObjectInspector listofinputsElementObjectInspector = (StructObjectInspector)loiInputs.getListElementObjectInspector();
-		BitcoinTransactionInput[] listOfInputsArray = new BitcoinTransactionInput[loiInputsLength];
+		List<BitcoinTransactionInput> listOfInputsArray = new ArrayList<BitcoinTransactionInput>(loiInputsLength);
 		for (int i=0;i<loiInputsLength;i++) {
 			Object currentlistofinputsObject = loiInputs.getListElement(listofinputsObject,i);
 			StructField prevtransactionhashSF = listofinputsElementObjectInspector.getStructFieldRef("prevtransactionhash");
@@ -147,14 +134,14 @@ public Object evaluate(DeferredObject[] arguments) throws HiveException {
 			byte[] currentTxInScript= wboi.getPrimitiveJavaObject(listofinputsElementObjectInspector.getStructFieldData(currentlistofinputsObject,txinscriptSF));
 			long currentSeqNo = wloi.get(listofinputsElementObjectInspector.getStructFieldData(currentlistofinputsObject,seqnoSF));
 			BitcoinTransactionInput currentBitcoinTransactionInput = new BitcoinTransactionInput(currentPrevTransactionHash,currentPreviousTxOutIndex,currentTxInScriptLength,currentTxInScript,currentSeqNo);
-			listOfInputsArray[i]=currentBitcoinTransactionInput;
+			listOfInputsArray.add(currentBitcoinTransactionInput);
 			
 		}
 		Object listofoutputsObject = soi.getStructFieldData(originalObject,listofoutputsSF);
 		ListObjectInspector loiOutputs=(ListObjectInspector)listofoutputsSF.getFieldObjectInspector();
 		StructObjectInspector listofoutputsElementObjectInspector = (StructObjectInspector)loiOutputs.getListElementObjectInspector();
 		int loiOutputsLength=loiInputs.getListLength(listofinputsObject);
-		BitcoinTransactionOutput[] listOfOutputsArray = new BitcoinTransactionOutput[loiOutputsLength];
+		List<BitcoinTransactionOutput> listOfOutputsArray = new ArrayList<BitcoinTransactionOutput>(loiOutputsLength);
 		for (int i=0;i<loiOutputsLength;i++) {
 			Object currentlistofoutputsObject = loiOutputs.getListElement(listofoutputsObject,i);
 			StructField valueSF = listofoutputsElementObjectInspector.getStructFieldRef("value");
@@ -168,7 +155,7 @@ public Object evaluate(DeferredObject[] arguments) throws HiveException {
 			byte[] currentTxOutScriptLength=wboi.getPrimitiveJavaObject(listofoutputsElementObjectInspector.getStructFieldData(currentlistofoutputsObject,txoutscriptlengthSF));
 			byte[] currentTxOutScript=wboi.getPrimitiveJavaObject(listofoutputsElementObjectInspector.getStructFieldData(currentlistofoutputsObject,txoutscriptSF));
 			BitcoinTransactionOutput currentBitcoinTransactionOutput = new BitcoinTransactionOutput(currentValue,currentTxOutScriptLength,currentTxOutScript);
-			listOfOutputsArray[i]=currentBitcoinTransactionOutput;
+			listOfOutputsArray.add(currentBitcoinTransactionOutput);
 		}
 		bitcoinTransaction = new BitcoinTransaction(version,inCounter,listOfInputsArray,outCounter,listOfOutputsArray,locktime);
 
