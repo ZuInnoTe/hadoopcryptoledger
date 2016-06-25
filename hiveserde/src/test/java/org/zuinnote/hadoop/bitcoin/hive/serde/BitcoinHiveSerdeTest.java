@@ -34,7 +34,6 @@ import org.zuinnote.hadoop.bitcoin.format.BitcoinBlockReader;
 import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
 
 
-import org.zuinnote.hadoop.bitcoin.hive.serde.struct.BitcoinBlockStruct;
 
 public class BitcoinHiveSerdeTest {
 private static final int DEFAULT_BUFFERSIZE=64*1024;
@@ -68,14 +67,14 @@ private static final byte[][] DEFAULT_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB4
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
 	// deserialize it
 		Object deserializedObject = testSerde.deserialize(theBitcoinBlock);
-		assertTrue("Deserialized Object is of type BitcoinBlockStruct", deserializedObject instanceof BitcoinBlockStruct);
-		BitcoinBlockStruct deserializedBitcoinBlockStruct = (BitcoinBlockStruct)deserializedObject;
+		assertTrue("Deserialized Object is of type BitcoinBlock", deserializedObject instanceof BitcoinBlock);
+		BitcoinBlock deserializedBitcoinBlockStruct = (BitcoinBlock)deserializedObject;
 	// verify certain attributes
-		assertEquals("Genesis Block must contain exactly one transaction", 1, deserializedBitcoinBlockStruct.transactions.size());
-		assertEquals("Genesis Block must contain exactly one transaction with one input", 1, deserializedBitcoinBlockStruct.transactions.get(0).listOfInputs.size());
-		assertEquals("Genesis Block must contain exactly one transaction with one input and script length 77", 77, deserializedBitcoinBlockStruct.transactions.get(0).listOfInputs.get(0).txInScript.length);
-		assertEquals("Genesis Block must contain exactly one transaction with one output", 1, deserializedBitcoinBlockStruct.transactions.get(0).listOfOutputs.size());
-		assertEquals("Genesis Block must contain exactly one transaction with one output and script length 67", 67, deserializedBitcoinBlockStruct.transactions.get(0).listOfOutputs.get(0).txOutScript.length);
+		assertEquals("Genesis Block must contain exactly one transaction", 1, deserializedBitcoinBlockStruct.getTransactions().size());
+		assertEquals("Genesis Block must contain exactly one transaction with one input", 1, deserializedBitcoinBlockStruct.getTransactions().get(0).getListOfInputs().size());
+		assertEquals("Genesis Block must contain exactly one transaction with one input and script length 77", 77, deserializedBitcoinBlockStruct.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
+		assertEquals("Genesis Block must contain exactly one transaction with one output", 1, deserializedBitcoinBlockStruct.getTransactions().get(0).getListOfOutputs().size());
+		assertEquals("Genesis Block must contain exactly one transaction with one output and script length 67", 67, deserializedBitcoinBlockStruct.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
 	} finally {
 		if (bbr!=null) 
 			bbr.close();

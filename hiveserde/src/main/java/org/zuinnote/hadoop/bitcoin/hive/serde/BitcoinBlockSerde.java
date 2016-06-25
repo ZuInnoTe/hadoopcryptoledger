@@ -41,7 +41,6 @@ import org.apache.hadoop.hive.ql.exec.vector.VectorizedRowBatch;
 
    
 import org.zuinnote.hadoop.bitcoin.format.*;
-import org.zuinnote.hadoop.bitcoin.hive.serde.struct.*;
 
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
@@ -69,52 +68,7 @@ private ObjectInspector bitcoinBlockObjectInspector;
 /** Deserializer **/
 
 public Object deserialize(Writable blob) {
-	if (blob instanceof BitcoinBlock) {
-		// put into Hive Structs to enable reuse of reflection object inspector
-		BitcoinBlock theBlock = (BitcoinBlock) blob;
-		BitcoinBlockStruct result = new BitcoinBlockStruct();
-		result.magicNo=theBlock.getMagicNo();
-		result.blockSize=theBlock.getBlockSize();
-		result.version=theBlock.getVersion();
-		result.time=theBlock.getTime();
-		result.bits=theBlock.getBits();
-		result.nonce=theBlock.getNonce();
-		result.transactionCounter=theBlock.getTransactionCounter();
-		result.hashPrevBlock=theBlock.getHashPrevBlock();
-		result.hashMerkleRoot=theBlock.getHashMerkleRoot();
-		ArrayList<BitcoinTransactionStruct> resultTransactionStruct=new ArrayList<BitcoinTransactionStruct>();
-		for (int i=0;i<theBlock.getTransactions().length;i++) {
-			BitcoinTransactionStruct currentTransaction=new BitcoinTransactionStruct();
-			currentTransaction.version=theBlock.getTransactions()[i].getVersion();
-			currentTransaction.inCounter=theBlock.getTransactions()[i].getInCounter();
-			currentTransaction.outCounter=theBlock.getTransactions()[i].getOutCounter();
-			ArrayList<BitcoinTransactionInputStruct> currentTransactionInputList=new ArrayList<BitcoinTransactionInputStruct>();
-			for (int j=0;j<theBlock.getTransactions()[i].getListOfInputs().length;j++) {
-				BitcoinTransactionInputStruct currentTransactionInput=new BitcoinTransactionInputStruct();
-				currentTransactionInput.prevTransactionHash=theBlock.getTransactions()[i].getListOfInputs()[j].getPrevTransactionHash();
-				currentTransactionInput.previousTxOutIndex=theBlock.getTransactions()[i].getListOfInputs()[j].getPreviousTxOutIndex();
-				currentTransactionInput.txInScriptLength=theBlock.getTransactions()[i].getListOfInputs()[j].getTxInScriptLength();
-				currentTransactionInput.txInScript=theBlock.getTransactions()[i].getListOfInputs()[j].getTxInScript();
-				currentTransactionInput.seqNo=theBlock.getTransactions()[i].getListOfInputs()[j].getSeqNo();
-				currentTransactionInputList.add(currentTransactionInput);
-			}
-			currentTransaction.listOfInputs=currentTransactionInputList;
-			ArrayList<BitcoinTransactionOutputStruct> currentTransactionOutputList=new ArrayList<BitcoinTransactionOutputStruct>();
-			for (int j=0;j<theBlock.getTransactions()[i].getListOfOutputs().length;j++) {
-				BitcoinTransactionOutputStruct currentTransactionOutput=new BitcoinTransactionOutputStruct();
-				currentTransactionOutput.value=theBlock.getTransactions()[i].getListOfOutputs()[j].getValue();
-				currentTransactionOutput.txOutScriptLength=theBlock.getTransactions()[i].getListOfOutputs()[j].getTxOutScriptLength();
-				currentTransactionOutput.txOutScript=theBlock.getTransactions()[i].getListOfOutputs()[j].getTxOutScript();
-				currentTransactionOutputList.add(currentTransactionOutput);
-			}
-			currentTransaction.listOfOutputs=currentTransactionOutputList;
-			currentTransaction.lockTime=theBlock.getTransactions()[i].getLockTime();
-			resultTransactionStruct.add(currentTransaction);
-		}
-		result.transactions=resultTransactionStruct;
-		return result;
-	} // cannot handle data that is not a BitcoinBlock
-	return null;
+		return blob;
 }
 
 public ObjectInspector getObjectInspector() {
@@ -134,7 +88,7 @@ public void initialize(Configuration conf, Properties tbl) {
 
    // get objectinspector with introspection for class BitcoinBlockStruct to reuse functionality
     bitcoinBlockObjectInspector = ObjectInspectorFactory
-        .getReflectionObjectInspector(BitcoinBlockStruct.class,
+        .getReflectionObjectInspector(BitcoinBlock.class,
         ObjectInspectorFactory.ObjectInspectorOptions.JAVA);
 
 }
