@@ -54,7 +54,7 @@ public class SparkBitcoinBlockCounter  {
     // extract the no transactions / block (map)
     JavaPairRDD<String, Long> noOfTransactionPair = bitcoinBlocksRDD.mapToPair(new PairFunction<Tuple2<BytesWritable,BitcoinBlock>, String, Long>() {
 	public Tuple2<String, Long> call(Tuple2<BytesWritable,BitcoinBlock> tupleBlock) {
-		return new Tuple2<String, Long>("No of transactions: ",new Long(tupleBlock._2().getTransactions().length)); 
+		return new Tuple2<String, Long>("No of transactions: ",new Long(tupleBlock._2().getTransactions().size())); 
 	}
     });
    // combine the results from all blocks

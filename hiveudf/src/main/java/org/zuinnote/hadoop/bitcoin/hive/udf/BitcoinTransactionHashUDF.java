@@ -56,7 +56,7 @@ import java.util.ArrayList;
 	name = "hclBitcoinTransactionHash",
 	value = "_FUNC_(Struct<BitcoinTransaction>) - calculates the hash of a BitcoinTransaction and returns it as byte array",
 	extended = "Example:\n" +
-	"  > SELECT hclBitcoinTransctionHash(transactions[0]) FROM BitcoinBlockChain LIMIT 1;\n")
+	"  > SELECT hclBitcoinTransactionHash(transactions[0]) FROM BitcoinBlockChain LIMIT 1;\n")
 public class BitcoinTransactionHashUDF extends GenericUDF {
 
 
