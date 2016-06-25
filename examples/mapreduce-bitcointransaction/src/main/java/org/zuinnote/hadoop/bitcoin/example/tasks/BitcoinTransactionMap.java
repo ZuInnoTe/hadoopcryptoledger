@@ -36,7 +36,7 @@ import java.util.*;
 	    private final static Text defaultKey = new Text("Transaction Input Count:");
 	    public void map(BytesWritable key, BitcoinTransaction value, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
 	    	// get the number of inputs to transaction
-	    	 output.collect(defaultKey, new IntWritable(value.getListOfInputs().length));
+	    	 output.collect(defaultKey, new IntWritable(value.getListOfInputs().size()));
 	    	 }
 	    
 	    }
