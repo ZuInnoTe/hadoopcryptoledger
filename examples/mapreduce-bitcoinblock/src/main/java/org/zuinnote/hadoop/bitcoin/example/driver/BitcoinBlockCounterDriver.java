@@ -56,7 +56,7 @@ public class BitcoinBlockCounterDriver  {
     conf.setOutputFormat(TextOutputFormat.class);
     /** Set as an example some of the options to configure the Bitcoin fileformat **/
      /** Find here all configuration options: https://github.com/ZuInnoTe/hadoopcryptoledger/wiki/Hadoop-File-Format **/
-    conf.set("hadoopcryptoledger.bitcoinblockinputformat.filter.magic","F9BEB4D8");
+    conf.set("hadoopcryptoledger.bitcoinblockinputformat.filter.magic","F9BEB4D9");
     FileInputFormat.addInputPath(conf, new Path(args[0]));
     FileOutputFormat.setOutputPath(conf, new Path(args[1]));
         
