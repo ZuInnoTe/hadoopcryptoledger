@@ -23,6 +23,9 @@ import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
 import java.io.IOException;
 import java.io.InputStream;
 
+
+import java.security.NoSuchAlgorithmException;
+
 import org.apache.hadoop.io.BytesWritable; 
 
 
@@ -90,22 +93,16 @@ public boolean next(BytesWritable key, BitcoinTransaction value) throws IOExcept
 		}
 
 		if (currentBitcoinBlock==null) return false;
-
-		byte[] hashMerkleRoot=currentBitcoinBlock.getHashMerkleRoot();
-		byte[] hashPrevBlock=currentBitcoinBlock.getHashPrevBlock();
-		byte[] transactionCounter=BitcoinUtil.convertIntToByteArray(currentTransactionCounterInBlock);
-		byte[] newKey=new byte[hashMerkleRoot.length+hashPrevBlock.length+transactionCounter.length];
-		for (int i=0;i<hashMerkleRoot.length;i++) {
-			newKey[i]=hashMerkleRoot[i];
-		}
-		for (int j=0;j<hashPrevBlock.length;j++) {
-			newKey[j+hashMerkleRoot.length]=hashPrevBlock[j];
-		}
-		for (int k=0;k<transactionCounter.length;k++) {
-			newKey[k+hashMerkleRoot.length+hashPrevBlock.length]=transactionCounter[k];
+		BitcoinTransaction currentTransaction=currentBitcoinBlock.getTransactions().get(currentTransactionCounterInBlock);
+		// the unique identifier that is linked in other transaction is usually its hash
+		byte[] newKey = new byte[0];
+		try {
+			newKey=BitcoinUtil.getTransactionHash(currentTransaction);
+		} catch (NoSuchAlgorithmException nsae) {
+			LOG.error("Cannot calculate transaction hash. Algorithm not available. Exception: "+nsae.toString());
 		}
 		key.set(newKey,0,newKey.length);
-		value.set(currentBitcoinBlock.getTransactions().get(currentTransactionCounterInBlock));
+		value.set(currentTransaction);
 		currentTransactionCounterInBlock++;
 		return true;
 	}
