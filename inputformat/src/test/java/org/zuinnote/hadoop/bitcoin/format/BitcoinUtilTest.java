@@ -22,6 +22,8 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertArrayEquals;
 import org.junit.Test;
 
+import java.util.List;
+import java.util.ArrayList;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -212,10 +214,10 @@ public class BitcoinUtilTest {
 	byte[] txOutScriptLength=new byte[]{(byte)0x43};
 	byte[] txOutScript=new byte[]{(byte)0x41,(byte)0x04,(byte)0x67,(byte)0x8A,(byte)0xFD,(byte)0xB0,(byte)0xFE,(byte)0x55,(byte)0x48,(byte)0x27,(byte)0x19,(byte)0x67,(byte)0xF1,(byte)0xA6,(byte)0x71,(byte)0x30,(byte)0xB7,(byte)0x10,(byte)0x5C,(byte)0xD6,(byte)0xA8,(byte)0x28,(byte)0xE0,(byte)0x39,(byte)0x09,(byte)0xA6,(byte)0x79,(byte)0x62,(byte)0xE0,(byte)0xEA,(byte)0x1F,(byte)0x61,(byte)0xDE,(byte)0xB6,(byte)0x49,(byte)0xF6,(byte)0xBC,(byte)0x3F,(byte)0x4C,(byte)0xEF,(byte)0x38,(byte)0xC4,(byte)0xF3,(byte)0x55,(byte)0x04,(byte)0xE5,(byte)0x1E,(byte)0xC1,(byte)0x12,(byte)0xDE,(byte)0x5C,(byte)0x38,(byte)0x4D,(byte)0xF7,(byte)0xBA,(byte)0x0B,(byte)0x8D,(byte)0x57,(byte)0x8A,(byte)0x4C,(byte)0x70,(byte)0x2B,(byte)0x6B,(byte)0xF1,(byte)0x1D,(byte)0x5F,(byte)0xAC};
 	int lockTime = 0;
-	BitcoinTransactionInput genesisInput[] = new BitcoinTransactionInput[1];
-	genesisInput[0]=new BitcoinTransactionInput(previousTransactionHash,previousTxOutIndex,txInScriptLength,txInScript,seqNo);
-	BitcoinTransactionOutput genesisOutput[] = new BitcoinTransactionOutput[1];
-	genesisOutput[0] = new BitcoinTransactionOutput(value,txOutScriptLength,txOutScript);
+	List<BitcoinTransactionInput> genesisInput = new ArrayList<BitcoinTransactionInput>(1);
+	genesisInput.add(new BitcoinTransactionInput(previousTransactionHash,previousTxOutIndex,txInScriptLength,txInScript,seqNo));
+	List<BitcoinTransactionOutput> genesisOutput = new ArrayList<BitcoinTransactionOutput>(1);
+	genesisOutput.add(new BitcoinTransactionOutput(value,txOutScriptLength,txOutScript));
 	 BitcoinTransaction genesisTransaction = new BitcoinTransaction(version,inCounter,genesisInput,outCounter,genesisOutput,lockTime);
 	byte[] genesisTransactionHash=BitcoinUtil.getTransactionHash(genesisTransaction);
 	 byte[] expectedHash = new byte[]{(byte)0x4A,(byte)0x5E,(byte)0x1E,(byte)0x4B,(byte)0xAA,(byte)0xB8,(byte)0x9F,(byte)0x3A,(byte)0x32,(byte)0x51,(byte)0x8A,(byte)0x88,(byte)0xC3,(byte)0x1B,(byte)0xC8,(byte)0x7F,(byte)0x61,(byte)0x8F,(byte)0x76,(byte)0x67,(byte)0x3E,(byte)0x2C,(byte)0xC7,(byte)0x7A,(byte)0xB2,(byte)0x12,(byte)0x7B,(byte)0x7A,(byte)0xFD,(byte)0xED,(byte)0xA3,(byte)0x3B};

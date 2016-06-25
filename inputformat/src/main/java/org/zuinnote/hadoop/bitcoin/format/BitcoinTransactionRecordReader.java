@@ -79,7 +79,7 @@ public BitcoinTransaction createValue() {
 public boolean next(BytesWritable key, BitcoinTransaction value) throws IOException {
 	// read all the blocks, if necessary a block overlapping a split
 	while(getFilePosition()<=getEnd()) { // did we already went beyond the split (remote) or do we have no further data left?
-		if ((currentBitcoinBlock==null) || (currentBitcoinBlock.getTransactions().length==currentTransactionCounterInBlock)){
+		if ((currentBitcoinBlock==null) || (currentBitcoinBlock.getTransactions().size()==currentTransactionCounterInBlock)){
 			try {
 				currentBitcoinBlock=getBbr().readBlock();
 				currentTransactionCounterInBlock=0;
@@ -105,7 +105,7 @@ public boolean next(BytesWritable key, BitcoinTransaction value) throws IOExcept
 			newKey[k+hashMerkleRoot.length+hashPrevBlock.length]=transactionCounter[k];
 		}
 		key.set(newKey,0,newKey.length);
-		value.set(currentBitcoinBlock.getTransactions()[currentTransactionCounterInBlock]);
+		value.set(currentBitcoinBlock.getTransactions().get(currentTransactionCounterInBlock));
 		currentTransactionCounterInBlock++;
 		return true;
 	}

@@ -25,6 +25,7 @@ import java.io.BufferedInputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
+import java.util.List;
 import java.util.ArrayList;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
@@ -181,8 +182,8 @@ public BitcoinBlock readBlock() throws BitcoinBlockReadException,IOException {
 		
 	long currentTransactionCounter=BitcoinUtil.convertVarIntByteBufferToLong(rawByteBuffer);
 	// parse transactions 
-	BitcoinTransaction[] allBlockTransactions=parseTransactions(rawByteBuffer,currentTransactionCounter);
-	if (allBlockTransactions.length!=currentTransactionCounter) throw new BitcoinBlockReadException("Error: Number of Transactions ("+allBlockTransactions.length+") does not correspond to transaction counter in block ("+currentTransactionCounter+")");
+	List<BitcoinTransaction> allBlockTransactions=parseTransactions(rawByteBuffer,currentTransactionCounter);
+	if (allBlockTransactions.size()!=currentTransactionCounter) throw new BitcoinBlockReadException("Error: Number of Transactions ("+allBlockTransactions.size()+") does not correspond to transaction counter in block ("+currentTransactionCounter+")");
 	BitcoinBlock result=new BitcoinBlock(currentMagicNo,currentBlockSize,currentVersion,currentTime,currentBits,currentNonce,currentTransactionCounter,currentHashPrevBlock,currentHashMerkleRoot,allBlockTransactions);
 	return result;
 }
@@ -198,8 +199,8 @@ public BitcoinBlock readBlock() throws BitcoinBlockReadException,IOException {
 *
 */
 
-public BitcoinTransaction[] parseTransactions(ByteBuffer rawByteBuffer,long noOfTransactions) {
-	ArrayList<BitcoinTransaction> resultTransactions = new ArrayList<BitcoinTransaction>();
+public List<BitcoinTransaction> parseTransactions(ByteBuffer rawByteBuffer,long noOfTransactions) {
+	ArrayList<BitcoinTransaction> resultTransactions = new ArrayList<BitcoinTransaction>(new Long(noOfTransactions).intValue());
 	// read all transactions from ByteBuffer
 	for (int k=0;k<noOfTransactions;k++) {
 		// read version
@@ -208,7 +209,7 @@ public BitcoinTransaction[] parseTransactions(ByteBuffer rawByteBuffer,long noOf
 		byte[] currentInCounterVarInt=BitcoinUtil.convertVarIntByteBufferToByteArray(rawByteBuffer);
 		long currentNoOfInputs=BitcoinUtil.getVarInt(currentInCounterVarInt);
 		// read inputs
-		ArrayList<BitcoinTransactionInput> currentTransactionInput = new ArrayList<BitcoinTransactionInput>();
+		ArrayList<BitcoinTransactionInput> currentTransactionInput = new ArrayList<BitcoinTransactionInput>(new Long(currentNoOfInputs).intValue());
 		
 		for (int i=0;i<currentNoOfInputs;i++) {
 			// read previous Hash of Transaction
@@ -232,7 +233,7 @@ public BitcoinTransaction[] parseTransactions(ByteBuffer rawByteBuffer,long noOf
 		byte[] currentOutCounterVarInt=BitcoinUtil.convertVarIntByteBufferToByteArray(rawByteBuffer);
 		long currentNoOfOutput=BitcoinUtil.getVarInt(currentOutCounterVarInt);
 		// read outputs
-		ArrayList<BitcoinTransactionOutput> currentTransactionOutput = new ArrayList<BitcoinTransactionOutput>();
+		ArrayList<BitcoinTransactionOutput> currentTransactionOutput = new ArrayList<BitcoinTransactionOutput>(new Long(currentNoOfOutput).intValue());
 		for (int i=0;i<currentNoOfOutput;i++) {
 			// read value
 			long currentTransactionOutputValue = rawByteBuffer.getLong();
@@ -247,19 +248,10 @@ public BitcoinTransaction[] parseTransactions(ByteBuffer rawByteBuffer,long noOf
 		}
 		// lock_time
 		int currentTransactionLockTime = rawByteBuffer.getInt();
-		// create Transaction
-			// Inputs as array
-			BitcoinTransactionInput[] listOfInputs = new BitcoinTransactionInput[currentTransactionInput.size()];
-			listOfInputs=currentTransactionInput.toArray(listOfInputs);
-			// Outputs as array
-			BitcoinTransactionOutput[] listOfOutputs = new BitcoinTransactionOutput[currentTransactionOutput.size()];
-			listOfOutputs=currentTransactionOutput.toArray(listOfOutputs);
 		// add transaction
-		resultTransactions.add(new BitcoinTransaction(currentVersion,currentInCounterVarInt,listOfInputs,currentOutCounterVarInt,listOfOutputs,currentTransactionLockTime));
+		resultTransactions.add(new BitcoinTransaction(currentVersion,currentInCounterVarInt,currentTransactionInput,currentOutCounterVarInt,currentTransactionOutput,currentTransactionLockTime));
 	}
-	BitcoinTransaction[] result = new BitcoinTransaction[resultTransactions.size()];
-	result=resultTransactions.toArray(result);
-	return result;
+	return resultTransactions;
 }
 
 /*

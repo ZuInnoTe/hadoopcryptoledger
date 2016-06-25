@@ -513,11 +513,11 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
-		assertEquals("Genesis Block must contain exactly one transaction", 1, theBitcoinBlock.getTransactions().length);
-		assertEquals("Genesis Block must contain exactly one transaction with one input", 1, theBitcoinBlock.getTransactions()[0].getListOfInputs().length);
-		assertEquals("Genesis Block must contain exactly one transaction with one input and script length 77", 77, theBitcoinBlock.getTransactions()[0].getListOfInputs()[0].getTxInScript().length);
-		assertEquals("Genesis Block must contain exactly one transaction with one output", 1, theBitcoinBlock.getTransactions()[0].getListOfOutputs().length);
-		assertEquals("Genesis Block must contain exactly one transaction with one output and script length 67", 67, theBitcoinBlock.getTransactions()[0].getListOfOutputs()[0].getTxOutScript().length);
+		assertEquals("Genesis Block must contain exactly one transaction", 1, theBitcoinBlock.getTransactions().size());
+		assertEquals("Genesis Block must contain exactly one transaction with one input", 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
+		assertEquals("Genesis Block must contain exactly one transaction with one input and script length 77", 77, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
+		assertEquals("Genesis Block must contain exactly one transaction with one output", 1, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
+		assertEquals("Genesis Block must contain exactly one transaction with one output and script length 67", 67, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
 	} finally {
 		if (bbr!=null) 
 			bbr.close();
@@ -537,11 +537,11 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.TESTNET3_MAGIC,direct);
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
-		assertEquals("TestNet3 Genesis Block must contain exactly one transaction", 1, theBitcoinBlock.getTransactions().length);
-		assertEquals("TestNet3 Genesis Block must contain exactly one transaction with one input", 1, theBitcoinBlock.getTransactions()[0].getListOfInputs().length);
-		assertEquals("TestNet3 Genesis Block must contain exactly one transaction with one input and script length 77", 77, theBitcoinBlock.getTransactions()[0].getListOfInputs()[0].getTxInScript().length);
-		assertEquals("TestNet3 Genesis Block must contain exactly one transaction with one output", 1, theBitcoinBlock.getTransactions()[0].getListOfOutputs().length);
-		assertEquals("TestNet3 Genesis Block must contain exactly one transaction with one output and script length 67", 67, theBitcoinBlock.getTransactions()[0].getListOfOutputs()[0].getTxOutScript().length);
+		assertEquals("TestNet3 Genesis Block must contain exactly one transaction", 1, theBitcoinBlock.getTransactions().size());
+		assertEquals("TestNet3 Genesis Block must contain exactly one transaction with one input", 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
+		assertEquals("TestNet3 Genesis Block must contain exactly one transaction with one input and script length 77", 77, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
+		assertEquals("TestNet3 Genesis Block must contain exactly one transaction with one output", 1, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
+		assertEquals("TestNet3 Genesis Block must contain exactly one transaction with one output and script length 67", 67, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
 	} finally {
 		if (bbr!=null) 
 			bbr.close();
@@ -560,11 +560,11 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
-		assertEquals("Random Version 1 Block must contain exactly two transactions", 2, theBitcoinBlock.getTransactions().length);
-		assertEquals("Random Version 1 Block must contain exactly two transactions of which the first has one input", 1, theBitcoinBlock.getTransactions()[0].getListOfInputs().length);
-		assertEquals("Random Version 1 Block must contain exactly two transactions of which the first has one input and script length 8", 8, theBitcoinBlock.getTransactions()[0].getListOfInputs()[0].getTxInScript().length);
-		assertEquals("Random Version 1 Block must contain exactly two transactions of which the first has one output", 1, theBitcoinBlock.getTransactions()[0].getListOfOutputs().length);
-		assertEquals("Random Version 1 Block must contain exactly two transactions of which the first has one output and script length 67", 67, theBitcoinBlock.getTransactions()[0].getListOfOutputs()[0].getTxOutScript().length);
+		assertEquals("Random Version 1 Block must contain exactly two transactions", 2, theBitcoinBlock.getTransactions().size());
+		assertEquals("Random Version 1 Block must contain exactly two transactions of which the first has one input", 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
+		assertEquals("Random Version 1 Block must contain exactly two transactions of which the first has one input and script length 8", 8, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
+		assertEquals("Random Version 1 Block must contain exactly two transactions of which the first has one output", 1, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
+		assertEquals("Random Version 1 Block must contain exactly two transactions of which the first has one output and script length 67", 67, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
 	} finally {
 		if (bbr!=null) 
 			bbr.close();
@@ -583,11 +583,11 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
-		assertEquals("Random Version 2 Block must contain exactly 343 transactions", 343, theBitcoinBlock.getTransactions().length);
-		assertEquals("Random Version 2 Block must contain exactly 343 transactions of which the first has one input", 1, theBitcoinBlock.getTransactions()[0].getListOfInputs().length);
-		assertEquals("Random Version 2 Block must contain exactly 343 transactions of which the first has one input and script length 40", 40, theBitcoinBlock.getTransactions()[0].getListOfInputs()[0].getTxInScript().length);
-		assertEquals("Random Version 2 Block must contain exactly 343 transactions of which the first has one output", 1, theBitcoinBlock.getTransactions()[0].getListOfOutputs().length);
-		assertEquals("Random Version 2 Block must contain exactly 343 transactions of which the first has one output and script length 25", 25, theBitcoinBlock.getTransactions()[0].getListOfOutputs()[0].getTxOutScript().length);
+		assertEquals("Random Version 2 Block must contain exactly 343 transactions", 343, theBitcoinBlock.getTransactions().size());
+		assertEquals("Random Version 2 Block must contain exactly 343 transactions of which the first has one input", 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
+		assertEquals("Random Version 2 Block must contain exactly 343 transactions of which the first has one input and script length 40", 40, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
+		assertEquals("Random Version 2 Block must contain exactly 343 transactions of which the first has one output", 1, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
+		assertEquals("Random Version 2 Block must contain exactly 343 transactions of which the first has one output and script length 25", 25, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
 	} finally {
 		if (bbr!=null) 
 			bbr.close();
@@ -606,11 +606,11 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
-		assertEquals("Random Version 3 Block must contain exactly 1645 transactions", 1645, theBitcoinBlock.getTransactions().length);
-		assertEquals("Random Version 3 Block must contain exactly 1645 transactions of which the first has one input", 1, theBitcoinBlock.getTransactions()[0].getListOfInputs().length);
-		assertEquals("Random Version 3 Block must contain exactly 1645 transactions of which the first has one input and script length 49", 49, theBitcoinBlock.getTransactions()[0].getListOfInputs()[0].getTxInScript().length);
-		assertEquals("Random Version 3 Block must contain exactly 1645 transactions of which the first has two outputs", 2, theBitcoinBlock.getTransactions()[0].getListOfOutputs().length);
-		assertEquals("Random Version 3 Block must contain exactly 1645 transactions of which the first has two output and the first output script length 25", 25, theBitcoinBlock.getTransactions()[0].getListOfOutputs()[0].getTxOutScript().length);
+		assertEquals("Random Version 3 Block must contain exactly 1645 transactions", 1645, theBitcoinBlock.getTransactions().size());
+		assertEquals("Random Version 3 Block must contain exactly 1645 transactions of which the first has one input", 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
+		assertEquals("Random Version 3 Block must contain exactly 1645 transactions of which the first has one input and script length 49", 49, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
+		assertEquals("Random Version 3 Block must contain exactly 1645 transactions of which the first has two outputs", 2, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
+		assertEquals("Random Version 3 Block must contain exactly 1645 transactions of which the first has two output and the first output script length 25", 25, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
 	} finally {
 		if (bbr!=null) 
 			bbr.close();
@@ -629,11 +629,11 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
-		assertEquals("Random Version 4 Block must contain exactly 936 transactions", 936, theBitcoinBlock.getTransactions().length);
-		assertEquals("Random Version 4 Block must contain exactly 936 transactions of which the first has one input", 1, theBitcoinBlock.getTransactions()[0].getListOfInputs().length);
-		assertEquals("Random Version 4 Block must contain exactly 936 transactions of which the first has one input and script length 4", 4, theBitcoinBlock.getTransactions()[0].getListOfInputs()[0].getTxInScript().length);
-		assertEquals("Random Version 4 Block must contain exactly 936 transactions of which the first has two outputs", 2, theBitcoinBlock.getTransactions()[0].getListOfOutputs().length);
-		assertEquals("Random Version 4 Block must contain exactly 936 transactions of which the first has two output and the first output script length 25", 25, theBitcoinBlock.getTransactions()[0].getListOfOutputs()[0].getTxOutScript().length);
+		assertEquals("Random Version 4 Block must contain exactly 936 transactions", 936, theBitcoinBlock.getTransactions().size());
+		assertEquals("Random Version 4 Block must contain exactly 936 transactions of which the first has one input", 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
+		assertEquals("Random Version 4 Block must contain exactly 936 transactions of which the first has one input and script length 4", 4, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
+		assertEquals("Random Version 4 Block must contain exactly 936 transactions of which the first has two outputs", 2, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
+		assertEquals("Random Version 4 Block must contain exactly 936 transactions of which the first has two output and the first output script length 25", 25, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
 	} finally {
 		if (bbr!=null) 
 			bbr.close();
@@ -652,11 +652,11 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.TESTNET3_MAGIC,direct);
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
-		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions", 3299, theBitcoinBlock.getTransactions().length);
-		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one input", 1, theBitcoinBlock.getTransactions()[0].getListOfInputs().length);
-		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one input and script length 35", 35, theBitcoinBlock.getTransactions()[0].getListOfInputs()[0].getTxInScript().length);
-		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one outputs", 1, theBitcoinBlock.getTransactions()[0].getListOfOutputs().length);
-		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one output and the first output script length 25", 25, theBitcoinBlock.getTransactions()[0].getListOfOutputs()[0].getTxOutScript().length);
+		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions", 3299, theBitcoinBlock.getTransactions().size());
+		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one input", 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
+		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one input and script length 35", 35, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
+		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one outputs", 1, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
+		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one output and the first output script length 25", 25, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
 	} finally {
 		if (bbr!=null) 
 			bbr.close();
@@ -675,23 +675,23 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.MULTINET_MAGIC,direct);
 		BitcoinBlock firstBitcoinBlock = bbr.readBlock();
-		assertEquals("First MultiNet Block must contain exactly one transaction", 1, firstBitcoinBlock.getTransactions().length);
-		assertEquals("First MultiNet Block must contain exactly one transaction with one input", 1, firstBitcoinBlock.getTransactions()[0].getListOfInputs().length);
-		assertEquals("First MultiNet Block must contain exactly one transaction with one input and script length 77", 77, firstBitcoinBlock.getTransactions()[0].getListOfInputs()[0].getTxInScript().length);
-		assertEquals("First MultiNet Block must contain exactly one transaction with one output", 1, firstBitcoinBlock.getTransactions()[0].getListOfOutputs().length);
-		assertEquals("First MultiNet Block must contain exactly one transaction with one output and script length 67", 67, firstBitcoinBlock.getTransactions()[0].getListOfOutputs()[0].getTxOutScript().length);
+		assertEquals("First MultiNet Block must contain exactly one transaction", 1, firstBitcoinBlock.getTransactions().size());
+		assertEquals("First MultiNet Block must contain exactly one transaction with one input", 1, firstBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
+		assertEquals("First MultiNet Block must contain exactly one transaction with one input and script length 77", 77, firstBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
+		assertEquals("First MultiNet Block must contain exactly one transaction with one output", 1, firstBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
+		assertEquals("First MultiNet Block must contain exactly one transaction with one output and script length 67", 67, firstBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
 		BitcoinBlock secondBitcoinBlock = bbr.readBlock();
-		assertEquals("Second MultiNet Block must contain exactly 343 transactions", 343, secondBitcoinBlock.getTransactions().length);
-		assertEquals("Second MultiNet Block must contain exactly 343 transactions of which the first has one input", 1, secondBitcoinBlock.getTransactions()[0].getListOfInputs().length);
-		assertEquals("Second MultiNet Block must contain exactly 343 transactions of which the first has one input and script length 40", 40, secondBitcoinBlock.getTransactions()[0].getListOfInputs()[0].getTxInScript().length);
-		assertEquals("Second MultiNet Block must contain exactly 343 transactions of which the first has one output", 1, secondBitcoinBlock.getTransactions()[0].getListOfOutputs().length);
-		assertEquals("Second MultiNet Block must contain exactly 343 transactions of which the first has one output and script length 25", 25, secondBitcoinBlock.getTransactions()[0].getListOfOutputs()[0].getTxOutScript().length);
+		assertEquals("Second MultiNet Block must contain exactly 343 transactions", 343, secondBitcoinBlock.getTransactions().size());
+		assertEquals("Second MultiNet Block must contain exactly 343 transactions of which the first has one input", 1, secondBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
+		assertEquals("Second MultiNet Block must contain exactly 343 transactions of which the first has one input and script length 40", 40, secondBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
+		assertEquals("Second MultiNet Block must contain exactly 343 transactions of which the first has one output", 1, secondBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
+		assertEquals("Second MultiNet Block must contain exactly 343 transactions of which the first has one output and script length 25", 25, secondBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
 		BitcoinBlock thirdBitcoinBlock = bbr.readBlock();
-		assertEquals("Third MultiNet Block must contain exactly 3299 transactions", 3299, thirdBitcoinBlock.getTransactions().length);
-		assertEquals("Third MultiNet Block must contain exactly 3299 transactions of which the first has one input", 1, thirdBitcoinBlock.getTransactions()[0].getListOfInputs().length);
-		assertEquals("Third MultiNet Block must contain exactly 3299 transactions of which the first has one input and script length 35", 35, thirdBitcoinBlock.getTransactions()[0].getListOfInputs()[0].getTxInScript().length);
-		assertEquals("Third MultiNet Block must contain exactly 3299 transactions of which the first has one outputs", 1, thirdBitcoinBlock.getTransactions()[0].getListOfOutputs().length);
-		assertEquals("Third MultiNet Block must contain exactly 3299 transactions of which the first has one output and the first output script length 25", 25, thirdBitcoinBlock.getTransactions()[0].getListOfOutputs()[0].getTxOutScript().length);
+		assertEquals("Third MultiNet Block must contain exactly 3299 transactions", 3299, thirdBitcoinBlock.getTransactions().size());
+		assertEquals("Third MultiNet Block must contain exactly 3299 transactions of which the first has one input", 1, thirdBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
+		assertEquals("Third MultiNet Block must contain exactly 3299 transactions of which the first has one input and script length 35", 35, thirdBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
+		assertEquals("Third MultiNet Block must contain exactly 3299 transactions of which the first has one outputs", 1, thirdBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
+		assertEquals("Third MultiNet Block must contain exactly 3299 transactions of which the first has one output and the first output script length 25", 25, thirdBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
 	} finally {
 		if (bbr!=null) 
 			bbr.close();
@@ -710,11 +710,11 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
-		assertEquals("Genesis Block must contain exactly one transaction", 1, theBitcoinBlock.getTransactions().length);
-		assertEquals("Genesis Block must contain exactly one transaction with one input", 1, theBitcoinBlock.getTransactions()[0].getListOfInputs().length);
-		assertEquals("Genesis Block must contain exactly one transaction with one input and script length 77", 77, theBitcoinBlock.getTransactions()[0].getListOfInputs()[0].getTxInScript().length);
-		assertEquals("Genesis Block must contain exactly one transaction with one output", 1, theBitcoinBlock.getTransactions()[0].getListOfOutputs().length);
-		assertEquals("Genesis Block must contain exactly one transaction with one output and script length 67", 67, theBitcoinBlock.getTransactions()[0].getListOfOutputs()[0].getTxOutScript().length);
+		assertEquals("Genesis Block must contain exactly one transaction", 1, theBitcoinBlock.getTransactions().size());
+		assertEquals("Genesis Block must contain exactly one transaction with one input", 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
+		assertEquals("Genesis Block must contain exactly one transaction with one input and script length 77", 77, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
+		assertEquals("Genesis Block must contain exactly one transaction with one output", 1, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
+		assertEquals("Genesis Block must contain exactly one transaction with one output and script length 67", 67, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
 	} finally {
 		if (bbr!=null) 
 			bbr.close();
@@ -734,11 +734,11 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.TESTNET3_MAGIC,direct);
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
-		assertEquals("TestNet3 Genesis Block must contain exactly one transaction", 1, theBitcoinBlock.getTransactions().length);
-		assertEquals("TestNet3 Genesis Block must contain exactly one transaction with one input", 1, theBitcoinBlock.getTransactions()[0].getListOfInputs().length);
-		assertEquals("TestNet3 Genesis Block must contain exactly one transaction with one input and script length 77", 77, theBitcoinBlock.getTransactions()[0].getListOfInputs()[0].getTxInScript().length);
-		assertEquals("TestNet3 Genesis Block must contain exactly one transaction with one output", 1, theBitcoinBlock.getTransactions()[0].getListOfOutputs().length);
-		assertEquals("TestNet3 Genesis Block must contain exactly one transaction with one output and script length 67", 67, theBitcoinBlock.getTransactions()[0].getListOfOutputs()[0].getTxOutScript().length);
+		assertEquals("TestNet3 Genesis Block must contain exactly one transaction", 1, theBitcoinBlock.getTransactions().size());
+		assertEquals("TestNet3 Genesis Block must contain exactly one transaction with one input", 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
+		assertEquals("TestNet3 Genesis Block must contain exactly one transaction with one input and script length 77", 77, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
+		assertEquals("TestNet3 Genesis Block must contain exactly one transaction with one output", 1, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
+		assertEquals("TestNet3 Genesis Block must contain exactly one transaction with one output and script length 67", 67, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
 	} finally {
 		if (bbr!=null) 
 			bbr.close();
@@ -758,11 +758,11 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
-		assertEquals("Random Version 1 Block must contain exactly two transactions", 2, theBitcoinBlock.getTransactions().length);
-		assertEquals("Random Version 1 Block must contain exactly two transactions of which the first has one input", 1, theBitcoinBlock.getTransactions()[0].getListOfInputs().length);
-		assertEquals("Random Version 1 Block must contain exactly two transactions of which the first has one input and script length 8", 8, theBitcoinBlock.getTransactions()[0].getListOfInputs()[0].getTxInScript().length);
-		assertEquals("Random Version 1 Block must contain exactly two transactions of which the first has one output", 1, theBitcoinBlock.getTransactions()[0].getListOfOutputs().length);
-		assertEquals("Random Version 1 Block must contain exactly two transactions of which the first has one output and script length 67", 67, theBitcoinBlock.getTransactions()[0].getListOfOutputs()[0].getTxOutScript().length);
+		assertEquals("Random Version 1 Block must contain exactly two transactions", 2, theBitcoinBlock.getTransactions().size());
+		assertEquals("Random Version 1 Block must contain exactly two transactions of which the first has one input", 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
+		assertEquals("Random Version 1 Block must contain exactly two transactions of which the first has one input and script length 8", 8, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
+		assertEquals("Random Version 1 Block must contain exactly two transactions of which the first has one output", 1, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
+		assertEquals("Random Version 1 Block must contain exactly two transactions of which the first has one output and script length 67", 67, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
 	} finally {
 		if (bbr!=null) 
 			bbr.close();
@@ -781,11 +781,11 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
-		assertEquals("Random Version 2 Block must contain exactly 343 transactions", 343, theBitcoinBlock.getTransactions().length);
-		assertEquals("Random Version 2 Block must contain exactly 343 transactions of which the first has one input", 1, theBitcoinBlock.getTransactions()[0].getListOfInputs().length);
-		assertEquals("Random Version 2 Block must contain exactly 343 transactions of which the first has one input and script length 40", 40, theBitcoinBlock.getTransactions()[0].getListOfInputs()[0].getTxInScript().length);
-		assertEquals("Random Version 2 Block must contain exactly 343 transactions of which the first has one output", 1, theBitcoinBlock.getTransactions()[0].getListOfOutputs().length);
-		assertEquals("Random Version 2 Block must contain exactly 343 transactions of which the first has one output and script length 25", 25, theBitcoinBlock.getTransactions()[0].getListOfOutputs()[0].getTxOutScript().length);
+		assertEquals("Random Version 2 Block must contain exactly 343 transactions", 343, theBitcoinBlock.getTransactions().size());
+		assertEquals("Random Version 2 Block must contain exactly 343 transactions of which the first has one input", 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
+		assertEquals("Random Version 2 Block must contain exactly 343 transactions of which the first has one input and script length 40", 40, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
+		assertEquals("Random Version 2 Block must contain exactly 343 transactions of which the first has one output", 1, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
+		assertEquals("Random Version 2 Block must contain exactly 343 transactions of which the first has one output and script length 25", 25, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
 	} finally {
 		if (bbr!=null) 
 			bbr.close();
@@ -804,11 +804,11 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
-		assertEquals("Random Version 3 Block must contain exactly 1645 transactions", 1645, theBitcoinBlock.getTransactions().length);
-		assertEquals("Random Version 3 Block must contain exactly 1645 transactions of which the first has one input", 1, theBitcoinBlock.getTransactions()[0].getListOfInputs().length);
-		assertEquals("Random Version 3 Block must contain exactly 1645 transactions of which the first has one input and script length 49", 49, theBitcoinBlock.getTransactions()[0].getListOfInputs()[0].getTxInScript().length);
-		assertEquals("Random Version 3 Block must contain exactly 1645 transactions of which the first has two outputs", 2, theBitcoinBlock.getTransactions()[0].getListOfOutputs().length);
-		assertEquals("Random Version 3 Block must contain exactly 1645 transactions of which the first has two output and the first output script length 25", 25, theBitcoinBlock.getTransactions()[0].getListOfOutputs()[0].getTxOutScript().length);
+		assertEquals("Random Version 3 Block must contain exactly 1645 transactions", 1645, theBitcoinBlock.getTransactions().size());
+		assertEquals("Random Version 3 Block must contain exactly 1645 transactions of which the first has one input", 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
+		assertEquals("Random Version 3 Block must contain exactly 1645 transactions of which the first has one input and script length 49", 49, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
+		assertEquals("Random Version 3 Block must contain exactly 1645 transactions of which the first has two outputs", 2, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
+		assertEquals("Random Version 3 Block must contain exactly 1645 transactions of which the first has two output and the first output script length 25", 25, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
 	} finally {
 		if (bbr!=null) 
 			bbr.close();
@@ -827,11 +827,11 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
-		assertEquals("Random Version 4 Block must contain exactly 936 transactions", 936, theBitcoinBlock.getTransactions().length);
-		assertEquals("Random Version 4 Block must contain exactly 936 transactions of which the first has one input", 1, theBitcoinBlock.getTransactions()[0].getListOfInputs().length);
-		assertEquals("Random Version 4 Block must contain exactly 936 transactions of which the first has one input and script length 4", 4, theBitcoinBlock.getTransactions()[0].getListOfInputs()[0].getTxInScript().length);
-		assertEquals("Random Version 4 Block must contain exactly 936 transactions of which the first has two outputs", 2, theBitcoinBlock.getTransactions()[0].getListOfOutputs().length);
-		assertEquals("Random Version 4 Block must contain exactly 936 transactions of which the first has two output and the first output script length 25", 25, theBitcoinBlock.getTransactions()[0].getListOfOutputs()[0].getTxOutScript().length);
+		assertEquals("Random Version 4 Block must contain exactly 936 transactions", 936, theBitcoinBlock.getTransactions().size());
+		assertEquals("Random Version 4 Block must contain exactly 936 transactions of which the first has one input", 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
+		assertEquals("Random Version 4 Block must contain exactly 936 transactions of which the first has one input and script length 4", 4, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
+		assertEquals("Random Version 4 Block must contain exactly 936 transactions of which the first has two outputs", 2, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
+		assertEquals("Random Version 4 Block must contain exactly 936 transactions of which the first has two output and the first output script length 25", 25, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
 	} finally {
 		if (bbr!=null) 
 			bbr.close();
@@ -851,11 +851,11 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.TESTNET3_MAGIC,direct);
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
-		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions", 3299, theBitcoinBlock.getTransactions().length);
-		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one input", 1, theBitcoinBlock.getTransactions()[0].getListOfInputs().length);
-		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one input and script length 35", 35, theBitcoinBlock.getTransactions()[0].getListOfInputs()[0].getTxInScript().length);
-		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one outputs", 1, theBitcoinBlock.getTransactions()[0].getListOfOutputs().length);
-		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one output and the first output script length 25", 25, theBitcoinBlock.getTransactions()[0].getListOfOutputs()[0].getTxOutScript().length);
+		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions", 3299, theBitcoinBlock.getTransactions().size());
+		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one input", 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
+		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one input and script length 35", 35, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
+		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one outputs", 1, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
+		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one output and the first output script length 25", 25, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
 	} finally {
 		if (bbr!=null) 
 			bbr.close();
@@ -874,23 +874,23 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.MULTINET_MAGIC,direct);
 		BitcoinBlock firstBitcoinBlock = bbr.readBlock();
-		assertEquals("First MultiNet Block must contain exactly one transaction", 1, firstBitcoinBlock.getTransactions().length);
-		assertEquals("First MultiNet Block must contain exactly one transaction with one input", 1, firstBitcoinBlock.getTransactions()[0].getListOfInputs().length);
-		assertEquals("First MultiNet Block must contain exactly one transaction with one input and script length 77", 77, firstBitcoinBlock.getTransactions()[0].getListOfInputs()[0].getTxInScript().length);
-		assertEquals("First MultiNet Block must contain exactly one transaction with one output", 1, firstBitcoinBlock.getTransactions()[0].getListOfOutputs().length);
-		assertEquals("First MultiNet Block must contain exactly one transaction with one output and script length 67", 67, firstBitcoinBlock.getTransactions()[0].getListOfOutputs()[0].getTxOutScript().length);
+		assertEquals("First MultiNet Block must contain exactly one transaction", 1, firstBitcoinBlock.getTransactions().size());
+		assertEquals("First MultiNet Block must contain exactly one transaction with one input", 1, firstBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
+		assertEquals("First MultiNet Block must contain exactly one transaction with one input and script length 77", 77, firstBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
+		assertEquals("First MultiNet Block must contain exactly one transaction with one output", 1, firstBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
+		assertEquals("First MultiNet Block must contain exactly one transaction with one output and script length 67", 67, firstBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
 		BitcoinBlock secondBitcoinBlock = bbr.readBlock();
-		assertEquals("Second MultiNet Block must contain exactly 343 transactions", 343, secondBitcoinBlock.getTransactions().length);
-		assertEquals("Second MultiNet Block must contain exactly 343 transactions of which the first has one input", 1, secondBitcoinBlock.getTransactions()[0].getListOfInputs().length);
-		assertEquals("Second MultiNet Block must contain exactly 343 transactions of which the first has one input and script length 40", 40, secondBitcoinBlock.getTransactions()[0].getListOfInputs()[0].getTxInScript().length);
-		assertEquals("Second MultiNet Block must contain exactly 343 transactions of which the first has one output", 1, secondBitcoinBlock.getTransactions()[0].getListOfOutputs().length);
-		assertEquals("Second MultiNet Block must contain exactly 343 transactions of which the first has one output and script length 25", 25, secondBitcoinBlock.getTransactions()[0].getListOfOutputs()[0].getTxOutScript().length);
+		assertEquals("Second MultiNet Block must contain exactly 343 transactions", 343, secondBitcoinBlock.getTransactions().size());
+		assertEquals("Second MultiNet Block must contain exactly 343 transactions of which the first has one input", 1, secondBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
+		assertEquals("Second MultiNet Block must contain exactly 343 transactions of which the first has one input and script length 40", 40, secondBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
+		assertEquals("Second MultiNet Block must contain exactly 343 transactions of which the first has one output", 1, secondBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
+		assertEquals("Second MultiNet Block must contain exactly 343 transactions of which the first has one output and script length 25", 25, secondBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
 		BitcoinBlock thirdBitcoinBlock = bbr.readBlock();
-		assertEquals("Third MultiNet Block must contain exactly 3299 transactions", 3299, thirdBitcoinBlock.getTransactions().length);
-		assertEquals("Third MultiNet Block must contain exactly 3299 transactions of which the first has one input", 1, thirdBitcoinBlock.getTransactions()[0].getListOfInputs().length);
-		assertEquals("Third MultiNet Block must contain exactly 3299 transactions of which the first has one input and script length 35", 35, thirdBitcoinBlock.getTransactions()[0].getListOfInputs()[0].getTxInScript().length);
-		assertEquals("Third MultiNet Block must contain exactly 3299 transactions of which the first has one outputs", 1, thirdBitcoinBlock.getTransactions()[0].getListOfOutputs().length);
-		assertEquals("Third MultiNet Block must contain exactly 3299 transactions of which the first has one output and the first output script length 25", 25, thirdBitcoinBlock.getTransactions()[0].getListOfOutputs()[0].getTxOutScript().length);
+		assertEquals("Third MultiNet Block must contain exactly 3299 transactions", 3299, thirdBitcoinBlock.getTransactions().size());
+		assertEquals("Third MultiNet Block must contain exactly 3299 transactions of which the first has one input", 1, thirdBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
+		assertEquals("Third MultiNet Block must contain exactly 3299 transactions of which the first has one input and script length 35", 35, thirdBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
+		assertEquals("Third MultiNet Block must contain exactly 3299 transactions of which the first has one outputs", 1, thirdBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
+		assertEquals("Third MultiNet Block must contain exactly 3299 transactions of which the first has one output and the first output script length 25", 25, thirdBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
 	} finally {
 		if (bbr!=null) 
 			bbr.close();

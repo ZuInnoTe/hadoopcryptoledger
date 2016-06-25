@@ -2,7 +2,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'application'
 
-
+compileJava.options.encoding = 'UTF-8'
 sourceCompatibility = 1.7
 version = '1.0'
 jar {

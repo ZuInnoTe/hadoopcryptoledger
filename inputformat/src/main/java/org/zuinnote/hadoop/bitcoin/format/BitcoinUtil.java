@@ -273,19 +273,19 @@ public static byte[] getTransactionHash(BitcoinTransaction transaction) throws N
 	transactionBAOS.write(version);
 	byte[] inCounter = transaction.getInCounter();
 	transactionBAOS.write(inCounter);
-	for (int i=0;i<transaction.getListOfInputs().length;i++) {
-		transactionBAOS.write(transaction.getListOfInputs()[i].getPrevTransactionHash());
-		transactionBAOS.write(reverseByteArray(convertIntToByteArray(new Long(transaction.getListOfInputs()[i].getPreviousTxOutIndex()).intValue())));
-		transactionBAOS.write(transaction.getListOfInputs()[i].getTxInScriptLength());
-		transactionBAOS.write(transaction.getListOfInputs()[i].getTxInScript());
-		transactionBAOS.write(reverseByteArray(convertIntToByteArray(new Long(transaction.getListOfInputs()[i].getSeqNo()).intValue())));
+	for (int i=0;i<transaction.getListOfInputs().size();i++) {
+		transactionBAOS.write(transaction.getListOfInputs().get(i).getPrevTransactionHash());
+		transactionBAOS.write(reverseByteArray(convertIntToByteArray(new Long(transaction.getListOfInputs().get(i).getPreviousTxOutIndex()).intValue())));
+		transactionBAOS.write(transaction.getListOfInputs().get(i).getTxInScriptLength());
+		transactionBAOS.write(transaction.getListOfInputs().get(i).getTxInScript());
+		transactionBAOS.write(reverseByteArray(convertIntToByteArray(new Long(transaction.getListOfInputs().get(i).getSeqNo()).intValue())));
 	}
 	byte[] outCounter = transaction.getOutCounter();
 	transactionBAOS.write(outCounter);
-	for (int j=0;j<transaction.getListOfOutputs().length;j++) {
-		transactionBAOS.write(reverseByteArray(convertLongToByteArray(transaction.getListOfOutputs()[j].getValue())));		
-		transactionBAOS.write(transaction.getListOfOutputs()[j].getTxOutScriptLength());
-		transactionBAOS.write(transaction.getListOfOutputs()[j].getTxOutScript());
+	for (int j=0;j<transaction.getListOfOutputs().size();j++) {
+		transactionBAOS.write(reverseByteArray(convertLongToByteArray(transaction.getListOfOutputs().get(j).getValue())));		
+		transactionBAOS.write(transaction.getListOfOutputs().get(j).getTxOutScriptLength());
+		transactionBAOS.write(transaction.getListOfOutputs().get(j).getTxOutScript());
 	}	
 	byte[] lockTime=reverseByteArray(convertIntToByteArray(transaction.getLockTime()));
 	transactionBAOS.write(lockTime);

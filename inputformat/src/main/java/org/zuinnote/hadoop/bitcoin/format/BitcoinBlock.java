@@ -21,7 +21,8 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 import org.apache.hadoop.io.Writable;
-
+import java.util.List;
+import java.util.ArrayList;
 
 /**
 * This class is an object storing relevant fields of a Bitcoin Block. 
@@ -39,7 +40,7 @@ private int nonce;
 private long transactionCounter;
 private byte[] hashPrevBlock;
 private byte[] hashMerkleRoot;
-private BitcoinTransaction[] transactions;
+private List<BitcoinTransaction> transactions;
 
 public BitcoinBlock() {
 	this.magicNo=new byte[0];
@@ -47,10 +48,10 @@ public BitcoinBlock() {
 	this.transactionCounter=0;
 	this.hashPrevBlock=new byte[0];
 	this.hashMerkleRoot=new byte[0];
-	this.transactions=new BitcoinTransaction[0];
+	this.transactions=new ArrayList<BitcoinTransaction>();
 }
 
-public BitcoinBlock(byte[] magicNo, int blockSize, int version, int time, byte[] bits, int nonce,long transactionCounter, byte[] hashPrevBlock, byte[] hashMerkleRoot, BitcoinTransaction[] transactions) {
+public BitcoinBlock(byte[] magicNo, int blockSize, int version, int time, byte[] bits, int nonce,long transactionCounter, byte[] hashPrevBlock, byte[] hashMerkleRoot, List<BitcoinTransaction> transactions) {
 	this.blockSize=blockSize;
 	this.magicNo=magicNo;
 	this.version=version;
@@ -100,7 +101,7 @@ public byte[] getHashMerkleRoot() {
 	return this.hashMerkleRoot;
 }
 
-public BitcoinTransaction[] getTransactions() {
+public List<BitcoinTransaction> getTransactions() {
 	return this.transactions;
 }
 

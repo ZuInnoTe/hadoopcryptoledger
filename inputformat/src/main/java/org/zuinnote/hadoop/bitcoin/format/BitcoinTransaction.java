@@ -22,6 +22,9 @@ import java.io.IOException;
 
 import org.apache.hadoop.io.Writable;
 
+import java.util.List;
+import java.util.ArrayList;
+
 
 public class BitcoinTransaction implements Writable {
 
@@ -29,20 +32,20 @@ public class BitcoinTransaction implements Writable {
 private int version;
 private byte[] inCounter;
 private byte[] outCounter;
-private BitcoinTransactionInput[] listOfInputs;
-private BitcoinTransactionOutput[] listOfOutputs;
+private List<BitcoinTransactionInput> listOfInputs;
+private List<BitcoinTransactionOutput> listOfOutputs;
 private int lockTime;
 
 public BitcoinTransaction() {
 	this.version=0;
 	this.inCounter=new byte[0];
 	this.outCounter=new byte[0];
-	this.listOfInputs=new BitcoinTransactionInput[0];
-	this.listOfOutputs=new BitcoinTransactionOutput[0];
+	this.listOfInputs=new ArrayList<BitcoinTransactionInput>();
+	this.listOfOutputs=new ArrayList<BitcoinTransactionOutput>();
 	this.lockTime=0;
 }
 
-public BitcoinTransaction(int version, byte[] inCounter, BitcoinTransactionInput[] listOfInputs, byte[] outCounter, BitcoinTransactionOutput[] listOfOutputs, int lockTime) {
+public BitcoinTransaction(int version, byte[] inCounter, List<BitcoinTransactionInput> listOfInputs, byte[] outCounter, List<BitcoinTransactionOutput> listOfOutputs, int lockTime) {
 	this.version=version;
 	this.inCounter=inCounter;
 	this.listOfInputs=listOfInputs;
@@ -59,7 +62,7 @@ public byte[] getInCounter() {
 	return this.inCounter;
 }
 
-public BitcoinTransactionInput[] getListOfInputs() {
+public List<BitcoinTransactionInput> getListOfInputs() {
 	return this.listOfInputs;
 }
 
@@ -67,7 +70,7 @@ public byte[] getOutCounter() {
 	return this.outCounter;
 }
 
-public BitcoinTransactionOutput[] getListOfOutputs() {
+public List<BitcoinTransactionOutput> getListOfOutputs() {
 	return this.listOfOutputs;
 }
 
