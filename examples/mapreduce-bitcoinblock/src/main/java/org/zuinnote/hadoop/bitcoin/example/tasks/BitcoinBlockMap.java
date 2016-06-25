@@ -36,7 +36,7 @@ import java.util.*;
 	    private final static Text defaultKey = new Text("Transaction Count:");
 	    public void map(BytesWritable key, BitcoinBlock value, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
 	    	// get the number of transactions
-	    	 output.collect(defaultKey, new IntWritable(value.getTransactions().length));
+	    	 output.collect(defaultKey, new IntWritable(value.getTransactions().size()));
 	    	 }
 	    
 	    }
