@@ -1,5 +1,4 @@
 language: java
-before_script: cd inputformat
 script:
 gradle clean
 gradle build
