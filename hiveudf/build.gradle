@@ -20,7 +20,7 @@ jar {
 publishing {
     publications {
         maven(MavenPublication) {
-            groupId 'org.zuinnote.hadoop'
+            groupId 'com.github.zuinnote'
             artifactId 'hadoopcryptoledger-hiveudf'
             version '1.0.0'
             from components.java
@@ -54,7 +54,7 @@ dependencies {
    // hadoop lib for driver
      provided("org.apache.hadoop:hadoop-client:2.7.0")
        // hadoop crypto ledger library
-   compile("org.zuinnote.hadoop:hadoopcryptoledger-hiveserde:1.0.0")
+   compile("com.github.zuinnote:hadoopcryptoledger-hiveserde:1.0.0")
     // hive serde API
    provided("org.apache.hive:hive-serde:1.2.0")
    provided("org.apache.hive:hive-exec:1.2.0")
