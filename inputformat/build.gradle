@@ -17,7 +17,7 @@ jar {
 publishing {
     publications {
         maven(MavenPublication) {
-            groupId 'org.zuinnote.hadoop'
+            groupId 'com.github.zuinnote'
             artifactId 'hadoopcryptoledger-fileformat'
             version '1.0.0'
 
