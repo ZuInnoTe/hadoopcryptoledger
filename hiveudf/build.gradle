@@ -3,7 +3,7 @@ apply plugin: 'application'
 apply plugin: 'maven-publish'
 
 sourceCompatibility = 1.7
-version = '1.0'
+version = '1.0.0'
 compileJava.options.encoding = 'UTF-8'
 
 jar {
@@ -31,12 +31,13 @@ publishing {
 
 repositories {
     mavenCentral()
+        mavenLocal()
     // workaround for certain dependencies of hive-exec
     maven {
     	url "http://conjars.org/repo"
     }
 
-    mavenLocal()
+
 }
 
 
@@ -54,7 +55,10 @@ dependencies {
    // hadoop lib for driver
      provided("org.apache.hadoop:hadoop-client:2.7.0")
        // hadoop crypto ledger library
-   compile("com.github.zuinnote:hadoopcryptoledger-hiveserde:1.0.0")
+
+  
+   provided("com.github.zuinnote:hadoopcryptoledger-fileformat:1.0.0")
+   provided("com.github.zuinnote:hadoopcryptoledger-hiveserde:1.0.0")
     // hive serde API
    provided("org.apache.hive:hive-serde:1.2.0")
    provided("org.apache.hive:hive-exec:1.2.0")
