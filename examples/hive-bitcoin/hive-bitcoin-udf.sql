@@ -8,7 +8,7 @@
 SELECT hclBitcoinScriptPattern(expout.txoutscript) FROM (select * from BitcoinBlockchain LATERAL VIEW explode(transactions) exploded_transactions as exptran) transaction_table LATERAL VIEW explode (exptran.listofoutputs) exploded_outputs as expout;
 
 
---- the following example displays the transaction hash of a given transaction. You can use the transaction hashes to determine which output has been used as input in another transaction and ultimatively to build a transaction graph to trace the route of bitcoins in the blockchain
+--- the following example displays the transaction hash of a given transaction. You can use the transaction hashes to determine which output has been used as input in another transaction and ultimately to build a transaction graph to trace the route of Bitcoins in the Blockchain
 SELECT hclBitcoinTransactionHash(transactions[0]) FROM BitcoinBlockChain LIMIT 1;
 
 
