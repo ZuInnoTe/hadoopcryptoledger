@@ -5,12 +5,11 @@ apply plugin: 'signing'
 apply plugin: 'jacoco'
 
 sourceCompatibility = 1.7
-version = '1.0.0'
 compileJava.options.encoding = 'UTF-8'
 
 group = "com.github.zuinnote"
 archivesBaseName = "hadoopcryptoledger-fileformat"
-version = "1.0.0"
+version = "1.0.1"
 
 jar {
     manifest {
