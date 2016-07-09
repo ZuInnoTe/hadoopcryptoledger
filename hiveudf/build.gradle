@@ -5,13 +5,12 @@ apply plugin: 'signing'
 apply plugin: 'jacoco'
 
 sourceCompatibility = 1.7
-version = '1.0.0'
 compileJava.options.encoding = 'UTF-8'
 
 
 group = "com.github.zuinnote"
 archivesBaseName = "hadoopcryptoledger-hiveudf"
-version = "1.0.0"
+version = "1.0.1"
 
 
 jar {
@@ -62,8 +61,8 @@ dependencies {
        // hadoop crypto ledger library
 
   
-   provided("com.github.zuinnote:hadoopcryptoledger-fileformat:1.0.0")
-   provided("com.github.zuinnote:hadoopcryptoledger-hiveserde:1.0.0")
+   provided("com.github.zuinnote:hadoopcryptoledger-fileformat:1.0.1")
+   provided("com.github.zuinnote:hadoopcryptoledger-hiveserde:1.0.1")
     // hive serde API
    provided("org.apache.hive:hive-serde:1.2.0")
    provided("org.apache.hive:hive-exec:1.2.0")
