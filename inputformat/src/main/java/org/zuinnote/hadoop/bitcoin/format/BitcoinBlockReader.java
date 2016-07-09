@@ -76,7 +76,7 @@ public BitcoinBlockReader(InputStream in, int maxSizeBitcoinBlock, int bufferSiz
 * Seek for a valid block start according to the following algorithm:
 * (1) find the magic of the block 
 * (2) Check that the block can be fully read and that block size is smaller than maximum block size
-* This functionality is particularly useful for file processing in Big Data systems, such as Hadoop & Co where we work indepently on different filesplits and cannot expect that the Bitcoin block starts directly at the beginning of the stream;
+* This functionality is particularly useful for file processing in Big Data systems, such as Hadoop and Co where we work indepently on different filesplits and cannot expect that the Bitcoin block starts directly at the beginning of the stream;
 **/
 
 public void seekBlockStart() throws BitcoinBlockReadException,IOException {
@@ -148,7 +148,7 @@ public void seekBlockStart() throws BitcoinBlockReadException,IOException {
 }
 
 /**
-* Read a block into a Java object of the class Bitcoin Block. This makes analysis very easy, but might be slower for some type of analytics where you are only interested in small parts of the block. In this case it is recommended to use {@see #readRawBlock}
+* Read a block into a Java object of the class Bitcoin Block. This makes analysis very easy, but might be slower for some type of analytics where you are only interested in small parts of the block. In this case it is recommended to use {@link #readRawBlock}
 *
 * @return BitcoinBlock
 */
