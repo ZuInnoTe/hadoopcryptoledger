@@ -75,6 +75,8 @@ public String getDisplayString(String[] arg0) {
 
 @Override
 public ObjectInspector initialize(ObjectInspector[] arguments) throws UDFArgumentException {
+	if (arguments==null) 
+      		throw new UDFArgumentLengthException("bitcoinTransactionHash only takes one argument: Struct<BitcoinTransaction> ");
   	if (arguments.length != 1)
       		throw new UDFArgumentLengthException("bitcoinTransactionHash only takes one argument: Struct<BitcoinTransaction> ");
 	if (!(arguments[0] instanceof StructObjectInspector)) 
