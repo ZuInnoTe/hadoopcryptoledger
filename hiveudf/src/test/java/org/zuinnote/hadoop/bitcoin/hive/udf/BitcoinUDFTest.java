@@ -129,7 +129,7 @@ public class BitcoinUDFTest {
 	doa[0]=new GenericUDF.DeferredJavaObject(genesisTransaction);
 	BytesWritable bw = (BytesWritable) bthUDF.evaluate(doa);
 	
-	assertArrayEquals("BitcoinTransaction object genesis transaction hash from UDF", expectedHash,bw.copyBytes());
+	assertArrayEquals("BitcoinTransaction struct transaction hash from UDF", expectedHash,bw.copyBytes());
   }
 
 } 
