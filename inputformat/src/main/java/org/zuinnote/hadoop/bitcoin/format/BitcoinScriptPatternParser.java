@@ -48,12 +48,12 @@ public static String getPaymentDestination(byte[] scriptPubKey) {
 		} 
 	}
 	// test if obsolete transaction to public key
-	if ((scriptPubKey[scriptPubKey.length-1] & 0xFF)==0xAC) {
+	if ((scriptPubKey.length>0) && ((scriptPubKey[scriptPubKey.length-1] & 0xFF)==0xAC)) {
 		byte[] publicKey =Arrays.copyOfRange(scriptPubKey, 0, scriptPubKey.length-1);
 		return "bitcoinpubkey_"+BitcoinUtil.convertByteArrayToHexString(publicKey);
 	}
 	// test if puzzle
-	if (((scriptPubKey[0] & 0xFF)==0xAA) && ((scriptPubKey[scriptPubKey.length-1] & 0xFF)==0x87)) {
+	if ((scriptPubKey.length>0) && ((scriptPubKey[0] & 0xFF)==0xAA) && ((scriptPubKey[scriptPubKey.length-1] & 0xFF)==0x87)) {
 		byte[] puzzle = Arrays.copyOfRange(scriptPubKey, 1, scriptPubKey.length-2);
 		return "puzzle_"+BitcoinUtil.convertByteArrayToHexString(puzzle);
 	}
