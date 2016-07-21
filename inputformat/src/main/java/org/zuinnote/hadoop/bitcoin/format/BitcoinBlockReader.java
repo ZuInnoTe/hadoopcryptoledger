@@ -77,6 +77,10 @@ public BitcoinBlockReader(InputStream in, int maxSizeBitcoinBlock, int bufferSiz
 * (1) find the magic of the block 
 * (2) Check that the block can be fully read and that block size is smaller than maximum block size
 * This functionality is particularly useful for file processing in Big Data systems, such as Hadoop and Co where we work indepently on different filesplits and cannot expect that the Bitcoin block starts directly at the beginning of the stream;
+* 
+* @throws {@link java.io.IOException} in case of errors reading from the InputStream
+* @throws (@link org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException} in case of format errors of the Bitcoin Blockchain data
+*
 **/
 
 public void seekBlockStart() throws BitcoinBlockReadException,IOException {
@@ -151,6 +155,8 @@ public void seekBlockStart() throws BitcoinBlockReadException,IOException {
 * Read a block into a Java object of the class Bitcoin Block. This makes analysis very easy, but might be slower for some type of analytics where you are only interested in small parts of the block. In this case it is recommended to use {@link #readRawBlock}
 *
 * @return BitcoinBlock
+* @throws {@link java.io.IOException} in case of errors reading from the InputStream
+* @throws (@link org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException} in case of format errors of the Bitcoin Blockchain data
 */
 
 public BitcoinBlock readBlock() throws BitcoinBlockReadException,IOException {
@@ -259,6 +265,9 @@ public List<BitcoinTransaction> parseTransactions(ByteBuffer rawByteBuffer,long 
 *
 *
 * @return ByteBuffer containing the block
+*
+* @throws {@link java.io.IOException} in case of errors reading from the InputStream
+* @throws (@link org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException} in case of format errors of the Bitcoin Blockchain data
 **/
 
 
@@ -369,6 +378,8 @@ public byte[] getKeyFromRawBlock (ByteBuffer rawByteBuffer)  {
 
 /**
 * Closes the reader
+*
+* @throws {@link java.io.IOException} in case of errors reading from the InputStream
 *
 */
 
