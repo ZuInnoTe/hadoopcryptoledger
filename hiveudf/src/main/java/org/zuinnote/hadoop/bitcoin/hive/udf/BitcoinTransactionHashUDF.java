@@ -68,10 +68,29 @@ private WritableIntObjectInspector wioi;
 private WritableLongObjectInspector wloi;
 
 
+/**
+* Returns the display representation of the function
+*
+* @param arg0 arguments
+*
+*/
+
 @Override
 public String getDisplayString(String[] arg0) {
 	return("hclBitcoinTransactionHash()");
 }
+
+/**
+*
+* Initialize HiveUDF and create object inspectors. It requires that the argument length is = 1 and that the ObjectInspector of arguments[0] is of type StructObjectInspector
+*
+* @param arguments array of length 1 containing one StructObjectInspector
+*
+* @return ObjectInspector that is able to parse the result of the evaluate method of the UDF (BinaryWritable)
+*
+* 
+*
+*/
 
 @Override
 public ObjectInspector initialize(ObjectInspector[] arguments) throws UDFArgumentException {
@@ -89,6 +108,15 @@ public ObjectInspector initialize(ObjectInspector[] arguments) throws UDFArgumen
 	// the UDF returns the hash value of a BitcoinTransaction as byte array
 	return PrimitiveObjectInspectorFactory.writableBinaryObjectInspector;
 }
+
+/**
+* This method evaluates a given Object (of type BitcoinTransaction) or a struct which has all necessary fields corresponding to a BitcoinTransaction. The first case occurs, if the UDF evaluates data represented in a table provided by the HiveSerde as part of the hadoocryptoledger library. The second case occurs, if BitcoinTransaction data has been imported in a table in another format, such as ORC or Parquet.
+* 
+* @param arguments array of length 1 containing one object of type BitcoinTransaction or a Struct representing a BitcoinTransaction
+*
+* @return BytesWritable containing a byte array with the double hash of the BitcoinTransaction
+*
+*/
 
 @Override
 public Object evaluate(DeferredObject[] arguments) throws HiveException {
