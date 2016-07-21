@@ -88,8 +88,12 @@ private BitcoinBlockReader bbr;
 * io.file.buffer.size: Size of in-memory  specified in the given Configuration. If io.file.buffer.size is not specified the default buffersize (maximum size of a bitcoin block) will be used. The configuration hadoopcryptoledger.bitcoinblockinputformat.filter.magic allows specifying the magic identifier of the block. The magic is a comma-separated list of Hex-values (e.g. F9BEB4D9,FABFB5DA,0B110907,0B110907). The default magic is always F9BEB4D9. One needs to specify at least one magic, otherwise it will be difficult to find blocks in splits. Furthermore, one may specify hadoopcryptoledger.bitcoinblockinputformat.maxblocksize, which defines the maximum size a bitcoin block may have. By default it is 1M). If you want to experiment with performance using DirectByteBuffer instead of HeapByteBuffer you can use "hadoopcryptoledeger.bitcoinblockinputformat.usedirectbuffer" (default: false). Note that it might have some unwanted consequences such as circumwenting Yarn memory management. The option is experimental and might be removed in future versions. 
 * @param reporter Reporter
 *
+*
+* @throws {@link java.io.IOException} in case of errors reading from the filestream provided by Hadoop
+* @throws {@link org.zuinnote.hadoop.bitcoin.format.exception.HadoopCryptoLedgerConfigurationException} in case of an invalid HadoopCryptoLedger-specific configuration of the inputformat
+* @throws {@link jorg.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException} in case the Bitcoin data contains invalid blocks (e.g. magic might be different)
+*
 */
-
 public AbstractBitcoinRecordReader(FileSplit split,JobConf job, Reporter reporter) throws IOException,HadoopCryptoLedgerConfigurationException,BitcoinBlockReadException {
     // parse configuration
      this.conf=job;	
@@ -175,6 +179,8 @@ public abstract boolean next(K key, V value) throws IOException;
 *
 * @return file position
 *
+* @throws {@link java.io.IOException} in case of errors reading from the filestream provided by Hadoop
+*
 */
 
 public long getFilePosition() throws IOException {
@@ -188,7 +194,7 @@ public long getFilePosition() throws IOException {
 *
 */
 
-public long getEnd() throws IOException {
+public long getEnd() {
 	return end;
 }
 
@@ -207,6 +213,8 @@ public BitcoinBlockReader getBbr() {
 * Returns how much of the file has been processed in terms of bytes
 *
 * @return progress percentage
+*
+* @throws {@link java.io.IOException} in case of errors reading from the filestream provided by Hadoop
 *
 */
 
@@ -232,6 +240,8 @@ private boolean  isCompressedInput() {
 *
 * @return position
 *
+* @throws {@link java.io.IOException} in case of errors reading from the filestream provided by Hadoop
+*
 */
 
 public  synchronized long getPos() throws IOException {
@@ -241,6 +251,8 @@ public  synchronized long getPos() throws IOException {
 /*
 * Clean up InputStream and Decompressor after use
 *
+*
+* @throws {@link java.io.IOException} in case of errors reading from the filestream provided by Hadoop
 *
 */
 
