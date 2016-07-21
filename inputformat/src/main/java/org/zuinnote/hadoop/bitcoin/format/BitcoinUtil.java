@@ -225,7 +225,7 @@ public static String convertByteArrayToHexString(byte[] byteArray) {
 /**
 * Converts an int to a date
 *
-* @param dateInt
+* @param dateInt timestamp in integer format 
 *
 * @return Date corresponding to dateInt
 *
@@ -263,6 +263,10 @@ public static boolean compareMagics (byte[] magic1,byte[] magic2) {
 * @param transaction The BitcoinTransaction of which we want to calculate the hash
 *
 * @return byte array containing the hash of the transaction
+*
+*
+* @throws {@link java.io.IOException} in case of errors reading from the InputStream
+* @throws (@link java.security.NoSuchAlgorithmException} in case the hashing algorithm of the Bitcoin Blockchain is not supported by the JDK
 *
 */
 public static byte[] getTransactionHash(BitcoinTransaction transaction) throws NoSuchAlgorithmException, IOException{
