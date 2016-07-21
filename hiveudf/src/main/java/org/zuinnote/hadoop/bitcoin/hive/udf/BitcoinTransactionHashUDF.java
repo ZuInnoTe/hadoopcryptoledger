@@ -88,7 +88,8 @@ public String getDisplayString(String[] arg0) {
 *
 * @return ObjectInspector that is able to parse the result of the evaluate method of the UDF (BinaryWritable)
 *
-* 
+* @throws org.apache.hadoop.hive.ql.exec.UDFArgumentException in case the first argument is not of StructObjectInspector
+* @throws org.apache.hadoop.hive.ql.exec.UDFArgumentLengthException in case the number of arguments is != 1
 *
 */
 
@@ -116,6 +117,7 @@ public ObjectInspector initialize(ObjectInspector[] arguments) throws UDFArgumen
 *
 * @return BytesWritable containing a byte array with the double hash of the BitcoinTransaction
 *
+* @throws org.apache.hadoop.hive.ql.metadata.HiveException in case an itnernal HiveError occurred
 */
 
 @Override

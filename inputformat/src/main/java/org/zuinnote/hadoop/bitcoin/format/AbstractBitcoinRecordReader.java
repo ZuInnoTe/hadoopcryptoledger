@@ -89,9 +89,9 @@ private BitcoinBlockReader bbr;
 * @param reporter Reporter
 *
 *
-* @throws {@link java.io.IOException} in case of errors reading from the filestream provided by Hadoop
-* @throws {@link org.zuinnote.hadoop.bitcoin.format.exception.HadoopCryptoLedgerConfigurationException} in case of an invalid HadoopCryptoLedger-specific configuration of the inputformat
-* @throws {@link jorg.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException} in case the Bitcoin data contains invalid blocks (e.g. magic might be different)
+* @throws java.io.IOException in case of errors reading from the filestream provided by Hadoop
+* @throws org.zuinnote.hadoop.bitcoin.format.exception.HadoopCryptoLedgerConfigurationException in case of an invalid HadoopCryptoLedger-specific configuration of the inputformat
+* @throws org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException in case the Bitcoin data contains invalid blocks (e.g. magic might be different)
 *
 */
 public AbstractBitcoinRecordReader(FileSplit split,JobConf job, Reporter reporter) throws IOException,HadoopCryptoLedgerConfigurationException,BitcoinBlockReadException {
@@ -179,7 +179,7 @@ public abstract boolean next(K key, V value) throws IOException;
 *
 * @return file position
 *
-* @throws {@link java.io.IOException} in case of errors reading from the filestream provided by Hadoop
+* @throws java.io.IOException in case of errors reading from the filestream provided by Hadoop
 *
 */
 
@@ -214,7 +214,7 @@ public BitcoinBlockReader getBbr() {
 *
 * @return progress percentage
 *
-* @throws {@link java.io.IOException} in case of errors reading from the filestream provided by Hadoop
+* @throws java.io.IOException in case of errors reading from the filestream provided by Hadoop
 *
 */
 
@@ -240,7 +240,7 @@ private boolean  isCompressedInput() {
 *
 * @return position
 *
-* @throws {@link java.io.IOException} in case of errors reading from the filestream provided by Hadoop
+* @throws java.io.IOException in case of errors reading from the filestream provided by Hadoop
 *
 */
 
@@ -252,7 +252,7 @@ public  synchronized long getPos() throws IOException {
 * Clean up InputStream and Decompressor after use
 *
 *
-* @throws {@link java.io.IOException} in case of errors reading from the filestream provided by Hadoop
+* @throws java.io.IOException in case of errors reading from the filestream provided by Hadoop
 *
 */
 
