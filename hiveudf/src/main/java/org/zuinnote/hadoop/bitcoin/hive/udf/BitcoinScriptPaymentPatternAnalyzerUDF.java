@@ -46,6 +46,10 @@ private static final Log LOG = LogFactory.getLog(BitcoinScriptPaymentPatternAnal
  /**
  ** Analyzes txOutScript (ScriptPubKey) of an output of a Bitcoin Transaction to determine the payment destination
 *
+* @param input BytesWritable containing a txOutScript of a Bitcoin Transaction
+*
+* @return Text containing the type of the output of the transaction, cf. BitcoinScriptPatternParser of the hadoopcryptoledger inputformat
+*
 */
   public Text evaluate(BytesWritable input) {
     if (input==null) return null;
