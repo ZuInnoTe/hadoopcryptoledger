@@ -10,7 +10,7 @@ jar {
         attributes 'Implementation-Title': 'Example - Spark 2 job (BitcoinBlock) for analysing Bitcoin data using hadoopcryptoledger', 'Implementation-Version': version
     }
  
-    baseName = 'example-hcl-spark-bitcoinblock'
+    baseName = 'example-hcl-spark2-bitcoinblock'
     version = '0.1.0'
    // note this builds one fat jar and it is not recommended for production use - just for illustration purpose
    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
