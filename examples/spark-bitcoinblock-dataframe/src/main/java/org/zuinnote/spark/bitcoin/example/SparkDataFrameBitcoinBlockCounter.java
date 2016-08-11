@@ -67,11 +67,11 @@ public class SparkDataFrameBitcoinBlockCounter  {
     // only use the BitcoinBlock and not the key
     JavaRDD<BitcoinBlock> bitcoinBlockRDD = bitcoinBlocksPairRDD.values();
     // convert it to DataFrame
-     DataFrame bitcoinBlockDF = sqlContext.createDataFrame(bitcoinBlockRDD, BitcoinBlock.class);
+     Dataset<Row> bitcoinBlockDF = sqlContext.createDataFrame(bitcoinBlockRDD, BitcoinBlock.class);
     bitcoinBlockDF.registerTempTable("BitcoinBlockChain");
     // cache it if you do a lot of iterative queries
      sqlContext.cacheTable("BitcoinBlockChain");
-    DataFrame allBlockCountDF = sqlContext.sql("SELECT count(*) FROM BitcoinBlockChain");
+    Dataset<Row> allBlockCountDF = sqlContext.sql("SELECT count(*) FROM BitcoinBlockChain");
   
     // write results to HDFS
     allBlockCountDF.write().save(args[1]);
