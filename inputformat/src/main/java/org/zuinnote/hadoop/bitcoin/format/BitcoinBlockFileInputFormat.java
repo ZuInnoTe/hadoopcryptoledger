@@ -44,10 +44,13 @@ import org.apache.commons.logging.Log;
 public class BitcoinBlockFileInputFormat extends FileInputFormat<BytesWritable,BitcoinBlock> implements JobConfigurable  {
 
 private static final Log LOG = LogFactory.getLog(BitcoinBlockFileInputFormat.class.getName());
+private static final String CONF_ISSPLITABLE="hadoopcryptoledeger.bitcoinblockinputformat.issplitable";
+private static final boolean DEFAULT_ISSPLITABLE=false;
+private boolean isSplitable=DEFAULT_ISSPLITABLE;
 private CompressionCodecFactory compressionCodecs = null;
 
 
-public RecordReader<BytesWritable,BitcoinBlock> getRecordReader(InputSplit split, JobConf job, Reporter reporter) throws IOException {
+public RecordReader<BytesWritable,BitcoinBlock> getRecordReader(InputSplit split, JobConf job, Reporter reporter) throws IOException {	
 	/** Create reader **/
 	try {
 		return new BitcoinBlockRecordReader( (FileSplit) split,job,reporter);
@@ -64,7 +67,8 @@ public RecordReader<BytesWritable,BitcoinBlock> getRecordReader(InputSplit split
 
 
 public void configure(JobConf conf) {
-    compressionCodecs = new CompressionCodecFactory(conf);
+    this.compressionCodecs = new CompressionCodecFactory(conf);
+    this.isSplitable=conf.getBoolean(this.CONF_ISSPLITABLE,this.DEFAULT_ISSPLITABLE);
 }
 
 /**
@@ -74,6 +78,7 @@ public void configure(JobConf conf) {
 */
 
   protected boolean isSplitable(FileSystem fs, Path file) {
+    if (this.isSplitable==false) return false;
     final CompressionCodec codec = compressionCodecs.getCodec(file);
     if (null == codec) {
       return true;
