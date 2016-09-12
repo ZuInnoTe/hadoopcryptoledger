@@ -64,6 +64,10 @@ public class BitcoinBlockSerde extends AbstractDeserializer implements Vectorize
 private static final Log LOG = LogFactory.getLog(BitcoinBlockSerde.class.getName());
 private ObjectInspector bitcoinBlockObjectInspector;
 
+private static final String CONF_MAXBLOCKSIZE="hadoopcryptoledger.bitcoinblockinputformat.maxblocksize";
+private static final String CONF_FILTERMAGIC="hadoopcryptoledger.bitcoinblockinputformat.filter.magic";
+private static final String CONF_USEDIRECTBUFFER="hadoopcryptoledeger.bitcoinblockinputformat.usedirectbuffer";
+
 
 /** Deserializer **/
 
@@ -90,12 +94,20 @@ public void initialize(Configuration conf, Properties tbl) {
     bitcoinBlockObjectInspector = ObjectInspectorFactory
         .getReflectionObjectInspector(BitcoinBlock.class,
         ObjectInspectorFactory.ObjectInspectorOptions.JAVA);
-
+   // pass tbl properties to Configuration
+	String maxBlockSizeStr=tbl.getProperty(CONF_MAXBLOCKSIZE);
+	if (maxBlockSizeStr!=null) conf.setInt(CONF_MAXBLOCKSIZE, new Integer(maxBlockSizeStr).intValue());
+	String filterMagicStr=tbl.getProperty(CONF_FILTERMAGIC);
+	if (filterMagicStr!=null) conf.set(CONF_FILTERMAGIC, filterMagicStr);
+	String useDirectBufferStr=tbl.getProperty(CONF_USEDIRECTBUFFER);
+	if (useDirectBufferStr!=null) conf.setBoolean(CONF_USEDIRECTBUFFER, new Boolean(useDirectBufferStr).booleanValue());
+ 
 }
 
 public void initialize(Configuration conf, Properties tbl, Properties partitionProperties) {
 	// currently, we do not support partitions, however, once there is a flume source to load blockchain data in realtime into HDFS, we may think about certain partitions (e.g. creating subdirectories for each month)
 	initialize(conf,tbl);
+	
 }
 
 
