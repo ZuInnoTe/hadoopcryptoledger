@@ -6,6 +6,9 @@ use blockchains;
 -- create table representing Bitcoin Blockchain data stored in /user/cloudera/bitcoin/input
 create table BitcoinBlockchain ROW FORMAT SERDE 'org.zuinnote.hadoop.bitcoin.hive.serde.BitcoinBlockSerde' STORED AS INPUTFORMAT 'org.zuinnote.hadoop.bitcoin.format.BitcoinBlockFileInputFormat' OUTPUTFORMAT 'org.apache.hadoop.mapreduce.lib.output.NullOutputFormat' LOCATION '/user/cloudera/bitcoin/input';
 
+-- create table representing Bitcoin Blockchain data from Testnet3
+create table BitcoinBlockchainTestNet3 ROW FORMAT SERDE 'org.zuinnote.hadoop.bitcoin.hive.serde.BitcoinBlockSerde' STORED AS INPUTFORMAT 'org.zuinnote.hadoop.bitcoin.format.BitcoinBlockFileInputFormat' OUTPUTFORMAT 'org.apache.hadoop.mapreduce.lib.output.NullOutputFormat' LOCATION '/user/cloudera/bitcoin/input' TBLPROPERTIES("hadoopcryptoledger.bitcoinblockinputformat.filter.magic"="0B110907");
+
 -- The following example counts the number of blocks:
 
 select count(*) from BitcoinBlockchain;
