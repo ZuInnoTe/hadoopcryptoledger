@@ -67,6 +67,7 @@ private ObjectInspector bitcoinBlockObjectInspector;
 private static final String CONF_MAXBLOCKSIZE="hadoopcryptoledger.bitcoinblockinputformat.maxblocksize";
 private static final String CONF_FILTERMAGIC="hadoopcryptoledger.bitcoinblockinputformat.filter.magic";
 private static final String CONF_USEDIRECTBUFFER="hadoopcryptoledeger.bitcoinblockinputformat.usedirectbuffer";
+private static final String CONF_ISSPLITABLE="hadoopcryptoledeger.bitcoinblockinputformat.issplitable";
 
 
 /** Deserializer **/
@@ -101,6 +102,8 @@ public void initialize(Configuration conf, Properties tbl) {
 	if (filterMagicStr!=null) conf.set(CONF_FILTERMAGIC, filterMagicStr);
 	String useDirectBufferStr=tbl.getProperty(CONF_USEDIRECTBUFFER);
 	if (useDirectBufferStr!=null) conf.setBoolean(CONF_USEDIRECTBUFFER, new Boolean(useDirectBufferStr).booleanValue());
+	String isSplitableStr= tbl.getProperty(CONF_ISSPLITABLE);
+	if (isSplitableStr!=null) conf.setBoolean(CONF_ISSPLITABLE, new Boolean(isSplitableStr).booleanValue());
  
 }
 
