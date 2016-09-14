@@ -1,4 +1,5 @@
 
+package org.zuinnote.spark.bitcoin.example
 
 import org.apache.spark.SparkContext
 import org.apache.spark.SparkConf
