@@ -15,5 +15,5 @@ libraryDependencies += "org.apache.spark" % "spark-core_2.10" % "1.5.0" % "provi
 
 libraryDependencies += "org.apache.hadoop" % "hadoop-client" % "2.7.0" % "provided"
 
-libraryDependencies += "org.scalatest" % "scalatest_2.11" % "2.2.1" % "test"
+libraryDependencies += "org.scalatest" % "scalatest_2.10" % "2.2.1" % "test"
 
