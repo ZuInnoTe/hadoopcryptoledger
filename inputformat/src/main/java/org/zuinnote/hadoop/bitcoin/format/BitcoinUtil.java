@@ -262,7 +262,7 @@ public static boolean compareMagics (byte[] magic1,byte[] magic2) {
 *
 * @param transaction The BitcoinTransaction of which we want to calculate the hash
 *
-* @return byte array containing the hash of the transaction
+* @return byte array containing the hash of the transaction. Note to compare it with prevTransactionHash of an input you need to apply reverseByteArray(prevTransactionHash)!
 *
 *
 * @throws java.io.IOException in case of errors reading from the InputStream
