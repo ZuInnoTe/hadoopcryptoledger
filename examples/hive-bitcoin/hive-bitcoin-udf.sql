@@ -11,4 +11,6 @@ SELECT hclBitcoinScriptPattern(expout.txoutscript) FROM (select * from BitcoinBl
 --- the following example displays the transaction hash of a given transaction. You can use the transaction hashes to determine which output has been used as input in another transaction and ultimately to build a transaction graph to trace the route of Bitcoins in the Blockchain
 SELECT hclBitcoinTransactionHash(transactions[0]) FROM BitcoinBlockChain LIMIT 1;
 
+--- if you want to search for the transaction hash in popular Bitcoin explorers then you have to reverse the output of the hclBitcoinTransactionHash UDF
+SELECT hex(encode(reverse(decode(hclBitcoinTransactionHash(transactions[0]),'ISO-8859-1')),'ISO-8859-1')) FROM BitcoinBlockChain LIMIT 1;
 
