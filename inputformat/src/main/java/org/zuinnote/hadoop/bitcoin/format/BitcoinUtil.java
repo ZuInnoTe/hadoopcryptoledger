@@ -262,7 +262,7 @@ public static boolean compareMagics (byte[] magic1,byte[] magic2) {
 *
 * @param transaction The BitcoinTransaction of which we want to calculate the hash
 *
-* @return byte array containing the hash of the transaction. Note to compare it with prevTransactionHash of an input you need to apply reverseByteArray(prevTransactionHash)!
+* @return byte array containing the hash of the transaction. Note: This one can be compared to a prevTransactionHash. However, if you want to search for it in popular blockchain explorers then you need to apply the function BitcoinUtil.reverseByteArray to it!
 *
 *
 * @throws java.io.IOException in case of errors reading from the InputStream
@@ -297,7 +297,7 @@ public static byte[] getTransactionHash(BitcoinTransaction transaction) throws N
 	MessageDigest digest = MessageDigest.getInstance("SHA-256");
 	byte[] firstRoundHash = digest.digest(transactionByteArray);
 	byte[] secondRoundHash = digest.digest(firstRoundHash);
-	byte[] finalHash = reverseByteArray(secondRoundHash);
+	byte[] finalHash = secondRoundHash;
 	return finalHash;
 }
 
