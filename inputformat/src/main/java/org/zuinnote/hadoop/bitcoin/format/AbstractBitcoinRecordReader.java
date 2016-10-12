@@ -51,7 +51,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
 
 public abstract class AbstractBitcoinRecordReader<K,V> implements RecordReader<K,V> {
-private static final Log LOG = LogFactory.getLog(BitcoinRawBlockRecordReader.class.getName());
+private static final Log LOG = LogFactory.getLog(AbstractBitcoinRecordReader.class.getName());
 private static final String CONF_BUFFERSIZE="io.file.buffer.size";
 private static final String CONF_MAXBLOCKSIZE="hadoopcryptoledger.bitcoinblockinputformat.maxblocksize";
 private static final String CONF_FILTERMAGIC="hadoopcryptoledger.bitcoinblockinputformat.filter.magic";
