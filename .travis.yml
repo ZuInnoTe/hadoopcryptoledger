@@ -16,4 +16,4 @@ script:
 - gradle clean
 - gradle build
 - gradle test
-- sonar-scanner -Dsonar.login=$SONAR_HCL
+- sonar-scanner -Dsonar.login=$SONAR_HCL -Dsonar.projectKey=ZuInnoTe:hadoopcryptoledger -Dsonar.projectName=HadoopCryptoLedger -Dsonar.sources=./inputformat/src,./hiveserde/src,./hiveudf/src
