@@ -35,6 +35,7 @@ import org.apache.commons.logging.Log;
 
 
 public class BitcoinUtil {
+
 private static final Log LOG = LogFactory.getLog(BitcoinUtil.class.getName());
 
 /**
@@ -301,6 +302,22 @@ public static byte[] getTransactionHash(BitcoinTransaction transaction) throws N
 	return finalHash;
 }
 
+	public static byte[] getBlockHash(BitcoinBlock block) throws NoSuchAlgorithmException, IOException {
+		ByteArrayOutputStream blockBAOS = new ByteArrayOutputStream();
+		String merkleTree = convertByteArrayToHexString(block.getHashMerkleRoot()).toLowerCase();
+		blockBAOS.write(reverseByteArray(convertIntToByteArray(block.getVersion())));
+		blockBAOS.write(block.getHashPrevBlock());
+		blockBAOS.write(block.getHashMerkleRoot());
+		blockBAOS.write(reverseByteArray(convertIntToByteArray(block.getTime())));
+		blockBAOS.write(block.getBits());
+		blockBAOS.write(reverseByteArray(convertIntToByteArray(block.getNonce())));
+		byte[] blockByteArray = blockBAOS.toByteArray();
+		MessageDigest digest = MessageDigest.getInstance("SHA-256");
+		byte[] firstRoundHash = digest.digest(blockByteArray);
+		byte[] secondRoundHash = digest.digest(firstRoundHash);
+		byte[] finalHash = secondRoundHash;
+		return reverseByteArray(finalHash);
+    }
 
 
 }

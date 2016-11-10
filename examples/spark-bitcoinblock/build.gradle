@@ -9,12 +9,14 @@ jar {
     manifest {
         attributes 'Implementation-Title': 'Example - Spark job (BitcoinBlock) for analysing Bitcoin data using hadoopcryptoledger', 'Implementation-Version': version
     }
- 
+
     baseName = 'example-hcl-spark-bitcoinblock'
     version = '0.1.0'
    // note this builds one fat jar and it is not recommended for production use - just for illustration purpose
    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 }
+
+mainClassName = "org.zuinnote.spark.bitcoin.example.SparkBitcoinBlockCounter"
 
 repositories {
     mavenCentral()
