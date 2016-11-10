@@ -16,6 +16,8 @@ jar {
    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 }
 
+mainClassName = "org.zuinnote.spark.bitcoin.example.SparkBitcoinBlockCounter"
+
 repositories {
     mavenCentral()
 }
