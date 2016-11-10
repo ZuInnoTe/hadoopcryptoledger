@@ -8,12 +8,8 @@ jdk:
   - oraclejdk8
   - oraclejdk7
 script:
-- jdk_switcher use oraclejdk7
 - gradle clean
 - gradle build
 - gradle test
-- jdk_switcher use oraclejdk8
-- gradle clean
-- gradle build
-- gradle test
+after_success:
 - sonar-scanner -Dsonar.login=$SONAR_HCL -Dsonar.projectKey=ZuInnoTe:hadoopcryptoledger -Dsonar.projectName=HadoopCryptoLedger -Dsonar.sources=./inputformat/src,./hiveserde/src,./hiveudf/src
