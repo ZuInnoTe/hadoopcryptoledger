@@ -36,9 +36,9 @@ import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
 
 
 public class BitcoinFormatReaderTest {
-private static final int DEFAULT_BUFFERSIZE=64*1024;
-private static final int DEFAULT_MAXSIZE_BITCOINBLOCK=1 * 1024 * 1024;
-private static final byte[][] DEFAULT_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB4,(byte)0xD9}};
+static final int DEFAULT_BUFFERSIZE=64*1024;
+static final int DEFAULT_MAXSIZE_BITCOINBLOCK=1 * 1024 * 1024;
+static final byte[][] DEFAULT_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB4,(byte)0xD9}};
 private static final byte[][] TESTNET3_MAGIC = {{(byte)0x0B,(byte)0x11,(byte)0x09,(byte)0x07}};
 private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB4,(byte)0xD9},{(byte)0x0B,(byte)0x11,(byte)0x09,(byte)0x07}};
 
