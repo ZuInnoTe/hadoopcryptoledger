@@ -13,4 +13,4 @@ script:
 - gradle clean
 - gradle build
 - gradle test
-- sonar-scanner -Dsonar.login=$SONAR_HCL -Dsonar.projectKey=ZuInnoTe:hadoopcryptoledger -Dsonar.projectName=HadoopCryptoLedger -Dsonar.sources=./inputformat/src,./hiveserde/src,./hiveudf/src
+- sonar-scanner -Dsonar.login=$SONAR_HCL -Dsonar.projectKey=ZuInnoTe:hadoopcryptoledger -Dsonar.projectName=HadoopCryptoLedger -Dsonar.sources=./inputformat/src/main,./hiveserde/src/main,./hiveudf/src/main/java,./examples/mapreduce-bitcoinblock/src/main/java,./examples/mapreduce-bitcointransaction/src/main/java,./examples/scala-spark-bitcoinblock/src/main/scala,./examples/scala-spark-graphx-bitcointransaction/src/main/scala,./examples/spark-bitcoinblock/src/main/java,./examples/spark2-bitcoinblock-dataset/src/main/java,./examples/spark2-bitcoinblock/src/main/java -Dsonar.tests=./inputformat/src/test,./hiveserde/src/test,./hiveudf/src/test
