@@ -280,10 +280,10 @@ public static byte[] getTransactionHash(BitcoinTransaction transaction) throws N
 	transactionBAOS.write(inCounter);
 	for (int i=0;i<transaction.getListOfInputs().size();i++) {
 		transactionBAOS.write(transaction.getListOfInputs().get(i).getPrevTransactionHash());
-		transactionBAOS.write(reverseByteArray(convertIntToByteArray(new Long(transaction.getListOfInputs().get(i).getPreviousTxOutIndex()).intValue())));
+		transactionBAOS.write(reverseByteArray(convertIntToByteArray((int)(transaction.getListOfInputs().get(i).getPreviousTxOutIndex()))));
 		transactionBAOS.write(transaction.getListOfInputs().get(i).getTxInScriptLength());
 		transactionBAOS.write(transaction.getListOfInputs().get(i).getTxInScript());
-		transactionBAOS.write(reverseByteArray(convertIntToByteArray(new Long(transaction.getListOfInputs().get(i).getSeqNo()).intValue())));
+		transactionBAOS.write(reverseByteArray(convertIntToByteArray((int)(transaction.getListOfInputs().get(i).getSeqNo()))));
 	}
 	byte[] outCounter = transaction.getOutCounter();
 	transactionBAOS.write(outCounter);
