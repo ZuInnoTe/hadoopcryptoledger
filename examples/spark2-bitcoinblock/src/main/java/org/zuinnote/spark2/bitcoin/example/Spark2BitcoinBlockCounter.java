@@ -19,7 +19,6 @@
  */
 package org.zuinnote.spark2.bitcoin.example;
 
-import java.io.IOException;
 import java.util.*;
         
 import org.apache.hadoop.fs.Path;
@@ -35,7 +34,6 @@ import org.apache.spark.sql.*;
 import org.apache.spark.api.java.*;
 import org.apache.spark.api.java.function.*;
 import org.apache.spark.SparkConf;
-import org.apache.spark.api.java.function.Function;
 
 import org.zuinnote.hadoop.bitcoin.format.*;
    
@@ -46,7 +44,9 @@ import org.zuinnote.hadoop.bitcoin.format.*;
 
 public class Spark2BitcoinBlockCounter  {
 
-       
+private Spark2BitcoinBlockCounter() {
+	super();
+}
         
         
  public static void main(String[] args) throws Exception {
@@ -62,12 +62,14 @@ public class Spark2BitcoinBlockCounter  {
     JavaPairRDD<BytesWritable, BitcoinBlock> bitcoinBlocksRDD = sc.hadoopRDD(hadoopConf, BitcoinBlockFileInputFormat.class, BytesWritable.class, BitcoinBlock.class, 2);
     // extract the no transactions / block (map)
     JavaPairRDD<String, Long> noOfTransactionPair = bitcoinBlocksRDD.mapToPair(new PairFunction<Tuple2<BytesWritable,BitcoinBlock>, String, Long>() {
+	@Override
 	public Tuple2<String, Long> call(Tuple2<BytesWritable,BitcoinBlock> tupleBlock) {
 		return new Tuple2<String, Long>("No of transactions: ",(long)(tupleBlock._2().getTransactions().size())); 
 	}
     });
    // combine the results from all blocks
    JavaPairRDD<String, Long> totalCount = noOfTransactionPair.reduceByKey(new Function2<Long, Long, Long>() {
+	@Override	
 	public Long call(Long a, Long b) { 
 		return a+b;
 	}
