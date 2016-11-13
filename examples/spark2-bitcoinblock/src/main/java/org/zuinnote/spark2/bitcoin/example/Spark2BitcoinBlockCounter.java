@@ -31,6 +31,7 @@ import org.apache.hadoop.util.*;
 
 import scala.Tuple2;
 import org.apache.hadoop.conf.*;
+import org.apache.spark.sql.*;
 import org.apache.spark.api.java.*;
 import org.apache.spark.api.java.function.*;
 import org.apache.spark.SparkConf;
@@ -47,6 +48,7 @@ public class Spark2BitcoinBlockCounter  {
 
        
         
+        
  public static void main(String[] args) throws Exception {
     SparkConf conf = new SparkConf().setAppName("Spark2 BitcoinBlock Analytics (hadoopcryptoledger)");
     JavaSparkContext sc = new JavaSparkContext(conf); 
@@ -61,7 +63,7 @@ public class Spark2BitcoinBlockCounter  {
     // extract the no transactions / block (map)
     JavaPairRDD<String, Long> noOfTransactionPair = bitcoinBlocksRDD.mapToPair(new PairFunction<Tuple2<BytesWritable,BitcoinBlock>, String, Long>() {
 	public Tuple2<String, Long> call(Tuple2<BytesWritable,BitcoinBlock> tupleBlock) {
-		return new Tuple2<String, Long>("No of transactions: ",new Long(tupleBlock._2().getTransactions().size())); 
+		return new Tuple2<String, Long>("No of transactions: ",(long)(tupleBlock._2().getTransactions().size())); 
 	}
     });
    // combine the results from all blocks
@@ -72,6 +74,7 @@ public class Spark2BitcoinBlockCounter  {
    });
     // write results to HDFS
     totalCount.repartition(1).saveAsTextFile(args[1]);
- }
+    sc.close();
+}
         
 }
