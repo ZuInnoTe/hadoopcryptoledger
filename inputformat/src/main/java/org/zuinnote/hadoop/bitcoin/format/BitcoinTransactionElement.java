@@ -5,7 +5,7 @@ public class BitcoinTransactionElement {
     private int transactionIdxInBlock;
     private byte[] transactionHash;
     private int type;
-    private int indexInTransaction;
+    private long indexInTransaction;
     private long amount;
     private byte[] script;
 
@@ -41,11 +41,11 @@ public class BitcoinTransactionElement {
         this.type = type;
     }
 
-    public int getIndexInTransaction() {
+    public long getIndexInTransaction() {
         return indexInTransaction;
     }
 
-    public void setIndexInTransaction(int indexInTransaction) {
+    public void setIndexInTransaction(long indexInTransaction) {
         this.indexInTransaction = indexInTransaction;
     }
 
