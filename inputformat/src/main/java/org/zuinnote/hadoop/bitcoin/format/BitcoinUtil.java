@@ -302,6 +302,19 @@ public static byte[] getTransactionHash(BitcoinTransaction transaction) throws N
 	return finalHash;
 }
 
+/**
+* Calculates the double SHA256-Hash of a block in little endian format. This could be used for certain analysis scenario where one want to investigate the referenced transaction used as an input for a Transaction. Furthermore, it can be used as a unique identifier of the transaction
+*
+*
+* @param transaction The BitcoinTransaction of which we want to calculate the hash
+*
+* @return byte array containing the hash of the block.
+*
+*
+* @throws java.io.IOException in case of errors reading from the InputStream
+* @throws java.security.NoSuchAlgorithmException in case the hashing algorithm of the Bitcoin Blockchain is not supported by the JDK
+*
+*/
 	public static byte[] getBlockHash(BitcoinBlock block) throws NoSuchAlgorithmException, IOException {
 		ByteArrayOutputStream blockBAOS = new ByteArrayOutputStream();
 		String merkleTree = convertByteArrayToHexString(block.getHashMerkleRoot()).toLowerCase();
