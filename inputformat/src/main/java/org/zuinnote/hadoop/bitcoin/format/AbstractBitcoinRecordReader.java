@@ -51,15 +51,17 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
 
 public abstract class AbstractBitcoinRecordReader<K,V> implements RecordReader<K,V> {
+public static final String CONF_BUFFERSIZE="io.file.buffer.size";
+public static final String CONF_MAXBLOCKSIZE="hadoopcryptoledger.bitcoinblockinputformat.maxblocksize";
+public static final String CONF_FILTERMAGIC="hadoopcryptoledger.bitcoinblockinputformat.filter.magic";
+public static final String CONF_USEDIRECTBUFFER="hadoopcryptoledeger.bitcoinblockinputformat.usedirectbuffer";
+public static final int DEFAULT_BUFFERSIZE=64*1024;
+public static final int DEFAULT_MAXSIZE_BITCOINBLOCK=2 * 1024 * 1024;
+public static final String DEFAULT_MAGIC = "F9BEB4D9";
+public static final boolean DEFAULT_USEDIRECTBUFFER=false;
+
 private static final Log LOG = LogFactory.getLog(AbstractBitcoinRecordReader.class.getName());
-private static final String CONF_BUFFERSIZE="io.file.buffer.size";
-private static final String CONF_MAXBLOCKSIZE="hadoopcryptoledger.bitcoinblockinputformat.maxblocksize";
-private static final String CONF_FILTERMAGIC="hadoopcryptoledger.bitcoinblockinputformat.filter.magic";
-private static final String CONF_USEDIRECTBUFFER="hadoopcryptoledeger.bitcoinblockinputformat.usedirectbuffer";
-private static final int DEFAULT_BUFFERSIZE=64*1024;
-private static final int DEFAULT_MAXSIZE_BITCOINBLOCK=2 * 1024 * 1024;
-private static final String DEFAULT_MAGIC = "F9BEB4D9";
-private static final boolean DEFAULT_USEDIRECTBUFFER=false;
+
 private int bufferSize=0;
 private int maxSizeBitcoinBlock=0; 
 private boolean useDirectBuffer=false;
