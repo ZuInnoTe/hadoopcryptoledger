@@ -1,5 +1,5 @@
 /**
- * Copyright 2016 ZuInnoTe (Jörn Franke) <zuinnote@gmail.com>
+ * Copyright 2016 Márton Elek
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,14 +30,10 @@ import org.zuinnote.hadoop.bitcoin.format.exception.HadoopCryptoLedgerConfigurat
 
 import java.io.IOException;
 
-public class BitcoinTransactionElementFileInputFormat extends FileInputFormat<BytesWritable, BitcoinTransactionElement> implements JobConfigurable {
+public class BitcoinTransactionElementFileInputFormat extends AbstractBitcoinFileInputFormat<BytesWritable,BitcoinTransactionElement>  {
 
     private static final Log LOG = LogFactory.getLog(BitcoinTransactionElementFileInputFormat.class.getName());
-    private static final String CONF_ISSPLITABLE = "hadoopcryptoledeger.bitcoinblockinputformat.issplitable";
-    private static final boolean DEFAULT_ISSPLITABLE = false;
-    private boolean isSplitable = DEFAULT_ISSPLITABLE;
-    private CompressionCodecFactory compressionCodecs = null;
-
+    
 
     public RecordReader<BytesWritable, BitcoinTransactionElement> getRecordReader(InputSplit split, JobConf job, Reporter reporter) throws IOException {
         /** Create reader **/
@@ -52,28 +48,5 @@ public class BitcoinTransactionElementFileInputFormat extends FileInputFormat<By
         }
         return null;
     }
-
-
-    public void configure(JobConf conf) {
-        this.compressionCodecs = new CompressionCodecFactory(conf);
-        this.isSplitable = conf.getBoolean(this.CONF_ISSPLITABLE, this.DEFAULT_ISSPLITABLE);
-    }
-
-    /**
-     *
-     * This method is experimental and derived from TextInputFormat. It is not necessary and not recommended to compress the blockchain files. Instead it is recommended to extract relevant data from the blockchain files once and store them in a format suitable for analytics (including compression), such as ORC or Parquet.
-     *
-     */
-
-    protected boolean isSplitable(FileSystem fs, Path file) {
-        if (this.isSplitable == false) return false;
-        final CompressionCodec codec = compressionCodecs.getCodec(file);
-        if (null == codec) {
-            return true;
-        }
-        return codec instanceof SplittableCompressionCodec;
-
-    }
-
 
 }
