@@ -303,7 +303,7 @@ public static byte[] getTransactionHash(BitcoinTransaction transaction) throws N
 }
 
 /**
-* Calculates the double SHA256-Hash of a block in little endian format. This could be used for certain analysis scenario where one want to investigate the referenced transaction used as an input for a Transaction. Furthermore, it can be used as a unique identifier of the transaction
+* Calculates the double SHA256-Hash of a block in little endian format. 
 *
 *
 * @param block The BitcoinTransaction of which we want to calculate the hash
