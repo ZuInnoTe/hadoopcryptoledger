@@ -28,10 +28,13 @@ import org.zuinnote.hadoop.bitcoin.format.exception.HadoopCryptoLedgerConfigurat
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.security.NoSuchAlgorithmException;
+import java.util.NoSuchElementException;
 
 
 public class BitcoinTransactionElementRecordReader extends AbstractBitcoinRecordReader<BytesWritable, BitcoinTransactionElement> {
-    private static final Log LOG = LogFactory.getLog(BitcoinBlockRecordReader.class.getName());
+
+    private static final Log LOG = LogFactory.getLog(BitcoinTransactionElementRecordReader.class.getName());
 
     private int currentTransactionCounterInBlock = 0;
 
@@ -43,6 +46,9 @@ public class BitcoinTransactionElementRecordReader extends AbstractBitcoinRecord
 
     private BitcoinTransaction currentTransaction;
 
+    private byte[] currentBlockHash;
+
+    private byte[] currentTransactionHash;
 
     public BitcoinTransactionElementRecordReader(FileSplit split, JobConf job, Reporter reporter) throws IOException, HadoopCryptoLedgerConfigurationException, BitcoinBlockReadException {
         super(split, job, reporter);
@@ -81,34 +87,35 @@ public class BitcoinTransactionElementRecordReader extends AbstractBitcoinRecord
                 if ((currentBitcoinBlock == null) || (currentBitcoinBlock.getTransactions().size() == currentTransactionCounterInBlock)) {
                     currentBitcoinBlock = getBbr().readBlock();
                     if (currentBitcoinBlock == null) return false;
+                    currentBlockHash = BitcoinUtil.getBlockHash(currentBitcoinBlock);
                     currentTransactionCounterInBlock = 0;
                     currentInputCounter = 0;
                     currentOutputCounter = 0;
+                    readTransaction();
                 }
-                currentTransaction = currentBitcoinBlock.getTransactions().get(currentTransactionCounterInBlock);
 
-                byte[] blockHash = BitcoinUtil.getBlockHash(currentBitcoinBlock);
-                byte[] transactionHash = BitcoinUtil.getTransactionHash(currentTransaction);
-                value.setBlockHash(blockHash);
+
+                value.setBlockHash(currentBlockHash);
                 value.setTransactionIdxInBlock(currentTransactionCounterInBlock);
                 if (currentTransaction.getListOfInputs().size() > currentInputCounter) {
                     value.setType(0);
                     BitcoinTransactionInput input = currentTransaction.getListOfInputs().get(currentInputCounter);
-                    currentInputCounter++;
+                    value.setIndexInTransaction(input.getPreviousTxOutIndex());
                     value.setAmount(0);
                     value.setTransactionHash(BitcoinUtil.reverseByteArray(input.getPrevTransactionHash()));
                     value.setScript(input.getTxInScript());
-                    byte[] keyBytes = createUniqKey(transactionHash, 0, currentInputCounter);
+                    byte[] keyBytes = createUniqKey(currentTransactionHash, 0, currentInputCounter);
                     key.set(keyBytes, 0, keyBytes.length);
+                    currentInputCounter++;
                     return true;
                 } else if (currentTransaction.getListOfOutputs().size() > currentOutputCounter) {
                     value.setType(1);
                     BitcoinTransactionOutput output = currentTransaction.getListOfOutputs().get(currentOutputCounter);
                     value.setAmount(output.getValue());
                     value.setIndexInTransaction(currentOutputCounter);
-                    value.setTransactionHash(transactionHash);
+                    value.setTransactionHash(BitcoinUtil.reverseByteArray(currentTransactionHash));
                     value.setScript(output.getTxOutScript());
-                    byte[] keyBytes = createUniqKey(transactionHash, 1, currentOutputCounter);
+                    byte[] keyBytes = createUniqKey(currentTransactionHash, 1, currentOutputCounter);
                     key.set(keyBytes, 0, keyBytes.length);
 
                     //return an output
@@ -118,14 +125,24 @@ public class BitcoinTransactionElementRecordReader extends AbstractBitcoinRecord
                     currentInputCounter = 0;
                     currentOutputCounter = 0;
                     currentTransactionCounterInBlock++;
-                    return next(key, value);
+                    readTransaction();
+                    continue;
                 }
             }
             return false;
-        } catch (Exception e) {
-            // log
-            LOG.error(e);
-            return false;
+        } catch (NoSuchElementException e) {
+            throw new RuntimeException(e);
+        } catch (BitcoinBlockReadException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void readTransaction() throws IOException, NoSuchAlgorithmException {
+        if (currentBitcoinBlock.getTransactions().size() > currentTransactionCounterInBlock) {
+            currentTransaction = currentBitcoinBlock.getTransactions().get(currentTransactionCounterInBlock);
+            currentTransactionHash = BitcoinUtil.getTransactionHash(currentTransaction);
         }
     }
 
