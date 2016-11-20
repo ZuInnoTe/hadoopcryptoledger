@@ -116,7 +116,9 @@ public void seekBlockStart() throws BitcoinBlockReadException,IOException {
 	// increase by one byte
 	if (magicFound==false) {
 		this.bin.reset();
-		this.bin.skip(1);
+		if (this.bin.skip(1)!=1) {
+			LOG.error("Error cannot skip 1 byte in InputStream");
+		}
 	}
 	currentSeek++;
 	}
@@ -136,7 +138,7 @@ public void seekBlockStart() throws BitcoinBlockReadException,IOException {
 		
 		long blockSize=BitcoinUtil.getSize(blockSizeArray);
 		if (this.maxSizeBitcoinBlock<blockSize) throw new BitcoinBlockReadException("Error: Cannot seek to a block start, because no valid block found. Max bitcoin block size is smaller than current block size.");
-		int blockSizeInt=new Long(blockSize).intValue();
+		int blockSizeInt=(int)blockSize;
 		byte[] blockRead=new byte[blockSizeInt];
 		int readByte=0;
 		int totalByteRead=0;
@@ -161,7 +163,9 @@ public void seekBlockStart() throws BitcoinBlockReadException,IOException {
 
 public BitcoinBlock readBlock() throws BitcoinBlockReadException,IOException {
 	ByteBuffer rawByteBuffer = readRawBlock();
-	if (rawByteBuffer==null) return null;
+	if (rawByteBuffer==null) {
+		return null;
+	}
 	// start parsing
 	// initialize byte arrays
 	byte[] currentMagicNo=new byte[4];	
@@ -206,7 +210,7 @@ public BitcoinBlock readBlock() throws BitcoinBlockReadException,IOException {
 */
 
 public List<BitcoinTransaction> parseTransactions(ByteBuffer rawByteBuffer,long noOfTransactions) {
-	ArrayList<BitcoinTransaction> resultTransactions = new ArrayList<BitcoinTransaction>(new Long(noOfTransactions).intValue());
+	ArrayList<BitcoinTransaction> resultTransactions = new ArrayList<BitcoinTransaction>((int)noOfTransactions);
 	// read all transactions from ByteBuffer
 	for (int k=0;k<noOfTransactions;k++) {
 		// read version
@@ -215,7 +219,7 @@ public List<BitcoinTransaction> parseTransactions(ByteBuffer rawByteBuffer,long 
 		byte[] currentInCounterVarInt=BitcoinUtil.convertVarIntByteBufferToByteArray(rawByteBuffer);
 		long currentNoOfInputs=BitcoinUtil.getVarInt(currentInCounterVarInt);
 		// read inputs
-		ArrayList<BitcoinTransactionInput> currentTransactionInput = new ArrayList<BitcoinTransactionInput>(new Long(currentNoOfInputs).intValue());
+		ArrayList<BitcoinTransactionInput> currentTransactionInput = new ArrayList<BitcoinTransactionInput>((int)currentNoOfInputs);
 		
 		for (int i=0;i<currentNoOfInputs;i++) {
 			// read previous Hash of Transaction
@@ -227,7 +231,7 @@ public List<BitcoinTransaction> parseTransactions(ByteBuffer rawByteBuffer,long 
 			byte[] currentTransactionTxInScriptLengthVarInt=BitcoinUtil.convertVarIntByteBufferToByteArray(rawByteBuffer);
 			long currentTransactionTxInScriptSize=BitcoinUtil.getVarInt(currentTransactionTxInScriptLengthVarInt);
 			// read inScript
-			int currentTransactionTxInScriptSizeInt=new Long(currentTransactionTxInScriptSize).intValue();
+			int currentTransactionTxInScriptSizeInt=(int)currentTransactionTxInScriptSize;
 			byte[] currentTransactionInScript=new byte[currentTransactionTxInScriptSizeInt];
 			rawByteBuffer.get(currentTransactionInScript,0,currentTransactionTxInScriptSizeInt);
 			// read sequence no
@@ -239,14 +243,14 @@ public List<BitcoinTransaction> parseTransactions(ByteBuffer rawByteBuffer,long 
 		byte[] currentOutCounterVarInt=BitcoinUtil.convertVarIntByteBufferToByteArray(rawByteBuffer);
 		long currentNoOfOutput=BitcoinUtil.getVarInt(currentOutCounterVarInt);
 		// read outputs
-		ArrayList<BitcoinTransactionOutput> currentTransactionOutput = new ArrayList<BitcoinTransactionOutput>(new Long(currentNoOfOutput).intValue());
+		ArrayList<BitcoinTransactionOutput> currentTransactionOutput = new ArrayList<BitcoinTransactionOutput>((int)(currentNoOfOutput));
 		for (int i=0;i<currentNoOfOutput;i++) {
 			// read value
 			long currentTransactionOutputValue = rawByteBuffer.getLong();
 			// read outScript length (Potential Internal Exceed Java Type)
 			byte[] currentTransactionTxOutScriptLengthVarInt=BitcoinUtil.convertVarIntByteBufferToByteArray(rawByteBuffer);
 			long currentTransactionTxOutScriptSize=BitcoinUtil.getVarInt(currentTransactionTxOutScriptLengthVarInt);
-			int currentTransactionTxOutScriptSizeInt=new Long(currentTransactionTxOutScriptSize).intValue();
+			int currentTransactionTxOutScriptSizeInt=(int)(currentTransactionTxOutScriptSize);
 			// read outScript
 			byte[] currentTransactionOutScript=new byte[currentTransactionTxOutScriptSizeInt];
 			rawByteBuffer.get(currentTransactionOutScript,0,currentTransactionTxOutScriptSizeInt);
@@ -308,7 +312,9 @@ public ByteBuffer readRawBlock() throws BitcoinBlockReadException, IOException {
 			if (readBlock==false) { // skip it
 				// Skip block
 				this.bin.reset();
-				this.bin.skip(blockSize);
+				if (this.bin.skip(blockSize)!=blockSize) {
+					LOG.error("Cannot skip block in InputStream");
+				}
 			}
 		} else {
 			readBlock=true;
@@ -320,7 +326,7 @@ public ByteBuffer readRawBlock() throws BitcoinBlockReadException, IOException {
 	if (blockSize<0) throw new BitcoinBlockReadException("Error: This block size cannot be handled currently (larger then largest number in positive signed int)");
 	if (blockSize>this.maxSizeBitcoinBlock) throw new BitcoinBlockReadException("Error: Block size is larger then defined in configuration - Please increase it if this is a valid block");
 	// read full block into ByteBuffer
-	int blockSizeInt=new Long(blockSize).intValue();
+	int blockSizeInt=(int)(blockSize);
 	byte[] fullBlock=new byte[blockSizeInt];
 	int readByte=0;
 	int totalByteRead=0;
