@@ -21,7 +21,6 @@ import org.zuinnote.hadoop.bitcoin.format.exception.HadoopCryptoLedgerConfigurat
 import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 
 import java.security.NoSuchAlgorithmException;
@@ -55,6 +54,7 @@ public BitcoinTransactionRecordReader(FileSplit split,JobConf job, Reporter repo
 *
 * @return key
 */
+@Override
 public BytesWritable createKey() {
 	return new BytesWritable();
 }
@@ -65,6 +65,7 @@ public BytesWritable createKey() {
 *
 * @return value
 */
+@Override
 public BitcoinTransaction createValue() {
 	return new BitcoinTransaction();
 }
@@ -79,6 +80,7 @@ public BitcoinTransaction createValue() {
 *
 * @return true if next block is available, false if not
 */
+@Override
 public boolean next(BytesWritable key, BitcoinTransaction value) throws IOException {
 	// read all the blocks, if necessary a block overlapping a split
 	while(getFilePosition()<=getEnd()) { // did we already went beyond the split (remote) or do we have no further data left?
@@ -92,7 +94,9 @@ public boolean next(BytesWritable key, BitcoinTransaction value) throws IOExcept
 			}
 		}
 
-		if (currentBitcoinBlock==null) return false;
+		if (currentBitcoinBlock==null) {
+			return false;
+		}
 		BitcoinTransaction currentTransaction=currentBitcoinBlock.getTransactions().get(currentTransactionCounterInBlock);
 		// the unique identifier that is linked in other transaction is usually its hash
 		byte[] newKey = new byte[0];
