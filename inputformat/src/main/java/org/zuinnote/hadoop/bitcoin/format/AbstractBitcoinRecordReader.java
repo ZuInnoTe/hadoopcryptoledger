@@ -155,6 +155,7 @@ public AbstractBitcoinRecordReader(FileSplit split,JobConf job, Reporter reporte
 *
 * @return key
 */
+@Override
 public abstract K createKey();
 
 /**
@@ -163,6 +164,7 @@ public abstract K createKey();
 *
 * @return value
 */
+@Override
 public abstract V createValue();
 
 
@@ -173,6 +175,7 @@ public abstract V createValue();
 *
 * @return true if next bitcoin data is available, false if not
 */
+@Override
 public abstract boolean next(K key, V value) throws IOException;
 
 
@@ -219,7 +222,7 @@ public BitcoinBlockReader getBbr() {
 * @throws java.io.IOException in case of errors reading from the filestream provided by Hadoop
 *
 */
-
+@Override
 public synchronized float getProgress() throws IOException {
 if (start == end) {
       return 0.0f;
@@ -245,7 +248,7 @@ private boolean  isCompressedInput() {
 * @throws java.io.IOException in case of errors reading from the filestream provided by Hadoop
 *
 */
-
+@Override
 public  synchronized long getPos() throws IOException {
 	return filePosition.getPos();
 }
@@ -257,7 +260,7 @@ public  synchronized long getPos() throws IOException {
 * @throws java.io.IOException in case of errors reading from the filestream provided by Hadoop
 *
 */
-
+@Override
 public synchronized void  close() throws IOException {
 try {
    if (bbr != null) {
