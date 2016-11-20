@@ -17,7 +17,7 @@
 package org.zuinnote.hadoop.bitcoin.hive.udf;
 
 import org.apache.hadoop.io.BytesWritable; 
-import org.apache.hadoop.io.Text; 
+
 
 import org.apache.hadoop.hive.ql.udf.generic.GenericUDF;
 import org.apache.hadoop.hive.ql.exec.Description;
@@ -25,7 +25,6 @@ import org.apache.hadoop.hive.ql.metadata.HiveException;
 import org.apache.hadoop.hive.ql.exec.UDFArgumentException;
 import org.apache.hadoop.hive.ql.exec.UDFArgumentLengthException;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
-import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspectorFactory;
 
 import org.apache.hadoop.hive.serde2.objectinspector.ListObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectInspectorFactory;
@@ -77,7 +76,7 @@ private WritableLongObjectInspector wloi;
 
 @Override
 public String getDisplayString(String[] arg0) {
-	return("hclBitcoinTransactionHash()");
+	return "hclBitcoinTransactionHash()";
 }
 
 /**
@@ -122,8 +121,9 @@ public ObjectInspector initialize(ObjectInspector[] arguments) throws UDFArgumen
 
 @Override
 public Object evaluate(DeferredObject[] arguments) throws HiveException {
-	if (arguments==null) return null;
-	if (arguments.length!=1) return null;
+	if ((arguments==null) || (arguments.length!=1)) { 
+		return null;
+	}
 	BitcoinTransaction bitcoinTransaction=null;
 	if (arguments[0].get() instanceof BitcoinTransaction) { // this happens if the table is in the original file format
 		 bitcoinTransaction = (BitcoinTransaction)arguments[0].get();
@@ -196,8 +196,10 @@ public Object evaluate(DeferredObject[] arguments) throws HiveException {
 	try {
 		 transactionHash = BitcoinUtil.getTransactionHash(bitcoinTransaction);
 	} catch (NoSuchAlgorithmException nsae) {
+		LOG.error(nsae);
 		throw new HiveException(nsae.toString());
 	} catch (IOException ioe) {
+		LOG.error(ioe);
 		throw new HiveException(ioe.toString());
 	}
 	return new BytesWritable(transactionHash);
