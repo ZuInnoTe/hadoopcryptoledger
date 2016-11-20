@@ -54,7 +54,7 @@ private CompressionCodecFactory compressionCodecs = null;
 public abstract RecordReader<K,V> getRecordReader(InputSplit split, JobConf job, Reporter reporter) throws IOException;
 
 
-
+@Override
 public void configure(JobConf conf) {
     this.compressionCodecs = new CompressionCodecFactory(conf);
     this.isSplitable=conf.getBoolean(this.CONF_ISSPLITABLE,this.DEFAULT_ISSPLITABLE);
@@ -65,9 +65,11 @@ public void configure(JobConf conf) {
 * This method is experimental and derived from TextInputFormat. It is not necessary and not recommended to compress the blockchain files. Instead it is recommended to extract relevant data from the blockchain files once and store them in a format suitable for analytics (including compression), such as ORC or Parquet.
 *
 */
-
+@Override
   protected boolean isSplitable(FileSystem fs, Path file) {
-    if (this.isSplitable==false) return false;
+    if (this.isSplitable==false) {
+		return false;
+    }
     final CompressionCodec codec = compressionCodecs.getCodec(file);
     if (null == codec) {
       return true;
