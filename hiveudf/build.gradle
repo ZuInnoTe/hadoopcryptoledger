@@ -1,5 +1,6 @@
 apply plugin: 'java'
 apply plugin: 'maven'
+apply plugin: 'maven-publish'
 apply plugin: 'signing'
 apply plugin: 'jacoco'
 
@@ -9,7 +10,7 @@ compileJava.options.encoding = 'UTF-8'
 
 group = "com.github.zuinnote"
 archivesBaseName = "hadoopcryptoledger-hiveudf"
-version = "1.0.1"
+version = "1.0.2"
 
 
 jar {
@@ -33,10 +34,12 @@ jacocoTestReport {
 
 repositories {
     mavenCentral()
+     mavenLocal()
     // workaround for certain dependencies of hive-exec
     maven {
     	url "http://conjars.org/repo"
     }
+   
 
 
 }
@@ -58,8 +61,8 @@ dependencies {
        // hadoop crypto ledger library
 
   
-   provided("com.github.zuinnote:hadoopcryptoledger-fileformat:1.0.1")
-   provided("com.github.zuinnote:hadoopcryptoledger-hiveserde:1.0.1")
+   provided("com.github.zuinnote:hadoopcryptoledger-fileformat:1.0.2")
+   provided("com.github.zuinnote:hadoopcryptoledger-hiveserde:1.0.2")
     // hive serde API
    provided("org.apache.hive:hive-serde:1.2.0")
    provided("org.apache.hive:hive-exec:1.2.0")
