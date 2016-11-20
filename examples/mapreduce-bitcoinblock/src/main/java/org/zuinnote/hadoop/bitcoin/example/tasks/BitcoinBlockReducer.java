@@ -30,7 +30,7 @@ import org.apache.hadoop.io.*;
 import java.util.*;
 
 public class BitcoinBlockReducer extends MapReduceBase implements Reducer<Text, IntWritable, Text, LongWritable> {
-
+  @Override
    public void reduce(Text key, Iterator<IntWritable> values, OutputCollector<Text, LongWritable> output, Reporter reporter)
      throws IOException {
        long sum = 0;

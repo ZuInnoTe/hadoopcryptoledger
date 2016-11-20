@@ -34,6 +34,7 @@ import java.util.*;
 
 	 public  class BitcoinBlockMap  extends MapReduceBase implements Mapper<BytesWritable, BitcoinBlock, Text, IntWritable> {
 	    private final static Text defaultKey = new Text("Transaction Count:");
+	    @Override
 	    public void map(BytesWritable key, BitcoinBlock value, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
 	    	// get the number of transactions
 	    	 output.collect(defaultKey, new IntWritable(value.getTransactions().size()));
