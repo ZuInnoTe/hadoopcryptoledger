@@ -39,7 +39,8 @@ import org.zuinnote.hadoop.bitcoin.format.*;
 
 public class BitcoinTransactionCounterDriver  {
 
-       
+ private BitcoinTransactionCounterDriver() {
+ }
         
  public static void main(String[] args) throws Exception {
     JobConf conf = new JobConf(BitcoinTransactionCounterDriver.class);
