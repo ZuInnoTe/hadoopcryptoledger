@@ -9,7 +9,7 @@ scalacOptions += "-target:jvm-1.7"
 
 assemblyJarName in assembly := "example-hcl-spark-scala-bitcoinblock.jar"
 
-libraryDependencies += "com.github.zuinnote" % "hadoopcryptoledger-fileformat" % "1.0.1" % "compile"
+libraryDependencies += "com.github.zuinnote" % "hadoopcryptoledger-fileformat" % "1.0.2" % "compile"
 
 libraryDependencies += "org.apache.spark" % "spark-core_2.10" % "1.5.0" % "provided"
 
