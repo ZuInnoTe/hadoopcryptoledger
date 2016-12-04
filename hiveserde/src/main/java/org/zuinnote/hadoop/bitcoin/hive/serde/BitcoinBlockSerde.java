@@ -19,10 +19,12 @@
  */
 package org.zuinnote.hadoop.bitcoin.hive.serde;
 
-import java.io.IOException;
 import java.util.*;
         
 
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.hive.serde.serdeConstants;
 import org.apache.hadoop.hive.serde2.AbstractDeserializer;
 import org.apache.hadoop.hive.serde2.SerDeException;
