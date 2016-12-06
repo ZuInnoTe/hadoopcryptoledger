@@ -21,21 +21,10 @@ import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
 import java.io.IOException;
 
 
-
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.compress.CompressionCodec;
-import org.apache.hadoop.io.compress.CompressionCodecFactory;
-import org.apache.hadoop.io.compress.SplittableCompressionCodec;
 import org.apache.hadoop.io.BytesWritable;
-import org.apache.hadoop.mapred.FileInputFormat;
-import org.apache.hadoop.mapred.FileSplit;
-import org.apache.hadoop.mapred.InputSplit;
-import org.apache.hadoop.mapred.JobConf;
-import org.apache.hadoop.mapred.JobConfigurable;
-import org.apache.hadoop.mapred.JobContext;
-import org.apache.hadoop.mapred.RecordReader;
-import org.apache.hadoop.mapred.Reporter;
+import org.apache.hadoop.mapreduce.InputSplit;
+import org.apache.hadoop.mapreduce.RecordReader;
+import org.apache.hadoop.mapreduce.TaskAttemptContext;
 
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
@@ -44,14 +33,11 @@ public class BitcoinTransactionFileInputFormat extends AbstractBitcoinFileInputF
 
 private static final Log LOG = LogFactory.getLog(BitcoinTransactionFileInputFormat.class.getName());
 
-public RecordReader<BytesWritable,BitcoinTransaction> getRecordReader(InputSplit split, JobConf job, Reporter reporter) throws IOException {
+public RecordReader<BytesWritable,BitcoinTransaction> createRecordReader(InputSplit split, TaskAttemptContext ctx) throws IOException {
 	/** Create reader **/
 	try {
-		return new BitcoinTransactionRecordReader( (FileSplit) split,job,reporter);
+		return new BitcoinTransactionRecordReader(ctx.getConfiguration());
 	} catch (HadoopCryptoLedgerConfigurationException e) {
-		// log
-		LOG.error(e);
-	} catch (BitcoinBlockReadException e) {
 		// log
 		LOG.error(e);
 	}

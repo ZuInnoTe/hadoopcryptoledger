@@ -22,15 +22,13 @@ import org.zuinnote.hadoop.bitcoin.format.exception.HadoopCryptoLedgerConfigurat
 import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.nio.ByteBuffer;
 
 import org.apache.hadoop.io.BytesWritable; 
 
-import org.apache.hadoop.mapred.FileSplit;
-import org.apache.hadoop.mapred.JobConf;
-import org.apache.hadoop.mapred.Reporter;
+import org.apache.hadoop.conf.Configuration;
+
 
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
@@ -40,33 +38,34 @@ import org.apache.commons.logging.Log;
 
 public class BitcoinRawBlockRecordReader  extends AbstractBitcoinRecordReader<BytesWritable, BytesWritable> {
 private static final Log LOG = LogFactory.getLog(BitcoinRawBlockRecordReader.class.getName());
+private BytesWritable currentKey=new BytesWritable();
+private BytesWritable currentValue=new BytesWritable();
 
-
-public BitcoinRawBlockRecordReader(FileSplit split,JobConf job, Reporter reporter) throws IOException,HadoopCryptoLedgerConfigurationException,BitcoinBlockReadException {
-	super(split,job,reporter);
+public BitcoinRawBlockRecordReader(Configuration conf) throws HadoopCryptoLedgerConfigurationException {
+	super(conf);
 }
 
 
-	
 
 /**
 *
-* Create an empty key
+*  get current key after calling next()
 *
-* @return key
+* @return key is a 64 byte array (hashMerkleRoot and prevHashBlock)
 */
-public BytesWritable createKey() {
-	return new BytesWritable();
+public BytesWritable getCurrentKey() {
+	return this.currentKey;
 }
 
+
 /**
 *
-* Create an empty value
+*  get current value after calling next()
 *
-* @return value
+* @return value is a deserialized Java object of class BitcoinBlock
 */
-public BytesWritable createValue() {
-	return new BytesWritable();
+public BytesWritable getCurrentValue() {
+	return this.currentValue;
 }
 
 
@@ -75,12 +74,9 @@ public BytesWritable createValue() {
 *
 * Read a next block. 
 *
-* @param key is a 64 byte array (hashMerkleRoot and prevHashBlock)
-* @param value is a deserialized Java object of class BitcoinBlock
-*
 * @return true if next block is available, false if not
 */
-public boolean next(BytesWritable key, BytesWritable value) throws IOException {
+public boolean nextKeyValue() throws IOException {
 	// read all the blocks, if necessary a block overlapping a split
 	while(getFilePosition()<=getEnd()) { // did we already went beyond the split (remote) or do we have no further data left?
 		ByteBuffer dataBlock=null;
@@ -92,7 +88,7 @@ public boolean next(BytesWritable key, BytesWritable value) throws IOException {
 		}	
 		if (dataBlock==null) return false;
 		byte newKey[]=getBbr().getKeyFromRawBlock(dataBlock);
-		key.set(newKey,0,newKey.length);
+		this.currentKey.set(newKey,0,newKey.length);
 		byte[] dataBlockArray=null;
 		if (dataBlock.hasArray()==true) {
 			dataBlockArray=dataBlock.array();
@@ -100,7 +96,7 @@ public boolean next(BytesWritable key, BytesWritable value) throws IOException {
 			dataBlockArray=new byte[dataBlock.capacity()];
 			dataBlock.get(dataBlockArray);
 		}
-		value.set(dataBlockArray,0,dataBlockArray.length);
+		this.currentValue.set(dataBlockArray,0,dataBlockArray.length);
 		return true;
 	}
 	return false;

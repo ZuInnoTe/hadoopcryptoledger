@@ -17,20 +17,20 @@
 package org.zuinnote.hadoop.bitcoin.format;
 
 
+
 import org.zuinnote.hadoop.bitcoin.format.exception.HadoopCryptoLedgerConfigurationException;
 import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
 
 import java.io.IOException;
 
-
 import java.security.NoSuchAlgorithmException;
+
+import java.nio.ByteBuffer;
 
 import org.apache.hadoop.io.BytesWritable; 
 
+import org.apache.hadoop.conf.Configuration;
 
-import org.apache.hadoop.mapred.FileSplit;
-import org.apache.hadoop.mapred.JobConf;
-import org.apache.hadoop.mapred.Reporter;
 
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
@@ -41,33 +41,35 @@ private static final Log LOG = LogFactory.getLog(BitcoinBlockRecordReader.class.
 
 private int currentTransactionCounterInBlock=0;
 private BitcoinBlock currentBitcoinBlock;
+private BytesWritable currentKey=new BytesWritable();
+private BitcoinTransaction currentValue=new BitcoinTransaction();
 
 
 
-public BitcoinTransactionRecordReader(FileSplit split,JobConf job, Reporter reporter) throws IOException,HadoopCryptoLedgerConfigurationException,BitcoinBlockReadException {
-	super(split,job,reporter);
+public BitcoinTransactionRecordReader(Configuration conf) throws HadoopCryptoLedgerConfigurationException {
+	super(conf);
 }
 
 /**
 *
-* Create an empty key
+*  get current key after calling next()
 *
-* @return key
+* @return key is is a 68 byte array (hashMerkleRoot, prevHashBlock, transActionCounter)
 */
 @Override
-public BytesWritable createKey() {
-	return new BytesWritable();
+public BytesWritable getCurrentKey() {
+	return this.currentKey;
 }
 
 /**
 *
-* Create an empty value
+*  get current value after calling next()
 *
-* @return value
+* @return value is a deserialized Java object of class BitcoinTransaction
 */
 @Override
-public BitcoinTransaction createValue() {
-	return new BitcoinTransaction();
+public BitcoinTransaction getCurrentValue() {
+	return this.currentValue;
 }
 
 
@@ -75,13 +77,11 @@ public BitcoinTransaction createValue() {
 *
 * Read a next block. 
 *
-* @param key is a 68 byte array (hashMerkleRoot, prevHashBlock, transActionCounter)
-* @param value is a deserialized Java object of class BitcoinBlock
 *
 * @return true if next block is available, false if not
 */
 @Override
-public boolean next(BytesWritable key, BitcoinTransaction value) throws IOException {
+public boolean nextKeyValue() throws IOException {
 	// read all the blocks, if necessary a block overlapping a split
 	while(getFilePosition()<=getEnd()) { // did we already went beyond the split (remote) or do we have no further data left?
 		if ((currentBitcoinBlock==null) || (currentBitcoinBlock.getTransactions().size()==currentTransactionCounterInBlock)){
@@ -105,8 +105,8 @@ public boolean next(BytesWritable key, BitcoinTransaction value) throws IOExcept
 		} catch (NoSuchAlgorithmException nsae) {
 			LOG.error("Cannot calculate transaction hash. Algorithm not available. Exception: "+nsae.toString());
 		}
-		key.set(newKey,0,newKey.length);
-		value.set(currentTransaction);
+		this.currentKey.set(newKey,0,newKey.length);
+		this.currentValue.set(currentTransaction);
 		currentTransactionCounterInBlock++;
 		return true;
 	}

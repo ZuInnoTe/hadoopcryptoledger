@@ -29,19 +29,16 @@ import org.apache.hadoop.io.compress.CompressionCodec;
 import org.apache.hadoop.io.compress.CompressionCodecFactory;
 import org.apache.hadoop.io.compress.SplittableCompressionCodec;
 import org.apache.hadoop.io.BytesWritable;
-import org.apache.hadoop.mapred.FileInputFormat;
-import org.apache.hadoop.mapred.FileSplit;
-import org.apache.hadoop.mapred.InputSplit;
-import org.apache.hadoop.mapred.JobConf;
-import org.apache.hadoop.mapred.JobConfigurable;
-import org.apache.hadoop.mapred.JobContext;
-import org.apache.hadoop.mapred.RecordReader;
-import org.apache.hadoop.mapred.Reporter;
+import org.apache.hadoop.mapreduce.JobContext;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.InputSplit;
+import org.apache.hadoop.mapreduce.RecordReader;
+import org.apache.hadoop.mapreduce.TaskAttemptContext;
 
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
 
-public abstract class AbstractBitcoinFileInputFormat<K,V> extends FileInputFormat<K,V> implements JobConfigurable  {
+public abstract class AbstractBitcoinFileInputFormat<K,V> extends FileInputFormat<K,V>   {
 public static final String CONF_ISSPLITABLE="hadoopcryptoledeger.bitcoinblockinputformat.issplitable";
 public static final boolean DEFAULT_ISSPLITABLE=false;
 
@@ -51,34 +48,26 @@ private boolean isSplitable=DEFAULT_ISSPLITABLE;
 private CompressionCodecFactory compressionCodecs = null;
 
 
-public abstract RecordReader<K,V> getRecordReader(InputSplit split, JobConf job, Reporter reporter) throws IOException;
-
-
-@Override
-public void configure(JobConf conf) {
-    this.compressionCodecs = new CompressionCodecFactory(conf);
-    this.isSplitable=conf.getBoolean(this.CONF_ISSPLITABLE,this.DEFAULT_ISSPLITABLE);
-}
+public abstract RecordReader<K,V> createRecordReader(InputSplit split, TaskAttemptContext ctx) throws IOException;
 
 /**
 *
 * This method is experimental and derived from TextInputFormat. It is not necessary and not recommended to compress the blockchain files. Instead it is recommended to extract relevant data from the blockchain files once and store them in a format suitable for analytics (including compression), such as ORC or Parquet.
 *
 */
+
 @Override
-  protected boolean isSplitable(FileSystem fs, Path file) {
+  protected boolean isSplitable(JobContext context, Path file) {
+    this.isSplitable=context.getConfiguration().getBoolean(this.CONF_ISSPLITABLE,this.DEFAULT_ISSPLITABLE);
     if (this.isSplitable==false) {
 		return false;
-    }
-    final CompressionCodec codec = compressionCodecs.getCodec(file);
+    }   
+   final CompressionCodec codec = new CompressionCodecFactory(context.getConfiguration()).getCodec(file);
     if (null == codec) {
       return true;
     }
     return codec instanceof SplittableCompressionCodec;
-
   }
-
-
 
 
 

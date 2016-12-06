@@ -23,7 +23,7 @@ import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
 
 import java.io.IOException;
 import java.io.InputStream;
-
+import java.lang.InterruptedException;
 import java.nio.ByteBuffer;
 
 import org.apache.hadoop.io.BytesWritable; 
@@ -42,15 +42,15 @@ import org.apache.hadoop.io.compress.SplittableCompressionCodec;
 import org.apache.hadoop.io.compress.CompressionCodecFactory;
 import org.apache.hadoop.io.compress.Decompressor;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.mapred.FileSplit;
-import org.apache.hadoop.mapred.JobConf;
-import org.apache.hadoop.mapred.RecordReader;
-import org.apache.hadoop.mapred.Reporter;
+import org.apache.hadoop.mapreduce.lib.input.FileSplit;
+import org.apache.hadoop.mapreduce.InputSplit;
+import org.apache.hadoop.mapreduce.TaskAttemptContext;
+import org.apache.hadoop.mapreduce.RecordReader;
 
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
 
-public abstract class AbstractBitcoinRecordReader<K,V> implements RecordReader<K,V> {
+public abstract class AbstractBitcoinRecordReader<K,V> extends RecordReader<K,V> {
 public static final String CONF_BUFFERSIZE="io.file.buffer.size";
 public static final String CONF_MAXBLOCKSIZE="hadoopcryptoledger.bitcoinblockinputformat.maxblocksize";
 public static final String CONF_FILTERMAGIC="hadoopcryptoledger.bitcoinblockinputformat.filter.magic";
@@ -76,7 +76,7 @@ private Configuration conf;
 private long start;
 private long pos;
 private long end;
-private final Seekable filePosition;
+private Seekable filePosition;
 private FSDataInputStream fileIn;
 private BitcoinBlockReader bbr;
 
@@ -85,20 +85,15 @@ private BitcoinBlockReader bbr;
 
 /**
 * Creates an Abstract Record Reader for Bitcoin blocks
-* @param split Split to use (assumed to be a file split)
-* @param job Configuration:
+* @param conf Configuration:
 * io.file.buffer.size: Size of in-memory  specified in the given Configuration. If io.file.buffer.size is not specified the default buffersize (maximum size of a bitcoin block) will be used. The configuration hadoopcryptoledger.bitcoinblockinputformat.filter.magic allows specifying the magic identifier of the block. The magic is a comma-separated list of Hex-values (e.g. F9BEB4D9,FABFB5DA,0B110907,0B110907). The default magic is always F9BEB4D9. One needs to specify at least one magic, otherwise it will be difficult to find blocks in splits. Furthermore, one may specify hadoopcryptoledger.bitcoinblockinputformat.maxblocksize, which defines the maximum size a bitcoin block may have. By default it is 1M). If you want to experiment with performance using DirectByteBuffer instead of HeapByteBuffer you can use "hadoopcryptoledeger.bitcoinblockinputformat.usedirectbuffer" (default: false). Note that it might have some unwanted consequences such as circumwenting Yarn memory management. The option is experimental and might be removed in future versions. 
-* @param reporter Reporter
 *
-*
-* @throws java.io.IOException in case of errors reading from the filestream provided by Hadoop
 * @throws org.zuinnote.hadoop.bitcoin.format.exception.HadoopCryptoLedgerConfigurationException in case of an invalid HadoopCryptoLedger-specific configuration of the inputformat
-* @throws org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException in case the Bitcoin data contains invalid blocks (e.g. magic might be different)
 *
 */
-public AbstractBitcoinRecordReader(FileSplit split,JobConf job, Reporter reporter) throws IOException,HadoopCryptoLedgerConfigurationException,BitcoinBlockReadException {
+public AbstractBitcoinRecordReader(Configuration conf) throws HadoopCryptoLedgerConfigurationException {
     // parse configuration
-     this.conf=job;	
+     this.conf=conf;	
 	this.maxSizeBitcoinBlock=conf.getInt(this.CONF_MAXBLOCKSIZE,this.DEFAULT_MAXSIZE_BITCOINBLOCK);
 	this.bufferSize=conf.getInt(this.CONF_BUFFERSIZE,this.DEFAULT_BUFFERSIZE);
 	this.specificMagic=conf.get(this.CONF_FILTERMAGIC);
@@ -114,13 +109,29 @@ public AbstractBitcoinRecordReader(FileSplit split,JobConf job, Reporter reporte
 		}
 	}	
 	this.useDirectBuffer=conf.getBoolean(this.CONF_USEDIRECTBUFFER,this.DEFAULT_USEDIRECTBUFFER);
-    // Initialize start and end of split
-    start = split.getStart();
-    end = start + split.getLength();
-    final Path file = split.getPath();
-     compressionCodecs = new CompressionCodecFactory(job);
-    codec = new CompressionCodecFactory(job).getCodec(file);
-    final FileSystem fs = file.getFileSystem(job);
+}
+
+
+/**
+* Initializes reader
+* @param split Split to use (assumed to be a file split)
+* @param context context of the job
+*
+*
+* @throws java.io.IOException in case of errors reading from the filestream provided by Hadoop
+* @throws java.lang.InterruptedException in case of thread interruption
+*
+*/
+@Override
+public void initialize(InputSplit split, TaskAttemptContext context) throws IOException, InterruptedException {
+   FileSplit fSplit = (FileSplit)split;
+ // Initialize start and end of split
+    start = fSplit.getStart();
+    end = start + fSplit.getLength();
+    final Path file = fSplit.getPath();
+     compressionCodecs = new CompressionCodecFactory(context.getConfiguration());
+    codec = compressionCodecs.getCodec(file);
+    final FileSystem fs = file.getFileSystem(context.getConfiguration());
     fileIn = fs.open(file);
     // open stream
       if (isCompressedInput()) { // decompress
@@ -128,13 +139,13 @@ public AbstractBitcoinRecordReader(FileSplit split,JobConf job, Reporter reporte
       	if (codec instanceof SplittableCompressionCodec) {
 		
         	final SplitCompressionInputStream cIn =((SplittableCompressionCodec)codec).createInputStream(fileIn, decompressor, start, end,SplittableCompressionCodec.READ_MODE.CONTINUOUS);
-		bbr = new BitcoinBlockReader(cIn, this.maxSizeBitcoinBlock,this.bufferSize,this.specificMagicByteArray,this.useDirectBuffer);  
+				bbr = new BitcoinBlockReader(cIn, this.maxSizeBitcoinBlock,this.bufferSize,this.specificMagicByteArray,this.useDirectBuffer);
 		start = cIn.getAdjustedStart();
        		end = cIn.getAdjustedEnd();
         	filePosition = cIn; // take pos from compressed stream
       } else {
 	bbr = new BitcoinBlockReader(codec.createInputStream(fileIn,decompressor), this.maxSizeBitcoinBlock,this.bufferSize,this.specificMagicByteArray,this.useDirectBuffer);
-        filePosition = fileIn;
+	filePosition = fileIn;
       }
     } else {
       fileIn.seek(start);
@@ -144,64 +155,18 @@ public AbstractBitcoinRecordReader(FileSplit split,JobConf job, Reporter reporte
     // initialize reader
     this.pos=start;
     // seek to block start (for the case a block overlaps a split)
-    bbr.seekBlockStart();
+    try {
+    	bbr.seekBlockStart();
+    } catch (BitcoinBlockReadException bbre) {
+		LOG.error("Error reading Bitcoin blockchhain data: "+bbre.toString());
+    } 
 }
 
-	
-
-/**
-*
-* Create an empty key
-*
-* @return key
-*/
-@Override
-public abstract K createKey();
-
-/**
-*
-* Create an empty value
-*
-* @return value
-*/
-@Override
-public abstract V createValue();
 
 
 
-/**
-*
-* Read Bitcoin data
-*
-* @return true if next bitcoin data is available, false if not
-*/
-@Override
-public abstract boolean next(K key, V value) throws IOException;
 
 
-/**
-* Get the current file position in a compressed or uncompressed file.
-*
-* @return file position
-*
-* @throws java.io.IOException in case of errors reading from the filestream provided by Hadoop
-*
-*/
-
-public long getFilePosition() throws IOException {
-	return  filePosition.getPos();
-}
-
-/**
-* Get the end of file
-*
-* @return end of file position
-*
-*/
-
-public long getEnd() {
-	return end;
-}
 
 /**
 * Get the current Block Reader
@@ -223,7 +188,7 @@ public BitcoinBlockReader getBbr() {
 *
 */
 @Override
-public synchronized float getProgress() throws IOException {
+public  float getProgress() throws IOException {
 if (start == end) {
       return 0.0f;
     } else {
@@ -231,27 +196,29 @@ if (start == end) {
     }
 }
 
-/*
-* Determines if the input is compressed or not
+/**
+* Get the end of file
 *
-* @return true if compressed, false if not
+* @return end of file position
+*
 */
-private boolean  isCompressedInput() {
-    return (codec != null);
-  }
 
-/*
-* Get current position in the stream
+public long getEnd() {
+	return end;
+}
+
+/**
+* Returns current position in file
 *
-* @return position
+* @return current position in file
 *
-* @throws java.io.IOException in case of errors reading from the filestream provided by Hadoop
 *
 */
-@Override
-public  synchronized long getPos() throws IOException {
-	return filePosition.getPos();
+
+public long getFilePosition() throws IOException {
+	return this.filePosition.getPos();
 }
+
 
 /*
 * Clean up InputStream and Decompressor after use
@@ -273,4 +240,15 @@ try {
       }
     }
   }
+
+
+/*
+* Determines if the input is compressed or not
+*
+* @return true if compressed, false if not
+*/
+private boolean  isCompressedInput() {
+    return (codec != null);
+ }
+
 }

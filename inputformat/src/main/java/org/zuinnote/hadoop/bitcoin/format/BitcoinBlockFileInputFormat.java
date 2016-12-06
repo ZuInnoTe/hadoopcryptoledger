@@ -24,11 +24,9 @@ import java.io.IOException;
 
 
 import org.apache.hadoop.io.BytesWritable;
-import org.apache.hadoop.mapred.FileSplit;
-import org.apache.hadoop.mapred.InputSplit;
-import org.apache.hadoop.mapred.JobConf;
-import org.apache.hadoop.mapred.RecordReader;
-import org.apache.hadoop.mapred.Reporter;
+import org.apache.hadoop.mapreduce.InputSplit;
+import org.apache.hadoop.mapreduce.RecordReader;
+import org.apache.hadoop.mapreduce.TaskAttemptContext;
 
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
@@ -38,14 +36,11 @@ public class BitcoinBlockFileInputFormat extends AbstractBitcoinFileInputFormat<
 private static final Log LOG = LogFactory.getLog(BitcoinBlockFileInputFormat.class.getName());
 
 @Override
-public RecordReader<BytesWritable,BitcoinBlock> getRecordReader(InputSplit split, JobConf job, Reporter reporter) throws IOException {	
+public RecordReader<BytesWritable,BitcoinBlock> createRecordReader(InputSplit split, TaskAttemptContext ctx) throws IOException {	
 	/** Create reader **/
 	try {
-		return new BitcoinBlockRecordReader( (FileSplit) split,job,reporter);
+		return new BitcoinBlockRecordReader(ctx.getConfiguration());
 	} catch (HadoopCryptoLedgerConfigurationException e) {
-		// log
-		LOG.error(e);
-	} catch (BitcoinBlockReadException e) {
 		// log
 		LOG.error(e);
 	}
