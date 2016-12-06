@@ -45,7 +45,7 @@ public BitcoinBlockRecordReader(Configuration conf) throws HadoopCryptoLedgerCon
 *
 *  get current key after calling next()
 *
-* @return key
+* @return key is a 64 byte array (hashMerkleRoot and prevHashBlock)
 */
 public BytesWritable getCurrentKey() {
 	return this.currentKey;
@@ -55,7 +55,7 @@ public BytesWritable getCurrentKey() {
 *
 *  get current value after calling next()
 *
-* @return value
+* @return is a deserialized Java object of class BitcoinBlock
 */
 public BitcoinBlock getCurrentValue() {
 	return this.currentValue;
@@ -67,8 +67,6 @@ public BitcoinBlock getCurrentValue() {
 *
 * Read a next block. 
 *
-* @param key is a 64 byte array (hashMerkleRoot and prevHashBlock)
-* @param value is a deserialized Java object of class BitcoinBlock
 *
 * @return true if next block is available, false if not
 */
