@@ -36,12 +36,16 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import java.io.IOException;
+import java.lang.InterruptedException;
 import java.nio.ByteBuffer;
 
 import org.apache.hadoop.fs.*;
-import org.apache.hadoop.conf.*;
 import org.apache.hadoop.io.*;
-import org.apache.hadoop.mapred.*;
+import org.apache.hadoop.mapreduce.*;
+import org.apache.hadoop.mapreduce.lib.input.*;
+import org.apache.hadoop.mapreduce.task.TaskAttemptContextImpl;
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.util.*;
 import org.apache.hadoop.io.compress.BZip2Codec;
 import org.apache.hadoop.io.compress.GzipCodec;
@@ -55,9 +59,8 @@ import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
 */
 
 public class BitcoinFormatHadoopTest {
-private static JobConf defaultConf = new JobConf();
+private static Configuration defaultConf = new Configuration();
 private static FileSystem localFs = null; 
-private static Reporter reporter = Reporter.NULL;
 
    @BeforeClass
     public static void oneTimeSetUp() throws IOException {
@@ -186,576 +189,598 @@ private static Reporter reporter = Reporter.NULL;
 
 
   @Test
-  public void readBitcoinRawBlockInputFormatGenesisBlock() throws IOException {
-    JobConf job = new JobConf(defaultConf);
+  public void readBitcoinRawBlockInputFormatGenesisBlock() throws IOException, InterruptedException {
+    Configuration conf = new Configuration(defaultConf);
     ClassLoader classLoader = getClass().getClassLoader();
     String fileName="genesis.blk";
     String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
     Path file = new Path(fileNameGenesis);
+    Job job = Job.getInstance(conf);
     FileInputFormat.setInputPaths(job, file);
     BitcoinRawBlockFileInputFormat format = new BitcoinRawBlockFileInputFormat();
-    format.configure(job);
-    InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for genesis block", 1, inputSplits.length);
-    	RecordReader<BytesWritable, BytesWritable> reader = format.getRecordReader(inputSplits[0], job, reporter);
+
+    List<InputSplit> splits = format.getSplits(job);
+    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
+    assertEquals("Only one split generated for genesis block", 1, splits.size());
+    	RecordReader<BytesWritable, BytesWritable> reader = format.createRecordReader(splits.get(0), context);
 	assertNotNull("Format returned  null RecordReader", reader);
+	reader.initialize(splits.get(0),context);
 	BytesWritable genesisKey = new BytesWritable();	
 	BytesWritable genesisBlock = new BytesWritable();
-	assertTrue("Input Split for genesis block contains at least one block", reader.next(genesisKey,genesisBlock));
+	assertTrue("Input Split for genesis block contains at least one block", reader.nextKeyValue());
+	genesisKey=reader.getCurrentKey();
+	genesisBlock=reader.getCurrentValue();
 	assertEquals("Genesis Block must have size of 293", 293, genesisBlock.getLength());
-	BytesWritable emptyKey = new BytesWritable();
-    	BytesWritable emptyBlock = new BytesWritable();
-    	assertFalse("No further blocks in genesis Block", reader.next(emptyKey,emptyBlock));
+    	assertFalse("No further blocks in genesis Block", reader.nextKeyValue());
   }
 
   @Test
-  public void readBitcoinRawBlockInputFormatBlockVersion1() throws IOException {
-    JobConf job = new JobConf(defaultConf);
+  public void readBitcoinRawBlockInputFormatBlockVersion1() throws IOException, InterruptedException {
+    Configuration conf = new Configuration(defaultConf);
     ClassLoader classLoader = getClass().getClassLoader();
     String fileName="version1.blk";
     String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
     Path file = new Path(fileNameBlock);
+    Job job = Job.getInstance(conf);
     FileInputFormat.setInputPaths(job, file);
     BitcoinRawBlockFileInputFormat format = new BitcoinRawBlockFileInputFormat();
-    format.configure(job);
-    InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for block version 1", 1, inputSplits.length);
-    	RecordReader<BytesWritable, BytesWritable> reader = format.getRecordReader(inputSplits[0], job, reporter);
+    List<InputSplit> splits = format.getSplits(job);
+    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
+    assertEquals("Only one split generated for block version 1", 1, splits.size());
+    	RecordReader<BytesWritable, BytesWritable> reader = format.createRecordReader(splits.get(0), context);
 	assertNotNull("Format returned  null RecordReader", reader);
+	reader.initialize(splits.get(0),context);
 	BytesWritable key = new BytesWritable();	
 	BytesWritable block = new BytesWritable();
-	assertTrue("Input Split for block version contains at least one block", reader.next(key,block));
+	assertTrue("Input Split for block version contains at least one block", reader.nextKeyValue());
+	block=reader.getCurrentValue();
 	assertEquals("Random block version 1  must have size of 482 bytes", 482, block.getLength());
-	BytesWritable emptyKey = new BytesWritable();
-    	BytesWritable emptyBlock = new BytesWritable();
-    	assertFalse("No further blocks in block version 1", reader.next(emptyKey,emptyBlock));
+    	assertFalse("No further blocks in block version 1", reader.nextKeyValue());
   }
 
 
   @Test
-  public void readBitcoinRawBlockInputFormatBlockVersion2() throws IOException {
-    JobConf job = new JobConf(defaultConf);
+  public void readBitcoinRawBlockInputFormatBlockVersion2() throws IOException, InterruptedException {
+    Configuration conf = new Configuration(defaultConf);
     ClassLoader classLoader = getClass().getClassLoader();
     String fileName="version2.blk";
     String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
     Path file = new Path(fileNameBlock);
+	Job job = Job.getInstance(conf);
     FileInputFormat.setInputPaths(job, file);
     BitcoinRawBlockFileInputFormat format = new BitcoinRawBlockFileInputFormat();
-    format.configure(job);
-    InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for block version 2", 1, inputSplits.length);
-    	RecordReader<BytesWritable, BytesWritable> reader = format.getRecordReader(inputSplits[0], job, reporter);
+    List<InputSplit> splits = format.getSplits(job);
+    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
+    assertEquals("Only one split generated for block version 2", 1, splits.size());
+    	RecordReader<BytesWritable, BytesWritable> reader = format.createRecordReader(splits.get(0), context);
 	assertNotNull("Format returned  null RecordReader", reader);
+	reader.initialize(splits.get(0),context);
 	BytesWritable key = new BytesWritable();	
 	BytesWritable block = new BytesWritable();
-	assertTrue("Input Split for block version contains at least one block", reader.next(key,block));
+	assertTrue("Input Split for block version contains at least one block", reader.nextKeyValue());
+	block=reader.getCurrentValue();
 	assertEquals("Random block version 2  must have size of 191.198 bytes", 191198, block.getLength());
-	BytesWritable emptyKey = new BytesWritable();
-    	BytesWritable emptyBlock = new BytesWritable();
-    	assertFalse("No further blocks in block version 2", reader.next(emptyKey,emptyBlock));
+    	assertFalse("No further blocks in block version 2", reader.nextKeyValue());
   }
 
 
   @Test
-  public void readBitcoinRawBlockInputFormatBlockVersion3() throws IOException {
-    JobConf job = new JobConf(defaultConf);
+  public void readBitcoinRawBlockInputFormatBlockVersion3() throws IOException, InterruptedException {
+    Configuration conf = new Configuration(defaultConf);
     ClassLoader classLoader = getClass().getClassLoader();
     String fileName="version3.blk";
     String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
     Path file = new Path(fileNameBlock);
+	Job job = Job.getInstance(conf);
     FileInputFormat.setInputPaths(job, file);
     BitcoinRawBlockFileInputFormat format = new BitcoinRawBlockFileInputFormat();
-    format.configure(job);
-    InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for block version 3", 1, inputSplits.length);
-    	RecordReader<BytesWritable, BytesWritable> reader = format.getRecordReader(inputSplits[0], job, reporter);
+    List<InputSplit> splits = format.getSplits(job);
+    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
+    assertEquals("Only one split generated for block version 3", 1, splits.size());
+    	RecordReader<BytesWritable, BytesWritable> reader = format.createRecordReader(splits.get(0), context);
 	assertNotNull("Format returned  null RecordReader", reader);
+	reader.initialize(splits.get(0),context);
 	BytesWritable key = new BytesWritable();	
 	BytesWritable block = new BytesWritable();
-	assertTrue("Input Split for block version contains at least one block", reader.next(key,block));
+	assertTrue("Input Split for block version contains at least one block", reader.nextKeyValue());
+	block=reader.getCurrentValue();
 	assertEquals("Random block version 3 must have size of 932.199 bytes", 932199, block.getLength());
-	BytesWritable emptyKey = new BytesWritable();
-    	BytesWritable emptyBlock = new BytesWritable();
-    	assertFalse("No further blocks in block version 3", reader.next(emptyKey,emptyBlock));
+    	assertFalse("No further blocks in block version 3", reader.nextKeyValue());
   }
 
   @Test
-  public void readBitcoinRawBlockInputFormatBlockVersion4() throws IOException {
-    JobConf job = new JobConf(defaultConf);
+  public void readBitcoinRawBlockInputFormatBlockVersion4() throws IOException, InterruptedException {
+    Configuration conf = new Configuration(defaultConf);
     ClassLoader classLoader = getClass().getClassLoader();
     String fileName="version4.blk";
     String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
     Path file = new Path(fileNameBlock);
+    	Job job = Job.getInstance(conf);
     FileInputFormat.setInputPaths(job, file);
     BitcoinRawBlockFileInputFormat format = new BitcoinRawBlockFileInputFormat();
-    format.configure(job);
-    InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for block version 4", 1, inputSplits.length);
-    	RecordReader<BytesWritable, BytesWritable> reader = format.getRecordReader(inputSplits[0], job, reporter);
+     List<InputSplit> splits = format.getSplits(job);
+    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
+    assertEquals("Only one split generated for block version 4", 1, splits.size());
+    	RecordReader<BytesWritable, BytesWritable> reader = format.createRecordReader(splits.get(0), context);
 	assertNotNull("Format returned  null RecordReader", reader);
+	reader.initialize(splits.get(0),context);
 	BytesWritable key = new BytesWritable();	
 	BytesWritable block = new BytesWritable();
-	assertTrue("Input Split for block version contains at least one block", reader.next(key,block));
+	assertTrue("Input Split for block version contains at least one block", reader.nextKeyValue());
+	block=reader.getCurrentValue();
 	assertEquals("Random block version 4 must have a size of 998.039 bytes", 998039, block.getLength());
-	BytesWritable emptyKey = new BytesWritable();
-    	BytesWritable emptyBlock = new BytesWritable();
-    	assertFalse("No further blocks in block version 4", reader.next(emptyKey,emptyBlock));
+    	assertFalse("No further blocks in block version 4", reader.nextKeyValue());
   }
 
   @Test
-  public void readBitcoinRawBlockInputFormatReqSeekBlockVersion1() throws IOException {
-    JobConf job = new JobConf(defaultConf);
+  public void readBitcoinRawBlockInputFormatReqSeekBlockVersion1() throws IOException, InterruptedException {
+    Configuration conf = new Configuration(defaultConf);
     ClassLoader classLoader = getClass().getClassLoader();
     String fileName="reqseekversion1.blk";
     String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
     Path file = new Path(fileNameBlock);
+        	Job job = Job.getInstance(conf);
     FileInputFormat.setInputPaths(job, file);
     BitcoinRawBlockFileInputFormat format = new BitcoinRawBlockFileInputFormat();
-    format.configure(job);
-    InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for block requiring seek version 1", 1, inputSplits.length);
-    	RecordReader<BytesWritable, BytesWritable> reader = format.getRecordReader(inputSplits[0], job, reporter);
+    List<InputSplit> splits = format.getSplits(job);
+    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
+    assertEquals("Only one split generated for block requiring seek version 1", 1, splits.size());
+    	RecordReader<BytesWritable, BytesWritable> reader = format.createRecordReader(splits.get(0), context);
 	assertNotNull("Format returned  null RecordReader", reader);
+	reader.initialize(splits.get(0),context);
 	BytesWritable key = new BytesWritable();	
 	BytesWritable block = new BytesWritable();
-	assertTrue("Input Split for block version contains at least one block", reader.next(key,block));
+	assertTrue("Input Split for block version contains at least one block", reader.nextKeyValue());
+	block=reader.getCurrentValue();
 	assertEquals("Random block requiring seek version 1 must have a size of 482 bytes", 482, block.getLength());
-	BytesWritable emptyKey = new BytesWritable();
-    	BytesWritable emptyBlock = new BytesWritable();
-    	assertFalse("No further blocks in block requiring seek version 1", reader.next(emptyKey,emptyBlock));
+    	assertFalse("No further blocks in block requiring seek version 1", reader.nextKeyValue());
   }
 
   @Test
-  public void readBitcoinRawBlockInputFormatMultiBlock() throws IOException {
-    JobConf job = new JobConf(defaultConf);
+  public void readBitcoinRawBlockInputFormatMultiBlock() throws IOException, InterruptedException {
+    Configuration conf = new Configuration(defaultConf);
     ClassLoader classLoader = getClass().getClassLoader();
     String fileName="multiblock.blk";
     String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
     Path file = new Path(fileNameBlock);
+    Job job = Job.getInstance(conf);
     FileInputFormat.setInputPaths(job, file);
     BitcoinRawBlockFileInputFormat format = new BitcoinRawBlockFileInputFormat();
-    format.configure(job);
-    InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for multiblock", 1, inputSplits.length);
-    	RecordReader<BytesWritable, BytesWritable> reader = format.getRecordReader(inputSplits[0], job, reporter);
+    List<InputSplit> splits = format.getSplits(job);
+    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
+    assertEquals("Only one split generated for multiblock", 1, splits.size());
+    	RecordReader<BytesWritable, BytesWritable> reader = format.createRecordReader(splits.get(0), context);
 	assertNotNull("Format returned  null RecordReader", reader);
+	reader.initialize(splits.get(0),context);
 	BytesWritable key = new BytesWritable();	
 	BytesWritable block = new BytesWritable();
-	assertTrue("Input Split for multi block contains the genesis block", reader.next(key,block));
+	assertTrue("Input Split for multi block contains the genesis block", reader.nextKeyValue());
+	block=reader.getCurrentValue();
 	assertEquals("Genesis Block must have size of 293", 293, block.getLength());
-	assertTrue("Input Split for block version contains block version 1", reader.next(key,block));
+	assertTrue("Input Split for block version contains block version 1", reader.nextKeyValue());
+	block=reader.getCurrentValue();
 	assertEquals("Random block version 1  must have size of 482 bytes", 482, block.getLength());
-	assertTrue("Input Split for block version contains block version 2", reader.next(key,block));
+	assertTrue("Input Split for block version contains block version 2", reader.nextKeyValue());
+	block=reader.getCurrentValue();
 	assertEquals("Random block version 2  must have size of 191.198 bytes", 191198, block.getLength());
-	BytesWritable emptyKey = new BytesWritable();
-    	BytesWritable emptyBlock = new BytesWritable();
-    	assertFalse("No further blocks in multi block", reader.next(emptyKey,emptyBlock));
+    	assertFalse("No further blocks in multi block", reader.nextKeyValue());
   }
 
   @Test
-  public void readBitcoinBlockInputFormatGenesisBlock() throws IOException {
-    JobConf job = new JobConf(defaultConf);
+  public void readBitcoinBlockInputFormatGenesisBlock() throws IOException, InterruptedException {
+    Configuration conf = new Configuration(defaultConf);
     ClassLoader classLoader = getClass().getClassLoader();
     String fileName="genesis.blk";
     String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
     Path file = new Path(fileNameGenesis);
+    Job job = Job.getInstance(conf);
     FileInputFormat.setInputPaths(job, file);
     BitcoinBlockFileInputFormat format = new BitcoinBlockFileInputFormat();
-    format.configure(job);
-    InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for genesis block", 1, inputSplits.length);
-    	RecordReader<BytesWritable, BitcoinBlock> reader = format.getRecordReader(inputSplits[0], job, reporter);
+    List<InputSplit> splits = format.getSplits(job);
+    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
+    assertEquals("Only one split generated for genesis block", 1, splits.size());
+    	RecordReader<BytesWritable, BitcoinBlock> reader = format.createRecordReader(splits.get(0), context);
 	assertNotNull("Format returned  null RecordReader", reader);
+	reader.initialize(splits.get(0),context);
 	BytesWritable genesisKey = new BytesWritable();	
 	BitcoinBlock genesisBlock = new BitcoinBlock();
-	assertTrue("Input Split for genesis block contains at least one block", reader.next(genesisKey,genesisBlock));
+	assertTrue("Input Split for genesis block contains at least one block", reader.nextKeyValue());
+	genesisBlock=reader.getCurrentValue();
 	assertEquals("Genesis Block must contain exactly one transaction", 1, genesisBlock.getTransactions().size());
-	BytesWritable emptyKey = new BytesWritable();
-    	BitcoinBlock emptyBlock = new BitcoinBlock();
-    	assertFalse("No further blocks in genesis Block", reader.next(emptyKey,emptyBlock));
+    	assertFalse("No further blocks in genesis Block", reader.nextKeyValue());
   }
 
   @Test
-  public void readBitcoinBlockInputFormatBlockVersion1() throws IOException {
-    JobConf job = new JobConf(defaultConf);
+  public void readBitcoinBlockInputFormatBlockVersion1() throws IOException, InterruptedException {
+    Configuration conf = new Configuration(defaultConf);
     ClassLoader classLoader = getClass().getClassLoader();
     String fileName="version1.blk";
     String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
     Path file = new Path(fileNameBlock);
+    Job job = Job.getInstance(conf);
     FileInputFormat.setInputPaths(job, file);
     BitcoinBlockFileInputFormat format = new BitcoinBlockFileInputFormat();
-    format.configure(job);
-    InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for block version 1", 1, inputSplits.length);
-    	RecordReader<BytesWritable, BitcoinBlock> reader = format.getRecordReader(inputSplits[0], job, reporter);
+    List<InputSplit> splits = format.getSplits(job);
+    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
+    assertEquals("Only one split generated for block version 1", 1, splits.size());
+    	RecordReader<BytesWritable, BitcoinBlock> reader = format.createRecordReader(splits.get(0), context);
 	assertNotNull("Format returned  null RecordReader", reader);
+	reader.initialize(splits.get(0),context);
 	BytesWritable key = new BytesWritable();	
 	BitcoinBlock block = new BitcoinBlock();
-	assertTrue("Input Split for block version contains at least one block", reader.next(key,block));
+	assertTrue("Input Split for block version contains at least one block", reader.nextKeyValue());
+	block=reader.getCurrentValue();
 	assertEquals("Random block version 1  must contain exactly two transactions", 2, block.getTransactions().size());
-	BytesWritable emptyKey = new BytesWritable();
-    	BitcoinBlock emptyBlock = new BitcoinBlock();
-    	assertFalse("No further blocks in block version 1", reader.next(emptyKey,emptyBlock));
+    	assertFalse("No further blocks in block version 1", reader.nextKeyValue());
   }
 
 
   @Test
-  public void readBitcoinBlockInputFormatBlockVersion2() throws IOException {
-    JobConf job = new JobConf(defaultConf);
+  public void readBitcoinBlockInputFormatBlockVersion2() throws IOException, InterruptedException {
+    Configuration conf = new Configuration(defaultConf);
     ClassLoader classLoader = getClass().getClassLoader();
     String fileName="version2.blk";
     String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
     Path file = new Path(fileNameBlock);
+    Job job = Job.getInstance(conf);
     FileInputFormat.setInputPaths(job, file);
     BitcoinBlockFileInputFormat format = new BitcoinBlockFileInputFormat();
-    format.configure(job);
-    InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for block version 2", 1, inputSplits.length);
-    	RecordReader<BytesWritable, BitcoinBlock> reader = format.getRecordReader(inputSplits[0], job, reporter);
+    List<InputSplit> splits = format.getSplits(job);
+    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
+    assertEquals("Only one split generated for block version 2", 1, splits.size());
+    	RecordReader<BytesWritable, BitcoinBlock> reader = format.createRecordReader(splits.get(0), context);
 	assertNotNull("Format returned  null RecordReader", reader);
+	reader.initialize(splits.get(0),context);
 	BytesWritable key = new BytesWritable();	
 	BitcoinBlock block = new BitcoinBlock();
-	assertTrue("Input Split for block version contains at least one block", reader.next(key,block));
+	assertTrue("Input Split for block version contains at least one block", reader.nextKeyValue());
+	block=reader.getCurrentValue();
 	assertEquals("Random block version 2  must contain exactly 343 transactions", 343, block.getTransactions().size());
-	BytesWritable emptyKey = new BytesWritable();
-    	BitcoinBlock emptyBlock = new BitcoinBlock();
-    	assertFalse("No further blocks in block version 2", reader.next(emptyKey,emptyBlock));
+    	assertFalse("No further blocks in block version 2", reader.nextKeyValue());
   }
 
 
   @Test
-  public void readBitcoinBlockInputFormatBlockVersion3() throws IOException {
-    JobConf job = new JobConf(defaultConf);
+  public void readBitcoinBlockInputFormatBlockVersion3() throws IOException, InterruptedException {
+    Configuration conf = new Configuration(defaultConf);
     ClassLoader classLoader = getClass().getClassLoader();
     String fileName="version3.blk";
     String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
     Path file = new Path(fileNameBlock);
+    Job job = Job.getInstance(conf);
     FileInputFormat.setInputPaths(job, file);
     BitcoinBlockFileInputFormat format = new BitcoinBlockFileInputFormat();
-    format.configure(job);
-    InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for block version 3", 1, inputSplits.length);
-    	RecordReader<BytesWritable, BitcoinBlock> reader = format.getRecordReader(inputSplits[0], job, reporter);
+    List<InputSplit> splits = format.getSplits(job);
+    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
+    assertEquals("Only one split generated for block version 3", 1,splits.size());
+    	RecordReader<BytesWritable, BitcoinBlock> reader = format.createRecordReader(splits.get(0), context);
 	assertNotNull("Format returned  null RecordReader", reader);
+	reader.initialize(splits.get(0),context);
 	BytesWritable key = new BytesWritable();	
 	BitcoinBlock block = new BitcoinBlock();
-	assertTrue("Input Split for block version contains at least one block", reader.next(key,block));
+	assertTrue("Input Split for block version contains at least one block", reader.nextKeyValue());
+	block=reader.getCurrentValue();
 	assertEquals("Random block version 3 must contain exactly 1645 transactions", 1645, block.getTransactions().size());
-	BytesWritable emptyKey = new BytesWritable();
-    	BitcoinBlock emptyBlock = new BitcoinBlock();
-    	assertFalse("No further blocks in block version 3", reader.next(emptyKey,emptyBlock));
+    	assertFalse("No further blocks in block version 3", reader.nextKeyValue());
   }
 
   @Test
-  public void readBitcoinBlockInputFormatBlockVersion4() throws IOException {
-    JobConf job = new JobConf(defaultConf);
+  public void readBitcoinBlockInputFormatBlockVersion4() throws IOException, InterruptedException {
+    Configuration conf = new Configuration(defaultConf);
     ClassLoader classLoader = getClass().getClassLoader();
     String fileName="version4.blk";
     String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
     Path file = new Path(fileNameBlock);
+    Job job = Job.getInstance(conf);
     FileInputFormat.setInputPaths(job, file);
     BitcoinBlockFileInputFormat format = new BitcoinBlockFileInputFormat();
-    format.configure(job);
-    InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for block version 4", 1, inputSplits.length);
-    	RecordReader<BytesWritable, BitcoinBlock> reader = format.getRecordReader(inputSplits[0], job, reporter);
+   List<InputSplit> splits = format.getSplits(job);
+    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
+    assertEquals("Only one split generated for block version 4", 1, splits.size());
+    	RecordReader<BytesWritable, BitcoinBlock> reader = format.createRecordReader(splits.get(0), context);
 	assertNotNull("Format returned  null RecordReader", reader);
+	reader.initialize(splits.get(0),context);
 	BytesWritable key = new BytesWritable();	
 	BitcoinBlock block = new BitcoinBlock();
-	assertTrue("Input Split for block version contains at least one block", reader.next(key,block));
+	assertTrue("Input Split for block version contains at least one block", reader.nextKeyValue());
+	block=reader.getCurrentValue();
 	assertEquals("Random block version 4 must contain exactly 936 transactions", 936, block.getTransactions().size());
-	BytesWritable emptyKey = new BytesWritable();
-    	BitcoinBlock emptyBlock = new BitcoinBlock();
-    	assertFalse("No further blocks in block version 4", reader.next(emptyKey,emptyBlock));
+    	assertFalse("No further blocks in block version 4", reader.nextKeyValue());
   }
 
   @Test
-  public void readBitcoinBlockInputFormatReqSeekBlockVersion1() throws IOException {
-    JobConf job = new JobConf(defaultConf);
+  public void readBitcoinBlockInputFormatReqSeekBlockVersion1() throws IOException, InterruptedException {
+    Configuration conf = new Configuration(defaultConf);
     ClassLoader classLoader = getClass().getClassLoader();
     String fileName="reqseekversion1.blk";
     String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
     Path file = new Path(fileNameBlock);
+    Job job = Job.getInstance(conf);
     FileInputFormat.setInputPaths(job, file);
     BitcoinBlockFileInputFormat format = new BitcoinBlockFileInputFormat();
-    format.configure(job);
-    InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for block requiring seek version 1", 1, inputSplits.length);
-    	RecordReader<BytesWritable, BitcoinBlock> reader = format.getRecordReader(inputSplits[0], job, reporter);
+   List<InputSplit> splits = format.getSplits(job);
+    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
+    assertEquals("Only one split generated for block requiring seek version 1", 1, splits.size());
+    	RecordReader<BytesWritable, BitcoinBlock> reader = format.createRecordReader(splits.get(0), context);
 	assertNotNull("Format returned  null RecordReader", reader);
+	reader.initialize(splits.get(0),context);
 	BytesWritable key = new BytesWritable();	
 	BitcoinBlock block = new BitcoinBlock();
-	assertTrue("Input Split for block version contains at least one block", reader.next(key,block));
+	assertTrue("Input Split for block version contains at least one block", reader.nextKeyValue());
+	block=reader.getCurrentValue();
 	assertEquals("Random block requiring seek version 1 must contain exactly two transactions", 2, block.getTransactions().size());
-	BytesWritable emptyKey = new BytesWritable();
-    	BitcoinBlock emptyBlock = new BitcoinBlock();
-    	assertFalse("No further blocks in block requiring seek version 1", reader.next(emptyKey,emptyBlock));
+    	assertFalse("No further blocks in block requiring seek version 1", reader.nextKeyValue());
   }
 
   @Test
-  public void readBitcoinBlockInputFormatMultiBlock() throws IOException {
-    JobConf job = new JobConf(defaultConf);
+  public void readBitcoinBlockInputFormatMultiBlock() throws IOException, InterruptedException {
+    Configuration conf = new Configuration(defaultConf);
     ClassLoader classLoader = getClass().getClassLoader();
     String fileName="multiblock.blk";
     String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
     Path file = new Path(fileNameBlock);
+        Job job = Job.getInstance(conf);
     FileInputFormat.setInputPaths(job, file);
     BitcoinBlockFileInputFormat format = new BitcoinBlockFileInputFormat();
-    format.configure(job);
-    InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for multiblock", 1, inputSplits.length);
-    	RecordReader<BytesWritable, BitcoinBlock> reader = format.getRecordReader(inputSplits[0], job, reporter);
+  List<InputSplit> splits = format.getSplits(job);
+    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
+    assertEquals("Only one split generated for multiblock", 1,splits.size());
+    	RecordReader<BytesWritable, BitcoinBlock> reader = format.createRecordReader(splits.get(0),context);
 	assertNotNull("Format returned  null RecordReader", reader);
+	reader.initialize(splits.get(0),context);
 	BytesWritable key = new BytesWritable();	
 	BitcoinBlock block = new BitcoinBlock();
-	assertTrue("Input Split for multi block contains the genesis block", reader.next(key,block));
+	assertTrue("Input Split for multi block contains the genesis block", reader.nextKeyValue());
+	block=reader.getCurrentValue();
 	assertEquals("Genesis Block must contain exactly one transaction", 1, block.getTransactions().size());
-	assertTrue("Input Split for block version contains block version 1", reader.next(key,block));
+	assertTrue("Input Split for block version contains block version 1", reader.nextKeyValue());
+	block=reader.getCurrentValue();
 	assertEquals("Random block version 1  must contain exactly two transactions", 2, block.getTransactions().size());
-	assertTrue("Input Split for block version contains at least one block", reader.next(key,block));
+	assertTrue("Input Split for block version contains at least one block", reader.nextKeyValue());
+	block=reader.getCurrentValue();
 	assertEquals("Random block version 2  must contain exactly 343 transactions", 343, block.getTransactions().size());
-	BytesWritable emptyKey = new BytesWritable();
-    	BitcoinBlock emptyBlock = new BitcoinBlock();
-    	assertFalse("No further blocks in multi block", reader.next(emptyKey,emptyBlock));
+    	assertFalse("No further blocks in multi block", reader.nextKeyValue());
   }
 
 
   @Test
-  public void readBitcoinTransactionInputFormatGenesisBlock() throws IOException {
-      JobConf job = new JobConf(defaultConf);
+  public void readBitcoinTransactionInputFormatGenesisBlock() throws IOException, InterruptedException {
+    Configuration conf = new Configuration(defaultConf);
     ClassLoader classLoader = getClass().getClassLoader();
     String fileName="genesis.blk";
     String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
     Path file = new Path(fileNameBlock);
+    Job job = Job.getInstance(conf);
     FileInputFormat.setInputPaths(job, file);
     BitcoinTransactionFileInputFormat format = new BitcoinTransactionFileInputFormat();
-    format.configure(job);
-    InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for genesis block", 1, inputSplits.length);
-    	RecordReader<BytesWritable, BitcoinTransaction> reader = format.getRecordReader(inputSplits[0], job, reporter);
+  List<InputSplit> splits = format.getSplits(job);
+    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
+    assertEquals("Only one split generated for genesis block", 1, splits.size());
+    	RecordReader<BytesWritable, BitcoinTransaction> reader = format.createRecordReader(splits.get(0), context);
 	assertNotNull("Format returned  null RecordReader", reader);
-	BytesWritable key = new BytesWritable();	
-	BitcoinTransaction transaction = new BitcoinTransaction();
+	reader.initialize(splits.get(0),context);
 	int transactCount=0;
-	while (reader.next(key,transaction)) {
+	while (reader.nextKeyValue()) {
 		transactCount++;
 	}
 	assertEquals("Genesis Block  must contain exactly one transactions", 1, transactCount);
   }
 
   @Test
-  public void readBitcoinTransactionInputFormatBlockVersion1() throws IOException {
-      JobConf job = new JobConf(defaultConf);
+  public void readBitcoinTransactionInputFormatBlockVersion1() throws IOException, InterruptedException {
+    Configuration conf = new Configuration(defaultConf);
     ClassLoader classLoader = getClass().getClassLoader();
     String fileName="version1.blk";
     String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
     Path file = new Path(fileNameBlock);
+    Job job = Job.getInstance(conf);
     FileInputFormat.setInputPaths(job, file);
     BitcoinTransactionFileInputFormat format = new BitcoinTransactionFileInputFormat();
-    format.configure(job);
-    InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for block version 1", 1, inputSplits.length);
-    	RecordReader<BytesWritable, BitcoinTransaction> reader = format.getRecordReader(inputSplits[0], job, reporter);
+     List<InputSplit> splits = format.getSplits(job);
+    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
+    assertEquals("Only one split generated for block version 1", 1, splits.size());
+    	RecordReader<BytesWritable, BitcoinTransaction> reader = format.createRecordReader(splits.get(0),context);
 	assertNotNull("Format returned  null RecordReader", reader);
-	BytesWritable key = new BytesWritable();	
-	BitcoinTransaction transaction = new BitcoinTransaction();
+	reader.initialize(splits.get(0),context);
 	int transactCount=0;
-	while (reader.next(key,transaction)) {
+	while (reader.nextKeyValue()) {
 		transactCount++;
 	}
 	assertEquals("Block version 1 must contain exactly two transactions", 2, transactCount);
   }
 
   @Test
-  public void readBitcoinTransactionInputFormatBlockVersion2() throws IOException {
-      JobConf job = new JobConf(defaultConf);
+  public void readBitcoinTransactionInputFormatBlockVersion2() throws IOException, InterruptedException {
+    Configuration conf = new Configuration(defaultConf);
     ClassLoader classLoader = getClass().getClassLoader();
     String fileName="version2.blk";
     String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
     Path file = new Path(fileNameBlock);
+    Job job = Job.getInstance(conf);
     FileInputFormat.setInputPaths(job, file);
     BitcoinTransactionFileInputFormat format = new BitcoinTransactionFileInputFormat();
-    format.configure(job);
-    InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for block version 2", 1, inputSplits.length);
-    	RecordReader<BytesWritable, BitcoinTransaction> reader = format.getRecordReader(inputSplits[0], job, reporter);
+     List<InputSplit> splits = format.getSplits(job);
+    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
+    assertEquals("Only one split generated for block version 2", 1, splits.size());
+    	RecordReader<BytesWritable, BitcoinTransaction> reader = format.createRecordReader(splits.get(0), context);
 	assertNotNull("Format returned  null RecordReader", reader);
-	BytesWritable key = new BytesWritable();	
-	BitcoinTransaction transaction = new BitcoinTransaction();
+	reader.initialize(splits.get(0),context);
 	int transactCount=0;
-	while (reader.next(key,transaction)) {
+	while (reader.nextKeyValue()) {
 		transactCount++;
 	}
 	assertEquals("Block version 2 must contain exactly 343 transactions", 343, transactCount);
   }
 
   @Test
-  public void readBitcoinTransactionInputFormatBlockVersion3() throws IOException {
-      JobConf job = new JobConf(defaultConf);
+  public void readBitcoinTransactionInputFormatBlockVersion3() throws IOException, InterruptedException {
+    Configuration conf = new Configuration(defaultConf);
     ClassLoader classLoader = getClass().getClassLoader();
     String fileName="version3.blk";
     String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
     Path file = new Path(fileNameBlock);
+    Job job = Job.getInstance(conf);
     FileInputFormat.setInputPaths(job, file);
     BitcoinTransactionFileInputFormat format = new BitcoinTransactionFileInputFormat();
-    format.configure(job);
-    InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for block version 3", 1, inputSplits.length);
-    	RecordReader<BytesWritable, BitcoinTransaction> reader = format.getRecordReader(inputSplits[0], job, reporter);
+     List<InputSplit> splits = format.getSplits(job);
+    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
+    assertEquals("Only one split generated for block version 3", 1, splits.size());
+    	RecordReader<BytesWritable, BitcoinTransaction> reader = format.createRecordReader(splits.get(0), context);
 	assertNotNull("Format returned  null RecordReader", reader);
-	BytesWritable key = new BytesWritable();	
-	BitcoinTransaction transaction = new BitcoinTransaction();
+	reader.initialize(splits.get(0),context);
 	int transactCount=0;
-	while (reader.next(key,transaction)) {
+	while (reader.nextKeyValue()) {
 		transactCount++;
 	}
 	assertEquals("Block version 3 must contain exactly 1645 transactions", 1645, transactCount);
   }
 
   @Test
-  public void readBitcoinTransactionInputFormatBlockVersion4() throws IOException {
-      JobConf job = new JobConf(defaultConf);
+  public void readBitcoinTransactionInputFormatBlockVersion4() throws IOException, InterruptedException {
+    Configuration conf = new Configuration(defaultConf);
     ClassLoader classLoader = getClass().getClassLoader();
     String fileName="version4.blk";
     String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
     Path file = new Path(fileNameBlock);
+    Job job = Job.getInstance(conf);
     FileInputFormat.setInputPaths(job, file);
     BitcoinTransactionFileInputFormat format = new BitcoinTransactionFileInputFormat();
-    format.configure(job);
-    InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for block version 4", 1, inputSplits.length);
-    	RecordReader<BytesWritable, BitcoinTransaction> reader = format.getRecordReader(inputSplits[0], job, reporter);
+     List<InputSplit> splits = format.getSplits(job);
+    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
+    assertEquals("Only one split generated for block version 4", 1, splits.size());
+    	RecordReader<BytesWritable, BitcoinTransaction> reader = format.createRecordReader(splits.get(0), context);
 	assertNotNull("Format returned  null RecordReader", reader);
-	BytesWritable key = new BytesWritable();	
-	BitcoinTransaction transaction = new BitcoinTransaction();
+	reader.initialize(splits.get(0),context);
 	int transactCount=0;
-	while (reader.next(key,transaction)) {
+	while (reader.nextKeyValue()) {
 		transactCount++;
 	}
 	assertEquals("Block version 4 must contain exactly 936 transactions", 936, transactCount);
   }
 
   @Test
-  public void readBitcoinTransactionInputFormatBlockVersion1ReqSeek() throws IOException {
-      JobConf job = new JobConf(defaultConf);
+  public void readBitcoinTransactionInputFormatBlockVersion1ReqSeek() throws IOException, InterruptedException {
+   Configuration conf = new Configuration(defaultConf);
     ClassLoader classLoader = getClass().getClassLoader();
     String fileName="reqseekversion1.blk";
     String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
     Path file = new Path(fileNameBlock);
+    Job job = Job.getInstance(conf);
     FileInputFormat.setInputPaths(job, file);
     BitcoinTransactionFileInputFormat format = new BitcoinTransactionFileInputFormat();
-    format.configure(job);
-    InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for block version 1 requiring seek", 1, inputSplits.length);
-    	RecordReader<BytesWritable, BitcoinTransaction> reader = format.getRecordReader(inputSplits[0], job, reporter);
+    List<InputSplit> splits = format.getSplits(job);
+    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
+    assertEquals("Only one split generated for block version 1 requiring seek", 1, splits.size());
+    	RecordReader<BytesWritable, BitcoinTransaction> reader = format.createRecordReader(splits.get(0), context);
 	assertNotNull("Format returned  null RecordReader", reader);
-	BytesWritable key = new BytesWritable();	
-	BitcoinTransaction transaction = new BitcoinTransaction();
+	reader.initialize(splits.get(0),context);
 	int transactCount=0;
-	while (reader.next(key,transaction)) {
+	while (reader.nextKeyValue()) {
 		transactCount++;
 	}
 	assertEquals("Block version 1 requiring seek must contain exactly two transactions", 2, transactCount);
   }
 
   @Test
-  public void readBitcoinTransactionInputFormatMultiBlock() throws IOException {
-      JobConf job = new JobConf(defaultConf);
+  public void readBitcoinTransactionInputFormatMultiBlock() throws IOException, InterruptedException {
+   Configuration conf = new Configuration(defaultConf);
     ClassLoader classLoader = getClass().getClassLoader();
     String fileName="multiblock.blk";
     String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
     Path file = new Path(fileNameBlock);
+    Job job = Job.getInstance(conf);
     FileInputFormat.setInputPaths(job, file);
     BitcoinTransactionFileInputFormat format = new BitcoinTransactionFileInputFormat();
-    format.configure(job);
-    InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for multi block", 1, inputSplits.length);
-    	RecordReader<BytesWritable, BitcoinTransaction> reader = format.getRecordReader(inputSplits[0], job, reporter);
+    List<InputSplit> splits = format.getSplits(job);
+    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
+    assertEquals("Only one split generated for multi block", 1, splits.size());
+    	RecordReader<BytesWritable, BitcoinTransaction> reader = format.createRecordReader(splits.get(0), context);
 	assertNotNull("Format returned  null RecordReader", reader);
-	BytesWritable key = new BytesWritable();	
-	BitcoinTransaction transaction = new BitcoinTransaction();
+	reader.initialize(splits.get(0),context);
 	int transactCount=0;
-	while (reader.next(key,transaction)) {
+	while (reader.nextKeyValue()) {
 		transactCount++;
 	}
 	assertEquals("Multiblock must contain exactly 1+2+343=346 transactions", 346, transactCount);
   }
 
   @Test
-  public void readBitcoinRawBlockInputFormatGzipCompressed() throws IOException {
-    JobConf job = new JobConf(defaultConf);
+  public void readBitcoinRawBlockInputFormatGzipCompressed() throws IOException, InterruptedException {
+   Configuration conf = new Configuration(defaultConf);
+    Job job = Job.getInstance(conf);
     CompressionCodec gzip = new GzipCodec();
-    ReflectionUtils.setConf(gzip, job);
+    ReflectionUtils.setConf(gzip, conf);
     ClassLoader classLoader = getClass().getClassLoader();
     String fileName="version4comp.blk.gz";
     String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
     Path file = new Path(fileNameBlock);
     FileInputFormat.setInputPaths(job, file);
     BitcoinRawBlockFileInputFormat format = new BitcoinRawBlockFileInputFormat();
-    format.configure(job);
-    InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for compressed block", 1, inputSplits.length);
-    	RecordReader<BytesWritable, BytesWritable> reader = format.getRecordReader(inputSplits[0], job, reporter);
+    List<InputSplit> splits = format.getSplits(job);
+    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
+    assertEquals("Only one split generated for compressed block", 1, splits.size());
+    	RecordReader<BytesWritable, BytesWritable> reader = format.createRecordReader(splits.get(0), context);
 	assertNotNull("Format returned  null RecordReader", reader);
+	reader.initialize(splits.get(0),context);
 	BytesWritable key = new BytesWritable();	
 	BytesWritable block = new BytesWritable();
-	assertTrue("Input Split for block version contains at least one block", reader.next(key,block));
+	assertTrue("Input Split for block version contains at least one block", reader.nextKeyValue());
+	block=reader.getCurrentValue();
 	assertEquals("Compressed block must have a size of 998.039 bytes", 998039, block.getLength());
-	BytesWritable emptyKey = new BytesWritable();
-    	BytesWritable emptyBlock = new BytesWritable();
-    	assertFalse("No further blocks in compressed block", reader.next(emptyKey,emptyBlock));
+    	assertFalse("No further blocks in compressed block", reader.nextKeyValue());
   }
 
   @Test
-  public void readBitcoinBlockInputFormatGzipCompressed() throws IOException{
-        JobConf job = new JobConf(defaultConf);
+  public void readBitcoinBlockInputFormatGzipCompressed() throws IOException, InterruptedException{
+   Configuration conf = new Configuration(defaultConf);
+    Job job = Job.getInstance(conf);
     CompressionCodec gzip = new GzipCodec();
-    ReflectionUtils.setConf(gzip, job);
+    ReflectionUtils.setConf(gzip, conf);
     ClassLoader classLoader = getClass().getClassLoader();
     String fileName="version4comp.blk.gz";
     String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
     Path file = new Path(fileNameBlock);
     FileInputFormat.setInputPaths(job, file);
     BitcoinBlockFileInputFormat format = new BitcoinBlockFileInputFormat();
-    format.configure(job);
-    InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for compressed block", 1, inputSplits.length);
-    	RecordReader<BytesWritable, BitcoinBlock> reader = format.getRecordReader(inputSplits[0], job, reporter);
+    List<InputSplit> splits = format.getSplits(job);
+    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
+    assertEquals("Only one split generated for compressed block", 1, splits.size());
+    	RecordReader<BytesWritable, BitcoinBlock> reader = format.createRecordReader(splits.get(0), context);
 	assertNotNull("Format returned  null RecordReader", reader);
+	reader.initialize(splits.get(0),context);
 	BytesWritable key = new BytesWritable();	
 	BitcoinBlock block = new BitcoinBlock();
-	assertTrue("Input Split for block version contains at least one block", reader.next(key,block));
+	assertTrue("Input Split for block version contains at least one block", reader.nextKeyValue());
+	block=reader.getCurrentValue();
 	assertEquals("Compressed block must have at least 936 transactions", 936, block.getTransactions().size());
 	assertEquals("Compressed block must contain exactly 936 transactions of which the first has one input and script length 4", 4, block.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
 	assertEquals("Compressed block must contain exactly 936 transactions of which the first has two outputs", 2, block.getTransactions().get(0).getListOfOutputs().size());
 	assertEquals("Compressed block must contain exactly 936 transactions of which the first has two output and the first output script length 25", 25, block.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
-	BytesWritable emptyKey = new BytesWritable();
-    	BitcoinBlock emptyBlock = new BitcoinBlock();
-    	assertFalse("No further blocks in compressed block", reader.next(emptyKey,emptyBlock));
+    	assertFalse("No further blocks in compressed block", reader.nextKeyValue());
   }
 
 
 
   @Test
-  public void readBitcoinTransactionInputFormatGzipCompressed() throws IOException{
-     JobConf job = new JobConf(defaultConf);
+  public void readBitcoinTransactionInputFormatGzipCompressed() throws IOException, InterruptedException{
+ Configuration conf = new Configuration(defaultConf);
+    Job job = Job.getInstance(conf);
     CompressionCodec gzip = new GzipCodec();
-    ReflectionUtils.setConf(gzip, job);
+    ReflectionUtils.setConf(gzip, conf);
     ClassLoader classLoader = getClass().getClassLoader();
     String fileName="version4comp.blk.gz";
     String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
     Path file = new Path(fileNameBlock);
     FileInputFormat.setInputPaths(job, file);
     BitcoinTransactionFileInputFormat format = new BitcoinTransactionFileInputFormat();
-    format.configure(job);
-    InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for compressed block", 1, inputSplits.length);
-    	RecordReader<BytesWritable, BitcoinTransaction> reader = format.getRecordReader(inputSplits[0], job, reporter);
+    List<InputSplit> splits = format.getSplits(job);
+    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
+    assertEquals("Only one split generated for compressed block", 1, splits.size());
+    	RecordReader<BytesWritable, BitcoinTransaction> reader = format.createRecordReader(splits.get(0), context);
 	assertNotNull("Format returned  null RecordReader", reader);
-	BytesWritable key = new BytesWritable();	
-	BitcoinTransaction transaction = new BitcoinTransaction();
+	reader.initialize(splits.get(0),context);
 	int transactCount=0;
-	while (reader.next(key,transaction)) {
+	while (reader.nextKeyValue()) {
 		transactCount++;
 	}
  	assertEquals("Comrpessed block must have at least 936 transactions", 936, transactCount);
@@ -764,80 +789,82 @@ private static Reporter reporter = Reporter.NULL;
 
 
   @Test
-  public void readBitcoinRawBlockInputFormatBzip2Compressed() throws IOException {
-    JobConf job = new JobConf(defaultConf);
+  public void readBitcoinRawBlockInputFormatBzip2Compressed() throws IOException, InterruptedException {
+ Configuration conf = new Configuration(defaultConf);
+    Job job = Job.getInstance(conf);
     CompressionCodec bzip2 = new BZip2Codec();
-    ReflectionUtils.setConf(bzip2, job);
+    ReflectionUtils.setConf(bzip2, conf);
     ClassLoader classLoader = getClass().getClassLoader();
     String fileName="version4comp.blk.bz2";
     String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
     Path file = new Path(fileNameBlock);
     FileInputFormat.setInputPaths(job, file);
     BitcoinRawBlockFileInputFormat format = new BitcoinRawBlockFileInputFormat();
-    format.configure(job);
-    InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for compressed block", 1, inputSplits.length);
-    	RecordReader<BytesWritable, BytesWritable> reader = format.getRecordReader(inputSplits[0], job, reporter);
+    List<InputSplit> splits = format.getSplits(job);
+    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
+    assertEquals("Only one split generated for compressed block", 1, splits.size());
+    	RecordReader<BytesWritable, BytesWritable> reader = format.createRecordReader(splits.get(0), context);
 	assertNotNull("Format returned  null RecordReader", reader);
+	reader.initialize(splits.get(0),context);
 	BytesWritable key = new BytesWritable();	
 	BytesWritable block = new BytesWritable();
-	assertTrue("Input Split for block version contains at least one block", reader.next(key,block));
+	assertTrue("Input Split for block version contains at least one block", reader.nextKeyValue());
+	block=reader.getCurrentValue();
 	assertEquals("Compressed block must have a size of 998.039 bytes", 998039, block.getLength());
-	BytesWritable emptyKey = new BytesWritable();
-    	BytesWritable emptyBlock = new BytesWritable();
-    	assertFalse("No further blocks in compressed block", reader.next(emptyKey,emptyBlock));
+    	assertFalse("No further blocks in compressed block", reader.nextKeyValue());
 
   }
 
   @Test
-  public void readBitcoinBlockInputFormatBzip2Compressed() throws IOException {
-    JobConf job = new JobConf(defaultConf);
+  public void readBitcoinBlockInputFormatBzip2Compressed() throws IOException, InterruptedException {
+ Configuration conf = new Configuration(defaultConf);
+    Job job = Job.getInstance(conf);
     CompressionCodec bzip2 = new BZip2Codec();
-    ReflectionUtils.setConf(bzip2, job);
+    ReflectionUtils.setConf(bzip2, conf);
     ClassLoader classLoader = getClass().getClassLoader();
     String fileName="version4comp.blk.bz2";
     String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
     Path file = new Path(fileNameBlock);
     FileInputFormat.setInputPaths(job, file);
     BitcoinBlockFileInputFormat format = new BitcoinBlockFileInputFormat();
-    format.configure(job);
-    InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for compressed block", 1, inputSplits.length);
-    	RecordReader<BytesWritable, BitcoinBlock> reader = format.getRecordReader(inputSplits[0], job, reporter);
+    List<InputSplit> splits = format.getSplits(job);
+    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
+    assertEquals("Only one split generated for compressed block", 1, splits.size());
+    	RecordReader<BytesWritable, BitcoinBlock> reader = format.createRecordReader(splits.get(0), context);
 	assertNotNull("Format returned  null RecordReader", reader);
+	reader.initialize(splits.get(0),context);
 	BytesWritable key = new BytesWritable();	
 	BitcoinBlock block = new BitcoinBlock();
-	assertTrue("Input Split for block version contains at least one block", reader.next(key,block));
+	assertTrue("Input Split for block version contains at least one block", reader.nextKeyValue());
+	block=reader.getCurrentValue();
 	assertEquals("Compressed block must have at least 936 transactions", 936, block.getTransactions().size());
 	assertEquals("Compressed block must contain exactly 936 transactions of which the first has one input and script length 4", 4, block.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
 	assertEquals("Compressed block must contain exactly 936 transactions of which the first has two outputs", 2, block.getTransactions().get(0).getListOfOutputs().size());
 	assertEquals("Compressed block must contain exactly 936 transactions of which the first has two output and the first output script length 25", 25, block.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
-	BytesWritable emptyKey = new BytesWritable();
-    	BitcoinBlock emptyBlock = new BitcoinBlock();
-    	assertFalse("No further blocks in compressed block", reader.next(emptyKey,emptyBlock));
+    	assertFalse("No further blocks in compressed block", reader.nextKeyValue());
   }
 
 
   @Test
-  public void readBitcoinTransactionInputFormatBzip2Compressed() throws IOException {
-      JobConf job = new JobConf(defaultConf);
+  public void readBitcoinTransactionInputFormatBzip2Compressed() throws IOException, InterruptedException {
+ Configuration conf = new Configuration(defaultConf);
+    Job job = Job.getInstance(conf);
     CompressionCodec bzip2 = new BZip2Codec();
-    ReflectionUtils.setConf(bzip2, job);
+    ReflectionUtils.setConf(bzip2, conf);
     ClassLoader classLoader = getClass().getClassLoader();
     String fileName="version4comp.blk.bz2";
     String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
     Path file = new Path(fileNameBlock);
     FileInputFormat.setInputPaths(job, file);
     BitcoinTransactionFileInputFormat format = new BitcoinTransactionFileInputFormat();
-    format.configure(job);
-    InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for compressed block", 1, inputSplits.length);
-    	RecordReader<BytesWritable, BitcoinTransaction> reader = format.getRecordReader(inputSplits[0], job, reporter);
+    List<InputSplit> splits = format.getSplits(job);
+    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
+    assertEquals("Only one split generated for compressed block", 1, splits.size());
+    	RecordReader<BytesWritable, BitcoinTransaction> reader = format.createRecordReader(splits.get(0), context);
 	assertNotNull("Format returned  null RecordReader", reader);
-	BytesWritable key = new BytesWritable();	
-	BitcoinTransaction transaction = new BitcoinTransaction();
+	reader.initialize(splits.get(0),context);
 	int transactCount=0;
-	while (reader.next(key,transaction)) {
+	while (reader.nextKeyValue()) {
 		transactCount++;
 	}
  	assertEquals("Comrpessed block must have at least 936 transactions", 936, transactCount);
