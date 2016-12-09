@@ -20,6 +20,7 @@ mainClassName = "org.zuinnote.spark.bitcoin.example.Spark2DataSetBitcoinBlockCou
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 
@@ -37,7 +38,7 @@ dependencies {
    // hadoop lib for input format
      provided("org.apache.hadoop:hadoop-client:2.7.0")
    // hadoop crypto ledger library
-   compile("com.github.zuinnote:hadoopcryptoledger-fileformat:1.0.2")
+   compile("com.github.zuinnote:hadoopcryptoledger-fileformat:1.0.3")
    // spark-core
     provided("org.apache.spark:spark-core_2.11:2.0.0")
    // spark-sql
