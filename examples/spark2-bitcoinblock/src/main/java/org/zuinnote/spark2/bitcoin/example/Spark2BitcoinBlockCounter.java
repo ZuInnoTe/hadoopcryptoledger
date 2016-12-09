@@ -21,21 +21,21 @@ package org.zuinnote.spark2.bitcoin.example;
 
 import java.util.*;
         
-import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.conf.*;
 import org.apache.hadoop.io.*;
-import org.apache.hadoop.mapred.*;
+import org.apache.hadoop.mapreduce.*;
 import org.apache.hadoop.util.*;
 
 
 import scala.Tuple2;
-import org.apache.hadoop.conf.*;
 import org.apache.spark.sql.*;
 import org.apache.spark.api.java.*;
 import org.apache.spark.api.java.function.*;
 import org.apache.spark.SparkConf;
 
-import org.zuinnote.hadoop.bitcoin.format.*;
+import org.zuinnote.hadoop.bitcoin.format.common.*;
+
+import org.zuinnote.hadoop.bitcoin.format.mapreduce.*;
    
 /**
 * Author: Jörn Franke <zuinnote@gmail.com>
@@ -53,13 +53,13 @@ private Spark2BitcoinBlockCounter() {
     SparkConf conf = new SparkConf().setAppName("Spark2 BitcoinBlock Analytics (hadoopcryptoledger)");
     JavaSparkContext sc = new JavaSparkContext(conf); 
     // create Hadoop Configuration
-    JobConf hadoopConf= new JobConf();
-    FileInputFormat.addInputPath(hadoopConf, new Path(args[0]));
+    Configuration hadoopConf= new Configuration();
       /** Set as an example some of the options to configure the Bitcoin fileformat **/
      /** Find here all configuration options: https://github.com/ZuInnoTe/hadoopcryptoledger/wiki/Hadoop-File-Format **/
     hadoopConf.set("hadoopcryptoledger.bitcoinblockinputformat.filter.magic","F9BEB4D9");
+    
     // read bitcoin data from HDFS
-    JavaPairRDD<BytesWritable, BitcoinBlock> bitcoinBlocksRDD = sc.hadoopRDD(hadoopConf, BitcoinBlockFileInputFormat.class, BytesWritable.class, BitcoinBlock.class, 2);
+    JavaPairRDD<BytesWritable, BitcoinBlock> bitcoinBlocksRDD = sc.newAPIHadoopFile(args[0], BitcoinBlockFileInputFormat.class, BytesWritable.class, BitcoinBlock.class,hadoopConf);
     // extract the no transactions / block (map)
     JavaPairRDD<String, Long> noOfTransactionPair = bitcoinBlocksRDD.mapToPair(new PairFunction<Tuple2<BytesWritable,BitcoinBlock>, String, Long>() {
 	@Override
