@@ -25,20 +25,32 @@ package org.zuinnote.hadoop.bitcoin.example.tasks;
 *
 */
 import java.io.IOException;
-import org.apache.hadoop.mapred.*;
+import org.apache.hadoop.mapreduce.*;
 import org.apache.hadoop.io.*;
-import org.zuinnote.hadoop.bitcoin.format.*;
+import org.zuinnote.hadoop.bitcoin.format.common.*;
+
+import org.zuinnote.hadoop.bitcoin.format.mapreduce.*;
 
 
 import java.util.*;
 
-	 public  class BitcoinBlockMap  extends MapReduceBase implements Mapper<BytesWritable, BitcoinBlock, Text, IntWritable> {
-	    private final static Text defaultKey = new Text("Transaction Count:");
-	    @Override
-	    public void map(BytesWritable key, BitcoinBlock value, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
-	    	// get the number of transactions
-	    	 output.collect(defaultKey, new IntWritable(value.getTransactions().size()));
-	    	 }
-	    
-	    }
+public  class BitcoinBlockMap  extends Mapper<BytesWritable, BitcoinBlock, Text, IntWritable> {
+private final static Text defaultKey = new Text("Transaction Count:");
+
+
+@Override
+public void setup(Context context) throws IOException, InterruptedException {
+}
+
+@Override
+public void map(BytesWritable key, BitcoinBlock value, Context context) throws IOException, InterruptedException {
+	// get the number of transactions
+	context.write(defaultKey, new IntWritable(value.getTransactions().size()));
+}
+
+@Override
+public void cleanup(Context context) {
+}	    
+
+}
 	 
