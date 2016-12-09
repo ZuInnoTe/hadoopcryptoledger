@@ -25,19 +25,21 @@ package org.zuinnote.hadoop.bitcoin.example.tasks;
 *
 */
 import java.io.IOException;
-import org.apache.hadoop.mapred.*;
+import org.apache.hadoop.mapreduce.*;
 import org.apache.hadoop.io.*;
 import java.util.*;
 
-public class BitcoinBlockReducer extends MapReduceBase implements Reducer<Text, IntWritable, Text, LongWritable> {
-  @Override
-   public void reduce(Text key, Iterator<IntWritable> values, OutputCollector<Text, LongWritable> output, Reporter reporter)
-     throws IOException {
+public class BitcoinBlockReducer extends Reducer<Text, IntWritable, Text, LongWritable> {
+
+private LongWritable result = new LongWritable();
+public void reduce(Text key, Iterable<IntWritable> values, Context context)
+     throws IOException, InterruptedException {
        long sum = 0;
-       while (values.hasNext()) {
-           sum += values.next().get();
+       for (IntWritable val: values) {
+           sum += val.get();
        }
-       output.collect(key, new LongWritable(sum));
+	result.set(sum);
+       context.write(key, result);
    }
 }
 
