@@ -29,8 +29,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import org.zuinnote.hadoop.bitcoin.format.BitcoinBlock;
-import org.zuinnote.hadoop.bitcoin.format.BitcoinBlockReader;
+import org.zuinnote.hadoop.bitcoin.format.common.BitcoinBlock;
+import org.zuinnote.hadoop.bitcoin.format.common.BitcoinBlockReader;
 import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
 
 
