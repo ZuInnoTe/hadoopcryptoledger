@@ -22,7 +22,7 @@ import java.util.Set;
 import org.apache.hadoop.hive.ql.io.AbstractStorageFormatDescriptor;
 import org.apache.hadoop.mapreduce.lib.output.NullOutputFormat;
 
-import org.zuinnote.hadoop.bitcoin.format.BitcoinBlockFileInputFormat;
+import org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinBlockFileInputFormat;
 
 public class BitcoinBlockStorageFormatDescriptor extends AbstractStorageFormatDescriptor {
   @Override

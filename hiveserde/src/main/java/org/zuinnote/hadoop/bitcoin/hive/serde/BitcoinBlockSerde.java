@@ -37,7 +37,10 @@ import org.apache.hadoop.hive.ql.exec.vector.VectorizedSerde;
 import org.apache.hadoop.hive.ql.exec.vector.VectorizedRowBatch;
 
    
-import org.zuinnote.hadoop.bitcoin.format.*;
+import org.zuinnote.hadoop.bitcoin.format.common.*;
+import org.zuinnote.hadoop.bitcoin.format.mapred.AbstractBitcoinRecordReader;
+
+import org.zuinnote.hadoop.bitcoin.format.mapred.AbstractBitcoinFileInputFormat;
 
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
