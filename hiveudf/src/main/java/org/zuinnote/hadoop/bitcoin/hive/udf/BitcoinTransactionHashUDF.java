@@ -34,7 +34,7 @@ import org.apache.hadoop.hive.serde2.objectinspector.primitive.WritableLongObjec
 import org.apache.hadoop.hive.serde2.objectinspector.StructField;
 import org.apache.hadoop.hive.serde2.objectinspector.StructObjectInspector;
 
-import org.zuinnote.hadoop.bitcoin.format.*;
+import org.zuinnote.hadoop.bitcoin.format.common.*;
 
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;

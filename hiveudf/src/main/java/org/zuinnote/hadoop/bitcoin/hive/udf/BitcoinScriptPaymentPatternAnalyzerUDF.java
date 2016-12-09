@@ -21,7 +21,6 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.hive.ql.exec.Description;
 import org.apache.hadoop.hive.ql.exec.UDF;
 
-import org.zuinnote.hadoop.bitcoin.format.*;
 
 
 import org.apache.commons.logging.LogFactory;
@@ -29,6 +28,7 @@ import org.apache.commons.logging.Log;
 
 import javax.xml.bind.DatatypeConverter;
 
+import org.zuinnote.hadoop.bitcoin.format.common.*;
 /*
 * UDF to extract the destination  (cf. https://en.bitcoin.it/wiki/Transaction#general_format_.28inside_a_block.29_of_each_input_of_a_transaction_-_Txin)
 *
