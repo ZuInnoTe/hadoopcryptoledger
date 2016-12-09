@@ -25,8 +25,6 @@ import org.apache.hadoop.io.*;
 import java.util.List;
 import java.util.ArrayList;
 
-import org.zuinnote.hadoop.bitcoin.format.*;
-
 /** This is simply for testing the UDF **/
 public class TestBitcoinTransaction implements Writable {
 

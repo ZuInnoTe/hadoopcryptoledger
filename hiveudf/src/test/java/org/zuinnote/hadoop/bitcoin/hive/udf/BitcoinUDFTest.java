@@ -28,7 +28,7 @@ import org.apache.hadoop.hive.ql.exec.UDFArgumentException;
 import org.apache.hadoop.hive.ql.exec.UDFArgumentLengthException;
 
 import org.zuinnote.hadoop.bitcoin.hive.udf.*;
-import org.zuinnote.hadoop.bitcoin.format.*;
+import org.zuinnote.hadoop.bitcoin.format.common.*;
 
 import java.util.ArrayList;
 import java.util.List;
