@@ -24,7 +24,6 @@ import org.apache.hadoop.fs.Path
 import org.apache.hadoop.mapred._
 import org.apache.hadoop.io._
 
-import org.zuinnote.hadoop.bitcoin.format._
    
 /**
 * Author: Jörn Franke <zuinnote@gmail.com>
