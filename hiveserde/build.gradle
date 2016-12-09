@@ -1,6 +1,5 @@
 apply plugin: 'java'
 apply plugin: 'maven'
-apply plugin: 'maven-publish'
 apply plugin: 'signing'
 apply plugin: 'jacoco'
 
@@ -11,17 +10,6 @@ group = "com.github.zuinnote"
 archivesBaseName = "hadoopcryptoledger-hiveserde"
 version = "1.0.3"
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            groupId 'com.github.zuinnote'
-            artifactId 'hadoopcryptoledger-hiveserde'
-            version '1.0.3'
-
-            from components.java
-        }
-    }
-}
 
 jar {
     manifest {
