@@ -21,12 +21,13 @@ import org.apache.spark.SparkConf
 import org.apache.hadoop.conf._
 import org.apache.spark.graphx._
 
-import org.apache.hadoop.fs.Path
-import org.apache.hadoop.mapred._
+
+import org.apache.hadoop.mapreduce._
 import org.apache.hadoop.io._
 
-import org.zuinnote.hadoop.bitcoin.format._
-   
+import org.zuinnote.hadoop.bitcoin.format.common._
+import org.zuinnote.hadoop.bitcoin.format.mapreduce._
+
 /**
 * Author: Jörn Franke <zuinnote@gmail.com>
 *
@@ -47,10 +48,9 @@ object SparkScalaBitcoinTransactionGraph {
    def main(args: Array[String]): Unit = {
         val conf = new SparkConf().setAppName("Spark-Scala-Graphx BitcoinTransaction Graph (hadoopcryptoledger)")
 	val sc=new SparkContext(conf)
-	val hadoopConf = new JobConf();
-	FileInputFormat.addInputPath(hadoopConf, new Path(args(0)));
+	val hadoopConf = new Configuration();
 	 hadoopConf.set("hadoopcryptoledger.bitcoinblockinputformat.filter.magic","F9BEB4D9");
-	val bitcoinBlocksRDD = sc.hadoopRDD(hadoopConf, classOf[BitcoinBlockFileInputFormat], classOf[BytesWritable], classOf[BitcoinBlock], 2)
+	val bitcoinBlocksRDD = sc.newAPIHadoopFile(args(0), classOf[BitcoinBlockFileInputFormat], classOf[BytesWritable], classOf[BitcoinBlock],hadoopConf)
 	// extract a tuple per transaction containing Bitcoin destination address, the input transaction hash, the input transaction output index, and the current transaction hash, the current transaction output index, a (generated) long identifier
    	val bitcoinTransactionTuples = bitcoinBlocksRDD.flatMap(hadoopKeyValueTuple => extractTransactionData(hadoopKeyValueTuple._2))
 	// create the vertex (vertexId, Bitcoin destination address), keep in mind that the flat table contains the same bitcoin address several times
