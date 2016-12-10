@@ -20,7 +20,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.hadoop.hive.ql.io.AbstractStorageFormatDescriptor;
-import org.apache.hadoop.mapreduce.lib.output.NullOutputFormat;
+import org.apache.hadoop.mapred.lib.NullOutputFormat;
 
 import org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinBlockFileInputFormat;
 
