@@ -48,6 +48,9 @@ public class BitcoinTransactionCounterDriver  {
         
  public static void main(String[] args) throws Exception {
     Configuration conf = new Configuration();
+   /** Set as an example some of the options to configure the Bitcoin fileformat **/
+     /** Find here all configuration options: https://github.com/ZuInnoTe/hadoopcryptoledger/wiki/Hadoop-File-Format **/
+    conf.set("hadoopcryptoledger.bitcoinblockinputformat.filter.magic","F9BEB4D9");
     Job job = Job.getInstance(conf,"example-hadoop-bitcoin-transactioncounter-job");
     job.setJarByClass(BitcoinTransactionCounterDriver.class);
     job.setMapOutputKeyClass(Text.class);
@@ -60,9 +63,6 @@ public class BitcoinTransactionCounterDriver  {
         
     job.setInputFormatClass(BitcoinTransactionFileInputFormat.class);
     job.setOutputFormatClass(TextOutputFormat.class);
-    /** Set as an example some of the options to configure the Bitcoin fileformat **/
-     /** Find here all configuration options: https://github.com/ZuInnoTe/hadoopcryptoledger/wiki/Hadoop-File-Format **/
-    conf.set("hadoopcryptoledger.bitcoinblockinputformat.filter.magic","F9BEB4D9");
     FileInputFormat.addInputPath(job, new Path(args[0]));
     FileOutputFormat.setOutputPath(job, new Path(args[1]));
         
