@@ -1,1 +1,1 @@
-include 'inputformat', 'hiveserde', 'hiveudf', 'examples:mapreduce-bitcoinblock', 'examples:mapreduce-bitcointransaction', 'examples:spark-bitcoinblock', 'examples:spark2-bitcoinblock', 'examples:spark2-bitcoinblock-dataset'
+include 'inputformat', 'hiveserde', 'hiveudf', 'examples:mapreduce-bitcoinblock', 'examples:mapreduce-bitcointransaction', 'examples:spark-bitcoinblock', 'examples:spark2-bitcoinblock'
