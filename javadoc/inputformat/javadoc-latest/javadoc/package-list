@@ -1,0 +1,4 @@
+org.zuinnote.hadoop.bitcoin.format.common
+org.zuinnote.hadoop.bitcoin.format.exception
+org.zuinnote.hadoop.bitcoin.format.mapred
+org.zuinnote.hadoop.bitcoin.format.mapreduce
