@@ -4,7 +4,7 @@ echo -e "Publishing test results...\n"
 
 # copy to home
 mkdir -p $HOME/inputformat/tests-latest
-cp -R fileformat/build/reports/tests $HOME/fileformat/tests-latest
+cp -R inputformat/build/reports/tests $HOME/inputformat/tests-latest
 mkdir -p $HOME/hiveserde/tests-latest
 cp -R hiveserde/build/reports/tests $HOME/hiveserde/tests-latest
 mkdir -p $HOME/hiveudf/tests-latest
