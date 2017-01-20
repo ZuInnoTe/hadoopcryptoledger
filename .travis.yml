@@ -16,5 +16,5 @@ script:
 - gradle test
 - sonar-scanner -Dsonar.login=$SONAR_HCL
 after_success:
-- scripts/publish-javadoc.sh
-- scripts/publish-junitreport.sh
+- .travis/publish-javadoc.sh
+- .travis/publish-junitreport.sh
