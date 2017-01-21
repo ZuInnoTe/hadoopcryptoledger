@@ -7,13 +7,13 @@ env:
 language: java
 script:
 - jdk_switcher use oraclejdk7
-- gradle clean
-- gradle build
-- gradle test
+- ./gradlew clean
+- ./gradlew build
+- ./gradlew test
 - jdk_switcher use oraclejdk8
-- gradle clean
-- gradle build
-- gradle test
+- ./gradlew clean
+- ./gradlew build
+- ./gradlew test
 - sonar-scanner -Dsonar.login=$SONAR_HCL
 after_success:
 - .travis/publish-javadoc.sh
