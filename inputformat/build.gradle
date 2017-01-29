@@ -47,6 +47,8 @@ sourceSets {
 
 pitest {
     targetClasses = ['org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtil']  //by default "${project.group}.*"
+    targetTests = ['org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtilTest'] 
+    timestampedReports = false
     threads = 4
     outputFormats = ['XML', 'HTML']
 }
