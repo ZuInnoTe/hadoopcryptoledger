@@ -132,11 +132,11 @@ public class BitcoinTransactionElementRecordReader extends AbstractBitcoinRecord
             }
             return false;
         } catch (NoSuchElementException e) {
-            throw new RuntimeException(e);
+	    LOG.error(e);
         } catch (BitcoinBlockReadException e) {
-            throw new RuntimeException(e);
+	    LOG.error(e);
         } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
+            LOG.error(e);
         }
     }
 
