@@ -14,7 +14,11 @@ script:
 - ./gradlew clean
 - ./gradlew build
 - ./gradlew test
+- ./gradlew pitest
+- ./gradlew dependencycheck
 - sonar-scanner -Dsonar.login=$SONAR_HCL
 after_success:
 - .travis/publish-javadoc.sh
 - .travis/publish-junitreport.sh
+- .travis/publish-pitest.sh
+- .travis/publish-owaspdependency.sh
