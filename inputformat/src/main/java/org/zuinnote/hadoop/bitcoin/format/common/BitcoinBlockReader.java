@@ -123,7 +123,6 @@ public void seekBlockStart() throws BitcoinBlockReadException,IOException {
 	currentSeek++;
 	}
 	// validate it is a full block
-	boolean fullBlock=false;
 	if (magicFound) {
 		// now we can check that we have a full block
 		this.bin.mark(this.maxSizeBitcoinBlock);
@@ -148,9 +147,10 @@ public void seekBlockStart() throws BitcoinBlockReadException,IOException {
 		}
 		if (totalByteRead!=blockSize) throw new BitcoinBlockReadException("Error: Cannot seek to a block start, because no valid block found. Cannot skip to end of block");
 		this.bin.reset();
-		fullBlock=true;
-	} else
-	if (!(magicFound) || !(fullBlock)) throw new BitcoinBlockReadException("Error: Cannot seek to a block start, because no valid block found");
+		// it is a full block
+	} else {
+		throw new BitcoinBlockReadException("Error: Cannot seek to a block start, because no valid block found");
+	}
 }
 
 /**
