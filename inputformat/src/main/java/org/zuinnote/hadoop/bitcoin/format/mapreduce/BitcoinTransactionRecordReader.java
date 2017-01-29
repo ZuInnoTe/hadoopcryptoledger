@@ -105,7 +105,8 @@ public boolean nextKeyValue() throws IOException {
 		try {
 			newKey=BitcoinUtil.getTransactionHash(currentTransaction);
 		} catch (NoSuchAlgorithmException nsae) {
-			LOG.error("Cannot calculate transaction hash. Algorithm not available. Exception: "+nsae.toString());
+			LOG.error("Cannot calculate transaction hash. Algorithm not available.");
+			LOG.error(nsae);
 		}
 		this.currentKey.set(newKey,0,newKey.length);
 		this.currentValue.set(currentTransaction);
