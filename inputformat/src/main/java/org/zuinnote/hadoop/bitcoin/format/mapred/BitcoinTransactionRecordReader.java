@@ -103,7 +103,8 @@ public boolean next(BytesWritable key, BitcoinTransaction value) throws IOExcept
 		try {
 			newKey=BitcoinUtil.getTransactionHash(currentTransaction);
 		} catch (NoSuchAlgorithmException nsae) {
-			LOG.error("Cannot calculate transaction hash. Algorithm not available. Exception: "+nsae.toString());
+			LOG.error("Cannot calculate transaction hash. Algorithm not available.");
+			LOG.error(nsae);
 		}
 		key.set(newKey,0,newKey.length);
 		value.set(currentTransaction);
