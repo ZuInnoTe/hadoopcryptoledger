@@ -160,7 +160,8 @@ public void initialize(InputSplit split, TaskAttemptContext context) throws IOEx
     try {
     	bbr.seekBlockStart();
     } catch (BitcoinBlockReadException bbre) {
-		LOG.error("Error reading Bitcoin blockchhain data: "+bbre.toString());
+		LOG.error("Error reading Bitcoin blockchhain data");
+		LOG.error(bbre);
     } 
 }
 
