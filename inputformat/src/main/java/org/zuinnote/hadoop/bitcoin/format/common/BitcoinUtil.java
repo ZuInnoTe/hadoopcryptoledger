@@ -317,7 +317,6 @@ public static byte[] getTransactionHash(BitcoinTransaction transaction) throws N
 */
 	public static byte[] getBlockHash(BitcoinBlock block) throws NoSuchAlgorithmException, IOException {
 		ByteArrayOutputStream blockBAOS = new ByteArrayOutputStream();
-		String merkleTree = convertByteArrayToHexString(block.getHashMerkleRoot()).toLowerCase();
 		blockBAOS.write(reverseByteArray(convertIntToByteArray(block.getVersion())));
 		blockBAOS.write(block.getHashPrevBlock());
 		blockBAOS.write(block.getHashMerkleRoot());
