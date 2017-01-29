@@ -114,7 +114,7 @@ public void seekBlockStart() throws BitcoinBlockReadException,IOException {
 		}
 		if (currentSeek==this.maxSizeBitcoinBlock) throw new BitcoinBlockReadException("Error: Cannot seek to a block start, because no valid block found within the maximum size of a Bitcoin block. Check data or increase maximum size of Bitcoin block.");
 	// increase by one byte
-	if !(magicFound) {
+	if (!(magicFound)) {
 		this.bin.reset();
 		if (this.bin.skip(1)!=1) {
 			LOG.error("Error cannot skip 1 byte in InputStream");
@@ -141,7 +141,8 @@ public void seekBlockStart() throws BitcoinBlockReadException,IOException {
 		int blockSizeInt=(int)blockSize;
 		byte[] blockRead=new byte[blockSizeInt];
 		int totalByteRead=0;
-		while ((int readByte=this.bin.read(blockRead,totalByteRead,blockSizeInt-totalByteRead))>-1) {
+		int readByte;
+		while ((readByte=this.bin.read(blockRead,totalByteRead,blockSizeInt-totalByteRead))>-1) {
 			totalByteRead+=readByte;
 			if (totalByteRead>=blockSize) break;
 		}
@@ -319,7 +320,7 @@ public ByteBuffer readRawBlock() throws BitcoinBlockReadException, IOException {
 		}
 	}
 	// check if it is larger than maxsize, include 8 bytes for the magic and size header
-	blockSize=BitcoinUtil.getSize(blockSizeByte)+8;
+	long blockSize=BitcoinUtil.getSize(blockSizeByte)+8;
 	if (blockSize==0) throw new BitcoinBlockReadException("Error: Blocksize too small");
 	if (blockSize<0) throw new BitcoinBlockReadException("Error: This block size cannot be handled currently (larger then largest number in positive signed int)");
 	if (blockSize>this.maxSizeBitcoinBlock) throw new BitcoinBlockReadException("Error: Block size is larger then defined in configuration - Please increase it if this is a valid block");
@@ -327,7 +328,8 @@ public ByteBuffer readRawBlock() throws BitcoinBlockReadException, IOException {
 	int blockSizeInt=(int)(blockSize);
 	byte[] fullBlock=new byte[blockSizeInt];
 	int totalByteRead=0;
-	while ((int readByte=this.bin.read(fullBlock,totalByteRead,blockSizeInt-totalByteRead))>-1) {
+	int readByte;
+	while ((readByte=this.bin.read(fullBlock,totalByteRead,blockSizeInt-totalByteRead))>-1) {
 			totalByteRead+=readByte;
 			if (totalByteRead>=blockSize) break;
 	}
@@ -361,7 +363,7 @@ public byte[] getKeyFromRawBlock (ByteBuffer rawByteBuffer)  {
 	// magic no (skip)
 	rawByteBuffer.get(magicNo,0,4);
 	// blocksize (skip)
-	´rawByteBuffer.getInt();
+	rawByteBuffer.getInt();
 	// version (skip)
 	rawByteBuffer.getInt();
 	// hashPrevBlock
