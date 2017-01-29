@@ -114,7 +114,7 @@ public void seekBlockStart() throws BitcoinBlockReadException,IOException {
 		}
 		if (currentSeek==this.maxSizeBitcoinBlock) throw new BitcoinBlockReadException("Error: Cannot seek to a block start, because no valid block found within the maximum size of a Bitcoin block. Check data or increase maximum size of Bitcoin block.");
 	// increase by one byte
-	if (magicFound==false) {
+	if !(magicFound) {
 		this.bin.reset();
 		if (this.bin.skip(1)!=1) {
 			LOG.error("Error cannot skip 1 byte in InputStream");
@@ -124,7 +124,7 @@ public void seekBlockStart() throws BitcoinBlockReadException,IOException {
 	}
 	// validate it is a full block
 	boolean fullBlock=false;
-	if (magicFound==true) {
+	if (magicFound) {
 		// now we can check that we have a full block
 		this.bin.mark(this.maxSizeBitcoinBlock);
 		// skip maigc
@@ -140,9 +140,8 @@ public void seekBlockStart() throws BitcoinBlockReadException,IOException {
 		if (this.maxSizeBitcoinBlock<blockSize) throw new BitcoinBlockReadException("Error: Cannot seek to a block start, because no valid block found. Max bitcoin block size is smaller than current block size.");
 		int blockSizeInt=(int)blockSize;
 		byte[] blockRead=new byte[blockSizeInt];
-		int readByte=0;
 		int totalByteRead=0;
-		while ((readByte=this.bin.read(blockRead,totalByteRead,blockSizeInt-totalByteRead))>-1) {
+		while ((int readByte=this.bin.read(blockRead,totalByteRead,blockSizeInt-totalByteRead))>-1) {
 			totalByteRead+=readByte;
 			if (totalByteRead>=blockSize) break;
 		}
@@ -150,7 +149,7 @@ public void seekBlockStart() throws BitcoinBlockReadException,IOException {
 		this.bin.reset();
 		fullBlock=true;
 	}
-	if ((magicFound==false) || (fullBlock==false)) throw new BitcoinBlockReadException("Error: Cannot seek to a block start, because no valid block found");
+	if (!(magicFound) || !(fullBlock)) throw new BitcoinBlockReadException("Error: Cannot seek to a block start, because no valid block found");
 }
 
 /**
@@ -279,7 +278,6 @@ public ByteBuffer readRawBlock() throws BitcoinBlockReadException, IOException {
 	boolean readBlock=false;
 	byte[] magicNo=new byte[4];
 	byte[] blockSizeByte=new byte[4];
-	long blockSize=0;
 	while (readBlock==false) { // in case of filtering by magic no we skip blocks until we reach a valid magicNo or end of Block
 		// check if more to read
 		if (this.bin.available()<1) {
@@ -295,7 +293,7 @@ public ByteBuffer readRawBlock() throws BitcoinBlockReadException, IOException {
 	
 		int blockSizeReadSize=this.bin.read(blockSizeByte,0,4);
 		if (blockSizeReadSize!=4) return null; // no more size to read
-		blockSize=BitcoinUtil.getSize(blockSizeByte)+8;
+		long blockSize=BitcoinUtil.getSize(blockSizeByte)+8;
 		// read the full block
 		this.bin.reset();
 		//filter by magic numbers?
@@ -328,14 +326,13 @@ public ByteBuffer readRawBlock() throws BitcoinBlockReadException, IOException {
 	// read full block into ByteBuffer
 	int blockSizeInt=(int)(blockSize);
 	byte[] fullBlock=new byte[blockSizeInt];
-	int readByte=0;
 	int totalByteRead=0;
-	while ((readByte=this.bin.read(fullBlock,totalByteRead,blockSizeInt-totalByteRead))>-1) {
+	while ((int readByte=this.bin.read(fullBlock,totalByteRead,blockSizeInt-totalByteRead))>-1) {
 			totalByteRead+=readByte;
 			if (totalByteRead>=blockSize) break;
 	}
 	if (totalByteRead!=blockSize) throw new BitcoinBlockReadException("Error: Could not read full block");
-	ByteBuffer result = null;
+	ByteBuffer result;
 	if (this.useDirectBuffer==false) {
 	 	result=ByteBuffer.wrap(fullBlock);	
 	} else {
@@ -364,9 +361,9 @@ public byte[] getKeyFromRawBlock (ByteBuffer rawByteBuffer)  {
 	// magic no (skip)
 	rawByteBuffer.get(magicNo,0,4);
 	// blocksize (skip)
-	int currentBlockSize=rawByteBuffer.getInt();
+	´rawByteBuffer.getInt();
 	// version (skip)
-	int currentVersion=rawByteBuffer.getInt();
+	rawByteBuffer.getInt();
 	// hashPrevBlock
 	rawByteBuffer.get(hashPrevBlock,0,32);
 	// hashMerkleRoot
