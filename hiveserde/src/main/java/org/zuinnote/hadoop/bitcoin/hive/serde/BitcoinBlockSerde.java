@@ -97,13 +97,13 @@ public void initialize(Configuration conf, Properties tbl) {
         ObjectInspectorFactory.ObjectInspectorOptions.JAVA);
    // pass tbl properties to Configuration
 	String maxBlockSizeStr=tbl.getProperty(CONF_MAXBLOCKSIZE);
-	if (maxBlockSizeStr!=null) conf.setInt(CONF_MAXBLOCKSIZE, new Integer(maxBlockSizeStr).intValue());
+	if (maxBlockSizeStr!=null) conf.setInt(CONF_MAXBLOCKSIZE, Integer.parseInt(maxBlockSizeStr));
 	String filterMagicStr=tbl.getProperty(CONF_FILTERMAGIC);
 	if (filterMagicStr!=null) conf.set(CONF_FILTERMAGIC, filterMagicStr);
 	String useDirectBufferStr=tbl.getProperty(CONF_USEDIRECTBUFFER);
-	if (useDirectBufferStr!=null) conf.setBoolean(CONF_USEDIRECTBUFFER, new Boolean(useDirectBufferStr).booleanValue());
+	if (useDirectBufferStr!=null) conf.setBoolean(CONF_USEDIRECTBUFFER, Boolean.parseBoolean(useDirectBufferStr));
 	String isSplitableStr= tbl.getProperty(CONF_ISSPLITABLE);
-	if (isSplitableStr!=null) conf.setBoolean(CONF_ISSPLITABLE, new Boolean(isSplitableStr).booleanValue());
+	if (isSplitableStr!=null) conf.setBoolean(CONF_ISSPLITABLE, Boolean.parseBoolean(isSplitableStr));
  
 }
 
