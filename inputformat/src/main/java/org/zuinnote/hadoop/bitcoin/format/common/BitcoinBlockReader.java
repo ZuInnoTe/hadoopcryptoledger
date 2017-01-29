@@ -149,7 +149,7 @@ public void seekBlockStart() throws BitcoinBlockReadException,IOException {
 		if (totalByteRead!=blockSize) throw new BitcoinBlockReadException("Error: Cannot seek to a block start, because no valid block found. Cannot skip to end of block");
 		this.bin.reset();
 		fullBlock=true;
-	}
+	} else
 	if (!(magicFound) || !(fullBlock)) throw new BitcoinBlockReadException("Error: Cannot seek to a block start, because no valid block found");
 }
 
