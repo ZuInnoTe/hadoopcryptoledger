@@ -130,7 +130,7 @@ public class BitcoinTransactionElementRecordReader extends AbstractBitcoinRecord
                     continue;
                 }
             }
-            return false;
+    
         } catch (NoSuchElementException e) {
 	    LOG.error(e);
         } catch (BitcoinBlockReadException e) {
@@ -138,6 +138,7 @@ public class BitcoinTransactionElementRecordReader extends AbstractBitcoinRecord
         } catch (NoSuchAlgorithmException e) {
             LOG.error(e);
         }
+	return false;
     }
 
     private void readTransaction() throws IOException, NoSuchAlgorithmException {
