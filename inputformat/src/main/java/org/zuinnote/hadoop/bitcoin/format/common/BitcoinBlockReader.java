@@ -86,7 +86,6 @@ public BitcoinBlockReader(InputStream in, int maxSizeBitcoinBlock, int bufferSiz
 public void seekBlockStart() throws BitcoinBlockReadException,IOException {
 	if (this.filterSpecificMagic==false) throw new BitcoinBlockReadException("Error: Cannot seek to a block start, because no magic(s) are defined.");
 	boolean magicFound=false;
-	boolean moreToRead=true;
 	// search if first byte of any magic matches
 	// search up to maximum size of a bitcoin block
 	int currentSeek=0;
