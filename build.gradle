@@ -3,3 +3,18 @@ allprojects {
 
 subprojects {
 }
+
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.owasp:dependency-check-gradle:1.4.5'
+	classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.1.10'
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.3'
+}

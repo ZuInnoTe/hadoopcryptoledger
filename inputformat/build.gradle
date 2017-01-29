@@ -3,6 +3,8 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 apply plugin: 'jacoco'
 apply plugin: 'org.owasp.dependencycheck'
+apply plugin: "info.solidsoft.pitest"
+
 
 sourceCompatibility = 1.7
 compileJava.options.encoding = 'UTF-8'
@@ -20,14 +22,6 @@ jar {
 }
 
 
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'org.owasp:dependency-check-gradle:1.4.5'
-    }
-}
 
 repositories {
     mavenCentral()
@@ -49,6 +43,12 @@ sourceSets {
     main.compileClasspath += configurations.provided
     test.compileClasspath += configurations.provided
     test.runtimeClasspath += configurations.provided
+}
+
+pitest {
+    targetClasses = ['org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtil']  //by default "${project.group}.*"
+    threads = 4
+    outputFormats = ['XML', 'HTML']
 }
 
 javadoc.classpath += configurations.provided
