@@ -124,7 +124,7 @@ public Object evaluate(DeferredObject[] arguments) throws HiveException {
 	if ((arguments==null) || (arguments.length!=1)) { 
 		return null;
 	}
-	BitcoinTransaction bitcoinTransaction=null;
+	BitcoinTransaction bitcoinTransaction;
 	if (arguments[0].get() instanceof BitcoinTransaction) { // this happens if the table is in the original file format
 		 bitcoinTransaction = (BitcoinTransaction)arguments[0].get();
 	} else { // this happens if the table has been imported into a more optimized analytics format, such as ORC. However, usually we expect that the first case will be used mostly (the hash is generated during extraction from the input format)
