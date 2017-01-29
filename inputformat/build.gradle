@@ -2,6 +2,7 @@ apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'signing'
 apply plugin: 'jacoco'
+apply plugin: 'org.owasp.dependencycheck'
 
 sourceCompatibility = 1.7
 compileJava.options.encoding = 'UTF-8'
@@ -19,6 +20,14 @@ jar {
 }
 
 
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.owasp:dependency-check-gradle:1.4.5'
+    }
+}
 
 repositories {
     mavenCentral()
@@ -32,6 +41,7 @@ jacocoTestReport {
 }
 
 configurations {
+	umlDoclet
 	provided
 }
 
@@ -63,6 +73,8 @@ artifacts {
 
 
 dependencies {
+    // uml doclet for using planuml in javadoc	
+    umlDoclet "nl.talsmasoftware:umldoclet:1.0.8"
     // hadoop libraries
    provided("org.apache.hadoop:hadoop-common:2.7.0")
    provided("org.apache.hadoop:hadoop-mapreduce-client-common:2.7.0")
