@@ -46,7 +46,7 @@ import org.apache.commons.logging.Log;
 
 public class BitcoinRawBlockFileInputFormat extends AbstractBitcoinFileInputFormat<BytesWritable,BytesWritable>  {
 
-private static final Log LOG = LogFactory.getLog(BitcoinRawBlockFileInputFormat.class.getName());
+private static final Log LOGFI = LogFactory.getLog(BitcoinRawBlockFileInputFormat.class.getName());
 
 
 public RecordReader<BytesWritable,BytesWritable> getRecordReader(InputSplit split, JobConf job, Reporter reporter)  throws IOException {
@@ -55,10 +55,10 @@ public RecordReader<BytesWritable,BytesWritable> getRecordReader(InputSplit spli
 		return new BitcoinRawBlockRecordReader( (FileSplit) split,job,reporter);
 	} catch (HadoopCryptoLedgerConfigurationException e) {
 		// log
-		LOG.error(e);
+		LOGFI.error(e);
 	} catch (BitcoinBlockReadException e) {
 		// log
-		LOG.error(e);
+		LOGFI.error(e);
 	}
 	return null;
 }

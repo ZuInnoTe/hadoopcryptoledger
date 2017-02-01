@@ -45,7 +45,7 @@ import org.zuinnote.hadoop.bitcoin.format.common.*;
 
 public class BitcoinTransactionFileInputFormat extends AbstractBitcoinFileInputFormat<BytesWritable,BitcoinTransaction>   {
 
-private static final Log LOG = LogFactory.getLog(BitcoinTransactionFileInputFormat.class.getName());
+private static final Log LOGFI = LogFactory.getLog(BitcoinTransactionFileInputFormat.class.getName());
 
 public RecordReader<BytesWritable,BitcoinTransaction> getRecordReader(InputSplit split, JobConf job, Reporter reporter) throws IOException {
 	/** Create reader **/
@@ -53,10 +53,10 @@ public RecordReader<BytesWritable,BitcoinTransaction> getRecordReader(InputSplit
 		return new BitcoinTransactionRecordReader( (FileSplit) split,job,reporter);
 	} catch (HadoopCryptoLedgerConfigurationException e) {
 		// log
-		LOG.error(e);
+		LOGFI.error(e);
 	} catch (BitcoinBlockReadException e) {
 		// log
-		LOG.error(e);
+		LOGFI.error(e);
 	}
 	return null;
 }
