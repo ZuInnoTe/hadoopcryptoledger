@@ -396,7 +396,7 @@ private boolean checkForMagicBytes(int firstByte) throws IOException {
 					this.bin.read(fullMagic,1,3);
 				}
 				// compare full magics
-				if (BitcoinUtil.compareMagics(fullMagic,this.specificMagicByteArray[i])==true) {
+				if (BitcoinUtil.compareMagics(fullMagic,this.specificMagicByteArray[i])) {
 					this.bin.reset();
 					return true;
 				}
