@@ -40,6 +40,7 @@ private final static Text defaultKey = new Text("Transaction Count:");
 
 @Override
 public void setup(Context context) throws IOException, InterruptedException {
+ // nothing to set up
 }
 
 @Override
@@ -50,6 +51,7 @@ public void map(BytesWritable key, BitcoinBlock value, Context context) throws I
 
 @Override
 public void cleanup(Context context) {
+ // nothing to cleanup
 }	    
 
 }
