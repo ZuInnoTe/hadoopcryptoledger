@@ -37,21 +37,12 @@ public static String getPaymentDestination(byte[] scriptPubKey) {
 	// test if anyone can spend output
 	if (scriptPubKey.length==0) return "anyone"; // need to check also ScriptSig for OP_TRUE
 	// test if standard transaction to Bitcoin address
-	if ((scriptPubKey.length==25)) {
-		// test start
-		if (((scriptPubKey[0] & 0xFF)==0x76) && ((scriptPubKey[1] & 0xFF)==0xA9) && ((scriptPubKey[2] & 0xFF)==0x14)) {
-			// test end
-			if (((scriptPubKey[23] & 0xFF)==0x88) && ((scriptPubKey[24]  & 0xFF)==0xAC)) {
-				byte[] bitcoinAddress = Arrays.copyOfRange(scriptPubKey, 3, 23);
-				return "bitcoinaddress_"+BitcoinUtil.convertByteArrayToHexString(bitcoinAddress);
-			} 
-		} 
-	}
+	String payToHash = checkPayToHash(scriptPubKey);
+	if (payToHash!=null) return payToHash;
 	// test if obsolete transaction to public key
-	if ((scriptPubKey.length>0) && ((scriptPubKey[scriptPubKey.length-1] & 0xFF)==0xAC)) {
-		byte[] publicKey =Arrays.copyOfRange(scriptPubKey, 0, scriptPubKey.length-1);
-		return "bitcoinpubkey_"+BitcoinUtil.convertByteArrayToHexString(publicKey);
-	}
+	String payToPubKey = checkPayToPubKey(scriptPubKey);
+	if (payToPubKey!=null) return payToPubKey;
+	
 	// test if puzzle
 	if ((scriptPubKey.length>0) && ((scriptPubKey[0] & 0xFF)==0xAA) && ((scriptPubKey[scriptPubKey.length-1] & 0xFF)==0x87)) {
 		byte[] puzzle = Arrays.copyOfRange(scriptPubKey, 1, scriptPubKey.length-2);
@@ -72,6 +63,45 @@ public static String getPaymentDestination(byte[] scriptPubKey) {
 */
 public static String convertByteScriptToReadableString(byte[] script) {
 	return "";
+}
+
+/***
+* Checks if scriptPubKey is about a transaction for paying to a hash
+*
+* @param scriptPubKey of transaction
+*
+* @return null, if transaction not about paying to hash, a string starting with "bitcoinaddress_" and ending with the hex values as String of the hash address
+*
+*/
+
+private static String checkPayToHash(byte[] scriptPubKey) {
+// test start
+if (scriptPubKey.length==25) {
+		if (((scriptPubKey[0] & 0xFF)==0x76) && ((scriptPubKey[1] & 0xFF)==0xA9) && ((scriptPubKey[2] & 0xFF)==0x14)) {
+			// test end
+			if (((scriptPubKey[23] & 0xFF)==0x88) && ((scriptPubKey[24]  & 0xFF)==0xAC)) {
+				byte[] bitcoinAddress = Arrays.copyOfRange(scriptPubKey, 3, 23);
+				return "bitcoinaddress_"+BitcoinUtil.convertByteArrayToHexString(bitcoinAddress);
+			} 
+		} 
+}
+	return null;
+}
+
+/***
+* Checks if scriptPubKey is about a transaction for paying to a public key
+*
+* @param scriptPubKey of transaction
+*
+* @return null, if transaction not about paying to hash, a string starting with "bitcoinpubkey_" and ending with the hex values as String of the public key
+*
+*/
+private static String checkPayToPubKey(byte[] scriptPubKey) {
+if ((scriptPubKey.length>0) && ((scriptPubKey[scriptPubKey.length-1] & 0xFF)==0xAC)) {
+		byte[] publicKey =Arrays.copyOfRange(scriptPubKey, 0, scriptPubKey.length-1);
+		return "bitcoinpubkey_"+BitcoinUtil.convertByteArrayToHexString(publicKey);
+	}
+	return null;
 }
 
 }
