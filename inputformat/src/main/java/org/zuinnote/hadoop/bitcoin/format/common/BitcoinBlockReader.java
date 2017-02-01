@@ -95,25 +95,7 @@ public void seekBlockStart() throws BitcoinBlockReadException,IOException {
 		if (firstByte==-1) { 
 			throw new BitcoinBlockReadException("Error: Did not find defined magic within current stream");
 		}
-		byte[] fullMagic=null;
-		for (int i=0;i<specificMagicByteArray.length;i++) {
-			// compare first byte and decide if we want to read full magic
-			int currentMagicFirstbyte=specificMagicByteArray[i][0] & 0xFF;
-			if (firstByte==currentMagicFirstbyte) {
-				if (fullMagic==null) { // read full magic
-					fullMagic=new byte[4];
-					fullMagic[0]=specificMagicByteArray[i][0];
-					this.bin.read(fullMagic,1,3);
-				}
-				// compare full magics
-				if (BitcoinUtil.compareMagics(fullMagic,specificMagicByteArray[i])==true) {
-					magicFound=true;
-					this.bin.reset();
-					break;
-				}
-				
-			} 
-		}
+		magicFound=checkForMagicBytes(firstByte);
 		if (currentSeek==this.maxSizeBitcoinBlock) throw new BitcoinBlockReadException("Error: Cannot seek to a block start, because no valid block found within the maximum size of a Bitcoin block. Check data or increase maximum size of Bitcoin block.");
 	// increase by one byte
 	if (!(magicFound)) {
@@ -388,6 +370,40 @@ public byte[] getKeyFromRawBlock (ByteBuffer rawByteBuffer)  {
 
 public void close() throws IOException {
 	this.bin.close();
+}
+
+
+/**
+* Checks in BufferedInputStream (bin) for the magic(s) specified in specificMagicByteArray
+*
+* @param firstByte first byte (as int) of the byteBuffer
+*
+* @retrun true if one of the magics has been identified, false if not
+*
+* @throws java.io.IOException in case of issues reading from BufferedInputStream
+*
+*/
+
+private boolean checkForMagicBytes(int firstByte) throws IOException {
+	byte[] fullMagic=null;
+		for (int i=0;i<this.specificMagicByteArray.length;i++) {
+			// compare first byte and decide if we want to read full magic
+			int currentMagicFirstbyte=this.specificMagicByteArray[i][0] & 0xFF;
+			if (firstByte==currentMagicFirstbyte) {
+				if (fullMagic==null) { // read full magic
+					fullMagic=new byte[4];
+					fullMagic[0]=this.specificMagicByteArray[i][0];
+					this.bin.read(fullMagic,1,3);
+				}
+				// compare full magics
+				if (BitcoinUtil.compareMagics(fullMagic,this.specificMagicByteArray[i])==true) {
+					this.bin.reset();
+					return true;
+				}
+			}
+				
+			} 
+	return false;
 }
 
 }
