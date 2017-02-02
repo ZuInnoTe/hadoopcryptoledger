@@ -60,6 +60,7 @@ public class BitcoinTransactionElementRecordReader extends AbstractBitcoinRecord
      *
      * @return key
      */
+    @Override
     public BytesWritable createKey() {
         return new BytesWritable();
     }
@@ -69,6 +70,7 @@ public class BitcoinTransactionElementRecordReader extends AbstractBitcoinRecord
      *
      * @return value
      */
+    @Override
     public BitcoinTransactionElement createValue() {
         return new BitcoinTransactionElement();
     }
@@ -81,13 +83,16 @@ public class BitcoinTransactionElementRecordReader extends AbstractBitcoinRecord
      * @param value is a deserialized Java object of class BitcoinBlock
      * @return true if next block is available, false if not
      */
+    @Override
     public boolean next(BytesWritable key, BitcoinTransactionElement value) throws IOException {
         // read all the blocks, if necessary a block overlapping a split´
         try {
             while (getFilePosition() <= getEnd()) { // did we already went beyond the split (remote) or do we have no further data left?
                 if ((currentBitcoinBlock == null) || (currentBitcoinBlock.getTransactions().size() == currentTransactionCounterInBlock)) {
                     currentBitcoinBlock = getBbr().readBlock();
-                    if (currentBitcoinBlock == null) return false;
+                    if (currentBitcoinBlock == null) {
+			return false;
+		    }
                     currentBlockHash = BitcoinUtil.getBlockHash(currentBitcoinBlock);
                     currentTransactionCounterInBlock = 0;
                     currentInputCounter = 0;
