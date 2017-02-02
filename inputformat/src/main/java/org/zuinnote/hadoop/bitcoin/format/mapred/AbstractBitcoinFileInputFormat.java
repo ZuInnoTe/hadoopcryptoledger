@@ -46,19 +46,18 @@ public abstract class AbstractBitcoinFileInputFormat<K,V> extends FileInputForma
 public static final String CONF_ISSPLITABLE=org.zuinnote.hadoop.bitcoin.format.mapreduce.AbstractBitcoinFileInputFormat.CONF_ISSPLITABLE;
 public static final boolean DEFAULT_ISSPLITABLE=org.zuinnote.hadoop.bitcoin.format.mapreduce.AbstractBitcoinFileInputFormat.DEFAULT_ISSPLITABLE;
 
-private static final Log LOGAFI = LogFactory.getLog(AbstractBitcoinFileInputFormat.class.getName());
 
 private boolean isSplitable=DEFAULT_ISSPLITABLE;
 private CompressionCodecFactory compressionCodecs = null;
 
-
+@Override
 public abstract RecordReader<K,V> getRecordReader(InputSplit split, JobConf job, Reporter reporter) throws IOException;
 
 
 @Override
 public void configure(JobConf conf) {
     this.compressionCodecs = new CompressionCodecFactory(conf);
-    this.isSplitable=conf.getBoolean(this.CONF_ISSPLITABLE,this.DEFAULT_ISSPLITABLE);
+    this.isSplitable=conf.getBoolean(AbstractBitcoinFileInputFormat.CONF_ISSPLITABLE,AbstractBitcoinFileInputFormat.DEFAULT_ISSPLITABLE);
 }
 
 /**
