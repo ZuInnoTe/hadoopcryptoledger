@@ -36,7 +36,7 @@ public class BitcoinTransactionElementFileInputFormat extends AbstractBitcoinFil
 
     private static final Log LOGFI = LogFactory.getLog(BitcoinTransactionElementFileInputFormat.class.getName());
     
-
+@Override
     public RecordReader<BytesWritable, BitcoinTransactionElement> getRecordReader(InputSplit split, JobConf job, Reporter reporter) throws IOException {
         /** Create reader **/
         try {
