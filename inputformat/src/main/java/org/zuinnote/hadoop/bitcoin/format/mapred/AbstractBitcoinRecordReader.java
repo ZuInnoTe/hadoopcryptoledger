@@ -73,11 +73,11 @@ private String[] specificMagicStringArray;
 private byte[][] specificMagicByteArray;
 
 private CompressionCodec codec;
-private CompressionCodecFactory compressionCodecs = null;
+private CompressionCodecFactory compressionCodecs;
 private Decompressor decompressor;
+private Reporter reporter;
 private Configuration conf;
 private long start;
-private long pos;
 private long end;
 private final Seekable filePosition;
 private FSDataInputStream fileIn;
@@ -100,23 +100,29 @@ private BitcoinBlockReader bbr;
 *
 */
 public AbstractBitcoinRecordReader(FileSplit split,JobConf job, Reporter reporter) throws IOException,HadoopCryptoLedgerConfigurationException,BitcoinBlockReadException {
+    LOG.debug("Reading configuration");
     // parse configuration
+     this.reporter=reporter;
      this.conf=job;	
-	this.maxSizeBitcoinBlock=conf.getInt(this.CONF_MAXBLOCKSIZE,this.DEFAULT_MAXSIZE_BITCOINBLOCK);
-	this.bufferSize=conf.getInt(this.CONF_BUFFERSIZE,this.DEFAULT_BUFFERSIZE);
-	this.specificMagic=conf.get(this.CONF_FILTERMAGIC);
+	this.maxSizeBitcoinBlock=conf.getInt(AbstractBitcoinRecordReader.CONF_MAXBLOCKSIZE,AbstractBitcoinRecordReader.DEFAULT_MAXSIZE_BITCOINBLOCK);
+	this.bufferSize=conf.getInt(AbstractBitcoinRecordReader.CONF_BUFFERSIZE,AbstractBitcoinRecordReader.DEFAULT_BUFFERSIZE);
+	this.specificMagic=conf.get(AbstractBitcoinRecordReader.CONF_FILTERMAGIC);
 	// we need to provide at least 
-	if ((this.specificMagic==null) || (this.specificMagic.length()==0)) this.specificMagic=this.DEFAULT_MAGIC;
+	if ((this.specificMagic==null) || (this.specificMagic.length()==0)) {
+		 this.specificMagic=AbstractBitcoinRecordReader.DEFAULT_MAGIC;
+	}
 	if ((this.specificMagic!=null) && (this.specificMagic.length()>0)) {
 		this.specificMagicStringArray=specificMagic.split(",");
 		specificMagicByteArray=new byte[specificMagicStringArray.length][4]; // each magic is always 4 byte
 		for (int i=0;i<specificMagicStringArray.length;i++) {
 				byte[] currentMagicNo=BitcoinUtil.convertHexStringToByteArray(specificMagicStringArray[i]);
-				if (currentMagicNo.length!=4) throw new HadoopCryptoLedgerConfigurationException("Error: Configuration. Magic number has not a length of 4 bytes. Index: "+i);
+				if (currentMagicNo.length!=4) {
+					throw new HadoopCryptoLedgerConfigurationException("Error: Configuration. Magic number has not a length of 4 bytes. Index: "+i);
+				}
 				specificMagicByteArray[i]=currentMagicNo;
 		}
 	}	
-	this.useDirectBuffer=conf.getBoolean(this.CONF_USEDIRECTBUFFER,this.DEFAULT_USEDIRECTBUFFER);
+	this.useDirectBuffer=conf.getBoolean(AbstractBitcoinRecordReader.CONF_USEDIRECTBUFFER,AbstractBitcoinRecordReader.DEFAULT_USEDIRECTBUFFER);
     // Initialize start and end of split
     start = split.getStart();
     end = start + split.getLength();
@@ -127,27 +133,32 @@ public AbstractBitcoinRecordReader(FileSplit split,JobConf job, Reporter reporte
     fileIn = fs.open(file);
     // open stream
       if (isCompressedInput()) { // decompress
+	LOG.debug("Decompressing file");
       	decompressor = CodecPool.getDecompressor(codec);
       	if (codec instanceof SplittableCompressionCodec) {
-		
+		LOG.debug("SplittableCompressionCodec");
         	final SplitCompressionInputStream cIn =((SplittableCompressionCodec)codec).createInputStream(fileIn, decompressor, start, end,SplittableCompressionCodec.READ_MODE.CONTINUOUS);
 		bbr = new BitcoinBlockReader(cIn, this.maxSizeBitcoinBlock,this.bufferSize,this.specificMagicByteArray,this.useDirectBuffer);  
 		start = cIn.getAdjustedStart();
        		end = cIn.getAdjustedEnd();
         	filePosition = cIn; // take pos from compressed stream
       } else {
+	LOG.debug("Not-splitable compression codec");
 	bbr = new BitcoinBlockReader(codec.createInputStream(fileIn,decompressor), this.maxSizeBitcoinBlock,this.bufferSize,this.specificMagicByteArray,this.useDirectBuffer);
         filePosition = fileIn;
       }
     } else {
+      LOG.debug("Processing file without compression");
       fileIn.seek(start);
       bbr = new BitcoinBlockReader(fileIn, this.maxSizeBitcoinBlock,this.bufferSize,this.specificMagicByteArray,this.useDirectBuffer);  
       filePosition = fileIn;
     }
     // initialize reader
-    this.pos=start;
     // seek to block start (for the case a block overlaps a split)
+    LOG.debug("Seeking to block start");
+    this.reporter.setStatus("Seeking Block start");
     bbr.seekBlockStart();
+    this.reporter.setStatus("Ready to read");
 }
 
 	
