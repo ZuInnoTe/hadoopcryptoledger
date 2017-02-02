@@ -55,6 +55,7 @@ public BitcoinRawBlockRecordReader(FileSplit split,JobConf job, Reporter reporte
 *
 * @return key
 */
+@Override
 public BytesWritable createKey() {
 	return new BytesWritable();
 }
@@ -65,6 +66,7 @@ public BytesWritable createKey() {
 *
 * @return value
 */
+@Override
 public BytesWritable createValue() {
 	return new BytesWritable();
 }
@@ -80,6 +82,7 @@ public BytesWritable createValue() {
 *
 * @return true if next block is available, false if not
 */
+@Override
 public boolean next(BytesWritable key, BytesWritable value) throws IOException {
 	// read all the blocks, if necessary a block overlapping a split
 	while(getFilePosition()<=getEnd()) { // did we already went beyond the split (remote) or do we have no further data left?
@@ -90,7 +93,9 @@ public boolean next(BytesWritable key, BytesWritable value) throws IOException {
 			// log
 			LOG.error(e);
 		}	
-		if (dataBlock==null) return false;
+		if (dataBlock==null) {
+			return false;
+		}
 		byte newKey[]=getBbr().getKeyFromRawBlock(dataBlock);
 		key.set(newKey,0,newKey.length);
 		byte[] dataBlockArray;
