@@ -35,21 +35,28 @@ public class BitcoinScriptPatternParser {
 public static String getPaymentDestination(byte[] scriptPubKey) {
 	if (scriptPubKey==null) return null;
 	// test if anyone can spend output
-	if (scriptPubKey.length==0) return "anyone"; // need to check also ScriptSig for OP_TRUE
+	if (scriptPubKey.length==0) {
+		return "anyone"; // need to check also ScriptSig for OP_TRUE
+	}
 	// test if standard transaction to Bitcoin address
 	String payToHash = checkPayToHash(scriptPubKey);
-	if (payToHash!=null) return payToHash;
+	if (payToHash!=null) {
+		return payToHash;
+	}
 	// test if obsolete transaction to public key
 	String payToPubKey = checkPayToPubKey(scriptPubKey);
-	if (payToPubKey!=null) return payToPubKey;
-	
+	if (payToPubKey!=null) {
+		return payToPubKey;
+	}	
 	// test if puzzle
 	if ((scriptPubKey.length>0) && ((scriptPubKey[0] & 0xFF)==0xAA) && ((scriptPubKey[scriptPubKey.length-1] & 0xFF)==0x87)) {
 		byte[] puzzle = Arrays.copyOfRange(scriptPubKey, 1, scriptPubKey.length-2);
 		return "puzzle_"+BitcoinUtil.convertByteArrayToHexString(puzzle);
 	}
 	// test if unspendable
-	if ((scriptPubKey.length>0) && ((scriptPubKey[0] & 0xFF)==0x6a)) return "unspendable";
+	if ((scriptPubKey.length>0) && ((scriptPubKey[0] & 0xFF)==0x6a)) {
+		 return "unspendable";
+	}
 	return null;
 }
 
