@@ -49,6 +49,7 @@ public BitcoinBlockRecordReader(Configuration conf) throws HadoopCryptoLedgerCon
 *
 * @return key is a 64 byte array (hashMerkleRoot and prevHashBlock)
 */
+@Override
 public BytesWritable getCurrentKey() {
 	return this.currentKey;
 }
@@ -59,6 +60,7 @@ public BytesWritable getCurrentKey() {
 *
 * @return is a deserialized Java object of class BitcoinBlock
 */
+@Override
 public BitcoinBlock getCurrentValue() {
 	return this.currentValue;
 }
@@ -72,6 +74,7 @@ public BitcoinBlock getCurrentValue() {
 *
 * @return true if next block is available, false if not
 */
+@Override
 public boolean nextKeyValue() throws IOException {
 	// read all the blocks, if necessary a block overlapping a split
 	while(getFilePosition()<=getEnd()) { // did we already went beyond the split (remote) or do we have no further data left?
