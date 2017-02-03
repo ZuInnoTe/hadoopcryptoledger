@@ -48,8 +48,6 @@ private byte[][] specificMagicByteArray;
 private ByteBuffer preAllocatedDirectByteBuffer;
 
 private BufferedInputStream bin;
-private int position=0;
-
 /**
 * Create a BitcoinBlock reader that reads from the given stream and uses the given parameters for configuration. Note it assumed that the validity of this configuration is checked by BitcoinBlockRecordReader
 * @param in Input stream to read from
@@ -64,7 +62,9 @@ public BitcoinBlockReader(InputStream in, int maxSizeBitcoinBlock, int bufferSiz
 	this.bufferSize=bufferSize;
 	this.specificMagicByteArray=specificMagicByteArray;
 	this.useDirectBuffer=useDirectBuffer;
-	if (specificMagicByteArray!=null) this.filterSpecificMagic=true;
+	if (specificMagicByteArray!=null) {
+		this.filterSpecificMagic=true;
+	}
 	this.bin=new BufferedInputStream(in,bufferSize);
 	if (this.useDirectBuffer==true) { // in case of a DirectByteBuffer we do allocation only once for the maximum size of one block, otherwise we will have a high cost for reallocation
 		preAllocatedDirectByteBuffer=ByteBuffer.allocateDirect(this.maxSizeBitcoinBlock);
@@ -84,7 +84,9 @@ public BitcoinBlockReader(InputStream in, int maxSizeBitcoinBlock, int bufferSiz
 **/
 
 public void seekBlockStart() throws BitcoinBlockReadException,IOException {
-	if (this.filterSpecificMagic==false) throw new BitcoinBlockReadException("Error: Cannot seek to a block start, because no magic(s) are defined.");
+	if (this.filterSpecificMagic==false) {
+		throw new BitcoinBlockReadException("Error: Cannot seek to a block start, because no magic(s) are defined.");
+	}
 	boolean magicFound=false;
 	// search if first byte of any magic matches
 	// search up to maximum size of a bitcoin block
@@ -96,7 +98,9 @@ public void seekBlockStart() throws BitcoinBlockReadException,IOException {
 			throw new BitcoinBlockReadException("Error: Did not find defined magic within current stream");
 		}
 		magicFound=checkForMagicBytes(firstByte);
-		if (currentSeek==this.maxSizeBitcoinBlock) throw new BitcoinBlockReadException("Error: Cannot seek to a block start, because no valid block found within the maximum size of a Bitcoin block. Check data or increase maximum size of Bitcoin block.");
+		if (currentSeek==this.maxSizeBitcoinBlock) { 
+			throw new BitcoinBlockReadException("Error: Cannot seek to a block start, because no valid block found within the maximum size of a Bitcoin block. Check data or increase maximum size of Bitcoin block.");
+		}
 	// increase by one byte
 	if (!(magicFound)) {
 		this.bin.reset();
@@ -111,24 +115,33 @@ public void seekBlockStart() throws BitcoinBlockReadException,IOException {
 		this.bin.mark(this.maxSizeBitcoinBlock);
 		// skip maigc
 		long skipMagic=this.bin.skip(4);
-		if (skipMagic!=4) throw new BitcoinBlockReadException("Error: Cannot seek to a block start, because no valid block found. Cannot skip forward magic");
+		if (skipMagic!=4) {
+			 throw new BitcoinBlockReadException("Error: Cannot seek to a block start, because no valid block found. Cannot skip forward magic");
+		}
 		// read size
 		// blocksize
 		byte[] blockSizeArray = new byte[4];
 		int readSize=this.bin.read(blockSizeArray,0,4);
-		if (readSize!=4) throw new BitcoinBlockReadException("Error: Cannot seek to a block start, because no valid block found. Cannot read size of block");
-		
+		if (readSize!=4) {
+			throw new BitcoinBlockReadException("Error: Cannot seek to a block start, because no valid block found. Cannot read size of block");
+		}		
 		long blockSize=BitcoinUtil.getSize(blockSizeArray);
-		if (this.maxSizeBitcoinBlock<blockSize) throw new BitcoinBlockReadException("Error: Cannot seek to a block start, because no valid block found. Max bitcoin block size is smaller than current block size.");
+		if (this.maxSizeBitcoinBlock<blockSize) {
+			throw new BitcoinBlockReadException("Error: Cannot seek to a block start, because no valid block found. Max bitcoin block size is smaller than current block size.");
+		}
 		int blockSizeInt=(int)blockSize;
 		byte[] blockRead=new byte[blockSizeInt];
 		int totalByteRead=0;
 		int readByte;
 		while ((readByte=this.bin.read(blockRead,totalByteRead,blockSizeInt-totalByteRead))>-1) {
 			totalByteRead+=readByte;
-			if (totalByteRead>=blockSize) break;
+			if (totalByteRead>=blockSize) { 
+				break;
+			}
 		}
-		if (totalByteRead!=blockSize) throw new BitcoinBlockReadException("Error: Cannot seek to a block start, because no valid block found. Cannot skip to end of block");
+		if (totalByteRead!=blockSize) {
+			 throw new BitcoinBlockReadException("Error: Cannot seek to a block start, because no valid block found. Cannot skip to end of block");
+		}
 		this.bin.reset();
 		// it is a full block
 }
@@ -173,7 +186,9 @@ public BitcoinBlock readBlock() throws BitcoinBlockReadException,IOException {
 	long currentTransactionCounter=BitcoinUtil.convertVarIntByteBufferToLong(rawByteBuffer);
 	// parse transactions 
 	List<BitcoinTransaction> allBlockTransactions=parseTransactions(rawByteBuffer,currentTransactionCounter);
-	if (allBlockTransactions.size()!=currentTransactionCounter) throw new BitcoinBlockReadException("Error: Number of Transactions ("+allBlockTransactions.size()+") does not correspond to transaction counter in block ("+currentTransactionCounter+")");
+	if (allBlockTransactions.size()!=currentTransactionCounter) {
+		 throw new BitcoinBlockReadException("Error: Number of Transactions ("+allBlockTransactions.size()+") does not correspond to transaction counter in block ("+currentTransactionCounter+")");
+	}
 	BitcoinBlock result=new BitcoinBlock(currentMagicNo,currentBlockSize,currentVersion,currentTime,currentBits,currentNonce,currentTransactionCounter,currentHashPrevBlock,currentHashMerkleRoot,allBlockTransactions);
 	return result;
 }
@@ -269,11 +284,15 @@ public ByteBuffer readRawBlock() throws BitcoinBlockReadException, IOException {
 		// read magic
 		
 		int magicNoReadSize=this.bin.read(magicNo,0,4);
-		if (magicNoReadSize!=4) return null; // no more magics to read
+		if (magicNoReadSize!=4) {
+			return null; // no more magics to read
+		}
 		// read blocksize
 	
 		int blockSizeReadSize=this.bin.read(blockSizeByte,0,4);
-		if (blockSizeReadSize!=4) return null; // no more size to read
+		if (blockSizeReadSize!=4) {
+			return null; // no more size to read
+		}
 		long blockSize=BitcoinUtil.getSize(blockSizeByte)+8;
 		// read the full block
 		this.bin.reset();
@@ -301,9 +320,15 @@ public ByteBuffer readRawBlock() throws BitcoinBlockReadException, IOException {
 	}
 	// check if it is larger than maxsize, include 8 bytes for the magic and size header
 	long blockSize=BitcoinUtil.getSize(blockSizeByte)+8;
-	if (blockSize==0) throw new BitcoinBlockReadException("Error: Blocksize too small");
-	if (blockSize<0) throw new BitcoinBlockReadException("Error: This block size cannot be handled currently (larger then largest number in positive signed int)");
-	if (blockSize>this.maxSizeBitcoinBlock) throw new BitcoinBlockReadException("Error: Block size is larger then defined in configuration - Please increase it if this is a valid block");
+	if (blockSize==0) {
+		throw new BitcoinBlockReadException("Error: Blocksize too small");
+	}
+	if (blockSize<0) {
+		throw new BitcoinBlockReadException("Error: This block size cannot be handled currently (larger then largest number in positive signed int)");
+	}
+	if (blockSize>this.maxSizeBitcoinBlock) {
+		throw new BitcoinBlockReadException("Error: Block size is larger then defined in configuration - Please increase it if this is a valid block");
+	}
 	// read full block into ByteBuffer
 	int blockSizeInt=(int)(blockSize);
 	byte[] fullBlock=new byte[blockSizeInt];
@@ -311,9 +336,13 @@ public ByteBuffer readRawBlock() throws BitcoinBlockReadException, IOException {
 	int readByte;
 	while ((readByte=this.bin.read(fullBlock,totalByteRead,blockSizeInt-totalByteRead))>-1) {
 			totalByteRead+=readByte;
-			if (totalByteRead>=blockSize) break;
+			if (totalByteRead>=blockSize) {
+				break;
+			}
 	}
-	if (totalByteRead!=blockSize) throw new BitcoinBlockReadException("Error: Could not read full block");
+	if (totalByteRead!=blockSize) {
+		 throw new BitcoinBlockReadException("Error: Could not read full block");
+	}
 	ByteBuffer result;
 	if (this.useDirectBuffer==false) {
 	 	result=ByteBuffer.wrap(fullBlock);	
