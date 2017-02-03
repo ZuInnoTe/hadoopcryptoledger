@@ -127,7 +127,7 @@ public AbstractBitcoinRecordReader(FileSplit split,JobConf job, Reporter reporte
     start = split.getStart();
     end = start + split.getLength();
     final Path file = split.getPath();
-     compressionCodecs = new CompressionCodecFactory(job);
+    this.compressionCodecs = new CompressionCodecFactory(job);
     codec = new CompressionCodecFactory(job).getCodec(file);
     final FileSystem fs = file.getFileSystem(job);
     fileIn = fs.open(file);
