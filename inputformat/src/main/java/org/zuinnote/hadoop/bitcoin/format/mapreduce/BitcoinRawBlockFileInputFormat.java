@@ -36,7 +36,7 @@ public class BitcoinRawBlockFileInputFormat extends AbstractBitcoinFileInputForm
 
 private static final Log LOG = LogFactory.getLog(BitcoinRawBlockFileInputFormat.class.getName());
 
-
+@Override
 public RecordReader<BytesWritable,BytesWritable> createRecordReader(InputSplit split, TaskAttemptContext ctx)  throws IOException {
 	/** Create reader **/
 	try {

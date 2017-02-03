@@ -34,7 +34,7 @@ import org.zuinnote.hadoop.bitcoin.format.common.*;
 public class BitcoinTransactionFileInputFormat extends AbstractBitcoinFileInputFormat<BytesWritable,BitcoinTransaction>   {
 
 private static final Log LOG = LogFactory.getLog(BitcoinTransactionFileInputFormat.class.getName());
-
+@Override
 public RecordReader<BytesWritable,BitcoinTransaction> createRecordReader(InputSplit split, TaskAttemptContext ctx) throws IOException {
 	/** Create reader **/
 	try {
