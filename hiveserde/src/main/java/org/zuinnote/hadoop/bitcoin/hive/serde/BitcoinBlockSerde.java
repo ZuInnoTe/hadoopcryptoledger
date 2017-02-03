@@ -71,15 +71,17 @@ private static final String CONF_ISSPLITABLE=AbstractBitcoinFileInputFormat.CONF
 
 
 /** Deserializer **/
-
+@Override
 public Object deserialize(Writable blob) {
 		return blob;
 }
 
+@Override
 public ObjectInspector getObjectInspector() {
 	return this.bitcoinBlockObjectInspector;
 }
 
+@Override
 public SerDeStats getSerDeStats() {
 	// not supported
 	return null;
@@ -89,6 +91,7 @@ public Class<? extends Writable> getSerializedClass() {
 	return BitcoinBlock.class;
 }
 
+@Override
 public void initialize(Configuration conf, Properties tbl) {
 
    // get objectinspector with introspection for class BitcoinBlockStruct to reuse functionality
@@ -115,12 +118,12 @@ public void initialize(Configuration conf, Properties tbl, Properties partitionP
 
 
 /** VectorizedSerde **/
-
+@Override
 public void deserializeVector(Object rowBlob, int rowsInBlob, VectorizedRowBatch reuseBatch) throws SerDeException {
 	// nothing to do here
 }
        
-
+@Override
 public Writable serializeVector(VectorizedRowBatch vrg, ObjectInspector objInspector) throws SerDeException {
  throw new UnsupportedOperationException("serializeVector not supported");
 }
