@@ -45,7 +45,6 @@ public static final boolean DEFAULT_ISSPLITABLE=false;
 private static final Log LOG = LogFactory.getLog(AbstractBitcoinFileInputFormat.class.getName());
 
 private boolean isSplitable=DEFAULT_ISSPLITABLE;
-private CompressionCodecFactory compressionCodecs = null;
 
 
 public abstract RecordReader<K,V> createRecordReader(InputSplit split, TaskAttemptContext ctx) throws IOException;
