@@ -57,7 +57,7 @@ public abstract RecordReader<K,V> createRecordReader(InputSplit split, TaskAttem
 
 @Override
   protected boolean isSplitable(JobContext context, Path file) {
-    this.isSplitable=context.getConfiguration().getBoolean(this.CONF_ISSPLITABLE,this.DEFAULT_ISSPLITABLE);
+    this.isSplitable=context.getConfiguration().getBoolean(AbstractBitcoinFileInputFormat.CONF_ISSPLITABLE,AbstractBitcoinFileInputFormat.DEFAULT_ISSPLITABLE);
     if (this.isSplitable==false) {
 		return false;
     }   
