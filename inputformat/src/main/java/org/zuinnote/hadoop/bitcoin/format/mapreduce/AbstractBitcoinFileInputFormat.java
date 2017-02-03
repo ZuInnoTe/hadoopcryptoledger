@@ -42,8 +42,6 @@ public abstract class AbstractBitcoinFileInputFormat<K,V> extends FileInputForma
 public static final String CONF_ISSPLITABLE="hadoopcryptoledeger.bitcoinblockinputformat.issplitable";
 public static final boolean DEFAULT_ISSPLITABLE=false;
 
-private static final Log LOG = LogFactory.getLog(AbstractBitcoinFileInputFormat.class.getName());
-
 private boolean isSplitable=DEFAULT_ISSPLITABLE;
 
 
