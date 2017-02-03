@@ -64,6 +64,7 @@ private BitcoinTransactionElement currentValue=new BitcoinTransactionElement();
 *
 * @return key  is a 68 byte array (hashMerkleRoot, prevHashBlock, transActionCounter)
 */
+    @Override
     public BytesWritable getCurrentKey() {
         return this.currentKey;
     }
@@ -75,6 +76,7 @@ private BitcoinTransactionElement currentValue=new BitcoinTransactionElement();
 *
 * @return value is a deserialized Java object of class BitcoinTransactionElement
 */
+   @Override
     public BitcoinTransactionElement getCurrentValue() {
         return this.currentValue;
     }
@@ -85,6 +87,7 @@ private BitcoinTransactionElement currentValue=new BitcoinTransactionElement();
      *
      * @return true if next block is available, false if not
      */
+    @Override
     public boolean nextKeyValue() throws IOException {
         // read all the blocks, if necessary a block overlapping a split´
         try {
