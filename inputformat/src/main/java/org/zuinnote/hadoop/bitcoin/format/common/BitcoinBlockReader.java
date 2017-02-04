@@ -189,7 +189,17 @@ public BitcoinBlock readBlock() throws BitcoinBlockReadException,IOException {
 	if (allBlockTransactions.size()!=currentTransactionCounter) {
 		 throw new BitcoinBlockReadException("Error: Number of Transactions ("+allBlockTransactions.size()+") does not correspond to transaction counter in block ("+currentTransactionCounter+")");
 	}
-	BitcoinBlock result=new BitcoinBlock(currentMagicNo,currentBlockSize,currentVersion,currentTime,currentBits,currentNonce,currentTransactionCounter,currentHashPrevBlock,currentHashMerkleRoot,allBlockTransactions);
+	BitcoinBlock result=new BitcoinBlock();
+	result.setMagicNo(currentMagicNo);
+	result.setBlockSize(currentBlockSize);
+	result.setVersion(currentVersion);
+	result.setTime(currentTime);
+	result.setBits(currentBits);
+	result.setNonce(currentNonce);
+	result.setTransactionCounter(currentTransactionCounter);
+	result.setHashPrevBlock(currentHashPrevBlock);
+	result.setHashMerkleRoot(currentHashMerkleRoot);
+	result.setTransactions(allBlockTransactions);
 	return result;
 }
 
