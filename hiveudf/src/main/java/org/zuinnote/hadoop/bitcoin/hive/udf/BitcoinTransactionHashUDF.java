@@ -93,12 +93,15 @@ public String getDisplayString(String[] arg0) {
 
 @Override
 public ObjectInspector initialize(ObjectInspector[] arguments) throws UDFArgumentException {
-	if (arguments==null) 
+	if (arguments==null) {
       		throw new UDFArgumentLengthException("bitcoinTransactionHash only takes one argument: Struct<BitcoinTransaction> ");
-  	if (arguments.length != 1)
+	}
+  	if (arguments.length != 1) {
       		throw new UDFArgumentLengthException("bitcoinTransactionHash only takes one argument: Struct<BitcoinTransaction> ");
-	if (!(arguments[0] instanceof StructObjectInspector)) 
+	}
+	if (!(arguments[0] instanceof StructObjectInspector)) { 
 		throw new UDFArgumentException("first argument must be a Struct containing a BitcoinTransaction");
+	}
 	this.soi = (StructObjectInspector)arguments[0];
 	// these are only used for bitcointransaction structs exported to other formats, such as ORC
 	this.wboi = PrimitiveObjectInspectorFactory.writableBinaryObjectInspector;
@@ -192,10 +195,10 @@ for (int i=0;i<listLength;i++) {
 	StructField seqnoSF = listOfInputsElementObjectInspector.getStructFieldRef("seqno");
 	boolean prevFieldsNull = (prevtransactionhashSF==null) || (previoustxoutindexSF==null);
 	boolean inFieldsNull = (txinscriptlengthSF==null) || (txinscriptSF==null);
-	boolean otherAttribNull = (seqnoSF==null);
+	boolean otherAttribNull = seqnoSF==null;
 	if (prevFieldsNull || inFieldsNull  || otherAttribNull) {
 		LOG.info("Invalid BitcoinTransactionInput detected at position "+i);
-		return null;
+		return new ArrayList<>();
 	}
 	byte[] currentPrevTransactionHash = wboi.getPrimitiveJavaObject(listOfInputsElementObjectInspector.getStructFieldData(currentlistofinputsObject,prevtransactionhashSF));
 	long currentPreviousTxOutIndex = wloi.get(listOfInputsElementObjectInspector.getStructFieldData(currentlistofinputsObject,previoustxoutindexSF));
@@ -229,7 +232,7 @@ StructObjectInspector listOfOutputsElementObjectInspector = (StructObjectInspect
 		StructField txoutscriptSF = listOfOutputsElementObjectInspector.getStructFieldRef("txoutscript");
 		if ((valueSF==null) || (txoutscriptlengthSF==null) || (txoutscriptSF==null)) {
 			LOG.info("Invalid BitcoinTransactionOutput detected at position "+i);
-			return null;
+			return new ArrayList<>();
 		}
 		long currentValue=wloi.get(listOfOutputsElementObjectInspector.getStructFieldData(currentListOfOutputsObject,valueSF));	
 		byte[] currentTxOutScriptLength=wboi.getPrimitiveJavaObject(listOfOutputsElementObjectInspector.getStructFieldData(currentListOfOutputsObject,txoutscriptlengthSF));
