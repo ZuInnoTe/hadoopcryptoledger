@@ -27,7 +27,7 @@ import org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinBlockFileInputFormat;
 public class BitcoinBlockStorageFormatDescriptor extends AbstractStorageFormatDescriptor {
   @Override
   public Set<String> getNames() {
-    HashSet<String> result = new HashSet<String>();
+    HashSet<String> result = new HashSet<>();
     result.add("BITCOINBLOCK");
     return result;
   }
