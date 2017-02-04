@@ -48,24 +48,16 @@ public BitcoinBlock() {
 	this.transactionCounter=0;
 	this.hashPrevBlock=new byte[0];
 	this.hashMerkleRoot=new byte[0];
-	this.transactions=new ArrayList<BitcoinTransaction>();
+	this.transactions=new ArrayList<>();
 }
 
-public BitcoinBlock(byte[] magicNo, int blockSize, int version, int time, byte[] bits, int nonce,long transactionCounter, byte[] hashPrevBlock, byte[] hashMerkleRoot, List<BitcoinTransaction> transactions) {
-	this.blockSize=blockSize;
-	this.magicNo=magicNo;
-	this.version=version;
-	this.time=time;
-	this.bits=bits;
-	this.nonce=nonce;
-	this.transactionCounter=transactionCounter;
-	this.hashPrevBlock=hashPrevBlock;
-	this.hashMerkleRoot=hashMerkleRoot;
-	this.transactions=transactions;
-}
 
 public int getBlockSize() {
 	return this.blockSize;
+}
+
+public void setBlockSize(int blockSize) {
+	this.blockSize=blockSize;
 }
 
 
@@ -73,36 +65,73 @@ public byte[] getMagicNo() {
 	return this.magicNo;
 }
 
+public void setMagicNo(byte[] magicNo) {
+	this.magicNo=magicNo;
+}
+
 public int getVersion() {
 	return this.version;
+}
+
+public void setVersion(int version) {
+	this.version=version;
 }
 
 public int getTime() {
 	return this.time;
 }
 
+public void setTime(int time) {
+	this.time=time;
+}
+
 public byte[] getBits() {
 	return this.bits;
+}
+
+public void setBits(byte[] bits) {
+	this.bits=bits;
 }
 
 public int getNonce() {
 	return this.nonce;
 }
 
+public void setNonce(int nonce) {
+	this.nonce=nonce;
+}
+
 public long getTransactionCounter() {
 	return this.transactionCounter;
+}
+
+
+public void setTransactionCounter(long transactionCounter) {
+	this.transactionCounter=transactionCounter;
 }
 
 public byte[] getHashPrevBlock() {
 	return this.hashPrevBlock;
 }
 
+public void setHashPrevBlock(byte[] hashPrevBlock) {
+	this.hashPrevBlock=hashPrevBlock;
+}
+
 public byte[] getHashMerkleRoot() {
 	return this.hashMerkleRoot;
 }
 
+public void setHashMerkleRoot(byte[] hashMerkleRoot) {
+	this.hashMerkleRoot=hashMerkleRoot;
+}
+
 public List<BitcoinTransaction> getTransactions() {
 	return this.transactions;
+}
+
+public void setTransactions(List<BitcoinTransaction> transactions) {
+	this.transactions=transactions;
 }
 
 public void set(BitcoinBlock newBitcoinBlock) {
