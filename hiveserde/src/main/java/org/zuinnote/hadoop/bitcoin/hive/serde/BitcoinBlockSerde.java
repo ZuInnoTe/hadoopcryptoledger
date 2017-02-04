@@ -20,7 +20,6 @@
 package org.zuinnote.hadoop.bitcoin.hive.serde;
 
 import java.util.Properties;
-import java.util.HashMap;
 
 
 import org.apache.hadoop.conf.Configuration;
