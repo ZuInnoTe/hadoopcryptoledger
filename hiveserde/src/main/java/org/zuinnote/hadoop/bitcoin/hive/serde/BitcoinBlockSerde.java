@@ -19,17 +19,15 @@
  */
 package org.zuinnote.hadoop.bitcoin.hive.serde;
 
-import java.util.*;
-        
+import java.util.Properties;
+import java.util.HashMap;
 
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.Writable;
-import org.apache.hadoop.hive.serde.serdeConstants;
 import org.apache.hadoop.hive.serde2.AbstractDeserializer;
 import org.apache.hadoop.hive.serde2.SerDeException;
 import org.apache.hadoop.hive.serde2.SerDeStats;
-import org.apache.hadoop.hive.serde2.typeinfo.TypeInfoUtils;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
 
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspectorFactory;
@@ -37,7 +35,7 @@ import org.apache.hadoop.hive.ql.exec.vector.VectorizedSerde;
 import org.apache.hadoop.hive.ql.exec.vector.VectorizedRowBatch;
 
    
-import org.zuinnote.hadoop.bitcoin.format.common.*;
+import org.zuinnote.hadoop.bitcoin.format.common.BitcoinBlock;
 import org.zuinnote.hadoop.bitcoin.format.mapred.AbstractBitcoinRecordReader;
 
 import org.zuinnote.hadoop.bitcoin.format.mapred.AbstractBitcoinFileInputFormat;
@@ -93,28 +91,36 @@ public Class<? extends Writable> getSerializedClass() {
 
 @Override
 public void initialize(Configuration conf, Properties tbl) {
-
+	LOG.debug("Initializing BitcoinBlockSerde");
    // get objectinspector with introspection for class BitcoinBlockStruct to reuse functionality
     bitcoinBlockObjectInspector = ObjectInspectorFactory
         .getReflectionObjectInspector(BitcoinBlock.class,
         ObjectInspectorFactory.ObjectInspectorOptions.JAVA);
    // pass tbl properties to Configuration
-	String maxBlockSizeStr=tbl.getProperty(CONF_MAXBLOCKSIZE);
-	if (maxBlockSizeStr!=null) conf.setInt(CONF_MAXBLOCKSIZE, Integer.parseInt(maxBlockSizeStr));
-	String filterMagicStr=tbl.getProperty(CONF_FILTERMAGIC);
-	if (filterMagicStr!=null) conf.set(CONF_FILTERMAGIC, filterMagicStr);
-	String useDirectBufferStr=tbl.getProperty(CONF_USEDIRECTBUFFER);
-	if (useDirectBufferStr!=null) conf.setBoolean(CONF_USEDIRECTBUFFER, Boolean.parseBoolean(useDirectBufferStr));
+	String maxBlockSizeStr=tbl.getProperty(BitcoinBlockSerde.CONF_MAXBLOCKSIZE);
+	if (maxBlockSizeStr!=null) {
+		 conf.setInt(BitcoinBlockSerde.CONF_MAXBLOCKSIZE, Integer.parseInt(maxBlockSizeStr));
+		 LOG.info("Setting max block size: "+maxBlockSizeStr);
+	}
+	String filterMagicStr=tbl.getProperty(BitcoinBlockSerde.CONF_FILTERMAGIC);
+	if (filterMagicStr!=null) {
+		 conf.set(BitcoinBlockSerde.CONF_FILTERMAGIC, filterMagicStr);
+		 LOG.info("Setting filter magic: "+filterMagicStr);
+	}
+	String useDirectBufferStr=tbl.getProperty(BitcoinBlockSerde.CONF_USEDIRECTBUFFER);
+	if (useDirectBufferStr!=null) {
+		conf.setBoolean(BitcoinBlockSerde.CONF_USEDIRECTBUFFER, Boolean.parseBoolean(useDirectBufferStr));
+		LOG.info("Use direct buffer: "+useDirectBufferStr);
+	}
 	String isSplitableStr= tbl.getProperty(CONF_ISSPLITABLE);
-	if (isSplitableStr!=null) conf.setBoolean(CONF_ISSPLITABLE, Boolean.parseBoolean(isSplitableStr));
+	if (isSplitableStr!=null) {
+		conf.setBoolean(BitcoinBlockSerde.CONF_ISSPLITABLE, Boolean.parseBoolean(isSplitableStr));
+		LOG.info("Enable splitable heuristic: "+isSplitableStr);
+	}
+	LOG.debug("Finish initializion BitcoinBlockSerde");
  
 }
 
-public void initialize(Configuration conf, Properties tbl, Properties partitionProperties) {
-	// currently, we do not support partitions, however, once there is a flume source to load blockchain data in realtime into HDFS, we may think about certain partitions (e.g. creating subdirectories for each month)
-	initialize(conf,tbl);
-	
-}
 
 
 /** VectorizedSerde **/
