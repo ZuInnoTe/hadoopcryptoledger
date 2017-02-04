@@ -26,13 +26,11 @@ import org.apache.hadoop.hive.ql.exec.UDF;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
 
-import javax.xml.bind.DatatypeConverter;
 
 import org.zuinnote.hadoop.bitcoin.format.common.*;
 /*
 * UDF to extract the destination  (cf. https://en.bitcoin.it/wiki/Transaction#general_format_.28inside_a_block.29_of_each_input_of_a_transaction_-_Txin)
 *
-* CREATE TEMPORARY FUNCTION hclBitcoinScriptPattern as 'org.zuinnote.hadoop.bitcoin.hive.udf.BitcoinScriptPaymentPatternAnalyzerUDF';
 *
 */
 @Description(
@@ -52,9 +50,15 @@ private static final Log LOG = LogFactory.getLog(BitcoinScriptPaymentPatternAnal
 *
 */
   public Text evaluate(BytesWritable input) {
-    if (input==null) return null;
+    if (input==null) { 
+	LOG.debug("Input is null");
+	return null;
+    }
     String paymentDestination = BitcoinScriptPatternParser.getPaymentDestination(input.copyBytes());
-    if (paymentDestination==null) return null;
+    if (paymentDestination==null) {
+	 LOG.debug("Payment destination is null");
+	 return null;
+    }
     return new Text(paymentDestination);
   }
 }

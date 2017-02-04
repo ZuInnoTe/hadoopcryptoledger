@@ -48,7 +48,6 @@ import java.util.ArrayList;
 /*
 * Generic UDF to calculate the hash value of a transaction. It can be used to create a graph of transactions (cf. https://en.bitcoin.it/wiki/Transaction#general_format_.28inside_a_block.29_of_each_input_of_a_transaction_-_Txin)
 *
-* CREATE TEMPORARY FUNCTION hclBitcoinTransactionHash as 'org.zuinnote.hadoop.bitcoin.hive.udf.BitcoinTransactionHashUDF';
 *
 */
 @Description(
@@ -136,7 +135,10 @@ public Object evaluate(DeferredObject[] arguments) throws HiveException {
 		StructField listofinputsSF=soi.getStructFieldRef("listofinputs");
 		StructField listofoutputsSF=soi.getStructFieldRef("listofoutputs");
 		StructField locktimeSF=soi.getStructFieldRef("locktime");
-		if ((versionSF==null) || (incounterSF==null) || (outcounterSF==null) || (listofinputsSF==null) || (listofoutputsSF==null) || (locktimeSF==null)) {
+		boolean inputsNull =  (incounterSF==null) || (listofinputsSF==null);
+		boolean outputsNull = (outcounterSF==null) || (listofoutputsSF==null);
+		boolean otherAttributeNull = (versionSF==null) || (locktimeSF==null);
+		if (inputsNull || outputsNull || otherAttributeNull) {
 			LOG.info("Structure does not correspond to BitcoinTransaction");
 			return null;
 		} 
@@ -146,49 +148,11 @@ public Object evaluate(DeferredObject[] arguments) throws HiveException {
 		int locktime = wioi.get(soi.getStructFieldData(originalObject,locktimeSF));
 		Object listofinputsObject = soi.getStructFieldData(originalObject,listofinputsSF);
 		ListObjectInspector loiInputs=(ListObjectInspector)listofinputsSF.getFieldObjectInspector();
-		int loiInputsLength=loiInputs.getListLength(listofinputsObject);
-		StructObjectInspector listofinputsElementObjectInspector = (StructObjectInspector)loiInputs.getListElementObjectInspector();
-		List<BitcoinTransactionInput> listOfInputsArray = new ArrayList<BitcoinTransactionInput>(loiInputsLength);
-		for (int i=0;i<loiInputsLength;i++) {
-			Object currentlistofinputsObject = loiInputs.getListElement(listofinputsObject,i);
-			StructField prevtransactionhashSF = listofinputsElementObjectInspector.getStructFieldRef("prevtransactionhash");
-			StructField previoustxoutindexSF = listofinputsElementObjectInspector.getStructFieldRef("previoustxoutindex");
-			StructField txinscriptlengthSF = listofinputsElementObjectInspector.getStructFieldRef("txinscriptlength");
-			StructField txinscriptSF = listofinputsElementObjectInspector.getStructFieldRef("txinscript");
-			StructField seqnoSF = listofinputsElementObjectInspector.getStructFieldRef("seqno");
-			if ((prevtransactionhashSF==null) || (previoustxoutindexSF==null) || (txinscriptlengthSF==null) || (txinscriptSF==null) || (seqnoSF==null)) {
-				LOG.info("Invalid BitcoinTransactionInput detected at position "+i);
-				return null;
-			}
-			byte[] currentPrevTransactionHash = wboi.getPrimitiveJavaObject(listofinputsElementObjectInspector.getStructFieldData(currentlistofinputsObject,prevtransactionhashSF));
-			long currentPreviousTxOutIndex = wloi.get(listofinputsElementObjectInspector.getStructFieldData(currentlistofinputsObject,previoustxoutindexSF));
-			byte[] currentTxInScriptLength= wboi.getPrimitiveJavaObject(listofinputsElementObjectInspector.getStructFieldData(currentlistofinputsObject,txinscriptlengthSF));
-			byte[] currentTxInScript= wboi.getPrimitiveJavaObject(listofinputsElementObjectInspector.getStructFieldData(currentlistofinputsObject,txinscriptSF));
-			long currentSeqNo = wloi.get(listofinputsElementObjectInspector.getStructFieldData(currentlistofinputsObject,seqnoSF));
-			BitcoinTransactionInput currentBitcoinTransactionInput = new BitcoinTransactionInput(currentPrevTransactionHash,currentPreviousTxOutIndex,currentTxInScriptLength,currentTxInScript,currentSeqNo);
-			listOfInputsArray.add(currentBitcoinTransactionInput);
-			
-		}
+		List<BitcoinTransactionInput> listOfInputsArray = readListOfInputsFromTable(loiInputs,listofinputsObject);
+		
 		Object listofoutputsObject = soi.getStructFieldData(originalObject,listofoutputsSF);
 		ListObjectInspector loiOutputs=(ListObjectInspector)listofoutputsSF.getFieldObjectInspector();
-		StructObjectInspector listofoutputsElementObjectInspector = (StructObjectInspector)loiOutputs.getListElementObjectInspector();
-		int loiOutputsLength=loiInputs.getListLength(listofinputsObject);
-		List<BitcoinTransactionOutput> listOfOutputsArray = new ArrayList<BitcoinTransactionOutput>(loiOutputsLength);
-		for (int i=0;i<loiOutputsLength;i++) {
-			Object currentlistofoutputsObject = loiOutputs.getListElement(listofoutputsObject,i);
-			StructField valueSF = listofoutputsElementObjectInspector.getStructFieldRef("value");
-			StructField txoutscriptlengthSF = listofoutputsElementObjectInspector.getStructFieldRef("txoutscriptlength");
-			StructField txoutscriptSF = listofoutputsElementObjectInspector.getStructFieldRef("txoutscript");
-			if ((valueSF==null) || (txoutscriptlengthSF==null) || (txoutscriptSF==null)) {
-				LOG.info("Invalid BitcoinTransactionOutput detected at position "+i);
-				return null;
-			}
-			long currentValue=wloi.get(listofoutputsElementObjectInspector.getStructFieldData(currentlistofoutputsObject,valueSF));	
-			byte[] currentTxOutScriptLength=wboi.getPrimitiveJavaObject(listofoutputsElementObjectInspector.getStructFieldData(currentlistofoutputsObject,txoutscriptlengthSF));
-			byte[] currentTxOutScript=wboi.getPrimitiveJavaObject(listofoutputsElementObjectInspector.getStructFieldData(currentlistofoutputsObject,txoutscriptSF));
-			BitcoinTransactionOutput currentBitcoinTransactionOutput = new BitcoinTransactionOutput(currentValue,currentTxOutScriptLength,currentTxOutScript);
-			listOfOutputsArray.add(currentBitcoinTransactionOutput);
-		}
+		List<BitcoinTransactionOutput> listOfOutputsArray = readListOfOutputsFromTable(loiOutputs,listofoutputsObject);
 		bitcoinTransaction = new BitcoinTransaction(version,inCounter,listOfInputsArray,outCounter,listOfOutputsArray,locktime);
 
 	}
@@ -204,5 +168,77 @@ public Object evaluate(DeferredObject[] arguments) throws HiveException {
 	}
 	return new BytesWritable(transactionHash);
 }
+
+/**
+* Read list of Bitcoin transaction inputs from a table in Hive in any format (e.g. ORC, Parquet)
+*
+* @param loi ObjectInspector for processing the Object containing a list
+* @param listOfInputsObject object containing the list of inputs to a Bitcoin Transaction
+*
+* @return a list of BitcoinTransactionInputs 
+*
+*/
+
+private List<BitcoinTransactionInput> readListOfInputsFromTable(ListObjectInspector loi, Object listOfInputsObject) {
+int listLength=loi.getListLength(listOfInputsObject);
+List<BitcoinTransactionInput> result = new ArrayList<>(listLength);
+StructObjectInspector listOfInputsElementObjectInspector = (StructObjectInspector)loi.getListElementObjectInspector();
+for (int i=0;i<listLength;i++) {
+	Object currentlistofinputsObject = loi.getListElement(listOfInputsObject,i);
+	StructField prevtransactionhashSF = listOfInputsElementObjectInspector.getStructFieldRef("prevtransactionhash");
+	StructField previoustxoutindexSF = listOfInputsElementObjectInspector.getStructFieldRef("previoustxoutindex");
+	StructField txinscriptlengthSF = listOfInputsElementObjectInspector.getStructFieldRef("txinscriptlength");
+	StructField txinscriptSF = listOfInputsElementObjectInspector.getStructFieldRef("txinscript");
+	StructField seqnoSF = listOfInputsElementObjectInspector.getStructFieldRef("seqno");
+	boolean prevFieldsNull = (prevtransactionhashSF==null) || (previoustxoutindexSF==null);
+	boolean inFieldsNull = (txinscriptlengthSF==null) || (txinscriptSF==null);
+	boolean otherAttribNull = (seqnoSF==null);
+	if (prevFieldsNull || inFieldsNull  || otherAttribNull) {
+		LOG.info("Invalid BitcoinTransactionInput detected at position "+i);
+		return null;
+	}
+	byte[] currentPrevTransactionHash = wboi.getPrimitiveJavaObject(listOfInputsElementObjectInspector.getStructFieldData(currentlistofinputsObject,prevtransactionhashSF));
+	long currentPreviousTxOutIndex = wloi.get(listOfInputsElementObjectInspector.getStructFieldData(currentlistofinputsObject,previoustxoutindexSF));
+	byte[] currentTxInScriptLength= wboi.getPrimitiveJavaObject(listOfInputsElementObjectInspector.getStructFieldData(currentlistofinputsObject,txinscriptlengthSF));
+	byte[] currentTxInScript= wboi.getPrimitiveJavaObject(listOfInputsElementObjectInspector.getStructFieldData(currentlistofinputsObject,txinscriptSF));
+	long currentSeqNo = wloi.get(listOfInputsElementObjectInspector.getStructFieldData(currentlistofinputsObject,seqnoSF));
+	BitcoinTransactionInput currentBitcoinTransactionInput = new BitcoinTransactionInput(currentPrevTransactionHash,currentPreviousTxOutIndex,currentTxInScriptLength,currentTxInScript,currentSeqNo);
+	result.add(currentBitcoinTransactionInput);
+}
+return result;
+}
+
+/**
+* Read list of Bitcoin transaction outputs from a table in Hive in any format (e.g. ORC, Parquet)
+*
+* @param loi ObjectInspector for processing the Object containing a list
+* @param listOfOutputsObject object containing the list of outputs to a Bitcoin Transaction
+*
+* @return a list of BitcoinTransactionOutputs 
+*
+*/
+
+private List<BitcoinTransactionOutput> readListOfOutputsFromTable(ListObjectInspector loi, Object listOfOutputsObject) {
+int listLength=loi.getListLength(listOfOutputsObject);
+List<BitcoinTransactionOutput> result=new ArrayList<>(listLength);
+StructObjectInspector listOfOutputsElementObjectInspector = (StructObjectInspector)loi.getListElementObjectInspector();
+	for (int i=0;i<listLength;i++) {
+		Object currentListOfOutputsObject = loi.getListElement(listOfOutputsObject,i);
+		StructField valueSF = listOfOutputsElementObjectInspector.getStructFieldRef("value");
+		StructField txoutscriptlengthSF = listOfOutputsElementObjectInspector.getStructFieldRef("txoutscriptlength");
+		StructField txoutscriptSF = listOfOutputsElementObjectInspector.getStructFieldRef("txoutscript");
+		if ((valueSF==null) || (txoutscriptlengthSF==null) || (txoutscriptSF==null)) {
+			LOG.info("Invalid BitcoinTransactionOutput detected at position "+i);
+			return null;
+		}
+		long currentValue=wloi.get(listOfOutputsElementObjectInspector.getStructFieldData(currentListOfOutputsObject,valueSF));	
+		byte[] currentTxOutScriptLength=wboi.getPrimitiveJavaObject(listOfOutputsElementObjectInspector.getStructFieldData(currentListOfOutputsObject,txoutscriptlengthSF));
+		byte[] currentTxOutScript=wboi.getPrimitiveJavaObject(listOfOutputsElementObjectInspector.getStructFieldData(currentListOfOutputsObject,txoutscriptSF));
+		BitcoinTransactionOutput currentBitcoinTransactionOutput = new BitcoinTransactionOutput(currentValue,currentTxOutScriptLength,currentTxOutScript);
+		result.add(currentBitcoinTransactionOutput);
+	}
+return result;
+}
+
 
 }
