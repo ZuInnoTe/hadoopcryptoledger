@@ -344,7 +344,9 @@ boolean magicFound=false;
 			throw new BitcoinBlockReadException("Error: Did not find defined magic within current stream");
 		}
 		try {
-			if (checkForMagicBytes(firstByte)) return;
+			if (checkForMagicBytes(firstByte)) {
+				return;
+			}
 		} catch (IOException e) {
 			LOG.error(e);
 			throw new BitcoinBlockReadException(e.toString());
