@@ -223,8 +223,8 @@ public List<BitcoinTransaction> parseTransactions(ByteBuffer rawByteBuffer,long 
 
 public ByteBuffer readRawBlock() throws BitcoinBlockReadException {
   try {
-	byte[] blockSizeByte = null;
-	while (blockSizeByte==null) { // in case of filtering by magic no we skip blocks until we reach a valid magicNo or end of Block
+	byte[] blockSizeByte = new byte[0];
+	while (blockSizeByte.length==0) { // in case of filtering by magic no we skip blocks until we reach a valid magicNo or end of Block
 		// check if more to read
 		if (this.bin.available()<1) {
 			return null;
@@ -344,7 +344,7 @@ boolean magicFound=false;
 			throw new BitcoinBlockReadException("Error: Did not find defined magic within current stream");
 		}
 		try {
-			magicFound=checkForMagicBytes(firstByte);
+			if (checkForMagicBytes(firstByte)) return;
 		} catch (IOException e) {
 			LOG.error(e);
 			throw new BitcoinBlockReadException(e.toString());
@@ -352,8 +352,7 @@ boolean magicFound=false;
 		if (currentSeek==this.maxSizeBitcoinBlock) { 
 			throw new BitcoinBlockReadException("Error: Cannot seek to a block start, because no valid block found within the maximum size of a Bitcoin block. Check data or increase maximum size of Bitcoin block.");
 		}
-	// increase by one byte
-	if (!(magicFound)) {
+	// increase by one byte if magic not found yet
 		try {
 			this.bin.reset();
 			if (this.bin.skip(1)!=1) {
@@ -363,7 +362,6 @@ boolean magicFound=false;
 			LOG.error(e);
 			throw new BitcoinBlockReadException(e.toString());
 		}
-	}
 	currentSeek++;
 	}
 }
@@ -451,13 +449,13 @@ private byte[] skipBlocksNotInFilter() throws IOException {
 		
 		int magicNoReadSize=this.bin.read(magicNo,0,4);
 		if (magicNoReadSize!=4) {
-			return null; // no more magics to read
+			return new byte[0]; // no more magics to read
 		}
 		// read blocksize
 	
 		int blockSizeReadSize=this.bin.read(blockSizeByte,0,4);
 		if (blockSizeReadSize!=4) {
-			return null; // no more size to read
+			return new byte[0]; // no more size to read
 		}
 		long blockSize=BitcoinUtil.getSize(blockSizeByte)+8;
 		// read the full block
@@ -476,7 +474,7 @@ private byte[] skipBlocksNotInFilter() throws IOException {
 			if (this.bin.skip(blockSize)!=blockSize) {
 					LOG.error("Cannot skip block in InputStream");
 			}
-			return null;
+			return new byte[0];
 		
 		} else {
 			return blockSizeByte;
