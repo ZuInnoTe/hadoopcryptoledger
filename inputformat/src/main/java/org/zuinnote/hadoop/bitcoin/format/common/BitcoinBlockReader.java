@@ -327,11 +327,10 @@ public void close() throws IOException {
 */
 
 private void findMagic() throws BitcoinBlockReadException {
-boolean magicFound=false;
 	// search if first byte of any magic matches
 	// search up to maximum size of a bitcoin block
 	int currentSeek=0;
-	while(!(magicFound)) {
+	while(currentSeek!=this.maxSizeBitcoinBlock) {
 		int firstByte=-1;
 		try {
 			this.bin.mark(4); // magic is always 4 bytes
