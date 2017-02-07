@@ -45,10 +45,7 @@ public RecordReader<BytesWritable,BitcoinBlock> getRecordReader(InputSplit split
 	/** Create reader **/
 	try {
 		return new BitcoinBlockRecordReader( (FileSplit) split,job,reporter);
-	} catch (HadoopCryptoLedgerConfigurationException e) {
-		// log
-		LOGFI.error(e);
-	} catch (BitcoinBlockReadException e) {
+	} catch (HadoopCryptoLedgerConfigurationException|BitcoinBlockReadException e) {
 		// log
 		LOGFI.error(e);
 	}
