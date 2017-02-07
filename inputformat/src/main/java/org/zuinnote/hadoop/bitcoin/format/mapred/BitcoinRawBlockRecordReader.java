@@ -22,7 +22,6 @@ import org.zuinnote.hadoop.bitcoin.format.exception.HadoopCryptoLedgerConfigurat
 import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.nio.ByteBuffer;
 
@@ -96,10 +95,10 @@ public boolean next(BytesWritable key, BytesWritable value) throws IOException {
 		if (dataBlock==null) {
 			return false;
 		}
-		byte newKey[]=getBbr().getKeyFromRawBlock(dataBlock);
+		byte[] newKey=getBbr().getKeyFromRawBlock(dataBlock);
 		key.set(newKey,0,newKey.length);
 		byte[] dataBlockArray;
-		if (dataBlock.hasArray()==true) {
+		if (dataBlock.hasArray()) {
 			dataBlockArray=dataBlock.array();
 		} else {
 			dataBlockArray=new byte[dataBlock.capacity()];
