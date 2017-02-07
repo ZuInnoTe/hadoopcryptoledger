@@ -101,8 +101,7 @@ public boolean nextKeyValue() throws IOException {
 		}
 		BitcoinTransaction currentTransaction=currentBitcoinBlock.getTransactions().get(currentTransactionCounterInBlock);
 		// the unique identifier that is linked in other transaction is usually its hash
-		byte[] newKey = new byte[0];
-		newKey=BitcoinUtil.getTransactionHash(currentTransaction);
+		byte[] newKey = BitcoinUtil.getTransactionHash(currentTransaction);
 		this.currentKey.set(newKey,0,newKey.length);
 		this.currentValue.set(currentTransaction);
 		currentTransactionCounterInBlock++;
