@@ -18,12 +18,7 @@ package org.zuinnote.hadoop.bitcoin.format.mapred;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.BytesWritable;
-import org.apache.hadoop.io.compress.CompressionCodec;
-import org.apache.hadoop.io.compress.CompressionCodecFactory;
-import org.apache.hadoop.io.compress.SplittableCompressionCodec;
 import org.apache.hadoop.mapred.*;
 import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
 import org.zuinnote.hadoop.bitcoin.format.exception.HadoopCryptoLedgerConfigurationException;
@@ -41,13 +36,10 @@ public class BitcoinTransactionElementFileInputFormat extends AbstractBitcoinFil
         /** Create reader **/
         try {
             return new BitcoinTransactionElementRecordReader((FileSplit) split, job, reporter);
-        } catch (HadoopCryptoLedgerConfigurationException e) {
+        } catch (HadoopCryptoLedgerConfigurationException|BitcoinBlockReadException e) {
             // log
             LOGFI.error(e);
-        } catch (BitcoinBlockReadException e) {
-            // log
-            LOGFI.error(e);
-        }
+        } 
         return null;
     }
 
