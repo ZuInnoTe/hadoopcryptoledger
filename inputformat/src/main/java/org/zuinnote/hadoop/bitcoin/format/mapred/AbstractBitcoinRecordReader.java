@@ -26,20 +26,16 @@ import java.io.InputStream;
 
 import java.nio.ByteBuffer;
 
-import org.apache.hadoop.io.BytesWritable; 
 
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.fs.Seekable;
-import org.apache.hadoop.io.LongWritable;
-import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.compress.CodecPool;
 import org.apache.hadoop.io.compress.CompressionCodec;
 import org.apache.hadoop.io.compress.CompressionCodecFactory;
 import org.apache.hadoop.io.compress.SplitCompressionInputStream;
 import org.apache.hadoop.io.compress.SplittableCompressionCodec;
-import org.apache.hadoop.io.compress.CompressionCodecFactory;
 import org.apache.hadoop.io.compress.Decompressor;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.mapred.FileSplit;
@@ -73,7 +69,6 @@ private String[] specificMagicStringArray;
 private byte[][] specificMagicByteArray;
 
 private CompressionCodec codec;
-private CompressionCodecFactory compressionCodecs;
 private Decompressor decompressor;
 private Reporter reporter;
 private Configuration conf;
@@ -127,7 +122,6 @@ public AbstractBitcoinRecordReader(FileSplit split,JobConf job, Reporter reporte
     start = split.getStart();
     end = start + split.getLength();
     final Path file = split.getPath();
-    this.compressionCodecs = new CompressionCodecFactory(job);
     codec = new CompressionCodecFactory(job).getCodec(file);
     final FileSystem fs = file.getFileSystem(job);
     fileIn = fs.open(file);
@@ -161,36 +155,7 @@ public AbstractBitcoinRecordReader(FileSplit split,JobConf job, Reporter reporte
     this.reporter.setStatus("Ready to read");
 }
 
-	
 
-/**
-*
-* Create an empty key
-*
-* @return key
-*/
-@Override
-public abstract K createKey();
-
-/**
-*
-* Create an empty value
-*
-* @return value
-*/
-@Override
-public abstract V createValue();
-
-
-
-/**
-*
-* Read Bitcoin data
-*
-* @return true if next bitcoin data is available, false if not
-*/
-@Override
-public abstract boolean next(K key, V value) throws IOException;
 
 
 /**
@@ -251,7 +216,7 @@ if (start == end) {
 * @return true if compressed, false if not
 */
 private boolean  isCompressedInput() {
-    return (codec != null);
+    return codec != null;
   }
 
 /*
