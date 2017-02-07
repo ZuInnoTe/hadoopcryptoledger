@@ -23,8 +23,6 @@ import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
 import java.io.IOException;
 
 
-import java.security.NoSuchAlgorithmException;
-
 import org.apache.hadoop.io.BytesWritable; 
 
 
