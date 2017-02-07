@@ -24,18 +24,10 @@ import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
 import java.io.IOException;
 
 
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.compress.CompressionCodec;
-import org.apache.hadoop.io.compress.CompressionCodecFactory;
-import org.apache.hadoop.io.compress.SplittableCompressionCodec;
 import org.apache.hadoop.io.BytesWritable;
-import org.apache.hadoop.mapred.FileInputFormat;
 import org.apache.hadoop.mapred.FileSplit;
 import org.apache.hadoop.mapred.InputSplit;
 import org.apache.hadoop.mapred.JobConf;
-import org.apache.hadoop.mapred.JobConfigurable;
-import org.apache.hadoop.mapred.JobContext;
 import org.apache.hadoop.mapred.RecordReader;
 import org.apache.hadoop.mapred.Reporter;
 
@@ -53,13 +45,10 @@ public RecordReader<BytesWritable,BytesWritable> getRecordReader(InputSplit spli
 	/** Create reader **/
 	try {
 		return new BitcoinRawBlockRecordReader( (FileSplit) split,job,reporter);
-	} catch (HadoopCryptoLedgerConfigurationException e) {
+	} catch (HadoopCryptoLedgerConfigurationException|BitcoinBlockReadException e) {
 		// log
 		LOGFI.error(e);
-	} catch (BitcoinBlockReadException e) {
-		// log
-		LOGFI.error(e);
-	}
+	} 
 	return null;
 }
 
