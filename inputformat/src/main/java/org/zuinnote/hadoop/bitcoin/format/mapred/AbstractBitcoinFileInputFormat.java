@@ -16,9 +16,6 @@
 
 package org.zuinnote.hadoop.bitcoin.format.mapred;
 
-import org.zuinnote.hadoop.bitcoin.format.exception.HadoopCryptoLedgerConfigurationException;
-import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
-
 import java.io.IOException;
 
 
@@ -28,18 +25,13 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.compress.CompressionCodec;
 import org.apache.hadoop.io.compress.CompressionCodecFactory;
 import org.apache.hadoop.io.compress.SplittableCompressionCodec;
-import org.apache.hadoop.io.BytesWritable;
 import org.apache.hadoop.mapred.FileInputFormat;
-import org.apache.hadoop.mapred.FileSplit;
 import org.apache.hadoop.mapred.InputSplit;
 import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapred.JobConfigurable;
-import org.apache.hadoop.mapred.JobContext;
 import org.apache.hadoop.mapred.RecordReader;
 import org.apache.hadoop.mapred.Reporter;
 
-import org.apache.commons.logging.LogFactory;
-import org.apache.commons.logging.Log;
 
 
 public abstract class AbstractBitcoinFileInputFormat<K,V> extends FileInputFormat<K,V> implements JobConfigurable  {
@@ -67,7 +59,7 @@ public void configure(JobConf conf) {
 */
 @Override
   protected boolean isSplitable(FileSystem fs, Path file) {
-    if (this.isSplitable==false) {
+    if (!(this.isSplitable)) {
 		return false;
     }
     final CompressionCodec codec = compressionCodecs.getCodec(file);
