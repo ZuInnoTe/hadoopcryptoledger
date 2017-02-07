@@ -85,19 +85,26 @@ public class BitcoinTransactionElementRecordReader extends AbstractBitcoinRecord
      */
     @Override
     public boolean next(BytesWritable key, BitcoinTransactionElement value) throws IOException {
-        // read all the blocks, if necessary a block overlapping a split´
-        try {
+        // read all the blocks, if necessary a block overlapping a split
             while (getFilePosition() <= getEnd()) { // did we already went beyond the split (remote) or do we have no further data left?
                 if ((currentBitcoinBlock == null) || (currentBitcoinBlock.getTransactions().size() == currentTransactionCounterInBlock)) {
-                    currentBitcoinBlock = getBbr().readBlock();
+		    try {
+                    	currentBitcoinBlock = getBbr().readBlock();
+		    } catch (BitcoinBlockReadException e) {
+			 LOG.error(e);
+		    }
                     if (currentBitcoinBlock == null) {
 			return false;
 		    }
-                    currentBlockHash = BitcoinUtil.getBlockHash(currentBitcoinBlock);
-                    currentTransactionCounterInBlock = 0;
-                    currentInputCounter = 0;
-                    currentOutputCounter = 0;
-                    readTransaction();
+		    try {
+                    	currentBlockHash = BitcoinUtil.getBlockHash(currentBitcoinBlock);
+                    	currentTransactionCounterInBlock = 0;
+                    	currentInputCounter = 0;
+                    	currentOutputCounter = 0;
+                    	readTransaction();
+	            } catch (IOException|NoSuchAlgorithmException e) {
+			LOG.error(e);
+		    }
                 }
 
 
@@ -131,18 +138,16 @@ public class BitcoinTransactionElementRecordReader extends AbstractBitcoinRecord
                     currentInputCounter = 0;
                     currentOutputCounter = 0;
                     currentTransactionCounterInBlock++;
-                    readTransaction();
+		    try {
+                    	readTransaction();
+		     }	catch (NoSuchAlgorithmException e) {
+			LOG.error(e);
+		    }
                     continue;
                 }
             }
     
-        } catch (NoSuchElementException e) {
-	    LOG.error(e);
-        } catch (BitcoinBlockReadException e) {
-	    LOG.error(e);
-        } catch (NoSuchAlgorithmException e) {
-            LOG.error(e);
-        }
+       
 	return false;
     }
 
