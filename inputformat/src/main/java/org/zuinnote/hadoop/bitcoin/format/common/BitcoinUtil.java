@@ -38,6 +38,9 @@ public class BitcoinUtil {
 
 private static final Log LOG = LogFactory.getLog(BitcoinUtil.class.getName());
 
+private BitcoinUtil() {
+}
+
 /**
 * Converts a signed int to an unsigned (long)
 *
@@ -47,8 +50,7 @@ private static final Log LOG = LogFactory.getLog(BitcoinUtil.class.getName());
 *
 */
 public static long convertSignedIntToUnsigned(int signedInt) {
-	long result=signedInt & 0x00000000ffffffffL;
-	return result;
+	return signedInt & 0x00000000ffffffffL;
 }
 
 
@@ -129,18 +131,34 @@ public static long convertVarIntByteBufferToLong(ByteBuffer byteBuffer) {
 
 public static long getVarInt(byte[] varInt) {
 	long result=0;
-	if (varInt.length==0) return result;
+	if (varInt.length==0) {
+		 return result;
+	}
 	int unsignedByte=varInt[0] & 0xFF;
-	if (unsignedByte<0xFD) return unsignedByte;
+	if (unsignedByte<0xFD) {
+		return unsignedByte;
+	}
 	int intSize=0;
-	if (unsignedByte==0xFD) intSize=3;
-	else if (unsignedByte==0xFE) intSize=5;
-	else if (unsignedByte==0XFF) intSize=9;
+	if (unsignedByte==0xFD) { 
+		intSize=3;
+	}
+	else if (unsignedByte==0xFE) {
+		intSize=5;
+	}
+	else if (unsignedByte==0XFF) {
+		intSize=9;
+	}
 	byte[] rawDataInt=reverseByteArray(Arrays.copyOfRange(varInt, 1, intSize));
 	ByteBuffer byteBuffer = ByteBuffer.wrap(rawDataInt);
-	if (intSize==3) result=byteBuffer.getShort();
-	else if (intSize==5) result=byteBuffer.getInt();
-	else if (intSize==9) result=byteBuffer.getLong(); // Need to handle sign - available only in JDK8
+	if (intSize==3) {
+		 result=byteBuffer.getShort();
+	}
+	else if (intSize==5) {
+		result=byteBuffer.getInt();
+	}
+	else if (intSize==9) {
+		result=byteBuffer.getLong(); // Need to handle sign - available only in JDK8
+	}
 	return result;
 }
 
@@ -155,9 +173,15 @@ public static long getVarInt(byte[] varInt) {
 
 public static byte getVarIntSize(byte firstByteVarInt) {
 	int unsignedByte=firstByteVarInt & 0xFF;
-	if (unsignedByte==0xFD) return 3;
-	if (unsignedByte==0xFE) return 5;
-	if (unsignedByte==0xFF) return 9;
+	if (unsignedByte==0xFD) {
+		 return 3;
+	}
+	if (unsignedByte==0xFE) {
+		return 5;
+	}
+	if (unsignedByte==0xFF) {
+		return 9;
+	}
 	return 1; //<0xFD
 }
 
@@ -172,7 +196,9 @@ public static byte getVarIntSize(byte firstByteVarInt) {
 */
 
 public static long getSize(byte[] byteSize) {
-	if (byteSize.length!=4) return 0;
+	if (byteSize.length!=4) {
+		return 0;
+	}
 	ByteBuffer converterBuffer = ByteBuffer.wrap(byteSize);
 	converterBuffer.order(ByteOrder.LITTLE_ENDIAN);
 	return convertSignedIntToUnsigned(converterBuffer.getInt());
@@ -247,9 +273,13 @@ public static Date convertIntToDate(int dateInt) {
 */
 
 public static boolean compareMagics (byte[] magic1,byte[] magic2) {
-	if (magic1.length!=magic2.length) return false;
+	if (magic1.length!=magic2.length) {
+		return false;
+	}
 	for (int i=0;i<magic1.length;i++) {
-		if (magic1[i]!=magic2[i]) return false;
+		if (magic1[i]!=magic2[i]) {
+			 return false;
+		}
 	}
 	return true;	
 
@@ -270,7 +300,7 @@ public static boolean compareMagics (byte[] magic1,byte[] magic2) {
 * @throws java.security.NoSuchAlgorithmException in case the hashing algorithm of the Bitcoin Blockchain is not supported by the JDK
 *
 */
-public static byte[] getTransactionHash(BitcoinTransaction transaction) throws NoSuchAlgorithmException, IOException{
+public static byte[] getTransactionHash(BitcoinTransaction transaction) throws IOException{
 	// convert transaction to byte array
 	ByteArrayOutputStream transactionBAOS = new ByteArrayOutputStream();
 	
@@ -295,11 +325,17 @@ public static byte[] getTransactionHash(BitcoinTransaction transaction) throws N
 	byte[] lockTime=reverseByteArray(convertIntToByteArray(transaction.getLockTime()));
 	transactionBAOS.write(lockTime);
 	byte[] transactionByteArray= transactionBAOS.toByteArray();
-	MessageDigest digest = MessageDigest.getInstance("SHA-256");
-	byte[] firstRoundHash = digest.digest(transactionByteArray);
-	byte[] secondRoundHash = digest.digest(firstRoundHash);
-	byte[] finalHash = secondRoundHash;
-	return finalHash;
+	byte[] firstRoundHash;
+	byte[] secondRoundHash;
+	try {
+		MessageDigest digest = MessageDigest.getInstance("SHA-256");
+		firstRoundHash = digest.digest(transactionByteArray);
+		secondRoundHash = digest.digest(firstRoundHash);
+	} catch (NoSuchAlgorithmException nsae) {
+		LOG.error(nsae);
+		return null;
+	}
+	return secondRoundHash;
 }
 
 /**
@@ -315,7 +351,7 @@ public static byte[] getTransactionHash(BitcoinTransaction transaction) throws N
 * @throws java.security.NoSuchAlgorithmException in case the hashing algorithm of the Bitcoin Blockchain is not supported by the JDK
 *
 */
-	public static byte[] getBlockHash(BitcoinBlock block) throws NoSuchAlgorithmException, IOException {
+	public static byte[] getBlockHash(BitcoinBlock block) throws IOException {
 		ByteArrayOutputStream blockBAOS = new ByteArrayOutputStream();
 		blockBAOS.write(reverseByteArray(convertIntToByteArray(block.getVersion())));
 		blockBAOS.write(block.getHashPrevBlock());
@@ -324,11 +360,17 @@ public static byte[] getTransactionHash(BitcoinTransaction transaction) throws N
 		blockBAOS.write(block.getBits());
 		blockBAOS.write(reverseByteArray(convertIntToByteArray(block.getNonce())));
 		byte[] blockByteArray = blockBAOS.toByteArray();
-		MessageDigest digest = MessageDigest.getInstance("SHA-256");
-		byte[] firstRoundHash = digest.digest(blockByteArray);
-		byte[] secondRoundHash = digest.digest(firstRoundHash);
-		byte[] finalHash = secondRoundHash;
-		return reverseByteArray(finalHash);
+		byte[] firstRoundHash;
+		byte[] secondRoundHash;
+		try {
+			MessageDigest digest = MessageDigest.getInstance("SHA-256");
+			firstRoundHash = digest.digest(blockByteArray);
+			secondRoundHash = digest.digest(firstRoundHash);
+		} catch (NoSuchAlgorithmException nsae) {
+			LOG.error(nsae);
+			return null;
+		}
+		return reverseByteArray(secondRoundHash);
     }
 
 

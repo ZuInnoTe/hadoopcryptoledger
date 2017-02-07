@@ -100,12 +100,7 @@ public boolean next(BytesWritable key, BitcoinTransaction value) throws IOExcept
 		BitcoinTransaction currentTransaction=currentBitcoinBlock.getTransactions().get(currentTransactionCounterInBlock);
 		// the unique identifier that is linked in other transaction is usually its hash
 		byte[] newKey = new byte[0];
-		try {
-			newKey=BitcoinUtil.getTransactionHash(currentTransaction);
-		} catch (NoSuchAlgorithmException nsae) {
-			LOG.error("Cannot calculate transaction hash. Algorithm not available.");
-			LOG.error(nsae);
-		}
+		newKey=BitcoinUtil.getTransactionHash(currentTransaction);
 		key.set(newKey,0,newKey.length);
 		value.set(currentTransaction);
 		currentTransactionCounterInBlock++;
