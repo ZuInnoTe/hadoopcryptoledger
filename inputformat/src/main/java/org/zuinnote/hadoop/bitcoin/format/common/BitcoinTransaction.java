@@ -40,8 +40,8 @@ public BitcoinTransaction() {
 	this.version=0;
 	this.inCounter=new byte[0];
 	this.outCounter=new byte[0];
-	this.listOfInputs=new ArrayList<BitcoinTransactionInput>();
-	this.listOfOutputs=new ArrayList<BitcoinTransactionOutput>();
+	this.listOfInputs=new ArrayList<>();
+	this.listOfOutputs=new ArrayList<>();
 	this.lockTime=0;
 }
 
