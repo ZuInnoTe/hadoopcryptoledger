@@ -333,7 +333,7 @@ public static byte[] getTransactionHash(BitcoinTransaction transaction) throws I
 		secondRoundHash = digest.digest(firstRoundHash);
 	} catch (NoSuchAlgorithmException nsae) {
 		LOG.error(nsae);
-		return null;
+		return new byte[0];
 	}
 	return secondRoundHash;
 }
@@ -368,7 +368,7 @@ public static byte[] getTransactionHash(BitcoinTransaction transaction) throws I
 			secondRoundHash = digest.digest(firstRoundHash);
 		} catch (NoSuchAlgorithmException nsae) {
 			LOG.error(nsae);
-			return null;
+			return new byte[0];
 		}
 		return reverseByteArray(secondRoundHash);
     }
