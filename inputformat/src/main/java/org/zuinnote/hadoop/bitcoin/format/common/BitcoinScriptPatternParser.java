@@ -17,12 +17,15 @@
 package org.zuinnote.hadoop.bitcoin.format.common;
 
 import java.util.Arrays;
-import java.util.Date;
 
 
 
 
 public class BitcoinScriptPatternParser {
+
+
+private BitcoinScriptPatternParser() {
+}
 
 /**
 * Get the payment destination from an scriptPubKey (output script of a transaction). This is based on standard scripts accepted by the Bitcoin network (https://en.bitcoin.it/wiki/Script).
@@ -33,7 +36,9 @@ public class BitcoinScriptPatternParser {
 **/
 
 public static String getPaymentDestination(byte[] scriptPubKey) {
-	if (scriptPubKey==null) return null;
+	if (scriptPubKey==null) {
+		return null;
+	}
 	// test if anyone can spend output
 	if (scriptPubKey.length==0) {
 		return "anyone"; // need to check also ScriptSig for OP_TRUE
@@ -60,17 +65,6 @@ public static String getPaymentDestination(byte[] scriptPubKey) {
 	return null;
 }
 
-/**
-* Converts a Bitcoin script in byte format to a (human) readable String. Not implemented.
-*
-* @param script script in a byte array
-*
-* @return String with a human readable script or null in case of invalid/non-parseable script (e.g. unknown opcodes etc.)
-*
-*/
-public static String convertByteScriptToReadableString(byte[] script) {
-	return "";
-}
 
 /***
 * Checks if scriptPubKey is about a transaction for paying to a hash
@@ -83,15 +77,14 @@ public static String convertByteScriptToReadableString(byte[] script) {
 
 private static String checkPayToHash(byte[] scriptPubKey) {
 // test start
-if (scriptPubKey.length==25) {
-		if (((scriptPubKey[0] & 0xFF)==0x76) && ((scriptPubKey[1] & 0xFF)==0xA9) && ((scriptPubKey[2] & 0xFF)==0x14)) {
-			// test end
-			if (((scriptPubKey[23] & 0xFF)==0x88) && ((scriptPubKey[24]  & 0xFF)==0xAC)) {
-				byte[] bitcoinAddress = Arrays.copyOfRange(scriptPubKey, 3, 23);
-				return "bitcoinaddress_"+BitcoinUtil.convertByteArrayToHexString(bitcoinAddress);
-			} 
-		} 
-}
+boolean validLength=scriptPubKey.length==25;
+boolean validStart=((scriptPubKey[0] & 0xFF)==0x76) && ((scriptPubKey[1] & 0xFF)==0xA9) && ((scriptPubKey[2] & 0xFF)==0x14);
+boolean validEnd=((scriptPubKey[23] & 0xFF)==0x88) && ((scriptPubKey[24]  & 0xFF)==0xAC);
+
+	if (validLength & validStart & validEnd) {
+		byte[] bitcoinAddress = Arrays.copyOfRange(scriptPubKey, 3, 23);
+		return "bitcoinaddress_"+BitcoinUtil.convertByteArrayToHexString(bitcoinAddress);
+	} 
 	return null;
 }
 
