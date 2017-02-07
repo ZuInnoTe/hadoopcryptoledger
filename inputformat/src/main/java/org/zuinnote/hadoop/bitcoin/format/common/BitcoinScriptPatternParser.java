@@ -81,7 +81,7 @@ boolean validLength=scriptPubKey.length==25;
 boolean validStart=((scriptPubKey[0] & 0xFF)==0x76) && ((scriptPubKey[1] & 0xFF)==0xA9) && ((scriptPubKey[2] & 0xFF)==0x14);
 boolean validEnd=((scriptPubKey[23] & 0xFF)==0x88) && ((scriptPubKey[24]  & 0xFF)==0xAC);
 
-	if (validLength & validStart & validEnd) {
+	if (validLength && validStart && validEnd) {
 		byte[] bitcoinAddress = Arrays.copyOfRange(scriptPubKey, 3, 23);
 		return "bitcoinaddress_"+BitcoinUtil.convertByteArrayToHexString(bitcoinAddress);
 	} 
