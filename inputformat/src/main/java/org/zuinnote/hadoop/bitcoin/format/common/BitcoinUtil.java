@@ -297,7 +297,6 @@ public static boolean compareMagics (byte[] magic1,byte[] magic2) {
 *
 *
 * @throws java.io.IOException in case of errors reading from the InputStream
-* @throws java.security.NoSuchAlgorithmException in case the hashing algorithm of the Bitcoin Blockchain is not supported by the JDK
 *
 */
 public static byte[] getTransactionHash(BitcoinTransaction transaction) throws IOException{
@@ -348,7 +347,6 @@ public static byte[] getTransactionHash(BitcoinTransaction transaction) throws I
 *
 *
 * @throws java.io.IOException in case of errors reading from the InputStream
-* @throws java.security.NoSuchAlgorithmException in case the hashing algorithm of the Bitcoin Blockchain is not supported by the JDK
 *
 */
 	public static byte[] getBlockHash(BitcoinBlock block) throws IOException {
