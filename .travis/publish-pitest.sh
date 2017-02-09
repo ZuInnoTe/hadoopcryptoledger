@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 if [ "$TRAVIS_REPO_SLUG" == "ZuInnoTe/hadoopcryptoledger" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; then
 
 echo -e "Publishing Pitest mutation testing results...\n"
