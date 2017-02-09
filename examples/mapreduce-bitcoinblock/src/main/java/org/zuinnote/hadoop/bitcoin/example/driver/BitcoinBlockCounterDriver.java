@@ -19,7 +19,6 @@
  */
 package org.zuinnote.hadoop.bitcoin.example.driver;
 
-import java.io.IOException;
 import java.util.*;
         
 import org.apache.hadoop.fs.Path;
