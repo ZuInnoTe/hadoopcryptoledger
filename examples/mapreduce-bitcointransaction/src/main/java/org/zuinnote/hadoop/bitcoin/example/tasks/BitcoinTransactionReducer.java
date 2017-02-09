@@ -33,14 +33,15 @@ public class BitcoinTransactionReducer extends Reducer<Text, IntWritable, Text, 
 
 private LongWritable result= new LongWritable();
 
-   public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
+@Override
+public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
        long sum = 0;
        for (IntWritable val: values) {
            sum += val.get();
        }
 	result.set(sum);
        context.write(key, result);
-   }
+ }
 }
 
 

@@ -34,10 +34,11 @@ import org.zuinnote.hadoop.bitcoin.format.mapreduce.*;
 import java.util.*;
 
 public  class BitcoinTransactionMap  extends  Mapper<BytesWritable, BitcoinTransaction, Text, IntWritable> {
-private final static Text defaultKey = new Text("Transaction Input Count:");
+private static final Text defaultKey = new Text("Transaction Input Count:");
 
 @Override
 public void setup(Context context) throws IOException, InterruptedException {
+// nothing todo
 }
 
 @Override
@@ -49,6 +50,7 @@ public void map(BytesWritable key, BitcoinTransaction value, Context context) th
 
 @Override
 public void cleanup(Context context) {
+ // nothing todo
 }
 
 }
