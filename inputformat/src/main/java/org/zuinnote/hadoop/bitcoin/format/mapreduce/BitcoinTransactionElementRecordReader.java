@@ -17,7 +17,6 @@
 package org.zuinnote.hadoop.bitcoin.format.mapreduce;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.util.NoSuchElementException;
 
 import java.nio.ByteBuffer;
 
