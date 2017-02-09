@@ -16,33 +16,26 @@
 
 package org.zuinnote.hadoop.bitcoin.format.mapreduce;
 
-import org.zuinnote.hadoop.bitcoin.format.exception.HadoopCryptoLedgerConfigurationException;
-import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
 
 import java.io.IOException;
 
 
 
-import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.compress.CompressionCodec;
 import org.apache.hadoop.io.compress.CompressionCodecFactory;
 import org.apache.hadoop.io.compress.SplittableCompressionCodec;
-import org.apache.hadoop.io.BytesWritable;
 import org.apache.hadoop.mapreduce.JobContext;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.InputSplit;
 import org.apache.hadoop.mapreduce.RecordReader;
 import org.apache.hadoop.mapreduce.TaskAttemptContext;
 
-import org.apache.commons.logging.LogFactory;
-import org.apache.commons.logging.Log;
 
 public abstract class AbstractBitcoinFileInputFormat<K,V> extends FileInputFormat<K,V>   {
 public static final String CONF_ISSPLITABLE="hadoopcryptoledeger.bitcoinblockinputformat.issplitable";
 public static final boolean DEFAULT_ISSPLITABLE=false;
 
-private boolean isSplitable=DEFAULT_ISSPLITABLE;
 
 
 @Override
@@ -56,8 +49,8 @@ public abstract RecordReader<K,V> createRecordReader(InputSplit split, TaskAttem
 
 @Override
   protected boolean isSplitable(JobContext context, Path file) {
-    this.isSplitable=context.getConfiguration().getBoolean(AbstractBitcoinFileInputFormat.CONF_ISSPLITABLE,AbstractBitcoinFileInputFormat.DEFAULT_ISSPLITABLE);
-    if (this.isSplitable==false) {
+    boolean isSplitable=context.getConfiguration().getBoolean(AbstractBitcoinFileInputFormat.CONF_ISSPLITABLE,AbstractBitcoinFileInputFormat.DEFAULT_ISSPLITABLE);
+    if (!(isSplitable)) {
 		return false;
     }   
    final CompressionCodec codec = new CompressionCodecFactory(context.getConfiguration()).getCodec(file);
