@@ -89,60 +89,82 @@ private BitcoinTransactionElement currentValue=new BitcoinTransactionElement();
      */
     @Override
     public boolean nextKeyValue() throws IOException {
-        // read all the blocks, if necessary a block overlapping a split´
-        try {
+    // read all the blocks, if necessary a block overlapping a split
             while (getFilePosition() <= getEnd()) { // did we already went beyond the split (remote) or do we have no further data left?
-                if ((currentBitcoinBlock == null) || (currentBitcoinBlock.getTransactions().size() == currentTransactionCounterInBlock)) {
-                    currentBitcoinBlock = getBbr().readBlock();
-                    if (currentBitcoinBlock == null) {
+                if (((currentBitcoinBlock == null) || (currentBitcoinBlock.getTransactions().size() == currentTransactionCounterInBlock)) &&(!(processNewBlock()))) {
 			return false;
-		   }
-                    currentBlockHash = BitcoinUtil.getBlockHash(currentBitcoinBlock);
-                    currentTransactionCounterInBlock = 0;
-                    currentInputCounter = 0;
-                    currentOutputCounter = 0;
-                    readTransaction();
                 }
-
-
                 this.currentValue.setBlockHash(currentBlockHash);
                 this.currentValue.setTransactionIdxInBlock(currentTransactionCounterInBlock);
                 if (currentTransaction.getListOfInputs().size() > currentInputCounter) {
-                    this.currentValue.setType(0);
-                    BitcoinTransactionInput input = currentTransaction.getListOfInputs().get(currentInputCounter);
-                    this.currentValue.setIndexInTransaction(input.getPreviousTxOutIndex());
-                    this.currentValue.setAmount(0);
-                    this.currentValue.setTransactionHash(BitcoinUtil.reverseByteArray(input.getPrevTransactionHash()));
-                    this.currentValue.setScript(input.getTxInScript());
-                    byte[] keyBytes = createUniqKey(currentTransactionHash, 0, currentInputCounter);
-                    this.currentKey.set(keyBytes, 0, keyBytes.length);
-                    currentInputCounter++;
+		    processInputs(this.currentKey, this.currentValue);
                     return true;
                 } else if (currentTransaction.getListOfOutputs().size() > currentOutputCounter) {
-                    this.currentValue.setType(1);
-                    BitcoinTransactionOutput output = currentTransaction.getListOfOutputs().get(currentOutputCounter);
-                    this.currentValue.setAmount(output.getValue());
-                    this.currentValue.setIndexInTransaction(currentOutputCounter);
-                    this.currentValue.setTransactionHash(BitcoinUtil.reverseByteArray(currentTransactionHash));
-                    this.currentValue.setScript(output.getTxOutScript());
-                    byte[] keyBytes = createUniqKey(currentTransactionHash, 1, currentOutputCounter);
-                    this.currentKey.set(keyBytes, 0, keyBytes.length);
-
-                    //return an output
-                    currentOutputCounter++;
+                    processOutputs(this.currentKey, this.currentValue);
                     return true;
                 } else {
                     currentInputCounter = 0;
                     currentOutputCounter = 0;
                     currentTransactionCounterInBlock++;
-                    readTransaction();
+		    try {
+                    	readTransaction();
+		     }	catch (NoSuchAlgorithmException e) {
+			LOG.error(e);
+		    }
                     continue;
                 }
             }
-        } catch (NoSuchElementException|BitcoinBlockReadException|NoSuchAlgorithmException e) {
-            LOG.error(e);
-        } 
-    	return false;
+    
+       
+	return false;
+    }
+
+
+ private void processInputs(BytesWritable key, BitcoinTransactionElement value) {
+		    value.setType(0);
+                    BitcoinTransactionInput input = currentTransaction.getListOfInputs().get(currentInputCounter);
+                    value.setIndexInTransaction(input.getPreviousTxOutIndex());
+                    value.setAmount(0);
+                    value.setTransactionHash(BitcoinUtil.reverseByteArray(input.getPrevTransactionHash()));
+                    value.setScript(input.getTxInScript());
+                    byte[] keyBytes = createUniqKey(currentTransactionHash, 0, currentInputCounter);
+                    key.set(keyBytes, 0, keyBytes.length);
+                    currentInputCounter++;
+   }
+
+    private void processOutputs(BytesWritable key, BitcoinTransactionElement value) {
+		 value.setType(1);
+                    BitcoinTransactionOutput output = currentTransaction.getListOfOutputs().get(currentOutputCounter);
+                    value.setAmount(output.getValue());
+                    value.setIndexInTransaction(currentOutputCounter);
+                    value.setTransactionHash(BitcoinUtil.reverseByteArray(currentTransactionHash));
+                    value.setScript(output.getTxOutScript());
+                    byte[] keyBytes = createUniqKey(currentTransactionHash, 1, currentOutputCounter);
+                    key.set(keyBytes, 0, keyBytes.length);
+
+                    //return an output
+                    currentOutputCounter++;
+    }
+
+    private boolean processNewBlock() throws IOException {
+	  try {
+                    	currentBitcoinBlock = getBbr().readBlock();
+		    } catch (BitcoinBlockReadException e) {
+			 LOG.error(e);
+		    }
+                    if (currentBitcoinBlock == null) {
+			return false;
+		    }
+		    try {
+                    	currentBlockHash = BitcoinUtil.getBlockHash(currentBitcoinBlock);
+                    	currentTransactionCounterInBlock = 0;
+                    	currentInputCounter = 0;
+                    	currentOutputCounter = 0;
+                    	readTransaction();
+	            } catch (IOException|NoSuchAlgorithmException e) {
+			LOG.error(e);
+		    }
+	return true;
     }
 
     private void readTransaction() throws IOException, NoSuchAlgorithmException {
