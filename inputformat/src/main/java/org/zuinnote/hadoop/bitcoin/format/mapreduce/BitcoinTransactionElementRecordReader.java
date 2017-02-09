@@ -94,7 +94,9 @@ private BitcoinTransactionElement currentValue=new BitcoinTransactionElement();
             while (getFilePosition() <= getEnd()) { // did we already went beyond the split (remote) or do we have no further data left?
                 if ((currentBitcoinBlock == null) || (currentBitcoinBlock.getTransactions().size() == currentTransactionCounterInBlock)) {
                     currentBitcoinBlock = getBbr().readBlock();
-                    if (currentBitcoinBlock == null) return false;
+                    if (currentBitcoinBlock == null) {
+			return false;
+		   }
                     currentBlockHash = BitcoinUtil.getBlockHash(currentBitcoinBlock);
                     currentTransactionCounterInBlock = 0;
                     currentInputCounter = 0;
@@ -137,13 +139,9 @@ private BitcoinTransactionElement currentValue=new BitcoinTransactionElement();
                     continue;
                 }
             }
-        } catch (NoSuchElementException e) {
+        } catch (NoSuchElementException|BitcoinBlockReadException|NoSuchAlgorithmException e) {
             LOG.error(e);
-        } catch (BitcoinBlockReadException e) {
-            LOG.error(e);
-        } catch (NoSuchAlgorithmException e) {
-            LOG.error(e);
-        }
+        } 
     	return false;
     }
 
