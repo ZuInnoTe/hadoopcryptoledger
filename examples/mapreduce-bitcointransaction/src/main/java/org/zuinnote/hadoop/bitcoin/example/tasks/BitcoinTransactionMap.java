@@ -38,7 +38,7 @@ private static final Text defaultKey = new Text("Transaction Input Count:");
 
 @Override
 public void setup(Context context) throws IOException, InterruptedException {
-// nothing todo
+// no action required
 }
 
 @Override
@@ -50,7 +50,7 @@ public void map(BytesWritable key, BitcoinTransaction value, Context context) th
 
 @Override
 public void cleanup(Context context) {
- // nothing todo
+ // no action required
 }
 
 }
