@@ -86,10 +86,8 @@ public class BitcoinTransactionElementRecordReader extends AbstractBitcoinRecord
     public boolean next(BytesWritable key, BitcoinTransactionElement value) throws IOException {
         // read all the blocks, if necessary a block overlapping a split
             while (getFilePosition() <= getEnd()) { // did we already went beyond the split (remote) or do we have no further data left?
-                if ((currentBitcoinBlock == null) || (currentBitcoinBlock.getTransactions().size() == currentTransactionCounterInBlock)) {
-		  if (!(processNewBlock())) {
+                if (((currentBitcoinBlock == null) || (currentBitcoinBlock.getTransactions().size() == currentTransactionCounterInBlock)) &&(!(processNewBlock()))) {
 			return false;
-		  }
                 }
                 value.setBlockHash(currentBlockHash);
                 value.setTransactionIdxInBlock(currentTransactionCounterInBlock);
