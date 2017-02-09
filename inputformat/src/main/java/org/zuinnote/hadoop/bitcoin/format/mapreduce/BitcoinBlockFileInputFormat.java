@@ -17,7 +17,6 @@
 package org.zuinnote.hadoop.bitcoin.format.mapreduce;
 
 import org.zuinnote.hadoop.bitcoin.format.exception.HadoopCryptoLedgerConfigurationException;
-import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
 
 import java.io.IOException;
 
