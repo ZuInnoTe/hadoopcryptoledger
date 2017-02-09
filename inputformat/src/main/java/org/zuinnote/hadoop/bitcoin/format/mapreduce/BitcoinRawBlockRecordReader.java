@@ -89,11 +89,13 @@ public boolean nextKeyValue() throws IOException {
 			// log
 			LOG.error(e);
 		}	
-		if (dataBlock==null) return false;
-		byte newKey[]=getBbr().getKeyFromRawBlock(dataBlock);
+		if (dataBlock==null) {
+			return false;
+		}
+		byte[] newKey=getBbr().getKeyFromRawBlock(dataBlock);
 		this.currentKey.set(newKey,0,newKey.length);
 		byte[] dataBlockArray;
-		if (dataBlock.hasArray()==true) {
+		if (dataBlock.hasArray()) {
 			dataBlockArray=dataBlock.array();
 		} else {
 			dataBlockArray=new byte[dataBlock.capacity()];
