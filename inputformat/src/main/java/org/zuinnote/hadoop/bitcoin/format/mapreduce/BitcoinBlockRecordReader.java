@@ -86,7 +86,9 @@ public boolean nextKeyValue() throws IOException {
 			// log
 			LOG.error(e);
 		}	
-		if (dataBlock==null) return false;
+		if (dataBlock==null) {
+			return false;
+		}
 		byte[] hashMerkleRoot=dataBlock.getHashMerkleRoot();
 		byte[] hashPrevBlock=dataBlock.getHashPrevBlock();
 		byte[] newKey=new byte[hashMerkleRoot.length+hashPrevBlock.length];
