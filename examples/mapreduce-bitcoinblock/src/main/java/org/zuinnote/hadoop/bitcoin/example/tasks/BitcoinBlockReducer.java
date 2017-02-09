@@ -32,6 +32,8 @@ import java.util.*;
 public class BitcoinBlockReducer extends Reducer<Text, IntWritable, Text, LongWritable> {
 
 private LongWritable result = new LongWritable();
+
+@Override
 public void reduce(Text key, Iterable<IntWritable> values, Context context)
      throws IOException, InterruptedException {
        long sum = 0;
