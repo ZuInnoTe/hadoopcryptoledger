@@ -35,7 +35,7 @@ import org.zuinnote.hadoop.bitcoin.format.mapreduce.*;
 import java.util.*;
 
 public  class BitcoinBlockMap  extends Mapper<BytesWritable, BitcoinBlock, Text, IntWritable> {
-private final static Text defaultKey = new Text("Transaction Count:");
+private static final Text defaultKey = new Text("Transaction Count:");
 
 
 @Override
