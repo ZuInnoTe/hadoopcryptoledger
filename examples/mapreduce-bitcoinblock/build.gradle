@@ -30,6 +30,8 @@ configurations {
 	provided
 	integrationTestCompile.extendsFrom testCompile
     	integrationTestRuntime.extendsFrom testRuntime
+	check.dependsOn integrationTest
+	integrationTest.mustRunAfter test
 }
 
 sourceSets {
