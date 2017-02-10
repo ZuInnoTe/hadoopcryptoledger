@@ -30,9 +30,8 @@ configurations {
 	provided
 	integrationTestCompile.extendsFrom testCompile
     	integrationTestRuntime.extendsFrom testRuntime
-	check.dependsOn integrationTest
-	integrationTest.mustRunAfter test
 }
+
 
 sourceSets {
     main.compileClasspath += configurations.provided
@@ -40,8 +39,8 @@ sourceSets {
     test.runtimeClasspath += configurations.provided
     integrationTest {
         java {
-            compileClasspath += main.output + test.output
-            runtimeClasspath += main.output + test.output
+            compileClasspath += main.output + test.output + configurations.provided
+            runtimeClasspath += main.output + test.output + configurations.provided
             srcDir file('src/integration-test/java')
         }
         resources.srcDir file('src/integration-test/resources')
@@ -63,6 +62,10 @@ task integrationTest(type: Test) {
     classpath = sourceSets.integrationTest.runtimeClasspath
     outputs.upToDateWhen { false }
 }
+
+
+check.dependsOn integrationTest
+integrationTest.mustRunAfter test
 
 uploadArchives {
     repositories {
