@@ -28,22 +28,39 @@ repositories {
 
 configurations {
 	provided
+	integrationTestCompile.extendsFrom testCompile
+    	integrationTestRuntime.extendsFrom testRuntime
 }
 
 sourceSets {
     main.compileClasspath += configurations.provided
     test.compileClasspath += configurations.provided
     test.runtimeClasspath += configurations.provided
+    integrationTest {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir file('src/integration-test/java')
+        }
+        resources.srcDir file('src/integration-test/resources')
+    }
 }
 
 dependencies {
    // hadoop lib for driver
      provided("org.apache.hadoop:hadoop-client:2.7.0")
        // hadoop crypto ledger library
-   compile("com.github.zuinnote:hadoopcryptoledger-fileformat:1.0.3")
+   compile("com.github.zuinnote:hadoopcryptoledger-fileformat:1.0.4")
+    testCompile group: 'org.jmockit', name: 'jmockit', version: '1.30'
     testCompile group: 'junit', name: 'junit', version: '4.+'
+
 }
 
+task integrationTest(type: Test) {
+    testClassesDir = sourceSets.integrationTest.output.classesDir
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    outputs.upToDateWhen { false }
+}
 
 uploadArchives {
     repositories {
