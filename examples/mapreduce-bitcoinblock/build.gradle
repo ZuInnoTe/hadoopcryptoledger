@@ -1,5 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
+apply plugin: 'jacoco'
+
 apply plugin: 'application'
 
 
@@ -23,6 +25,13 @@ mainClassName = "org.zuinnote.hadoop.bitcoin.example.driver.BitcoinBlockCounterD
 repositories {
     mavenCentral()
     mavenLocal()
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled true
+    }
 }
 
 
@@ -67,6 +76,7 @@ task integrationTest(type: Test) {
 
 check.dependsOn integrationTest
 integrationTest.mustRunAfter test
+
 
 uploadArchives {
     repositories {
