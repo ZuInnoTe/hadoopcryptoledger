@@ -39,32 +39,38 @@ import org.zuinnote.hadoop.bitcoin.format.mapreduce.*;
 *
 */
 
-public class BitcoinBlockCounterDriver  {
+public class BitcoinBlockCounterDriver extends Configured implements Tool {
 
  private BitcoinBlockCounterDriver() {
  }      
         
- public static void main(String[] args) throws Exception {
-    Configuration conf = new Configuration();
-   /** Set as an example some of the options to configure the Bitcoin fileformat **/
-     /** Find here all configuration options: https://github.com/ZuInnoTe/hadoopcryptoledger/wiki/Hadoop-File-Format **/
-    conf.set("hadoopcryptoledger.bitcoinblockinputformat.filter.magic","F9BEB4D9");
-    Job job = Job.getInstance(conf,"example-hadoop-bitcoin-transactioncounter-job");
-    job.setJarByClass(BitcoinBlockCounterDriver.class);
-    job.setMapOutputKeyClass(Text.class);
-    job.setMapOutputValueClass(IntWritable.class);
-    job.setOutputKeyClass(Text.class);
-    job.setOutputValueClass(LongWritable.class);
+ public int run(String[] args) throws Exception {
+        Job job = Job.getInstance(getConf(),"example-hadoop-bitcoin-transactioncounter-job");
+   	job.setJarByClass(BitcoinBlockCounterDriver.class);
+    	job.setMapOutputKeyClass(Text.class);
+    	job.setMapOutputValueClass(IntWritable.class);
+    	job.setOutputKeyClass(Text.class);
+   	job.setOutputValueClass(LongWritable.class);
         
-    job.setMapperClass(BitcoinBlockMap.class);
-    job.setReducerClass(BitcoinBlockReducer.class);
+    	job.setMapperClass(BitcoinBlockMap.class);
+    	job.setReducerClass(BitcoinBlockReducer.class);
         
-    job.setInputFormatClass(BitcoinBlockFileInputFormat.class);
-    job.setOutputFormatClass(TextOutputFormat.class);
-     FileInputFormat.addInputPath(job, new Path(args[0]));
-    FileOutputFormat.setOutputPath(job, new Path(args[1]));
+    	job.setInputFormatClass(BitcoinBlockFileInputFormat.class);
+    	job.setOutputFormatClass(TextOutputFormat.class);
+     	FileInputFormat.addInputPath(job, new Path(args[0]));
+    	FileOutputFormat.setOutputPath(job, new Path(args[1]));
         
-    System.exit(job.waitForCompletion(true)?0:1);
- }
+         return job.waitForCompletion(true)?0:1;
+       }
+       
+       public static void main(String[] args) throws Exception {
+	 Configuration conf = new Configuration();
+   	 /** Set as an example some of the options to configure the Bitcoin fileformat **/
+    	 /** Find here all configuration options: https://github.com/ZuInnoTe/hadoopcryptoledger/wiki/Hadoop-File-Format **/
+    	conf.set("hadoopcryptoledger.bitcoinblockinputformat.filter.magic","F9BEB4D9");
+         // Let ToolRunner handle generic command-line options 
+         int res = ToolRunner.run(conf, new BitcoinBlockCounterDriver(), args); 
+         System.exit(res);
+       }
         
 }
