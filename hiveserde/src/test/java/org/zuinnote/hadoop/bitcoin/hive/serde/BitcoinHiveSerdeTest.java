@@ -29,6 +29,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import java.util.Properties;
+
+import org.apache.hadoop.conf.Configuration;
+
 import org.zuinnote.hadoop.bitcoin.format.common.BitcoinBlock;
 import org.zuinnote.hadoop.bitcoin.format.common.BitcoinBlockReader;
 import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
@@ -49,6 +53,23 @@ private static final byte[][] DEFAULT_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB4
 	File file = new File(fileNameGenesis);
 	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
 	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+  }
+
+  @Test
+  public void initializePositive() {
+	BitcoinBlockSerde testSerde = new BitcoinBlockSerde();
+	Configuration conf = new Configuration();
+	Properties tblProperties = new Properties();
+	// just for testing purposes - these values may have no real meaning
+	tblProperties.setProperty(BitcoinBlockSerde.CONF_MAXBLOCKSIZE, String.valueOf(1));
+        tblProperties.setProperty(BitcoinBlockSerde.CONF_FILTERMAGIC, "A0A0A0A0");
+	tblProperties.setProperty(BitcoinBlockSerde.CONF_USEDIRECTBUFFER,"true");
+	tblProperties.setProperty(BitcoinBlockSerde.CONF_ISSPLITABLE,"true");
+	testSerde.initialize(conf,tblProperties);
+	assertEquals("MAXBLOCKSIZE set correctly", 1, conf.getInt(BitcoinBlockSerde.CONF_MAXBLOCKSIZE,2));	
+	assertEquals("FILTERMAGIC set correctly", "A0A0A0A0", conf.get(BitcoinBlockSerde.CONF_FILTERMAGIC,"B0B0B0B0"));
+	assertTrue("USEDIRECTBUFFER set correctly", conf.getBoolean(BitcoinBlockSerde.CONF_USEDIRECTBUFFER,false));	
+	assertTrue("ISSPLITABLE set correctly", conf.getBoolean(BitcoinBlockSerde.CONF_ISSPLITABLE,false));
   }
 
  @Test
