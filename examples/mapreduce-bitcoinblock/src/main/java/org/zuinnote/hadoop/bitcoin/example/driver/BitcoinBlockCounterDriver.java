@@ -41,7 +41,8 @@ import org.zuinnote.hadoop.bitcoin.format.mapreduce.*;
 
 public class BitcoinBlockCounterDriver extends Configured implements Tool {
 
- private BitcoinBlockCounterDriver() {
+ public BitcoinBlockCounterDriver() {
+	// nothing needed here
  }      
         
  public int run(String[] args) throws Exception {
