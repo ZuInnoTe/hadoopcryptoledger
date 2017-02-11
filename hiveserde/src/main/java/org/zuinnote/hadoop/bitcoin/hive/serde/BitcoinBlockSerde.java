@@ -57,14 +57,15 @@ import org.apache.commons.logging.Log;
 */
 
 public class BitcoinBlockSerde extends AbstractDeserializer implements VectorizedSerde {
+public static final String CONF_MAXBLOCKSIZE=AbstractBitcoinRecordReader.CONF_MAXBLOCKSIZE;
+public static final String CONF_FILTERMAGIC=AbstractBitcoinRecordReader.CONF_FILTERMAGIC;
+public static final String CONF_USEDIRECTBUFFER=AbstractBitcoinRecordReader.CONF_USEDIRECTBUFFER;
+public static final String CONF_ISSPLITABLE=AbstractBitcoinFileInputFormat.CONF_ISSPLITABLE;
 
 private static final Log LOG = LogFactory.getLog(BitcoinBlockSerde.class.getName());
 private ObjectInspector bitcoinBlockObjectInspector;
 
-private static final String CONF_MAXBLOCKSIZE=AbstractBitcoinRecordReader.CONF_MAXBLOCKSIZE;
-private static final String CONF_FILTERMAGIC=AbstractBitcoinRecordReader.CONF_FILTERMAGIC;
-private static final String CONF_USEDIRECTBUFFER=AbstractBitcoinRecordReader.CONF_USEDIRECTBUFFER;
-private static final String CONF_ISSPLITABLE=AbstractBitcoinFileInputFormat.CONF_ISSPLITABLE;
+
 
 
 /** Deserializer **/
