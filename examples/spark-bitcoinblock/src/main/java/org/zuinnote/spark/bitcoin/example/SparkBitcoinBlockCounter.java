@@ -35,7 +35,6 @@ import org.apache.hadoop.conf.*;
 import org.apache.spark.api.java.*;
 import org.apache.spark.api.java.function.*;
 import org.apache.spark.SparkConf;
-import org.apache.spark.api.java.function.Function;
 
 import org.zuinnote.hadoop.bitcoin.format.common.*;
 
@@ -48,34 +47,82 @@ import org.zuinnote.hadoop.bitcoin.format.mapreduce.*;
 
 public class SparkBitcoinBlockCounter  {
 
+
+public SparkBitcoinBlockCounter() {
+	super();
+}
+        
        
         
  public static void main(String[] args) throws Exception {
-    SparkConf conf = new SparkConf().setAppName("Spark BitcoinBlock Analytics (hadoopcryptoledger)");
+ SparkConf conf = new SparkConf().setAppName("Spark2 BitcoinBlock Analytics (hadoopcryptoledger)");
     JavaSparkContext sc = new JavaSparkContext(conf); 
     // create Hadoop Configuration
     Configuration hadoopConf= new Configuration();
-    
       /** Set as an example some of the options to configure the Bitcoin fileformat **/
      /** Find here all configuration options: https://github.com/ZuInnoTe/hadoopcryptoledger/wiki/Hadoop-File-Format **/
     hadoopConf.set("hadoopcryptoledger.bitcoinblockinputformat.filter.magic","F9BEB4D9");
-    // read bitcoin data from HDFS
-    JavaPairRDD<BytesWritable, BitcoinBlock> bitcoinBlocksRDD = sc.newAPIHadoopFile(args[0], BitcoinBlockFileInputFormat.class, BytesWritable.class, BitcoinBlock.class,hadoopConf);
+    jobTotalNumOfTransactions(sc,hadoopConf, args[0],args[1]);
+    sc.close();
+ }
+      
 
+  /**
+     * a job for counting the total number of transactions
+     * 
+     * @param sc context
+     * @param hadoopConf Configuration for input format
+     * @param inputFile Input file
+     * @param output outputFile file
+     * 
+     *
+     **/
+
+
+    public static void jobTotalNumOfTransactions(JavaSparkContext sc, Configuration hadoopConf, String inputFile, String outputFile) {
+    // read bitcoin data from HDFS
+    JavaPairRDD<BytesWritable, BitcoinBlock> bitcoinBlocksRDD = sc.newAPIHadoopFile(inputFile, BitcoinBlockFileInputFormat.class, BytesWritable.class, BitcoinBlock.class,hadoopConf);
     // extract the no transactions / block (map)
     JavaPairRDD<String, Long> noOfTransactionPair = bitcoinBlocksRDD.mapToPair(new PairFunction<Tuple2<BytesWritable,BitcoinBlock>, String, Long>() {
+	@Override
 	public Tuple2<String, Long> call(Tuple2<BytesWritable,BitcoinBlock> tupleBlock) {
-		return new Tuple2<String, Long>("No of transactions: ",new Long(tupleBlock._2().getTransactions().size())); 
+		return mapNoOfTransaction(tupleBlock._2());
 	}
     });
    // combine the results from all blocks
    JavaPairRDD<String, Long> totalCount = noOfTransactionPair.reduceByKey(new Function2<Long, Long, Long>() {
+	@Override	
 	public Long call(Long a, Long b) { 
-		return a+b;
+		return reduceSumUpTransactions(a,b);
 	}
    });
     // write results to HDFS
-    totalCount.repartition(1).saveAsTextFile(args[1]);
- }
-        
+    totalCount.repartition(1).saveAsTextFile(outputFile);
+    }
+
+    /**
+     * Maps the number of transactions of a block to a tuple
+     *
+     * @param block Bitcoinblock
+     *
+     * @return Tuple containing the String "No of transactions. " and the number of transactions as long 
+     *
+    **/
+  public static Tuple2<String,Long> mapNoOfTransaction(BitcoinBlock block) {
+	return new Tuple2<String, Long>("No of transactions: ",(long)(block.getTransactions().size())); 
+  }
+
+   /**
+     * Sums up the transaction count within a reduce step
+     * 
+     * @param a transaction count
+     * @param b transaction count
+     *
+     * @return sum of a and b
+     *
+    **/
+  public static Long reduceSumUpTransactions(Long a, Long b) {
+	return a+b;
+  }
+  
 }
