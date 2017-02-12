@@ -44,7 +44,7 @@ import org.zuinnote.hadoop.bitcoin.format.mapreduce.*;
 
 public class Spark2BitcoinBlockCounter  {
 
-private Spark2BitcoinBlockCounter() {
+public Spark2BitcoinBlockCounter() {
 	super();
 }
         
