@@ -208,6 +208,7 @@ private static Reporter reporter = Reporter.NULL;
 	BytesWritable emptyKey = new BytesWritable();
     	BytesWritable emptyBlock = new BytesWritable();
     	assertFalse("No further blocks in genesis Block", reader.next(emptyKey,emptyBlock));
+	reader.close();
   }
 
   @Test
@@ -231,6 +232,7 @@ private static Reporter reporter = Reporter.NULL;
 	BytesWritable emptyKey = new BytesWritable();
     	BytesWritable emptyBlock = new BytesWritable();
     	assertFalse("No further blocks in block version 1", reader.next(emptyKey,emptyBlock));
+	reader.close();
   }
 
 
@@ -255,6 +257,7 @@ private static Reporter reporter = Reporter.NULL;
 	BytesWritable emptyKey = new BytesWritable();
     	BytesWritable emptyBlock = new BytesWritable();
     	assertFalse("No further blocks in block version 2", reader.next(emptyKey,emptyBlock));
+	reader.close();
   }
 
 
@@ -279,6 +282,7 @@ private static Reporter reporter = Reporter.NULL;
 	BytesWritable emptyKey = new BytesWritable();
     	BytesWritable emptyBlock = new BytesWritable();
     	assertFalse("No further blocks in block version 3", reader.next(emptyKey,emptyBlock));
+	reader.close();
   }
 
   @Test
@@ -302,6 +306,7 @@ private static Reporter reporter = Reporter.NULL;
 	BytesWritable emptyKey = new BytesWritable();
     	BytesWritable emptyBlock = new BytesWritable();
     	assertFalse("No further blocks in block version 4", reader.next(emptyKey,emptyBlock));
+	reader.close();
   }
 
   @Test
@@ -325,6 +330,7 @@ private static Reporter reporter = Reporter.NULL;
 	BytesWritable emptyKey = new BytesWritable();
     	BytesWritable emptyBlock = new BytesWritable();
     	assertFalse("No further blocks in block requiring seek version 1", reader.next(emptyKey,emptyBlock));
+	reader.close();
   }
 
   @Test
@@ -352,6 +358,7 @@ private static Reporter reporter = Reporter.NULL;
 	BytesWritable emptyKey = new BytesWritable();
     	BytesWritable emptyBlock = new BytesWritable();
     	assertFalse("No further blocks in multi block", reader.next(emptyKey,emptyBlock));
+	reader.close();
   }
 
   @Test
@@ -375,6 +382,7 @@ private static Reporter reporter = Reporter.NULL;
 	BytesWritable emptyKey = new BytesWritable();
     	BitcoinBlock emptyBlock = new BitcoinBlock();
     	assertFalse("No further blocks in genesis Block", reader.next(emptyKey,emptyBlock));
+	reader.close();
   }
 
   @Test
@@ -398,6 +406,7 @@ private static Reporter reporter = Reporter.NULL;
 	BytesWritable emptyKey = new BytesWritable();
     	BitcoinBlock emptyBlock = new BitcoinBlock();
     	assertFalse("No further blocks in block version 1", reader.next(emptyKey,emptyBlock));
+	reader.close();
   }
 
 
@@ -422,6 +431,7 @@ private static Reporter reporter = Reporter.NULL;
 	BytesWritable emptyKey = new BytesWritable();
     	BitcoinBlock emptyBlock = new BitcoinBlock();
     	assertFalse("No further blocks in block version 2", reader.next(emptyKey,emptyBlock));
+	reader.close();
   }
 
 
@@ -446,6 +456,7 @@ private static Reporter reporter = Reporter.NULL;
 	BytesWritable emptyKey = new BytesWritable();
     	BitcoinBlock emptyBlock = new BitcoinBlock();
     	assertFalse("No further blocks in block version 3", reader.next(emptyKey,emptyBlock));
+	reader.close();
   }
 
   @Test
@@ -469,6 +480,7 @@ private static Reporter reporter = Reporter.NULL;
 	BytesWritable emptyKey = new BytesWritable();
     	BitcoinBlock emptyBlock = new BitcoinBlock();
     	assertFalse("No further blocks in block version 4", reader.next(emptyKey,emptyBlock));
+	reader.close();
   }
 
   @Test
@@ -492,6 +504,7 @@ private static Reporter reporter = Reporter.NULL;
 	BytesWritable emptyKey = new BytesWritable();
     	BitcoinBlock emptyBlock = new BitcoinBlock();
     	assertFalse("No further blocks in block requiring seek version 1", reader.next(emptyKey,emptyBlock));
+	reader.close();
   }
 
   @Test
@@ -519,6 +532,7 @@ private static Reporter reporter = Reporter.NULL;
 	BytesWritable emptyKey = new BytesWritable();
     	BitcoinBlock emptyBlock = new BitcoinBlock();
     	assertFalse("No further blocks in multi block", reader.next(emptyKey,emptyBlock));
+	reader.close();
   }
 
 
@@ -543,6 +557,7 @@ private static Reporter reporter = Reporter.NULL;
 		transactCount++;
 	}
 	assertEquals("Genesis Block  must contain exactly one transactions", 1, transactCount);
+	reader.close();
   }
 
   @Test
@@ -566,6 +581,7 @@ private static Reporter reporter = Reporter.NULL;
 		transactCount++;
 	}
 	assertEquals("Block version 1 must contain exactly two transactions", 2, transactCount);
+	reader.close();
   }
 
   @Test
@@ -589,6 +605,7 @@ private static Reporter reporter = Reporter.NULL;
 		transactCount++;
 	}
 	assertEquals("Block version 2 must contain exactly 343 transactions", 343, transactCount);
+	reader.close();
   }
 
   @Test
@@ -612,6 +629,7 @@ private static Reporter reporter = Reporter.NULL;
 		transactCount++;
 	}
 	assertEquals("Block version 3 must contain exactly 1645 transactions", 1645, transactCount);
+	reader.close();
   }
 
   @Test
@@ -635,6 +653,7 @@ private static Reporter reporter = Reporter.NULL;
 		transactCount++;
 	}
 	assertEquals("Block version 4 must contain exactly 936 transactions", 936, transactCount);
+	reader.close();
   }
 
   @Test
@@ -658,6 +677,7 @@ private static Reporter reporter = Reporter.NULL;
 		transactCount++;
 	}
 	assertEquals("Block version 1 requiring seek must contain exactly two transactions", 2, transactCount);
+	reader.close();
   }
 
   @Test
@@ -681,6 +701,7 @@ private static Reporter reporter = Reporter.NULL;
 		transactCount++;
 	}
 	assertEquals("Multiblock must contain exactly 1+2+343=346 transactions", 346, transactCount);
+	reader.close();
   }
 
   @Test
@@ -706,6 +727,7 @@ private static Reporter reporter = Reporter.NULL;
 	BytesWritable emptyKey = new BytesWritable();
     	BytesWritable emptyBlock = new BytesWritable();
     	assertFalse("No further blocks in compressed block", reader.next(emptyKey,emptyBlock));
+	reader.close();
   }
 
   @Test
@@ -734,6 +756,7 @@ private static Reporter reporter = Reporter.NULL;
 	BytesWritable emptyKey = new BytesWritable();
     	BitcoinBlock emptyBlock = new BitcoinBlock();
     	assertFalse("No further blocks in compressed block", reader.next(emptyKey,emptyBlock));
+	reader.close();	
   }
 
 
@@ -760,8 +783,9 @@ private static Reporter reporter = Reporter.NULL;
 	while (reader.next(key,transaction)) {
 		transactCount++;
 	}
- 	assertEquals("Comrpessed block must have at least 936 transactions", 936, transactCount);
-  }
+ 	assertEquals("Compressed block must have at least 936 transactions", 936, transactCount);
+	reader.close();  
+}
 
 
 
@@ -788,7 +812,7 @@ private static Reporter reporter = Reporter.NULL;
 	BytesWritable emptyKey = new BytesWritable();
     	BytesWritable emptyBlock = new BytesWritable();
     	assertFalse("No further blocks in compressed block", reader.next(emptyKey,emptyBlock));
-
+	reader.close();
   }
 
   @Test
@@ -817,6 +841,7 @@ private static Reporter reporter = Reporter.NULL;
 	BytesWritable emptyKey = new BytesWritable();
     	BitcoinBlock emptyBlock = new BitcoinBlock();
     	assertFalse("No further blocks in compressed block", reader.next(emptyKey,emptyBlock));
+	reader.close();
   }
 
 
@@ -842,7 +867,8 @@ private static Reporter reporter = Reporter.NULL;
 	while (reader.next(key,transaction)) {
 		transactCount++;
 	}
- 	assertEquals("Comrpessed block must have at least 936 transactions", 936, transactCount);
+ 	assertEquals("Compressed block must have at least 936 transactions", 936, transactCount);
+	reader.close();
   }
 
 
