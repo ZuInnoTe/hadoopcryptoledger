@@ -66,7 +66,7 @@ import org.zuinnote.hadoop.bitcoin.format.common.BitcoinTransaction;
 
 import org.zuinnote.hadoop.bitcoin.example.driver.BitcoinTransactionCounterDriver;
 
-public final class MapReduceBitcoinTransactionIntegrationTest.java {
+public final class MapReduceBitcoinTransactionIntegrationTest {
 private static final String tmpPrefix = "hcl-integrationtest";
 private static java.nio.file.Path tmpPath;
 private static String CLUSTERNAME="hcl-minicluster";
@@ -192,7 +192,7 @@ private ArrayList<Decompressor> openDecompressors = new ArrayList<>();
 	List<String> resultLines = readDefaultResults(1);
     	// compare results
 	assertEquals("Number of result line is 1",1,resultLines.size());
-	assertEquals("Number of transaction inputs is 0","Transaction Input Count:\t0",resultLines.get(0));
+	assertEquals("Number of transaction inputs is 1","Transaction Input Count:\t1",resultLines.get(0));
     }
 
       /**

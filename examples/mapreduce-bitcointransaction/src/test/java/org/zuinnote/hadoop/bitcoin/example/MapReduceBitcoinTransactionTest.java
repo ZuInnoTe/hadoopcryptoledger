@@ -44,11 +44,12 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
 
-import org.zuinnote.hadoop.bitcoin.format.common.BitcoinBlock;
 import org.zuinnote.hadoop.bitcoin.format.common.BitcoinTransaction;
+import org.zuinnote.hadoop.bitcoin.format.common.BitcoinTransactionInput;
+import org.zuinnote.hadoop.bitcoin.format.common.BitcoinTransactionOutput;
 
-import org.zuinnote.hadoop.bitcoin.example.tasks.BitcoinBlockMap;
-import org.zuinnote.hadoop.bitcoin.example.tasks.BitcoinBlockReducer;
+import org.zuinnote.hadoop.bitcoin.example.tasks.BitcoinTransactionMap;
+import org.zuinnote.hadoop.bitcoin.example.tasks.BitcoinTransactionReducer;
 
 public final class MapReduceBitcoinTransactionTest {
 
@@ -73,12 +74,11 @@ public final class MapReduceBitcoinTransactionTest {
 
     @Test
     public void map(@Mocked final Mapper.Context defaultContext) throws IOException,InterruptedException {
-	BitcoinBlockMap mapper = new BitcoinBlockMap();
+	BitcoinTransactionMap mapper = new BitcoinTransactionMap();
 	final BytesWritable key = new BytesWritable();
-	final BitcoinBlock value = new BitcoinBlock();
-	final Text defaultKey = new Text("Transaction Count:");
+	final BitcoinTransaction value = new BitcoinTransaction(0,new byte[0], new ArrayList<BitcoinTransactionInput>(),new byte[0],new ArrayList<BitcoinTransactionOutput>(),0);
+	final Text defaultKey = new Text("Transaction Input Count:");
 	final IntWritable nullInt = new IntWritable(0);
-	value.setTransactions(new ArrayList<BitcoinTransaction>());
 	new Expectations() {{
 		defaultContext.write(defaultKey,nullInt); times=1;
 	}};
@@ -87,8 +87,8 @@ public final class MapReduceBitcoinTransactionTest {
 
     @Test
     public void reduce(@Mocked final Reducer.Context defaultContext) throws IOException,InterruptedException {
-	BitcoinBlockReducer reducer = new BitcoinBlockReducer();
-	final Text defaultKey = new Text("Transaction Count:");
+	BitcoinTransactionReducer reducer = new BitcoinTransactionReducer();
+	final Text defaultKey = new Text("Transaction Input Count:");
 	final IntWritable oneInt = new IntWritable(1);
 	final IntWritable twoInt = new IntWritable(2);
 	final LongWritable resultLong = new LongWritable(3);
