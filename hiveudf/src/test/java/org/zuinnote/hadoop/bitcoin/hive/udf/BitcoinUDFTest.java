@@ -8,6 +8,8 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
+import org.junit.Rule;
+import org.junit.rules.ExpectedException;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,6 +21,8 @@ import org.apache.hadoop.io.Text;
 
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
 
+import org.apache.hadoop.hive.serde2.objectinspector.primitive.StringObjectInspector;
+import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectInspectorFactory;
 import org.apache.hadoop.hive.serde2.objectinspector.StructObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspectorFactory;
 import  org.apache.hadoop.hive.ql.udf.generic.*;
@@ -36,6 +40,8 @@ import java.util.List;
 
 
 public class BitcoinUDFTest {
+  @Rule
+  public final ExpectedException exception = ExpectedException.none();
 
 @Test
   public void BitcoinScriptPaymentPatternAnalyzerUDFNotNull() {
@@ -47,6 +53,15 @@ public class BitcoinUDFTest {
 	assertEquals("TxOutScript from Genesis should be payment to a pubkey address", comparatorText,result);
   }
 
+@Test
+  public void BitcoinScriptPaymentPatternAnalyzerUDFPaymentDestinationNull() {
+	BitcoinScriptPaymentPatternAnalyzerUDF bsppaUDF = new BitcoinScriptPaymentPatternAnalyzerUDF();
+	byte[] txOutScriptTestNull= new byte[]{(byte)0x00};
+       BytesWritable evalObj = new BytesWritable(txOutScriptTestNull);
+	Text result = bsppaUDF.evaluate(evalObj);
+	assertNull("Invalid payment script should be null for payment destination", result);
+  }
+
 
 @Test
   public void BitcoinScriptPaymentPatternAnalyzerUDFNull() {
@@ -55,6 +70,19 @@ public class BitcoinUDFTest {
   }
 
  
+@Test
+  public void BitcoinTransactionHashUDFInvalidArguments() throws HiveException {
+	BitcoinTransactionHashUDF bthUDF = new BitcoinTransactionHashUDF();
+	exception.expect(UDFArgumentLengthException.class);
+	bthUDF.initialize(null);
+	exception.expect(UDFArgumentLengthException.class);	
+	bthUDF.initialize(new ObjectInspector[2]);
+	StringObjectInspector[] testStringOI = new StringObjectInspector[1];
+	testStringOI[0]=PrimitiveObjectInspectorFactory.javaStringObjectInspector;
+	exception.expect(UDFArgumentException.class);
+	bthUDF.initialize(testStringOI);
+  }
+
 @Test
   public void BitcoinTransactionHashUDFNull() throws HiveException {
 	BitcoinTransactionHashUDF bthUDF = new BitcoinTransactionHashUDF();
