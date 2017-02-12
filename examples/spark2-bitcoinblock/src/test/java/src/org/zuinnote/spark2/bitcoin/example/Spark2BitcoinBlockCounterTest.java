@@ -14,9 +14,7 @@
 * limitations under the License.
 **/
 
-/**
- * Simple Driver for a Spark 2 job counting the number of transactons in a given block from the specified files containing Bitcoin blockchain data
- */
+
 package org.zuinnote.spark2.bitcoin.example;
 
 
