@@ -17,6 +17,7 @@
 package org.zuinnote.hadoop.bitcoin.format.common;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertArrayEquals;
@@ -44,6 +45,55 @@ public class BitcoinScriptPatternParserTest {
 	String comparatorText = "bitcoinpubkey_4104678AFDB0FE5548271967F1A67130B7105CD6A828E03909A67962E0EA1F61DEB649F6BC3F4CEF38C4F35504E51EC112DE5C384DF7BA0B8D578A4C702B6BF11D5F";
 	assertEquals("TxOutScript from Genesis should be payment to a pubkey address", comparatorText,result);
   }
+
+
+@Test
+  public void testPaymentNull() {
+	String result =  BitcoinScriptPatternParser.getPaymentDestination(null);
+	assertNull("Null as script returns null", result);
+  }
+
+
+@Test
+  public void testPaymentAnyone() {
+	String result =  BitcoinScriptPatternParser.getPaymentDestination(new byte[0]);
+	assertEquals("Empty script means anyone can spend", "anyone",result);
+  }
+
+
+@Test
+  public void testPaymentUnspendable() {
+	String result =  BitcoinScriptPatternParser.getPaymentDestination(new byte[]{0x6a});
+	assertEquals("Unspendable script", "unspendable",result);
+  }
+
+
+@Test
+  public void testPaymentInvalid() {
+	String result =  BitcoinScriptPatternParser.getPaymentDestination(new byte[]{0x00});
+	assertNull("Invalid script returns null", result);
+  }
+
+
+
+@Test
+  public void testPaymentP2Hash() {
+        byte[] txOutScriptP2Hash= new byte[]{(byte)0x76,(byte)0xa9,(byte)0x14,(byte)0xfd,(byte)0x92,(byte)0xaa,(byte)0xfe,(byte)0x55,(byte)0x5c,(byte)0x07,(byte)0xe8,(byte)0x90,(byte)0xe8,(byte)0x07,(byte)0x5e,(byte)0xd6,(byte)0x1f,(byte)0x39,(byte)0xca,(byte)0x90,(byte)0x52,(byte)0x2b,(byte)0x8f,(byte)0x88,(byte)0xAC};
+	String result =  BitcoinScriptPatternParser.getPaymentDestination(txOutScriptP2Hash);
+	String comparatorText = "bitcoinaddress_FD92AAFE555C07E890E8075ED61F39CA90522B8F";
+	assertEquals("Payment destination of script should be p2hash", comparatorText, result);
+  }
+
+@Test
+  public void testPaymentPuzzle() {
+        byte[] txOutScriptPuzzle= new byte[]{(byte)0xAA,(byte)0x20,(byte)0x6f,(byte)0xe2,(byte)0x8c,(byte)0x0a,(byte)0xb6,(byte)0xf1,(byte)0xb3,(byte)0x72,(byte)0xc1,(byte)0xa6,(byte)0xa2,(byte)0x46,(byte)0xae,(byte)0x63,(byte)0xf7,(byte)0x4f,(byte)0x93,(byte)0x1e,(byte)0x83,(byte)0x65,(byte)0xe1,(byte)0x5a,(byte)0x08,(byte)0x9c,(byte)0x68,(byte)0xd6,(byte)0x19,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x87};
+	String result =  BitcoinScriptPatternParser.getPaymentDestination(txOutScriptPuzzle);
+	String comparatorText = "puzzle_206FE28C0AB6F1B372C1A6A246AE63F74F931E8365E15A089C68D61900000000";
+	assertEquals("Payment destination of script should be puzzle", comparatorText, result);
+  }
+
+
+
 
 
 }
