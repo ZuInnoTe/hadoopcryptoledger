@@ -57,9 +57,25 @@ public Spark2BitcoinBlockCounter() {
       /** Set as an example some of the options to configure the Bitcoin fileformat **/
      /** Find here all configuration options: https://github.com/ZuInnoTe/hadoopcryptoledger/wiki/Hadoop-File-Format **/
     hadoopConf.set("hadoopcryptoledger.bitcoinblockinputformat.filter.magic","F9BEB4D9");
-    
+    jobTotalNumOfTransactions(sc,hadoopConf, args[0],args[1]);
+    sc.close();
+}
+
+    /**
+     * a job for counting the total number of transactions
+     * 
+     * @param sc context
+     * @param hadoopConf Configuration for input format
+     * @param inputFile Input file
+     * @param output outputFile file
+     * 
+     *
+     **/
+
+
+    public static void jobTotalNumOfTransactions(JavaSparkContext sc, Configuration hadoopConf, String inputFile, String outputFile) {
     // read bitcoin data from HDFS
-    JavaPairRDD<BytesWritable, BitcoinBlock> bitcoinBlocksRDD = sc.newAPIHadoopFile(args[0], BitcoinBlockFileInputFormat.class, BytesWritable.class, BitcoinBlock.class,hadoopConf);
+    JavaPairRDD<BytesWritable, BitcoinBlock> bitcoinBlocksRDD = sc.newAPIHadoopFile(inputFile, BitcoinBlockFileInputFormat.class, BytesWritable.class, BitcoinBlock.class,hadoopConf);
     // extract the no transactions / block (map)
     JavaPairRDD<String, Long> noOfTransactionPair = bitcoinBlocksRDD.mapToPair(new PairFunction<Tuple2<BytesWritable,BitcoinBlock>, String, Long>() {
 	@Override
@@ -75,11 +91,8 @@ public Spark2BitcoinBlockCounter() {
 	}
    });
     // write results to HDFS
-    totalCount.repartition(1).saveAsTextFile(args[1]);
-    sc.close();
-}
-
-
+    totalCount.repartition(1).saveAsTextFile(outputFile);
+    }
 
     /**
      * Maps the number of transactions of a block to a tuple
