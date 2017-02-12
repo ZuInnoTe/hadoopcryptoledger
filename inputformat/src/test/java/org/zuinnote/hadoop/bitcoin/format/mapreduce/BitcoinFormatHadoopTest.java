@@ -214,6 +214,7 @@ private static FileSystem localFs = null;
 	genesisBlock=reader.getCurrentValue();
 	assertEquals("Genesis Block must have size of 293", 293, genesisBlock.getLength());
     	assertFalse("No further blocks in genesis Block", reader.nextKeyValue());
+	reader.close();
   }
 
   @Test
@@ -238,6 +239,7 @@ private static FileSystem localFs = null;
 	block=reader.getCurrentValue();
 	assertEquals("Random block version 1  must have size of 482 bytes", 482, block.getLength());
     	assertFalse("No further blocks in block version 1", reader.nextKeyValue());
+	reader.close();
   }
 
 
@@ -263,6 +265,7 @@ private static FileSystem localFs = null;
 	block=reader.getCurrentValue();
 	assertEquals("Random block version 2  must have size of 191.198 bytes", 191198, block.getLength());
     	assertFalse("No further blocks in block version 2", reader.nextKeyValue());
+	reader.close();
   }
 
 
@@ -288,6 +291,7 @@ private static FileSystem localFs = null;
 	block=reader.getCurrentValue();
 	assertEquals("Random block version 3 must have size of 932.199 bytes", 932199, block.getLength());
     	assertFalse("No further blocks in block version 3", reader.nextKeyValue());
+	reader.close();
   }
 
   @Test
@@ -312,6 +316,7 @@ private static FileSystem localFs = null;
 	block=reader.getCurrentValue();
 	assertEquals("Random block version 4 must have a size of 998.039 bytes", 998039, block.getLength());
     	assertFalse("No further blocks in block version 4", reader.nextKeyValue());
+	reader.close();
   }
 
   @Test
@@ -336,6 +341,7 @@ private static FileSystem localFs = null;
 	block=reader.getCurrentValue();
 	assertEquals("Random block requiring seek version 1 must have a size of 482 bytes", 482, block.getLength());
     	assertFalse("No further blocks in block requiring seek version 1", reader.nextKeyValue());
+	reader.close();
   }
 
   @Test
@@ -366,6 +372,7 @@ private static FileSystem localFs = null;
 	block=reader.getCurrentValue();
 	assertEquals("Random block version 2  must have size of 191.198 bytes", 191198, block.getLength());
     	assertFalse("No further blocks in multi block", reader.nextKeyValue());
+	reader.close();
   }
 
   @Test
@@ -390,6 +397,7 @@ private static FileSystem localFs = null;
 	genesisBlock=reader.getCurrentValue();
 	assertEquals("Genesis Block must contain exactly one transaction", 1, genesisBlock.getTransactions().size());
     	assertFalse("No further blocks in genesis Block", reader.nextKeyValue());
+	reader.close();
   }
 
   @Test
@@ -414,6 +422,7 @@ private static FileSystem localFs = null;
 	block=reader.getCurrentValue();
 	assertEquals("Random block version 1  must contain exactly two transactions", 2, block.getTransactions().size());
     	assertFalse("No further blocks in block version 1", reader.nextKeyValue());
+	reader.close();	
   }
 
 
@@ -439,6 +448,7 @@ private static FileSystem localFs = null;
 	block=reader.getCurrentValue();
 	assertEquals("Random block version 2  must contain exactly 343 transactions", 343, block.getTransactions().size());
     	assertFalse("No further blocks in block version 2", reader.nextKeyValue());
+	reader.close();
   }
 
 
@@ -464,6 +474,7 @@ private static FileSystem localFs = null;
 	block=reader.getCurrentValue();
 	assertEquals("Random block version 3 must contain exactly 1645 transactions", 1645, block.getTransactions().size());
     	assertFalse("No further blocks in block version 3", reader.nextKeyValue());
+	reader.close();
   }
 
   @Test
@@ -488,6 +499,7 @@ private static FileSystem localFs = null;
 	block=reader.getCurrentValue();
 	assertEquals("Random block version 4 must contain exactly 936 transactions", 936, block.getTransactions().size());
     	assertFalse("No further blocks in block version 4", reader.nextKeyValue());
+	reader.close();
   }
 
   @Test
@@ -512,6 +524,7 @@ private static FileSystem localFs = null;
 	block=reader.getCurrentValue();
 	assertEquals("Random block requiring seek version 1 must contain exactly two transactions", 2, block.getTransactions().size());
     	assertFalse("No further blocks in block requiring seek version 1", reader.nextKeyValue());
+	reader.close();	
   }
 
   @Test
@@ -542,6 +555,7 @@ private static FileSystem localFs = null;
 	block=reader.getCurrentValue();
 	assertEquals("Random block version 2  must contain exactly 343 transactions", 343, block.getTransactions().size());
     	assertFalse("No further blocks in multi block", reader.nextKeyValue());
+	reader.close();	
   }
 
 
@@ -566,6 +580,7 @@ private static FileSystem localFs = null;
 		transactCount++;
 	}
 	assertEquals("Genesis Block  must contain exactly one transactions", 1, transactCount);
+	reader.close();
   }
 
   @Test
@@ -589,6 +604,7 @@ private static FileSystem localFs = null;
 		transactCount++;
 	}
 	assertEquals("Block version 1 must contain exactly two transactions", 2, transactCount);
+	reader.close();
   }
 
   @Test
@@ -612,6 +628,7 @@ private static FileSystem localFs = null;
 		transactCount++;
 	}
 	assertEquals("Block version 2 must contain exactly 343 transactions", 343, transactCount);
+	reader.close();
   }
 
   @Test
@@ -635,6 +652,7 @@ private static FileSystem localFs = null;
 		transactCount++;
 	}
 	assertEquals("Block version 3 must contain exactly 1645 transactions", 1645, transactCount);
+	reader.close();
   }
 
   @Test
@@ -658,6 +676,7 @@ private static FileSystem localFs = null;
 		transactCount++;
 	}
 	assertEquals("Block version 4 must contain exactly 936 transactions", 936, transactCount);
+	reader.close();
   }
 
   @Test
@@ -681,6 +700,7 @@ private static FileSystem localFs = null;
 		transactCount++;
 	}
 	assertEquals("Block version 1 requiring seek must contain exactly two transactions", 2, transactCount);
+	reader.close();
   }
 
   @Test
@@ -704,6 +724,7 @@ private static FileSystem localFs = null;
 		transactCount++;
 	}
 	assertEquals("Multiblock must contain exactly 1+2+343=346 transactions", 346, transactCount);
+	reader.close();
   }
 
   @Test
@@ -730,6 +751,7 @@ private static FileSystem localFs = null;
 	block=reader.getCurrentValue();
 	assertEquals("Compressed block must have a size of 998.039 bytes", 998039, block.getLength());
     	assertFalse("No further blocks in compressed block", reader.nextKeyValue());
+	reader.close();
   }
 
   @Test
@@ -759,6 +781,7 @@ private static FileSystem localFs = null;
 	assertEquals("Compressed block must contain exactly 936 transactions of which the first has two outputs", 2, block.getTransactions().get(0).getListOfOutputs().size());
 	assertEquals("Compressed block must contain exactly 936 transactions of which the first has two output and the first output script length 25", 25, block.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
     	assertFalse("No further blocks in compressed block", reader.nextKeyValue());
+	reader.close();
   }
 
 
@@ -786,6 +809,7 @@ private static FileSystem localFs = null;
 		transactCount++;
 	}
  	assertEquals("Comrpessed block must have at least 936 transactions", 936, transactCount);
+	reader.close();
   }
 
 
@@ -814,7 +838,7 @@ private static FileSystem localFs = null;
 	block=reader.getCurrentValue();
 	assertEquals("Compressed block must have a size of 998.039 bytes", 998039, block.getLength());
     	assertFalse("No further blocks in compressed block", reader.nextKeyValue());
-
+	reader.close();
   }
 
   @Test
@@ -844,6 +868,7 @@ private static FileSystem localFs = null;
 	assertEquals("Compressed block must contain exactly 936 transactions of which the first has two outputs", 2, block.getTransactions().get(0).getListOfOutputs().size());
 	assertEquals("Compressed block must contain exactly 936 transactions of which the first has two output and the first output script length 25", 25, block.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
     	assertFalse("No further blocks in compressed block", reader.nextKeyValue());
+	reader.close();
   }
 
 
@@ -869,7 +894,8 @@ private static FileSystem localFs = null;
 	while (reader.nextKeyValue()) {
 		transactCount++;
 	}
- 	assertEquals("Comrpessed block must have at least 936 transactions", 936, transactCount);
+ 	assertEquals("Compressed block must have at least 936 transactions", 936, transactCount);
+	reader.close();
   }
 
 
