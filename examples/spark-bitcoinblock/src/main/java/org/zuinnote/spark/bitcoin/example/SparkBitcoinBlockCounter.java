@@ -19,7 +19,6 @@
  */
 package org.zuinnote.spark.bitcoin.example;
 
-import java.io.IOException;
 import java.util.*;
         
 import org.apache.hadoop.fs.Path;
