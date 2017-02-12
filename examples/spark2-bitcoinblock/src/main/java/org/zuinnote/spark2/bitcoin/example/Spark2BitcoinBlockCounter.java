@@ -64,19 +64,46 @@ private Spark2BitcoinBlockCounter() {
     JavaPairRDD<String, Long> noOfTransactionPair = bitcoinBlocksRDD.mapToPair(new PairFunction<Tuple2<BytesWritable,BitcoinBlock>, String, Long>() {
 	@Override
 	public Tuple2<String, Long> call(Tuple2<BytesWritable,BitcoinBlock> tupleBlock) {
-		return new Tuple2<String, Long>("No of transactions: ",(long)(tupleBlock._2().getTransactions().size())); 
+		return mapNoOfTransaction(tupleBlock._2());
 	}
     });
    // combine the results from all blocks
    JavaPairRDD<String, Long> totalCount = noOfTransactionPair.reduceByKey(new Function2<Long, Long, Long>() {
 	@Override	
 	public Long call(Long a, Long b) { 
-		return a+b;
+		return reduceSumUpTransactions(a,b);
 	}
    });
     // write results to HDFS
     totalCount.repartition(1).saveAsTextFile(args[1]);
     sc.close();
 }
+
+
+
+    /**
+     * Maps the number of transactions of a block to a tuple
+     *
+     * @param block Bitcoinblock
+     *
+     * @return Tuple containing the String "No of transactions. " and the number of transactions as long 
+     *
+    **/
+  public static Tuple2<String,Long> mapNoOfTransaction(BitcoinBlock block) {
+	return new Tuple2<String, Long>("No of transactions: ",(long)(block.getTransactions().size())); 
+  }
+
+   /**
+     * Sums up the transaction count within a reduce step
+     * 
+     * @param a transaction count
+     * @param b transaction count
+     *
+     * @return sum of a and b
+     *
+    **/
+  public static Long reduceSumUpTransactions(Long a, Long b) {
+	return a+b;
+  }
         
 }
