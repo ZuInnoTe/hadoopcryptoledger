@@ -1,5 +1,6 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
+apply plugin: 'jacoco'
 apply plugin: 'application'
 
 compileJava.options.encoding = 'UTF-8'
@@ -24,27 +25,56 @@ repositories {
 }
 
 
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled true
+    }
+}
+
+
 configurations {
 	provided
+	integrationTestCompile.extendsFrom testCompile
+    	integrationTestRuntime.extendsFrom testRuntime
 }
 
 sourceSets {
     main.compileClasspath += configurations.provided
     test.compileClasspath += configurations.provided
     test.runtimeClasspath += configurations.provided
+    integrationTest {
+        java {
+            compileClasspath += main.output + test.output + configurations.provided
+            runtimeClasspath += main.output + test.output + configurations.provided
+            srcDir file('src/integration-test/java')
+        }
+        resources.srcDir file('src/integration-test/resources')
+    }
 }
 
 dependencies {
    // hadoop lib for input format
      provided("org.apache.hadoop:hadoop-client:2.7.0")
    // hadoop crypto ledger library
-   compile("com.github.zuinnote:hadoopcryptoledger-fileformat:1.0.3")
+   compile("com.github.zuinnote:hadoopcryptoledger-fileformat:1.0.4")
    // spark-core
     provided("org.apache.spark:spark-core_2.11:2.0.0") 
    // spark-sql for SparkSession
  provided("org.apache.spark:spark-sql_2.11:2.0.0")
     testCompile group: 'junit', name: 'junit', version: '4.+'
 }
+
+
+task integrationTest(type: Test) {
+    testClassesDir = sourceSets.integrationTest.output.classesDir
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    outputs.upToDateWhen { false }
+}
+
+
+check.dependsOn integrationTest
+integrationTest.mustRunAfter test
 
 
 uploadArchives {
