@@ -91,8 +91,9 @@ object SparkScalaBitcoinTransactionGraph {
 	// calculate input degrees 
 
 	val inDegreeInformation = graph.outerJoinVertices(graph.inDegrees)((vid,bitcoinAddress,deg) => (bitcoinAddress,deg.getOrElse(0)))
-    	// print results top 5 bitcoin addresses with the most inputs
-	println(inDegreeInformation.vertices.top(5)(Ordering.by(_._2._2)).mkString("\n"))
+    	// save top 5 bitcoin addresses with the most inputs in output directory
+	val saveRdd=sc.parallelize(inDegreeInformation.vertices.top(5)(Ordering.by(_._2._2)))
+	saveRdd.repartition(1).saveAsTextFile(args(1))
       }
 
 	// extract relevant data
