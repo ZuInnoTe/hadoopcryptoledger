@@ -50,7 +50,12 @@ object SparkScalaBitcoinTransactionGraph {
 	val sc=new SparkContext(conf)
 	val hadoopConf = new Configuration();
 	 hadoopConf.set("hadoopcryptoledger.bitcoinblockinputformat.filter.magic","F9BEB4D9");
-	val bitcoinBlocksRDD = sc.newAPIHadoopFile(args(0), classOf[BitcoinBlockFileInputFormat], classOf[BytesWritable], classOf[BitcoinBlock],hadoopConf)
+	jobTop5AddressInput(sc,hadoopConf,args(0),args(1))
+	sc.stop()
+      }
+
+ def jobTop5AddressInput(sc: SparkContext, hadoopConf: Configuration, inputFile: String, outputFile: String): Unit = {
+val bitcoinBlocksRDD = sc.newAPIHadoopFile(inputFile, classOf[BitcoinBlockFileInputFormat], classOf[BytesWritable], classOf[BitcoinBlock],hadoopConf)
 	// extract a tuple per transaction containing Bitcoin destination address, the input transaction hash, the input transaction output index, and the current transaction hash, the current transaction output index, a (generated) long identifier
    	val bitcoinTransactionTuples = bitcoinBlocksRDD.flatMap(hadoopKeyValueTuple => extractTransactionData(hadoopKeyValueTuple._2))
 	// create the vertex (vertexId, Bitcoin destination address), keep in mind that the flat table contains the same bitcoin address several times
@@ -93,8 +98,8 @@ object SparkScalaBitcoinTransactionGraph {
 	val inDegreeInformation = graph.outerJoinVertices(graph.inDegrees)((vid,bitcoinAddress,deg) => (bitcoinAddress,deg.getOrElse(0)))
     	// save top 5 bitcoin addresses with the most inputs in output directory
 	val saveRdd=sc.parallelize(inDegreeInformation.vertices.top(5)(Ordering.by(_._2._2)))
-	saveRdd.repartition(1).saveAsTextFile(args(1))
-      }
+	saveRdd.repartition(1).saveAsTextFile(outputFile)
+}
 
 	// extract relevant data
 	def extractTransactionData(bitcoinBlock: BitcoinBlock): Array[(String,Array[Byte],Long,Array[Byte], Long)] = {
