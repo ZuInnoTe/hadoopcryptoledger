@@ -162,10 +162,7 @@ public Object evaluate(DeferredObject[] arguments) throws HiveException {
 	byte[] transactionHash=null;
 	try {
 		 transactionHash = BitcoinUtil.getTransactionHash(bitcoinTransaction);
-	} catch (NoSuchAlgorithmException nsae) {
-		LOG.error(nsae);
-		throw new HiveException(nsae.toString());
-	} catch (IOException ioe) {
+	}  catch (IOException ioe) {
 		LOG.error(ioe);
 		throw new HiveException(ioe.toString());
 	}
