@@ -92,10 +92,9 @@ private ArrayList<Decompressor> openDecompressors = new ArrayList<>();
 	// create temp directory
       tmpPath = Files.createTempDirectory(tmpPrefix);
       // create shutdown hook to remove temp files (=HDFS MiniCluster) after shutdown, may need to rethink to avoid many threads are created
-	Runtime.getRuntime().addShutdownHook(new Thread(
-    	new Runnable() {
-      	@Override
-      	public void run() {
+	Runtime.getRuntime().addShutdownHook(new Thread( new Runnable() {
+   	@Override
+      	 public void run()  {
         	try {
           		Files.walkFileTree(tmpPath, new SimpleFileVisitor<java.nio.file.Path>() {
 	
