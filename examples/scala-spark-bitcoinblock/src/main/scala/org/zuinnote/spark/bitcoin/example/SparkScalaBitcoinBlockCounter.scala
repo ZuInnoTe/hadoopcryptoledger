@@ -59,6 +59,8 @@ object SparkScalaBitcoinBlockCounter {
 
 		totalCount
 	}
+
+
  }
 
 
