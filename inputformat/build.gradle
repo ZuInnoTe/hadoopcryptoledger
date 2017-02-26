@@ -37,17 +37,27 @@ jacocoTestReport {
 configurations {
 	umlDoclet
 	provided
+	integrationTestCompile.extendsFrom testCompile
+    	integrationTestRuntime.extendsFrom testRuntime
 }
 
 sourceSets {
     main.compileClasspath += configurations.provided
     test.compileClasspath += configurations.provided
     test.runtimeClasspath += configurations.provided
+     integrationTest {
+        java {
+            compileClasspath += main.output + test.output + configurations.provided
+            runtimeClasspath += main.output + test.output + configurations.provided
+            srcDir file('src/integration-test/java')
+        }
+        resources.srcDir file('src/integration-test/resources')
+    }
 }
 
 pitest {
-    targetClasses = ['org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtil']  //by default "${project.group}.*"
-    targetTests = ['org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtilTest'] 
+    targetClasses = ['org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtil','org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParser']  //by default "${project.group}.*"
+    targetTests = ['org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtilTest','org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest'] 
     timestampedReports = false
     threads = 4
     outputFormats = ['XML', 'HTML']
