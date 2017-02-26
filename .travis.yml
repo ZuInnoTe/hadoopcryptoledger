@@ -10,12 +10,13 @@ script:
 - ./gradlew clean
 - ./gradlew build
 - ./gradlew test
+- ./gradlew integrationTest
 - jdk_switcher use oraclejdk8
 - ./gradlew clean
 - ./gradlew build
 - ./gradlew test
+- ./gradlew integrationTest
 - ./gradlew pitest
-- ./gradlew dependencycheck
 - sonar-scanner -Dsonar.login=$SONAR_HCL
 after_success:
 - .travis/publish-javadoc.sh
