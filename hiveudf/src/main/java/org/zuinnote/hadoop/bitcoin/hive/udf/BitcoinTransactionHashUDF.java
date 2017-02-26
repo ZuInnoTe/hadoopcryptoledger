@@ -40,7 +40,6 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
 
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 
 import java.util.List;
 import java.util.ArrayList;
