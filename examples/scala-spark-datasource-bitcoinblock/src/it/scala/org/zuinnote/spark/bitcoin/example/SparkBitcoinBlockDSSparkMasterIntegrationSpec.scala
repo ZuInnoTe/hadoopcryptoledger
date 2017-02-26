@@ -137,7 +137,7 @@ override def beforeAll(): Unit = {
 }
 
 
-"The genesis block on DFS" should "be 1 transactions i total" in {
+"The genesis block on DFS" should "have 5000000000 of summarized transaction outputs" in {
 	Given("Genesis Block on DFSCluster")
 	// create input directory
 	dfsCluster.getFileSystem().mkdirs(DFS_INPUT_DIR)
