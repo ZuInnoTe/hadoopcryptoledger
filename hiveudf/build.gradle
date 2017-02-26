@@ -46,12 +46,22 @@ repositories {
 
 configurations {
 	provided
+	integrationTestCompile.extendsFrom testCompile
+    	integrationTestRuntime.extendsFrom testRuntime
 }
 
 sourceSets {
     main.compileClasspath += configurations.provided
     test.compileClasspath += configurations.provided
     test.runtimeClasspath += configurations.provided
+    integrationTest {
+        java {
+            compileClasspath += main.output + test.output + configurations.provided
+            runtimeClasspath += main.output + test.output + configurations.provided
+            srcDir file('src/integration-test/java')
+        }
+        resources.srcDir file('src/integration-test/resources')
+    }
 }
 
 dependencies {
