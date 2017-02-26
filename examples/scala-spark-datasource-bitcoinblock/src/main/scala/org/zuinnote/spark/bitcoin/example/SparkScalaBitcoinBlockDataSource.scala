@@ -24,6 +24,8 @@ import org.apache.hadoop.fs.Path
 import org.apache.hadoop.mapred._
 import org.apache.hadoop.io._
 
+import org.apache.spark.sql.functions._
+
    
 /**
 * Author: Jörn Franke <zuinnote@gmail.com>
@@ -40,16 +42,26 @@ object SparkScalaBitcoinBlockDataSource {
    def main(args: Array[String]): Unit = {
         val conf = new SparkConf().setAppName("Spark-Scala BitcoinBlock Analytics (hadoopcryptoledger) - Datasource API")
 	val sc=new SparkContext(conf)
-val sqlContext = new SQLContext(sc)
-val df = sqlContext.read
-    .format("org.zuinnote.spark.bitcoin.block")
-    .option("magic", "F9BEB4D9") // set magic to the Bitcoin network
-    // other options maxBlockSize, useDirectBuffer, isSplitable
-    .load(args(0))
-	val totalCount = df.select("magicNo").count
-	// print to screen
-	println("Total number of blocks in files: "+totalCount)	
+	val sqlContext = new SQLContext(sc)
+	sumTransactionOutputsJob(sqlContext,args(0),args(1))
+	sc.stop()
       }
+
+	def sumTransactionOutputsJob(sqlContext: SQLContext, inputFile: String, outputFile: String): Unit = {
+	val df = sqlContext.read
+    	.format("org.zuinnote.spark.bitcoin.block")
+    	.option("magic", "F9BEB4D9") // set magic to the Bitcoin network
+    	// other options maxBlockSize, useDirectBuffer, isSplitable
+    	.load(inputFile)
+	// print schema
+	df.printSchema
+	// extract all the outputs of the transactions and summarize them
+	val transactionsDF=df.select(explode(df("transactions")).alias("transactions"))
+	val transactionsLOODF = transactionsDF.select(explode(transactionsDF("transactions.listOfOutputs")).alias("listOfOutputs"))
+	val summarizedOutputs=transactionsLOODF.agg(sum(transactionsLOODF("listOfOutputs.value")))
+	// store the result on HDFS
+	summarizedOutputs.rdd.saveAsTextFile(outputFile)
+	}
     }
 
 
