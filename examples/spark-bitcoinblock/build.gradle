@@ -37,6 +37,15 @@ configurations {
     	integrationTestRuntime.extendsFrom testRuntime
 }
 
+eclipse {
+
+  classpath {
+    plusConfigurations += [ configurations.provided ]
+    plusConfigurations += [ configurations.integrationTestCompile ]
+    plusConfigurations += [ configurations.integrationTestRuntime ]
+  }
+}
+
 sourceSets {
     main.compileClasspath += configurations.provided
     test.compileClasspath += configurations.provided
@@ -52,9 +61,9 @@ sourceSets {
 }
 
 dependencies {
-  
+
    // hadoop lib for input format
-     provided("org.apache.hadoop:hadoop-client:2.7.0") 
+     provided("org.apache.hadoop:hadoop-client:2.7.0")
    // hadoop crypto ledger library
    compile("com.github.zuinnote:hadoopcryptoledger-fileformat:1.0.4")
    // spark-core

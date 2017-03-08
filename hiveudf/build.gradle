@@ -16,7 +16,7 @@ jar {
     manifest {
         attributes 'Implementation-Title': 'ZuInnoTe - Hadoop CryptoLedger Analytics Library - Hive UDF', 'Implementation-Version': version
     }
- 
+
     baseName = 'hadoopcryptoledger-hiveudf'
    // note this builds one fat jar and it is not recommended for production use - just for illustration purpose
    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
@@ -38,7 +38,7 @@ repositories {
     maven {
     	url "http://conjars.org/repo"
     }
-   
+
 
 
 }
@@ -48,6 +48,13 @@ configurations {
 	provided
 	integrationTestCompile.extendsFrom testCompile
     	integrationTestRuntime.extendsFrom testRuntime
+}
+
+eclipse {
+
+  classpath {
+    plusConfigurations += [ configurations.provided ]
+  }
 }
 
 sourceSets {
@@ -69,7 +76,7 @@ dependencies {
      provided("org.apache.hadoop:hadoop-client:2.7.0")
        // hadoop crypto ledger library
 
-  
+
    provided("com.github.zuinnote:hadoopcryptoledger-fileformat:1.0.4")
    provided("com.github.zuinnote:hadoopcryptoledger-hiveserde:1.0.4")
     // hive serde API
@@ -95,7 +102,3 @@ task sourcesJar(type: Jar) {
 artifacts {
     archives hadoopCryptoLedgerJavaDocs, sourcesJar
 }
-
-
-
-

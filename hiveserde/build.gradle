@@ -16,7 +16,7 @@ jar {
     manifest {
         attributes 'Implementation-Title': 'ZuInnoTe - Hadoop CryptoLedger Analytics Library - Serde', 'Implementation-Version': version
     }
- 
+
     baseName = 'hadoopcryptoledger-hiveserde'
    // note this builds one fat jar and it is not recommended for production use - just for illustration purpose
    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
@@ -47,6 +47,13 @@ configurations {
 	provided
 	integrationTestCompile.extendsFrom testCompile
     	integrationTestRuntime.extendsFrom testRuntime
+}
+
+eclipse {
+
+  classpath {
+    plusConfigurations += [ configurations.provided ]
+  }
 }
 
 sourceSets {
@@ -105,6 +112,3 @@ task sourcesJar(type: Jar) {
 artifacts {
     archives hadoopCryptoLedgerJavaDocs, sourcesJar
 }
-
-
-

@@ -17,7 +17,7 @@ version = "1.0.4"
 jar {
     manifest {
         attributes 'Implementation-Title': 'ZuInnoTe - Hadoop CryptoLedger Analytics Library - Inputformat', 'Implementation-Version': version
-    } 
+    }
     baseName = 'hadoopcryptoledger-fileformat'
 }
 
@@ -41,6 +41,13 @@ configurations {
     	integrationTestRuntime.extendsFrom testRuntime
 }
 
+eclipse {
+
+  classpath {
+    plusConfigurations += [ configurations.provided ]
+  }
+}
+
 sourceSets {
     main.compileClasspath += configurations.provided
     test.compileClasspath += configurations.provided
@@ -57,7 +64,7 @@ sourceSets {
 
 pitest {
     targetClasses = ['org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtil','org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParser']  //by default "${project.group}.*"
-    targetTests = ['org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtilTest','org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest'] 
+    targetTests = ['org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtilTest','org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest']
     timestampedReports = false
     threads = 4
     outputFormats = ['XML', 'HTML']
@@ -95,7 +102,7 @@ publishing {
 }
 
 dependencies {
-    // uml doclet for using planuml in javadoc	
+    // uml doclet for using planuml in javadoc
     umlDoclet "nl.talsmasoftware:umldoclet:1.0.8"
     // hadoop libraries
    provided("org.apache.hadoop:hadoop-common:2.7.0")
@@ -105,8 +112,3 @@ dependencies {
    // test
    testCompile group: 'junit', name: 'junit', version: '4.12'
 }
-
-
-
-
-
