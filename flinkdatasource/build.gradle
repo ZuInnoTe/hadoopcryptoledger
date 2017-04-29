@@ -1,0 +1,109 @@
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+apply plugin: 'maven'
+apply plugin: 'signing'
+apply plugin: 'jacoco'
+
+sourceCompatibility = 1.7
+compileJava.options.encoding = 'UTF-8'
+
+group = "com.github.zuinnote"
+archivesBaseName = "hadoopcryptoledger-flinkdatasource"
+version = "1.0.4"
+
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'ZuInnoTe - Hadoop CryptoLedger Analytics Library - Flink Data Source', 'Implementation-Version': version
+    }
+
+    baseName = 'hadoopcryptoledger-flinkdatasource'
+   // note this builds one fat jar and it is not recommended for production use - just for illustration purpose
+   from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+}
+
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+
+
+}
+
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled true
+    }
+}
+
+
+
+configurations {
+	provided
+	integrationTestCompile.extendsFrom testCompile
+    	integrationTestRuntime.extendsFrom testRuntime
+}
+
+eclipse {
+
+  classpath {
+    plusConfigurations += [ configurations.provided ]
+  }
+}
+
+sourceSets {
+    main.compileClasspath += configurations.provided
+    test.compileClasspath += configurations.provided
+    test.runtimeClasspath += configurations.provided
+    integrationTest {
+        java {
+            compileClasspath += main.output + test.output + configurations.provided
+            runtimeClasspath += main.output + test.output + configurations.provided
+            srcDir file('src/integration-test/java')
+        }
+        resources.srcDir file('src/integration-test/resources')
+    }
+}
+
+dependencies {
+   // hadoop lib for driver
+     provided("org.apache.hadoop:hadoop-client:2.7.0")
+       // hadoop crypto ledger library
+   provided("com.github.zuinnote:hadoopcryptoledger-fileformat:1.0.4")
+    // flink api
+   provided("org.apache.flink:flink-java:1.2.0")
+   // log4j2
+   provided("org.apache.logging.log4j:log4j-api:2.4.1")
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId 'com.github.zuinnote'
+            artifactId 'hadoopcryptoledger-flinkdatasource'
+            version '1.0.4'
+
+            from components.java
+        }
+    }
+}
+
+javadoc.classpath += configurations.provided
+
+task hadoopCryptoLedgerJavaDocs(type: Jar) {
+  classifier = 'javadoc'
+  from javadoc
+}
+
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives hadoopCryptoLedgerJavaDocs, sourcesJar
+}
