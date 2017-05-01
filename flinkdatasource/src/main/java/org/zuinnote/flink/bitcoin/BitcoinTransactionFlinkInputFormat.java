@@ -44,9 +44,9 @@ public class BitcoinTransactionFlinkInputFormat extends AbstractBitcoinFlinkInpu
 	private transient BitcoinBlock currentBitcoinBlock;
 	private int currentTransactionCounterInBlock;
 	
-	public BitcoinTransactionFlinkInputFormat(int maxSizeBitcoinBlock, int bufferSize, String specificMagicStr,
+	public BitcoinTransactionFlinkInputFormat(int maxSizeBitcoinBlock,String specificMagicStr,
 			boolean useDirectBuffer) throws HadoopCryptoLedgerConfigurationException {
-		super(maxSizeBitcoinBlock, bufferSize, specificMagicStr, useDirectBuffer);
+		super(maxSizeBitcoinBlock,  specificMagicStr, useDirectBuffer);
 		this.isEndReached=false;
 	}
 	
@@ -58,7 +58,7 @@ public class BitcoinTransactionFlinkInputFormat extends AbstractBitcoinFlinkInpu
 	@Override
 	public BitcoinTransaction nextRecord(BitcoinTransaction reuse) throws IOException {
 		BitcoinTransaction currentTransaction=null;
-		if (this.stream.getPos()<=this.currentSplit.getStart()+this.currentSplit.getLength()) {
+		if ((this.currentSplit.getLength()<0) ||(this.stream.getPos()<=this.currentSplit.getStart()+this.currentSplit.getLength())) {
 			if ((currentBitcoinBlock==null) || (currentBitcoinBlock.getTransactions().size()==currentTransactionCounterInBlock)){
 				try {
 					currentBitcoinBlock=getBbr().readBlock();

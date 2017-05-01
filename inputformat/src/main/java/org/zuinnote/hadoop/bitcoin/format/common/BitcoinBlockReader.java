@@ -46,7 +46,7 @@ private boolean filterSpecificMagic=false;
 private byte[][] specificMagicByteArray;
 private ByteBuffer preAllocatedDirectByteBuffer;
 
-private BufferedInputStream bin;
+private InputStream bin;
 /**
 * Create a BitcoinBlock reader that reads from the given stream and uses the given parameters for configuration. Note it assumed that the validity of this configuration is checked by BitcoinBlockRecordReader
 * @param in Input stream to read from
@@ -63,7 +63,11 @@ public BitcoinBlockReader(InputStream in, int maxSizeBitcoinBlock, int bufferSiz
 	if (specificMagicByteArray!=null) {
 		this.filterSpecificMagic=true;
 	}
-	this.bin=new BufferedInputStream(in,bufferSize);
+	if (bufferSize==0) { // use original stream
+		this.bin=in;
+	} else {
+		this.bin=new BufferedInputStream(in,bufferSize);
+	}
 	if (this.useDirectBuffer) { // in case of a DirectByteBuffer we do allocation only once for the maximum size of one block, otherwise we will have a high cost for reallocation
 		preAllocatedDirectByteBuffer=ByteBuffer.allocateDirect(this.maxSizeBitcoinBlock);
 	}

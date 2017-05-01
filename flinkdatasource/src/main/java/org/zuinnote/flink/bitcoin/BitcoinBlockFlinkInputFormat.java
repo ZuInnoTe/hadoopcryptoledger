@@ -40,9 +40,9 @@ public class BitcoinBlockFlinkInputFormat extends AbstractBitcoinFlinkInputForma
 	private static final long serialVersionUID = 4150883073922261077L;
 	private boolean isEndReached;
 	
-	public BitcoinBlockFlinkInputFormat(int maxSizeBitcoinBlock, int bufferSize, String specificMagicStr,
+	public BitcoinBlockFlinkInputFormat(int maxSizeBitcoinBlock,  String specificMagicStr,
 			boolean useDirectBuffer) throws HadoopCryptoLedgerConfigurationException {
-		super(maxSizeBitcoinBlock, bufferSize, specificMagicStr, useDirectBuffer);
+		super(maxSizeBitcoinBlock, specificMagicStr, useDirectBuffer);
 		this.isEndReached=false;
 	}
 	
@@ -54,7 +54,10 @@ public class BitcoinBlockFlinkInputFormat extends AbstractBitcoinFlinkInputForma
 	@Override
 	public BitcoinBlock nextRecord(BitcoinBlock reuse) throws IOException {
 		BitcoinBlock dataBlock=null;
-		if (this.stream.getPos()<=this.currentSplit.getStart()+this.currentSplit.getLength()) {
+		LOG.debug(stream.getPos());
+		LOG.debug(this.currentSplit.getStart());
+		LOG.debug(this.currentSplit.getLength());
+		if ((this.currentSplit.getLength()<0) ||(this.stream.getPos()<=this.currentSplit.getStart()+this.currentSplit.getLength())) {
 			try {
 				dataBlock=this.getBbr().readBlock();
 			} catch(BitcoinBlockReadException e) {

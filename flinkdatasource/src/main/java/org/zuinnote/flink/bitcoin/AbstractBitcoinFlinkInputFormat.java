@@ -22,6 +22,8 @@ package org.zuinnote.flink.bitcoin;
 
 import java.io.IOException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.flink.api.common.io.CheckpointableInputFormat;
 import org.apache.flink.api.common.io.FileInputFormat;
 import org.apache.flink.core.fs.FileInputSplit;
@@ -30,6 +32,8 @@ import org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtil;
 import org.zuinnote.hadoop.bitcoin.format.exception.HadoopCryptoLedgerConfigurationException;
 
 public abstract class AbstractBitcoinFlinkInputFormat<E> extends FileInputFormat<E> implements CheckpointableInputFormat<FileInputSplit, Long>{
+
+	private static final Log LOG = LogFactory.getLog(AbstractBitcoinFlinkInputFormat.class.getName());
 
 	private transient BitcoinBlockReader bbr;
 	private int maxSizeBitcoinBlock;
@@ -41,9 +45,8 @@ public abstract class AbstractBitcoinFlinkInputFormat<E> extends FileInputFormat
 	 */
 	private static final long serialVersionUID = -4661705676237973665L;
 	
-	public AbstractBitcoinFlinkInputFormat(int maxSizeBitcoinBlock, int bufferSize,  String specificMagicStr, boolean useDirectBuffer) throws HadoopCryptoLedgerConfigurationException {
+	public AbstractBitcoinFlinkInputFormat(int maxSizeBitcoinBlock, String specificMagicStr, boolean useDirectBuffer) throws HadoopCryptoLedgerConfigurationException {
 		this.maxSizeBitcoinBlock=maxSizeBitcoinBlock;
-		this.bufferSize=bufferSize;
 		this.useDirectBuffer=useDirectBuffer;
 		if ((specificMagicStr!=null) && (specificMagicStr.length()>0)) {
 			String[] specificMagicStringArray=specificMagicStr.split(",");
@@ -68,7 +71,9 @@ public abstract class AbstractBitcoinFlinkInputFormat<E> extends FileInputFormat
 	@Override
 	public void open(FileInputSplit split) throws IOException {
 		super.open(split);
-		bbr = new BitcoinBlockReader(this.stream,this.maxSizeBitcoinBlock,this.bufferSize,this.specificMagicArray,this.useDirectBuffer);
+		LOG.debug("Initialize Bitcoin reader");
+		// temporary measure to set buffer size to 1, otherwise we cannot guarantee that checkpointing works
+		bbr = new BitcoinBlockReader(this.stream,this.maxSizeBitcoinBlock,1,this.specificMagicArray,this.useDirectBuffer);
 	}
 	
 	/*

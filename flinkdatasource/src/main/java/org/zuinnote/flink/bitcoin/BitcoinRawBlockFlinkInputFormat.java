@@ -40,9 +40,9 @@ public class BitcoinRawBlockFlinkInputFormat extends AbstractBitcoinFlinkInputFo
 	private static final long serialVersionUID = 4150883073922261077L;
 	private boolean isEndReached;
 	
-	public BitcoinRawBlockFlinkInputFormat(int maxSizeBitcoinBlock, int bufferSize, String specificMagicStr,
+	public BitcoinRawBlockFlinkInputFormat(int maxSizeBitcoinBlock, String specificMagicStr,
 			boolean useDirectBuffer) throws HadoopCryptoLedgerConfigurationException {
-		super(maxSizeBitcoinBlock, bufferSize, specificMagicStr, useDirectBuffer);
+		super(maxSizeBitcoinBlock, specificMagicStr, useDirectBuffer);
 		this.isEndReached=false;
 	}
 	
@@ -54,7 +54,7 @@ public class BitcoinRawBlockFlinkInputFormat extends AbstractBitcoinFlinkInputFo
 	@Override
 	public BytesWritable nextRecord(BytesWritable reuse) throws IOException {
 		ByteBuffer dataBlock=null;
-		if (this.stream.getPos()<=this.currentSplit.getStart()+this.currentSplit.getLength()) {			
+		if ((this.currentSplit.getLength()<0) ||(this.stream.getPos()<=this.currentSplit.getStart()+this.currentSplit.getLength())) {
 			try {
 				dataBlock=this.getBbr().readRawBlock();
 			} catch(BitcoinBlockReadException e) {
