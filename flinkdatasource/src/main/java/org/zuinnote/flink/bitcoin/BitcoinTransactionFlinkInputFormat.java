@@ -28,10 +28,14 @@ import org.zuinnote.hadoop.bitcoin.format.common.BitcoinTransaction;
 import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
 import org.zuinnote.hadoop.bitcoin.format.exception.HadoopCryptoLedgerConfigurationException;
 import org.apache.commons.logging.LogFactory;
+import org.apache.flink.api.common.io.CheckpointableInputFormat;
+import org.apache.flink.api.java.tuple.Tuple;
+import org.apache.flink.api.java.tuple.Tuple2;
+import org.apache.flink.core.fs.FileInputSplit;
 import org.apache.commons.logging.Log;
 
 
-public class BitcoinTransactionFlinkInputFormat extends AbstractBitcoinFlinkInputFormat<BitcoinTransaction> {
+public class BitcoinTransactionFlinkInputFormat extends AbstractBitcoinFlinkInputFormat<BitcoinTransaction> implements CheckpointableInputFormat<FileInputSplit, Tuple2<Long,Long>> {
 	
 
 
@@ -42,7 +46,7 @@ public class BitcoinTransactionFlinkInputFormat extends AbstractBitcoinFlinkInpu
 	private static final long serialVersionUID = 4150883073922261077L;
 	private boolean isEndReached;
 	private transient BitcoinBlock currentBitcoinBlock;
-	private int currentTransactionCounterInBlock;
+	private long currentTransactionCounterInBlock;
 	
 	public BitcoinTransactionFlinkInputFormat(int maxSizeBitcoinBlock,String specificMagicStr,
 			boolean useDirectBuffer) throws HadoopCryptoLedgerConfigurationException {
@@ -53,6 +57,40 @@ public class BitcoinTransactionFlinkInputFormat extends AbstractBitcoinFlinkInpu
 	@Override
 	public boolean reachedEnd() throws IOException {
 		return this.isEndReached;
+	}
+	
+	
+	/*
+	 * Saves the current state of the stream
+	 *  
+	 *  @return current position in stream
+	 *  
+	 * (non-Javadoc)
+	 * @see org.apache.flink.api.common.io.CheckpointableInputFormat#getCurrentState()
+	 */
+	
+	@Override
+	public Tuple2<Long,Long> getCurrentState() throws IOException {
+		return new Tuple2<>(this.stream.getPos(), this.currentTransactionCounterInBlock);
+	}
+	
+	/*
+	 * Reopens the stream at a specific previously stored position and initializes the BitcoinBlockReader
+	 * 
+	 * @param split FileInputSplit
+	 * @param state position in the stream
+	 * 
+	 * (non-Javadoc)
+	 * @see org.apache.flink.api.common.io.CheckpointableInputFormat#reopen(org.apache.flink.core.io.InputSplit, java.io.Serializable)
+	 */
+	@Override
+	public void reopen(FileInputSplit split, Tuple2<Long,Long> state) throws IOException {
+		try {
+			this.open(split);
+		} finally {
+			this.stream.seek(state.f0);
+			this.currentTransactionCounterInBlock=state.f1;
+		}
 	}
 
 	@Override
@@ -71,7 +109,7 @@ public class BitcoinTransactionFlinkInputFormat extends AbstractBitcoinFlinkInpu
 			if (currentBitcoinBlock==null) {
 				this.isEndReached=true;
 			} else {
-				currentTransaction=currentBitcoinBlock.getTransactions().get(currentTransactionCounterInBlock);
+				currentTransaction=currentBitcoinBlock.getTransactions().get((int) currentTransactionCounterInBlock);
 				currentTransactionCounterInBlock++;
 			}
 		} else {

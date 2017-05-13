@@ -25,6 +25,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.core.fs.FileInputSplit;
 import org.apache.flink.core.fs.Path;
 import org.apache.hadoop.io.BytesWritable;
@@ -129,7 +130,7 @@ public class FlinkBitcoinDataSourceTest {
 	    }
 	   
 	 @Test
-	 public void restoreState() throws HadoopCryptoLedgerConfigurationException, IOException {
+	 public void restoreStateBitcoinBlock() throws HadoopCryptoLedgerConfigurationException, IOException {
 		 // test if state is correctly restored
 		 	ClassLoader classLoader = getClass().getClassLoader();
 		    String fileName="multiblock.blk";
@@ -159,6 +160,74 @@ public class FlinkBitcoinDataSourceTest {
 		    assertEquals("Third block contains 343 transactions",343,nextBlock.getTransactions().size());
 		    nextBlock=inputFormat.nextRecord(reuse);
 		    assertNull("No further block",nextBlock);
+		    assertTrue("End reached",inputFormat.reachedEnd());
+	 }
+	 
+	 @Test
+	 public void restoreStateBitcoinRawBlock() throws HadoopCryptoLedgerConfigurationException, IOException {
+		 // test if state is correctly restored
+		 	ClassLoader classLoader = getClass().getClassLoader();
+		    String fileName="multiblock.blk";
+		    String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		    Path file = new Path(fileNameBlock); 
+		    FileInputSplit blockInputSplit = new FileInputSplit(0,file,0, -1, null);
+		    BitcoinRawBlockFlinkInputFormat inputFormat = new BitcoinRawBlockFlinkInputFormat(1024*1024, "F9BEB4D9",false);
+		    inputFormat.open(blockInputSplit);
+		    assertFalse("End not reached",inputFormat.reachedEnd());
+		    BytesWritable reuse = new BytesWritable();
+		    BytesWritable nextBlock = inputFormat.nextRecord(reuse);
+		    assertNotNull("First Block returned",nextBlock);
+		    // save state
+		    Long state = inputFormat.getCurrentState();
+		    assertEquals("state 293",293,state.longValue());
+		    // read 2nd block
+		    nextBlock=inputFormat.nextRecord(reuse);
+		    assertNotNull("Second block after state save exist",nextBlock);
+		    // restore state
+		    inputFormat.reopen(blockInputSplit, state);
+		    // read 2nd block again
+		    nextBlock=inputFormat.nextRecord(reuse);
+		    assertNotNull("Second block after state restore exist",nextBlock);
+		    // read 3rd block
+		    nextBlock=inputFormat.nextRecord(reuse);
+		    assertNotNull("Third block after state restore exist",nextBlock);
+		    nextBlock=inputFormat.nextRecord(reuse);
+		    assertNull("No further block",nextBlock);
+		    assertTrue("End reached",inputFormat.reachedEnd());
+	 }
+	 
+	 @Test
+	 public void restoreStateBitcoinTransaction() throws HadoopCryptoLedgerConfigurationException, IOException {
+		 // test if state is correctly restored
+		 	ClassLoader classLoader = getClass().getClassLoader();
+		    String fileName="multiblock.blk";
+		    String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		    Path file = new Path(fileNameBlock); 
+		    FileInputSplit transactionInputSplit = new FileInputSplit(0,file,0, -1, null);
+		    BitcoinTransactionFlinkInputFormat inputFormat = new BitcoinTransactionFlinkInputFormat(1024*1024, "F9BEB4D9",false);
+		    inputFormat.open(transactionInputSplit);
+		    assertFalse("End not reached",inputFormat.reachedEnd());
+		    BitcoinTransaction reuse = new BitcoinTransaction();
+		    BitcoinTransaction nextTransaction = inputFormat.nextRecord(reuse);
+		    assertNotNull("First Transaction returned",nextTransaction);
+		    nextTransaction = inputFormat.nextRecord(reuse);
+		    assertNotNull("Second Transaction returned",nextTransaction);
+		    // save state
+		    Tuple2<Long,Long> state = inputFormat.getCurrentState();
+		    assertEquals("state buffer position:  775",775,(long)state.f0);
+		    assertEquals("state transacton position: 1",1,(long)state.f1);
+		    nextTransaction = inputFormat.nextRecord(reuse);
+		    assertNotNull("Third Transaction returned after state save",nextTransaction);
+		    // restore state
+		    inputFormat.reopen(transactionInputSplit, state);
+		    nextTransaction = inputFormat.nextRecord(reuse);
+		    assertNotNull("Third Transaction returned after state restore",nextTransaction);
+		    // further transactions
+		    int remainingTransactionCounter=0;
+		    while (inputFormat.nextRecord(reuse)!=null) {
+		    	remainingTransactionCounter++;
+		    }
+		    assertEquals("Reamining transactions after state restore from block 3: 343",343,remainingTransactionCounter);
 		    assertTrue("End reached",inputFormat.reachedEnd());
 	 }
 	 

@@ -24,20 +24,18 @@ import java.io.IOException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.flink.api.common.io.CheckpointableInputFormat;
 import org.apache.flink.api.common.io.FileInputFormat;
 import org.apache.flink.core.fs.FileInputSplit;
 import org.zuinnote.hadoop.bitcoin.format.common.BitcoinBlockReader;
 import org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtil;
 import org.zuinnote.hadoop.bitcoin.format.exception.HadoopCryptoLedgerConfigurationException;
 
-public abstract class AbstractBitcoinFlinkInputFormat<E> extends FileInputFormat<E> implements CheckpointableInputFormat<FileInputSplit, Long>{
+public abstract class AbstractBitcoinFlinkInputFormat<E> extends FileInputFormat<E> {
 
 	private static final Log LOG = LogFactory.getLog(AbstractBitcoinFlinkInputFormat.class.getName());
 
 	private transient BitcoinBlockReader bbr;
 	private int maxSizeBitcoinBlock;
-	private int bufferSize;
 	private byte [][] specificMagicArray;
 	private boolean useDirectBuffer;
 	/**
@@ -75,38 +73,7 @@ public abstract class AbstractBitcoinFlinkInputFormat<E> extends FileInputFormat
 		// temporary measure to set buffer size to 1, otherwise we cannot guarantee that checkpointing works
 		bbr = new BitcoinBlockReader(this.stream,this.maxSizeBitcoinBlock,1,this.specificMagicArray,this.useDirectBuffer);
 	}
-	
-	/*
-	 * Saves the current state of the stream
-	 *  
-	 *  @return current position in stream
-	 *  
-	 * (non-Javadoc)
-	 * @see org.apache.flink.api.common.io.CheckpointableInputFormat#getCurrentState()
-	 */
-	
-	@Override
-	public Long getCurrentState() throws IOException {
-		return this.stream.getPos();
-	}
-	
-	/*
-	 * Reopens the stream at a specific previously stored position and initializes the BitcoinBlockReader
-	 * 
-	 * @param split FileInputSplit
-	 * @param state position in the stream
-	 * 
-	 * (non-Javadoc)
-	 * @see org.apache.flink.api.common.io.CheckpointableInputFormat#reopen(org.apache.flink.core.io.InputSplit, java.io.Serializable)
-	 */
-	@Override
-	public void reopen(FileInputSplit split, Long state) throws IOException {
-		try {
-			this.open(split);
-		} finally {
-			this.stream.seek(state);
-		}
-	}
+
 	
 	
 	/*

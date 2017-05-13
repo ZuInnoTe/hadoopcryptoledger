@@ -84,7 +84,7 @@ publishing {
         maven(MavenPublication) {
             groupId 'com.github.zuinnote'
             artifactId 'hadoopcryptoledger-flinkdatasource'
-            version '1.0.4'
+            version '1.0.5'
 
             from components.java
         }
@@ -92,6 +92,11 @@ publishing {
 }
 
 
+
+
+test {
+    testLogging.showStandardStreams = true
+}
 
 javadoc.classpath += configurations.provided
 

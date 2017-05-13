@@ -25,11 +25,13 @@ import java.nio.ByteBuffer;
 import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
 import org.zuinnote.hadoop.bitcoin.format.exception.HadoopCryptoLedgerConfigurationException;
 import org.apache.commons.logging.LogFactory;
+import org.apache.flink.api.common.io.CheckpointableInputFormat;
+import org.apache.flink.core.fs.FileInputSplit;
 import org.apache.hadoop.io.BytesWritable;
 import org.apache.commons.logging.Log;
 
 
-public class BitcoinRawBlockFlinkInputFormat extends AbstractBitcoinFlinkInputFormat<BytesWritable> {
+public class BitcoinRawBlockFlinkInputFormat extends AbstractBitcoinFlinkInputFormat<BytesWritable> implements CheckpointableInputFormat<FileInputSplit, Long> {
 	
 
 
@@ -49,6 +51,39 @@ public class BitcoinRawBlockFlinkInputFormat extends AbstractBitcoinFlinkInputFo
 	@Override
 	public boolean reachedEnd() throws IOException {
 		return this.isEndReached;
+	}
+	
+	
+	/*
+	 * Saves the current state of the stream
+	 *  
+	 *  @return current position in stream
+	 *  
+	 * (non-Javadoc)
+	 * @see org.apache.flink.api.common.io.CheckpointableInputFormat#getCurrentState()
+	 */
+	
+	@Override
+	public Long getCurrentState() throws IOException {
+		return this.stream.getPos();
+	}
+	
+	/*
+	 * Reopens the stream at a specific previously stored position and initializes the BitcoinBlockReader
+	 * 
+	 * @param split FileInputSplit
+	 * @param state position in the stream
+	 * 
+	 * (non-Javadoc)
+	 * @see org.apache.flink.api.common.io.CheckpointableInputFormat#reopen(org.apache.flink.core.io.InputSplit, java.io.Serializable)
+	 */
+	@Override
+	public void reopen(FileInputSplit split, Long state) throws IOException {
+		try {
+			this.open(split);
+		} finally {
+			this.stream.seek(state);
+		}
 	}
 
 	@Override
