@@ -29,7 +29,6 @@ import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
 import org.zuinnote.hadoop.bitcoin.format.exception.HadoopCryptoLedgerConfigurationException;
 import org.apache.commons.logging.LogFactory;
 import org.apache.flink.api.common.io.CheckpointableInputFormat;
-import org.apache.flink.api.java.tuple.Tuple;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.core.fs.FileInputSplit;
 import org.apache.commons.logging.Log;
