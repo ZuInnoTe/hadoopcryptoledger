@@ -29,6 +29,7 @@ import org.apache.flink.core.fs.FileInputSplit;
 import org.zuinnote.hadoop.bitcoin.format.common.BitcoinBlockReader;
 import org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtil;
 import org.zuinnote.hadoop.bitcoin.format.exception.HadoopCryptoLedgerConfigurationException;
+import org.zuinnote.hadoop.bitcoin.format.mapred.AbstractBitcoinRecordReader;
 
 public abstract class AbstractBitcoinFlinkInputFormat<E> extends FileInputFormat<E> {
 
@@ -42,6 +43,10 @@ public abstract class AbstractBitcoinFlinkInputFormat<E> extends FileInputFormat
 	 * 
 	 */
 	private static final long serialVersionUID = -4661705676237973665L;
+	
+	public AbstractBitcoinFlinkInputFormat() throws HadoopCryptoLedgerConfigurationException {
+		this(AbstractBitcoinRecordReader.DEFAULT_MAXSIZE_BITCOINBLOCK,AbstractBitcoinRecordReader.DEFAULT_MAGIC,AbstractBitcoinRecordReader.DEFAULT_USEDIRECTBUFFER);
+	}
 	
 	public AbstractBitcoinFlinkInputFormat(int maxSizeBitcoinBlock, String specificMagicStr, boolean useDirectBuffer) throws HadoopCryptoLedgerConfigurationException {
 		this.maxSizeBitcoinBlock=maxSizeBitcoinBlock;
