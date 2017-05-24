@@ -20,7 +20,7 @@ resolvers += Resolver.mavenLocal
 
 scalacOptions += "-target:jvm-1.7"
 
-assemblyJarName in assembly := "example-hcl-spark-scala-bitcoinblock.jar"
+assemblyJarName in assembly := "example-hcl-flink-scala-bitcoinblock.jar"
 
 fork  := true
 
@@ -30,18 +30,19 @@ itJacoco.settings
 
 
 libraryDependencies += "com.github.zuinnote" % "hadoopcryptoledger-flinkdatasource" % "1.0.4" % "compile"
+libraryDependencies += "org.apache.flink" %% "flink-scala" % "1.2.0" % "provided" 
 
-libraryDependencies += "org.apache.flink" %% "flink-scala" % "1.2.0" % "provided"
+libraryDependencies += "org.apache.flink" % "flink-shaded-hadoop2" % "1.2.0" % "provided"  
 
 // needed for writable serializer 
-libraryDependencies += "org.apache.flink" %% "flink-hadoop-compatibility" % "1.2.0" % "compile"
+libraryDependencies += "org.apache.flink" %% "flink-hadoop-compatibility" % "1.2.0" % "compile" 
+
+libraryDependencies += "org.apache.flink" %% "flink-clients" % "1.2.0" % "it" 
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.1" % "test,it"
 
 libraryDependencies += "javax.servlet" % "javax.servlet-api" % "3.0.1" % "it"
 
-libraryDependencies += "org.apache.hadoop" % "hadoop-common" % "2.7.0" % "it" classifier "" classifier "tests"
+libraryDependencies += "org.apache.hadoop" % "hadoop-common" % "2.2.0" % "it" classifier "" classifier "tests"
 
-libraryDependencies += "org.apache.hadoop" % "hadoop-hdfs" % "2.7.0" % "it" classifier "" classifier "tests"
-
-libraryDependencies += "org.apache.hadoop" % "hadoop-minicluster" % "2.7.0" % "it"
+libraryDependencies += "org.apache.hadoop" % "hadoop-hdfs" % "2.2.0" % "it"  classifier "" classifier "tests"

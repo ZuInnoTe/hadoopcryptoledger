@@ -48,8 +48,7 @@ import org.apache.hadoop.io.compress.Decompressor
 import org.apache.hadoop.io.compress.SplittableCompressionCodec
 import org.apache.hadoop.io.compress.SplitCompressionInputStream
 
-import org.apache.flink.api.java.ExecutionEnvironment
-import org.apache.flink.api.java.LocalEnvironment
+import org.apache.flink.api.scala.ExecutionEnvironment
 
 import scala.collection.mutable.ArrayBuffer
 import org.scalatest.{FlatSpec, BeforeAndAfterAll, GivenWhenThen, Matchers}
@@ -108,8 +107,10 @@ override def beforeAll(): Unit = {
  	 dfsCluster = builder.numDataNodes(NOOFDATANODES).build()
 	conf.set("fs.defaultFS", dfsCluster.getFileSystem().getUri().toString()) 
 	// create local Flink cluster
- 	flinkEnvironment = new LocalEnvironment()
+ 	flinkEnvironment = ExecutionEnvironment.createLocalEnvironment(1)
  }
+
+  
 
   
   override def afterAll(): Unit = {
@@ -120,31 +121,30 @@ override def beforeAll(): Unit = {
 			 CodecPool.returnDecompressor(currentDecompressor)
 		}
  	}
-    // close dfs cluster
-    dfsCluster.shutdown()
     super.afterAll()
 }
 
 
-"The genesis block on DFS" should "be 1 transactions i total" in {
-	Given("Genesis Block on DFSCluster")
-	// create input directory
+
+"The multi block on DFS" should "be 346 transactions i total" in {
+	Given("Genesis Block as local file")
+// create input directory
 	dfsCluster.getFileSystem().mkdirs(DFS_INPUT_DIR)
 	// copy bitcoin blocks
 	val classLoader = getClass().getClassLoader()
     	// put testdata on DFS
-    	val fileName: String="genesis.blk"
+    	val fileName: String="multiblock.blk"
     	val fileNameFullLocal=classLoader.getResource("testdata/"+fileName).getFile()
     	val inputFile=new Path(fileNameFullLocal)
     	dfsCluster.getFileSystem().copyFromLocalFile(false, false, inputFile, DFS_INPUT_DIR)
-
 	When("count total transactions")
-	//
-	Then("1 transaction in total as a result")
+	FlinkScalaBitcoinBlockCounter.countTotalTransactions(flinkEnvironment,dfsCluster.getFileSystem().getUri().toString()+DFS_INPUT_DIR_NAME,dfsCluster.getFileSystem().getUri().toString()+DFS_OUTPUT_DIR_NAME+"/"+DEFAULT_OUTPUT_FILENAME)
+  flinkEnvironment.execute("Flink Scala Bitcoin transaction counter")
+	Then("346 transaction in total as a result")
 	// fetch results
-	//val resultLines = readDefaultResults(1)
-	//assert(1==resultLines.size())
-	//assert("(No of transactions: ,1)"==resultLines.get(0))
+	val resultLines = readDefaultResults(1)
+	assert(1==resultLines.size())
+	assert("(Number of Transactions: ,346)"==resultLines.get(0))
 }
 
 
@@ -201,5 +201,4 @@ def  openFile(path: Path): InputStream = {
       		}
 	}
 }
-
 }

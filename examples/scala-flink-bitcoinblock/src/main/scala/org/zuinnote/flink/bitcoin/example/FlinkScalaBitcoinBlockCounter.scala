@@ -41,9 +41,9 @@ object FlinkScalaBitcoinBlockCounter {
         val totalTransactionCounts = blockChainData.map{bitcoinBlock => ("Number of Transactions: ",bitcoinBlock.getTransactions().size())}
           .groupBy(0)
           .sum(1)
-         totalTransactionCounts.writeAsText(outputFile,FileSystem.WriteMode.OVERWRITE)
-        
-      }
+ 
+       totalTransactionCounts.writeAsText(outputFile,FileSystem.WriteMode.OVERWRITE)
+     }
 
  }
 
