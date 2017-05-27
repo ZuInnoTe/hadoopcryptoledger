@@ -10,6 +10,8 @@ mkdir -p $HOME/hiveserde/pitest
 cp -R hiveserde/build/reports/pitest $HOME/hiveserde/pitest
 mkdir -p $HOME/hiveudf/pitest
 cp -R hiveudf/build/reports/pitest $HOME/hiveudf/pitest
+mkdir -p $HOME/flinkdatasource/pitest
+cp -R flinkdatasource/build/reports/pitest $HOME/flinkdatasource/pitest
 
 # Get to the Travis build directory, configure git and clone the repo
 cd $HOME
@@ -28,6 +30,9 @@ cp -Rf $HOME/pitest/dependencycheck ./pitest/hiveserde
 git rm -rf ./pitest/hiveudf
 mkdir -p ./pitest/hiveudf
 cp -Rf $HOME/hiveudf/pitest ./pitest/hiveudf
+git rm -rf ./pitest/flinkdatasource
+mkdir -p ./pitest/flinkdatasource
+cp -Rf $HOME/flinkdatasource/pitest ./pitest/flinkdatasource
 git add -f .
 git commit -m "Lastest test mutation testing on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages"
 git push -fq origin gh-pages > /dev/null

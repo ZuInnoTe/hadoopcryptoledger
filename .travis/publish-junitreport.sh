@@ -10,6 +10,8 @@ mkdir -p $HOME/hiveserde/tests-latest
 cp -R hiveserde/build/reports/tests $HOME/hiveserde/tests-latest
 mkdir -p $HOME/hiveudf/tests-latest
 cp -R hiveudf/build/reports/tests $HOME/hiveudf/tests-latest
+mkdir -p $HOME/flinkdatasource/tests-latest
+cp -R flinkdatasource/build/reports/tests $HOME/flinkdatasource/tests-latest
 
 # Get to the Travis build directory, configure git and clone the repo
 cd $HOME
@@ -28,6 +30,9 @@ cp -Rf $HOME/hiveserde/tests-latest ./tests/hiveserde
 git rm -rf ./tests/hiveudf
 mkdir -p ./tests/hiveudf
 cp -Rf $HOME/hiveudf/tests-latest ./tests/hiveudf
+git rm -rf ./tests/flinkdatasource
+mkdir -p ./tests/flinkdatasource
+cp -Rf $HOME/flinkdatasource/tests-latest ./tests/flinkdatasource
 git add -f .
 git commit -m "Lastest javadoc on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages"
 git push -fq origin gh-pages > /dev/null

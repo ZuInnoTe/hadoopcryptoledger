@@ -10,6 +10,8 @@ mkdir -p $HOME/hiveserde/dependencycheck
 cp -R hiveserde/build/reports/dependency-check-report.html $HOME/hiveserde/dependencycheck
 mkdir -p $HOME/hiveudf/dependencycheck
 cp -R hiveudf/build/reports/dependency-check-report.html $HOME/hiveudf/dependencycheck
+mkdir -p $HOME/hiveudf/flinkdatasource
+cp -R flinkdatasource/build/reports/dependency-check-report.html $HOME/flinkdatasource/dependencycheck
 
 # Get to the Travis build directory, configure git and clone the repo
 cd $HOME
@@ -28,6 +30,9 @@ cp -Rf $HOME/hiveserde/dependencycheck ./dependencycheck/hiveserde
 git rm -rf ./dependencycheck/hiveudf
 mkdir -p ./dependencycheck/hiveudf
 cp -Rf $HOME/hiveudf/dependencycheck ./dependencycheck/hiveudf
+git rm -rf ./dependencycheck/flinkdatasource
+mkdir -p ./dependencycheck/flinkdatasource
+cp -Rf $HOME/flinkdatasource/dependencycheck ./dependencycheck/flinkdatasource
 git add -f .
 git commit -m "Lastest OWASP dependency check results on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages"
 git push -fq origin gh-pages > /dev/null

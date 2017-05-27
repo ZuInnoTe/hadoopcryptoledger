@@ -10,7 +10,8 @@ mkdir -p $HOME/hiveserde/javadoc-latest
 cp -R hiveserde/build/docs/javadoc $HOME/hiveserde/javadoc-latest
 mkdir -p $HOME/hiveudf/javadoc-latest
 cp -R hiveudf/build/docs/javadoc $HOME/hiveudf/javadoc-latest
-
+mkdir -p $HOME/flinkdatasource/javadoc-latest
+cp -R flinkdatasource/build/docs/javadoc $HOME/flinkdatasource/javadoc-latest
 
 # Get to the Travis build directory, configure git and clone the repo
 cd $HOME
@@ -30,6 +31,8 @@ cp -Rf $HOME/hiveserde/javadoc-latest ./javadoc/hiveserde
 git rm -rf ./javadoc/hiveudf
 mkdir -p ./javadoc/hiveudf
 cp -Rf $HOME/hiveudf/javadoc-latest ./javadoc/hiveudf
+mkdir -p ./javadoc/flinkdatasource
+cp -Rf $HOME/flinkdatasource/javadoc-latest ./javadoc/flinkdatasource
 git add -f .
 git commit -m "Lastest javadoc on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages"
 git push -fq origin gh-pages > /dev/null
