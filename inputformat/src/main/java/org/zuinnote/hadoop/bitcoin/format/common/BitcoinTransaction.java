@@ -20,6 +20,7 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
+import org.apache.commons.io.output.ThresholdingOutputStream;
 import org.apache.hadoop.io.Writable;
 
 import java.util.List;
@@ -30,32 +31,86 @@ public class BitcoinTransaction implements Writable {
 
 	
 private int version;
+private byte marker;
+private byte flag;
 private byte[] inCounter;
 private byte[] outCounter;
 private List<BitcoinTransactionInput> listOfInputs;
 private List<BitcoinTransactionOutput> listOfOutputs;
+private List<BitcoinScriptWitness> listOfScriptWitness;
 private int lockTime;
 
 public BitcoinTransaction() {
 	this.version=0;
+	this.marker=1;
+	this.flag=0;
 	this.inCounter=new byte[0];
 	this.outCounter=new byte[0];
 	this.listOfInputs=new ArrayList<>();
 	this.listOfOutputs=new ArrayList<>();
+	this.listOfScriptWitness=new ArrayList<>();
 	this.lockTime=0;
 }
 
+/***
+ * Creates a traditional Bitcoin Transaction without ScriptWitness
+ * 
+ * @param version
+ * @param inCounter
+ * @param listOfInputs
+ * @param outCounter
+ * @param listOfOutputs
+ * @param lockTime
+ */
 public BitcoinTransaction(int version, byte[] inCounter, List<BitcoinTransactionInput> listOfInputs, byte[] outCounter, List<BitcoinTransactionOutput> listOfOutputs, int lockTime) {
+
+	this.marker=1;
+	this.flag=0;
 	this.version=version;
 	this.inCounter=inCounter;
 	this.listOfInputs=listOfInputs;
 	this.outCounter=outCounter;
 	this.listOfOutputs=listOfOutputs;
+	this.listOfScriptWitness=new ArrayList<>();
+	this.lockTime=lockTime;
+}
+
+
+/**
+ * Creates a Bitcoin Transaction with Sigwitness
+ * 
+ * @param marker
+ * @param flag
+ * @param version
+ * @param inCounter
+ * @param listOfInputs
+ * @param outCounter
+ * @param listOfOutputs
+ * @param listOfScriptWitness
+ * @param lockTime
+ */
+public BitcoinTransaction(byte marker, byte flag, int version, byte[] inCounter, List<BitcoinTransactionInput> listOfInputs, byte[] outCounter, List<BitcoinTransactionOutput> listOfOutputs, List<BitcoinScriptWitness> listOfScriptWitness, int lockTime) {
+	this.marker=marker;
+	this.flag=flag;
+	this.version=version;
+	this.inCounter=inCounter;
+	this.listOfInputs=listOfInputs;
+	this.outCounter=outCounter;
+	this.listOfOutputs=listOfOutputs;
+	this.listOfScriptWitness=listOfScriptWitness;
 	this.lockTime=lockTime;
 }
 
 public int getVersion() {
 	return this.version;
+}
+
+public byte getMarker() {
+	return this.marker;
+}
+
+public byte getFlag() {
+	return this.flag;
 }
 
 public byte[] getInCounter() {
@@ -72,6 +127,10 @@ public byte[] getOutCounter() {
 
 public List<BitcoinTransactionOutput> getListOfOutputs() {
 	return this.listOfOutputs;
+}
+
+public List<BitcoinScriptWitness> getBitcoinScriptWitness() {
+	return this.listOfScriptWitness;
 }
 
 public int getLockTime() {
