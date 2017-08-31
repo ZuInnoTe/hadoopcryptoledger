@@ -183,7 +183,7 @@ public List<BitcoinTransaction> parseTransactions(ByteBuffer rawByteBuffer,long 
 				// load the real number of inputs
 				segwit=true;
 				marker=0;
-				flag=1;
+				flag=segwitFlag;
 				currentInCounterVarInt=BitcoinUtil.convertVarIntByteBufferToByteArray(rawByteBuffer);
 				currentNoOfInputs=BitcoinUtil.getVarInt(currentInCounterVarInt);
 			} else {
