@@ -168,7 +168,28 @@ public List<BitcoinTransaction> parseTransactions(ByteBuffer rawByteBuffer,long 
 		int currentVersion=rawByteBuffer.getInt();
 		// read inCounter
 		byte[] currentInCounterVarInt=BitcoinUtil.convertVarIntByteBufferToByteArray(rawByteBuffer);
+		
 		long currentNoOfInputs=BitcoinUtil.getVarInt(currentInCounterVarInt);
+		boolean segwit=false;
+		byte marker=1;
+		byte flag=0;
+		// check segwit marker
+		if (currentNoOfInputs==0) {
+			// this seems to be segwit - lets be sure
+			// check segwit flag
+			byte segwitFlag = rawByteBuffer.get();
+			if (segwitFlag!=0) {
+			
+				// load the real number of inputs
+				segwit=true;
+				marker=0;
+				flag=1;
+				currentInCounterVarInt=BitcoinUtil.convertVarIntByteBufferToByteArray(rawByteBuffer);
+				currentNoOfInputs=BitcoinUtil.getVarInt(currentInCounterVarInt);
+			} else {
+				LOG.warn("It seems a block with 0 transaction inputs was found");
+			}
+		}
 		// read inputs
 		ArrayList<BitcoinTransactionInput> currentTransactionInput = new ArrayList<>((int)currentNoOfInputs);
 		
@@ -207,10 +228,30 @@ public List<BitcoinTransaction> parseTransactions(ByteBuffer rawByteBuffer,long 
 			rawByteBuffer.get(currentTransactionOutScript,0,currentTransactionTxOutScriptSizeInt);
 			currentTransactionOutput.add(new BitcoinTransactionOutput(currentTransactionOutputValue,currentTransactionTxOutScriptLengthVarInt,currentTransactionOutScript));
 		}
+		ArrayList<BitcoinScriptWitness> currentTransactionSegwit = new ArrayList<>((int)currentNoOfInputs);
+		if (segwit) {
+			// read segwit data
+			// for each transaction input there is at least some segwit data item
+			// read scriptWitness size
+			byte[] currentWitnessCounterVarInt=BitcoinUtil.convertVarIntByteBufferToByteArray(rawByteBuffer);
+			
+			long currentNoOfWitnesses=BitcoinUtil.getVarInt(currentWitnessCounterVarInt);
+			for (int i=0;i<currentNoOfWitnesses;i++) {
+				// read size of segwit script
+				byte[] currentTransactionSegwitScriptLength=BitcoinUtil.convertVarIntByteBufferToByteArray(rawByteBuffer);
+				long currentTransactionSegwitScriptSize=BitcoinUtil.getVarInt(currentTransactionSegwitScriptLength);
+				int currentTransactionSegwitScriptSizeInt= (int)currentTransactionSegwitScriptSize;
+				// read segwit script
+				byte[] currentTransactionInSegwitScript=new byte[currentTransactionSegwitScriptSizeInt];
+				rawByteBuffer.get(currentTransactionInSegwitScript,0,currentTransactionSegwitScriptSizeInt);
+				// add segwit
+				currentTransactionSegwit.add(new BitcoinScriptWitness(currentTransactionSegwitScriptLength,currentTransactionInSegwitScript));
+			}
+		}
 		// lock_time
 		int currentTransactionLockTime = rawByteBuffer.getInt();
 		// add transaction
-		resultTransactions.add(new BitcoinTransaction(currentVersion,currentInCounterVarInt,currentTransactionInput,currentOutCounterVarInt,currentTransactionOutput,currentTransactionLockTime));
+		resultTransactions.add(new BitcoinTransaction(marker,flag,currentVersion,currentInCounterVarInt,currentTransactionInput,currentOutCounterVarInt,currentTransactionOutput,currentTransactionSegwit,currentTransactionLockTime));
 	}
 	return resultTransactions;
 }
