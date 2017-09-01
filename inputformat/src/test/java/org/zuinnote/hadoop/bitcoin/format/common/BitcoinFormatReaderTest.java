@@ -145,6 +145,17 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
 	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
   }
+ 
+ @Test
+ public void checkTestDataScriptWitnessNetAvailable() {
+	ClassLoader classLoader = getClass().getClassLoader();
+	String fileName="scriptwitness.blk";
+	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
+	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	File file = new File(fileNameGenesis);
+	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
+	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+ }
 
 
 
@@ -325,6 +336,28 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 	}
   }
 
+@Test
+public void parseScriptWitnessBlockAsBitcoinRawBlockHeap()  throws FileNotFoundException, IOException, BitcoinBlockReadException {
+  ClassLoader classLoader = getClass().getClassLoader();
+	String fileName="scriptwitness.blk";
+	String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+	File file = new File(fileNameBlock);
+	BitcoinBlockReader bbr = null;
+	boolean direct=false;
+	try {
+		FileInputStream fin = new FileInputStream(file);
+		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
+		ByteBuffer version1ByteBuffer = bbr.readRawBlock();
+		assertFalse("Random ScriptWitness Raw Block is HeapByteBuffer", version1ByteBuffer.isDirect());
+		assertEquals("Random ScriptWitness Raw Block has a size of 999283 bytes", 999283, version1ByteBuffer.limit());
+		
+	} finally {
+		if (bbr!=null) 
+			bbr.close();
+	}
+}
+
+
   @Test
   public void parseGenesisBlockAsBitcoinRawBlockDirect() throws FileNotFoundException, IOException, BitcoinBlockReadException {
 	ClassLoader classLoader = getClass().getClassLoader();
@@ -499,6 +532,27 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 			bbr.close();
 	}
   }
+
+@Test
+public void parseScriptWitnessBlockAsBitcoinRawBlockDirect()  throws FileNotFoundException, IOException, BitcoinBlockReadException {
+  ClassLoader classLoader = getClass().getClassLoader();
+	String fileName="scriptwitness.blk";
+	String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+	File file = new File(fileNameBlock);
+	BitcoinBlockReader bbr = null;
+	boolean direct=true;
+	try {
+		FileInputStream fin = new FileInputStream(file);
+		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
+		ByteBuffer version1ByteBuffer = bbr.readRawBlock();
+		assertTrue("Random ScriptWitness Raw Block is DirectByteBuffer", version1ByteBuffer.isDirect());
+		assertEquals("Random ScriptWitness Raw Block has a size of 999283 bytes", 999283, version1ByteBuffer.limit());
+		
+	} finally {
+		if (bbr!=null) 
+			bbr.close();
+	}
+}
 
 
   @Test
@@ -697,6 +751,26 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 			bbr.close();
 	}
   }
+
+@Test
+public void parseScriptWitnessBlockAsBitcoinBlockHeap() throws FileNotFoundException, IOException, BitcoinBlockReadException {
+	ClassLoader classLoader = getClass().getClassLoader();
+	String fileName="scriptwitness.blk";
+	String fullFileNameString=classLoader.getResource("testdata/"+fileName).getFile();	
+	File file = new File(fullFileNameString);
+	BitcoinBlockReader bbr = null;
+	boolean direct=false;
+	try {
+		FileInputStream fin = new FileInputStream(file);
+		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
+		BitcoinBlock theBitcoinBlock = bbr.readBlock();
+		assertEquals("Random ScriptWitness Block must contain exactly 470 transactions", 470, theBitcoinBlock.getTransactions().size());
+		
+	} finally {
+		if (bbr!=null) 
+			bbr.close();
+	}
+}
 
   @Test
   public void parseGenesisBlockAsBitcoinBlockDirect() throws FileNotFoundException, IOException, BitcoinBlockReadException {
