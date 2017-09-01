@@ -7,7 +7,7 @@ env:
   - GRADLE_OPTS=-Dorg.gradle.daemon=false 
 language: java
 script:
-- jdk_switcher use oraclejdk7
+- jdk_switcher use openjdk7
 - ./gradlew clean
 - ./gradlew build
 - ./gradlew test
