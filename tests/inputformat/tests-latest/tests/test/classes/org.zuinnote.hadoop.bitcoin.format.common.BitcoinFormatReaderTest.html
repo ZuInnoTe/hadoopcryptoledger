@@ -23,7 +23,7 @@
 <tr>
 <td>
 <div class="infoBox" id="tests">
-<div class="counter">45</div>
+<div class="counter">49</div>
 <p>tests</p>
 </div>
 </td>
@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.154s</div>
+<div class="counter">0.408s</div>
 <p>duration</p>
 </div>
 </td>
@@ -76,11 +76,16 @@
 </thead>
 <tr>
 <td class="success">checkTestDataGenesisBlockAvailable</td>
-<td>0s</td>
+<td>0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">checkTestDataMultiNetAvailable</td>
+<td>0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">checkTestDataScriptWitnessNetAvailable</td>
 <td>0s</td>
 <td class="success">passed</td>
 </tr>
@@ -91,12 +96,12 @@
 </tr>
 <tr>
 <td class="success">checkTestDataTestnet3Version4BlockAvailable</td>
-<td>0s</td>
+<td>0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">checkTestDataVersion1BlockAvailable</td>
-<td>0s</td>
+<td>0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -111,7 +116,7 @@
 </tr>
 <tr>
 <td class="success">checkTestDataVersion3BlockAvailable</td>
-<td>0.001s</td>
+<td>0.006s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -126,17 +131,17 @@
 </tr>
 <tr>
 <td class="success">getKeyFromRawBlockHeap</td>
-<td>0.002s</td>
+<td>0.004s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">parseGenesisBlockAsBitcoinBlockDirect</td>
-<td>0.001s</td>
+<td>0.002s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">parseGenesisBlockAsBitcoinBlockHeap</td>
-<td>0.001s</td>
+<td>0s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -156,17 +161,32 @@
 </tr>
 <tr>
 <td class="success">parseMultiNetAsBitcoinRawBlockHeap</td>
-<td>0.001s</td>
+<td>0.002s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">parseMultiNetBlockAsBitcoinBlockDirect</td>
-<td>0.005s</td>
+<td>0.006s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">parseMultiNetBlockAsBitcoinBlockHeap</td>
-<td>0.021s</td>
+<td>0.077s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">parseScriptWitnessBlockAsBitcoinBlockHeap</td>
+<td>0.013s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">parseScriptWitnessBlockAsBitcoinRawBlockDirect</td>
+<td>0.003s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">parseScriptWitnessBlockAsBitcoinRawBlockHeap</td>
+<td>0.004s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -186,17 +206,17 @@
 </tr>
 <tr>
 <td class="success">parseTestNet3GenesisBlockAsBitcoinRawBlockHeap</td>
-<td>0s</td>
+<td>0.004s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">parseTestNet3Version4BlockAsBitcoinBlockDirect</td>
-<td>0.013s</td>
+<td>0.029s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">parseTestNet3Version4BlockAsBitcoinBlockHeap</td>
-<td>0.010s</td>
+<td>0.013s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -211,7 +231,7 @@
 </tr>
 <tr>
 <td class="success">parseVersion1BlockAsBitcoinBlockDirect</td>
-<td>0s</td>
+<td>0.002s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -226,57 +246,57 @@
 </tr>
 <tr>
 <td class="success">parseVersion1BlockAsBitcoinRawBlockHeap</td>
-<td>0s</td>
+<td>0.002s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">parseVersion2BlockAsBitcoinBlockDirect</td>
-<td>0.002s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">parseVersion2BlockAsBitcoinBlockHeap</td>
-<td>0.002s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">parseVersion2BlockAsBitcoinRawBlockDirect</td>
-<td>0.001s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">parseVersion2BlockAsBitcoinRawBlockHeap</td>
-<td>0s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">parseVersion3BlockAsBitcoinBlockDirect</td>
-<td>0.005s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">parseVersion3BlockAsBitcoinBlockHeap</td>
-<td>0.009s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">parseVersion3BlockAsBitcoinRawBlockDirect</td>
-<td>0.002s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">parseVersion3BlockAsBitcoinRawBlockHeap</td>
-<td>0.001s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">parseVersion4BlockAsBitcoinBlockDirect</td>
 <td>0.004s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
-<td class="success">parseVersion4BlockAsBitcoinBlockHeap</td>
+<td class="success">parseVersion2BlockAsBitcoinBlockHeap</td>
+<td>0.003s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">parseVersion2BlockAsBitcoinRawBlockDirect</td>
+<td>0.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">parseVersion2BlockAsBitcoinRawBlockHeap</td>
+<td>0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">parseVersion3BlockAsBitcoinBlockDirect</td>
+<td>0.006s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">parseVersion3BlockAsBitcoinBlockHeap</td>
+<td>0.013s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">parseVersion3BlockAsBitcoinRawBlockDirect</td>
+<td>0.003s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">parseVersion3BlockAsBitcoinRawBlockHeap</td>
+<td>0.004s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">parseVersion4BlockAsBitcoinBlockDirect</td>
 <td>0.010s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">parseVersion4BlockAsBitcoinBlockHeap</td>
+<td>0.015s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -291,12 +311,12 @@
 </tr>
 <tr>
 <td class="success">seekBlockStartDirect</td>
-<td>0s</td>
+<td>0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">seekBlockStartHeap</td>
-<td>0.047s</td>
+<td>0.160s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -309,7 +329,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 4.1</a> at Aug 31, 2017 10:10:03 PM</p>
+<a href="http://www.gradle.org">Gradle 4.1</a> at Sep 1, 2017 6:44:43 PM</p>
 </div>
 </div>
 </body>
