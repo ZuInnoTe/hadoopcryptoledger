@@ -971,6 +971,27 @@ public void parseScriptWitnessBlockAsBitcoinBlockHeap() throws FileNotFoundExcep
 	}
   }
 
+
+@Test
+public void parseScriptWitnessBlockAsBitcoinBlockDirect() throws FileNotFoundException, IOException, BitcoinBlockReadException {
+	ClassLoader classLoader = getClass().getClassLoader();
+	String fileName="scriptwitness.blk";
+	String fullFileNameString=classLoader.getResource("testdata/"+fileName).getFile();	
+	File file = new File(fullFileNameString);
+	BitcoinBlockReader bbr = null;
+	boolean direct=true;
+	try {
+		FileInputStream fin = new FileInputStream(file);
+		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
+		BitcoinBlock theBitcoinBlock = bbr.readBlock();
+		assertEquals("Random ScriptWitness Block must contain exactly 470 transactions", 470, theBitcoinBlock.getTransactions().size());
+		
+	} finally {
+		if (bbr!=null) 
+			bbr.close();
+	}
+}
+
   @Test
   public void seekBlockStartHeap()  throws FileNotFoundException, IOException, BitcoinBlockReadException {
      ClassLoader classLoader = getClass().getClassLoader();
