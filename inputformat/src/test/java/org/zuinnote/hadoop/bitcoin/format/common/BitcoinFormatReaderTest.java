@@ -347,9 +347,9 @@ public void parseScriptWitnessBlockAsBitcoinRawBlockHeap()  throws FileNotFoundE
 	try {
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
-		ByteBuffer version1ByteBuffer = bbr.readRawBlock();
-		assertFalse("Random ScriptWitness Raw Block is HeapByteBuffer", version1ByteBuffer.isDirect());
-		assertEquals("Random ScriptWitness Raw Block has a size of 999283 bytes", 999283, version1ByteBuffer.limit());
+		ByteBuffer scriptwitnessByteBuffer = bbr.readRawBlock();
+		assertFalse("Random ScriptWitness Raw Block is HeapByteBuffer", scriptwitnessByteBuffer.isDirect());
+		assertEquals("Random ScriptWitness Raw Block has a size of 999283 bytes", 999283, scriptwitnessByteBuffer.limit());
 		
 	} finally {
 		if (bbr!=null) 
@@ -544,9 +544,9 @@ public void parseScriptWitnessBlockAsBitcoinRawBlockDirect()  throws FileNotFoun
 	try {
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
-		ByteBuffer version1ByteBuffer = bbr.readRawBlock();
-		assertTrue("Random ScriptWitness Raw Block is DirectByteBuffer", version1ByteBuffer.isDirect());
-		assertEquals("Random ScriptWitness Raw Block has a size of 999283 bytes", 999283, version1ByteBuffer.limit());
+		ByteBuffer scriptwitnessByteBuffer = bbr.readRawBlock();
+		assertTrue("Random ScriptWitness Raw Block is DirectByteBuffer", scriptwitnessByteBuffer.isDirect());
+		assertEquals("Random ScriptWitness Raw Block has a size of 999283 bytes", 999283, scriptwitnessByteBuffer.limit());
 		
 	} finally {
 		if (bbr!=null) 
