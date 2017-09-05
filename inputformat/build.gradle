@@ -11,7 +11,7 @@ compileJava.options.encoding = 'UTF-8'
 
 group = "com.github.zuinnote"
 archivesBaseName = "hadoopcryptoledger-fileformat"
-version = "1.0.4"
+version = "1.0.5"
 
 
 jar {
@@ -84,6 +84,10 @@ task sourcesJar(type: Jar) {
     from sourceSets.main.allSource
 }
 
+test {
+    testLogging.showStandardStreams = true
+}
+
 artifacts {
     archives hadoopCryptoLedgerJavaDocs, sourcesJar
 }
@@ -94,7 +98,7 @@ publishing {
         maven(MavenPublication) {
             groupId 'com.github.zuinnote'
             artifactId 'hadoopcryptoledger-fileformat'
-            version '1.0.4'
+            version '1.0.5'
 
             from components.java
         }
@@ -107,6 +111,8 @@ dependencies {
     // hadoop libraries
    provided("org.apache.hadoop:hadoop-common:2.7.0")
    provided("org.apache.hadoop:hadoop-mapreduce-client-common:2.7.0")
+   // JSR 374 JSON processing API
+   compile("javax.json:javax.json-api:1.1")
    // log4j2
    provided("org.apache.logging.log4j:log4j-api:2.4.1")
    // test

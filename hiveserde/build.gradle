@@ -9,7 +9,7 @@ compileJava.options.encoding = 'UTF-8'
 
 group = "com.github.zuinnote"
 archivesBaseName = "hadoopcryptoledger-hiveserde"
-version = "1.0.4"
+version = "1.0.5"
 
 
 jar {
@@ -74,7 +74,7 @@ dependencies {
    // hadoop lib for driver
      provided("org.apache.hadoop:hadoop-client:2.7.0")
        // hadoop crypto ledger library
-   provided("com.github.zuinnote:hadoopcryptoledger-fileformat:1.0.4")
+   provided("com.github.zuinnote:hadoopcryptoledger-fileformat:1.0.5")
     // hive serde API
    provided("org.apache.hive:hive-serde:1.2.0")
    provided("org.apache.hive:hive-exec:1.2.0")
@@ -89,7 +89,7 @@ publishing {
         maven(MavenPublication) {
             groupId 'com.github.zuinnote'
             artifactId 'hadoopcryptoledger-hiveserde'
-            version '1.0.4'
+            version '1.0.5'
 
             from components.java
         }
