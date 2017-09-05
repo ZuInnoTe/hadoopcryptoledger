@@ -126,9 +126,10 @@ override def beforeAll(): Unit = {
 
 
 
-"The multi block on DFS" should "be 346 transactions i total" in {
+"The multi block on DFS" should "be 346 transactions in total" in {
 	Given("Genesis Block as local file")
 // create input directory
+	   dfsCluster.getFileSystem().delete(DFS_INPUT_DIR,true)
 	dfsCluster.getFileSystem().mkdirs(DFS_INPUT_DIR)
 	// copy bitcoin blocks
 	val classLoader = getClass().getClassLoader()
@@ -145,6 +146,29 @@ override def beforeAll(): Unit = {
 	val resultLines = readDefaultResults(1)
 	assert(1==resultLines.size())
 	assert("(Number of Transactions: ,346)"==resultLines.get(0))
+}
+
+
+"The scriptwitness block on DFS" should "be 470 transactions in total" in {
+	Given("Random Scriptwitness Block as local file")
+// create input directory
+	   dfsCluster.getFileSystem().delete(DFS_INPUT_DIR,true)
+	dfsCluster.getFileSystem().mkdirs(DFS_INPUT_DIR)
+	// copy bitcoin blocks
+	val classLoader = getClass().getClassLoader()
+    	// put testdata on DFS
+    	val fileName: String="scriptwitness.blk"
+    	val fileNameFullLocal=classLoader.getResource("testdata/"+fileName).getFile()
+    	val inputFile=new Path(fileNameFullLocal)
+    	dfsCluster.getFileSystem().copyFromLocalFile(false, false, inputFile, DFS_INPUT_DIR)
+	When("count total transactions")
+	FlinkScalaBitcoinBlockCounter.countTotalTransactions(flinkEnvironment,dfsCluster.getFileSystem().getUri().toString()+DFS_INPUT_DIR_NAME,dfsCluster.getFileSystem().getUri().toString()+DFS_OUTPUT_DIR_NAME+"/"+DEFAULT_OUTPUT_FILENAME)
+  flinkEnvironment.execute("Flink Scala Bitcoin transaction counter")
+	Then("470 transaction in total as a result")
+	// fetch results
+	val resultLines = readDefaultResults(1)
+	assert(1==resultLines.size())
+	assert("(Number of Transactions: ,470)"==resultLines.get(0))
 }
 
 
