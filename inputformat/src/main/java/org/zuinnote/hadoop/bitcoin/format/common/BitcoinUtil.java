@@ -305,6 +305,13 @@ public static byte[] getTransactionHash(BitcoinTransaction transaction) throws I
 	
 	byte[] version = reverseByteArray(convertIntToByteArray(transaction.getVersion()));
 	transactionBAOS.write(version);
+	// check if segwit
+	boolean segwit=false;
+	if ((transaction.getMarker()==0) && (transaction.getFlag()!=0)) {
+		segwit=true;
+		transactionBAOS.write(transaction.getMarker());
+		transactionBAOS.write(transaction.getFlag());
+	}
 	byte[] inCounter = transaction.getInCounter();
 	transactionBAOS.write(inCounter);
 	for (int i=0;i<transaction.getListOfInputs().size();i++) {
@@ -320,7 +327,13 @@ public static byte[] getTransactionHash(BitcoinTransaction transaction) throws I
 		transactionBAOS.write(reverseByteArray(convertLongToByteArray(transaction.getListOfOutputs().get(j).getValue())));		
 		transactionBAOS.write(transaction.getListOfOutputs().get(j).getTxOutScriptLength());
 		transactionBAOS.write(transaction.getListOfOutputs().get(j).getTxOutScript());
-	}	
+	}
+	if (segwit) {
+		for (int k=0;k<transaction.getBitcoinScriptWitness().size();k++) {
+			transactionBAOS.write(transaction.getBitcoinScriptWitness().get(k).getWitnessScriptLength());
+			transactionBAOS.write(transaction.getBitcoinScriptWitness().get(k).getWitnessScript());
+		}
+	}
 	byte[] lockTime=reverseByteArray(convertIntToByteArray(transaction.getLockTime()));
 	transactionBAOS.write(lockTime);
 	byte[] transactionByteArray= transactionBAOS.toByteArray();
