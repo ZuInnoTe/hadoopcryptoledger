@@ -37,7 +37,7 @@ private byte[] inCounter;
 private byte[] outCounter;
 private List<BitcoinTransactionInput> listOfInputs;
 private List<BitcoinTransactionOutput> listOfOutputs;
-private List<BitcoinScriptWitness> listOfScriptWitness;
+private List<BitcoinScriptWitnessItem> listOfScriptWitnessItem;
 private int lockTime;
 
 public BitcoinTransaction() {
@@ -48,7 +48,7 @@ public BitcoinTransaction() {
 	this.outCounter=new byte[0];
 	this.listOfInputs=new ArrayList<>();
 	this.listOfOutputs=new ArrayList<>();
-	this.listOfScriptWitness=new ArrayList<>();
+	this.listOfScriptWitnessItem=new ArrayList<>();
 	this.lockTime=0;
 }
 
@@ -71,7 +71,7 @@ public BitcoinTransaction(int version, byte[] inCounter, List<BitcoinTransaction
 	this.listOfInputs=listOfInputs;
 	this.outCounter=outCounter;
 	this.listOfOutputs=listOfOutputs;
-	this.listOfScriptWitness=new ArrayList<>();
+	this.listOfScriptWitnessItem=new ArrayList<>();
 	this.lockTime=lockTime;
 }
 
@@ -86,10 +86,10 @@ public BitcoinTransaction(int version, byte[] inCounter, List<BitcoinTransaction
  * @param listOfInputs
  * @param outCounter
  * @param listOfOutputs
- * @param listOfScriptWitness
+ * @param listOfScriptWitnessItem
  * @param lockTime
  */
-public BitcoinTransaction(byte marker, byte flag, int version, byte[] inCounter, List<BitcoinTransactionInput> listOfInputs, byte[] outCounter, List<BitcoinTransactionOutput> listOfOutputs, List<BitcoinScriptWitness> listOfScriptWitness, int lockTime) {
+public BitcoinTransaction(byte marker, byte flag, int version, byte[] inCounter, List<BitcoinTransactionInput> listOfInputs, byte[] outCounter, List<BitcoinTransactionOutput> listOfOutputs, List<BitcoinScriptWitnessItem> listOfScriptWitnessItem, int lockTime) {
 	this.marker=marker;
 	this.flag=flag;
 	this.version=version;
@@ -97,7 +97,7 @@ public BitcoinTransaction(byte marker, byte flag, int version, byte[] inCounter,
 	this.listOfInputs=listOfInputs;
 	this.outCounter=outCounter;
 	this.listOfOutputs=listOfOutputs;
-	this.listOfScriptWitness=listOfScriptWitness;
+	this.listOfScriptWitnessItem=listOfScriptWitnessItem;
 	this.lockTime=lockTime;
 }
 
@@ -129,8 +129,8 @@ public List<BitcoinTransactionOutput> getListOfOutputs() {
 	return this.listOfOutputs;
 }
 
-public List<BitcoinScriptWitness> getBitcoinScriptWitness() {
-	return this.listOfScriptWitness;
+public List<BitcoinScriptWitnessItem> getBitcoinScriptWitness() {
+	return this.listOfScriptWitnessItem;
 }
 
 public int getLockTime() {
