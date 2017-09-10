@@ -252,6 +252,81 @@ public class BitcoinUtilTest {
 	 assertArrayEquals("Hash for Genesis Transaction correctly calculated", expectedHash, genesisTransactionHash);
   }
 
+  @Test
+  public void getTransactionHashSegWit() throws NoSuchAlgorithmException, IOException {
+	 // reconstruct the transaction from the a random segwit block
+	//  02000000 00010107 2135236D 2EBC78B6 ACE18897 03B18485 528712BD 70E07F4A 901140DE 38A2E801 00000017 1600144D 4D83ED5F 107B8D45 1E59A043 1A139279 6B2604FF FFFFFF02 4FE9243C 00000000 17A914F0 50C591EA 982673CC EDF52113 657B6783 03E6A187 157E9003 00000000 1976A914 FB2E1383 5E3988C7 8F760D4A C81E04EA F194EA92 88AC0248 30450221 00BB5F78 E8A1BA5E 14261B0A D39556AF 9B21D91F 675D38C8 CDAD7E7F 5D21004A BD02204C 1EACF1F9 AC1DCC61 63F207FC BC498B32 4CBEF57F 839FA2C2 55574B2F 3719BC01 2103C53F EA9AE561 B60574B2 D510273F 7C516069 7EB47B48 8E95AD62 91BBCB5E 43A20000 0000
+	    
+	 // previous tx out index
+		// 01 000000
+	  // 0x17 inscript size
+	  // inscript
+	// 1600144D 4D83ED5F 107B8D45 1E59A043 1A139279 6B2604
+	  //seqno
+	// FF FFFFFF
+	  // out counter
+	 // 02
+	  // value
+	  //4FE9243C 00000000  // reverse 3C24E94F
+	  
+	  // out script size 0x17
+	  // outscript A914F0 50C591EA 982673CC EDF52113 657B6783 03E6A187 
+	  
+	  //value
+	  // 157E9003 00000000 
+	  //out script size 0x19
+	  // outscript 76A914 FB2E1383 5E3988C7 8F760D4A C81E04EA F194EA92 88AC
+	  
+	  // no of witnesses: 0x02
+	  // size witness script 0x48
+	  // witness script 30450221 00BB5F78 E8A1BA5E 14261B0A D39556AF 9B21D91F 675D38C8 CDAD7E7F 5D21004A BD02204C 1EACF1F9 AC1DCC61 63F207FC BC498B32 4CBEF57F 839FA2C2 55574B2F 3719BC01 
+	  // size of witness script 0x21
+	  // script: 03C53F EA9AE561 B60574B2 D510273F 7C516069 7EB47B48 8E95AD62 91BBCB5E 43A2
+	  // lock time: 0000 0000
+	  
+	  // transact hash: 47521c2a13455e92d3bd563fada5786e85b45e9685a8c9a3feb89a4fb50daff5
+
+	int version=2;
+	byte marker=0x00;
+	byte flag=0x01;
+	byte[] inCounter = new byte[]{0x01};
+	byte[] previousTransactionHash = new byte[]{(byte)0x07,(byte)0x21,(byte)0x35,(byte)0x23,(byte)0x6D,(byte)0x2E,(byte)0xBC,(byte)0x78,(byte)0xB6,(byte)0xAC,(byte)0xE1,(byte)0x88,(byte)0x97,(byte)0x03,(byte)0xB1,(byte)0x84,(byte)0x85,(byte)0x52,(byte)0x87,(byte)0x12,(byte)0xBD,(byte)0x70,(byte)0xE0,(byte)0x7F,(byte)0x4A,(byte)0x90,(byte)0x11,(byte)0x40,(byte)0xDE,(byte)0x38,(byte)0xA2,(byte)0xE8};
+	long previousTxOutIndex = 1L;
+
+	byte[] txInScriptLength = new byte[]{(byte)0x17};
+	
+	byte[] txInScript= new byte[]{(byte)0x16,(byte)0x00,(byte)0x14,(byte)0x4D,(byte)0x4D,(byte)0x83,(byte)0xED,(byte)0x5F,(byte)0x10,(byte)0x7B,(byte)0x8D,(byte)0x45,(byte)0x1E,(byte)0x59,(byte)0xA0,(byte)0x43,(byte)0x1A,(byte)0x13,(byte)0x92,(byte)0x79,(byte)0x6B,(byte)0x26,(byte)0x04};
+	long seqNo=4294967295L;
+	byte[] outCounter = new byte[]{0x02};
+	long value_1=1009051983L;
+	byte[] txOutScriptLength_1=new byte[]{(byte)0x17};
+	byte[] txOutScript_1=new byte[]{(byte)0xA9,(byte)0x14,(byte)0xF0,(byte)0x50,(byte)0xC5,(byte)0x91,(byte)0xEA,(byte)0x98,(byte)0x26,(byte)0x73,(byte)0xCC,(byte)0xED,(byte)0xF5,(byte)0x21,(byte)0x13,(byte)0x65,(byte)0x7B,(byte)0x67,(byte)0x83,(byte)0x03,(byte)0xE6,(byte)0xA1,(byte)0x87};
+	long value_2=59801109L;
+	byte[] txOutScriptLength_2=new byte[]{(byte)0x19};
+	byte[] txOutScript_2=new byte[]{(byte)0x76,(byte)0xA9,(byte)0x14,(byte)0xFB,(byte)0x2E,(byte)0x13,(byte)0x83,(byte)0x5E,(byte)0x39,(byte)0x88,(byte)0xC7,(byte)0x8F,(byte)0x76,(byte)0x0D,(byte)0x4A,(byte)0xC8,(byte)0x1E,(byte)0x04,(byte)0xEA,(byte)0xF1,(byte)0x94,(byte)0xEA,(byte)0x92,(byte)0x88,(byte)0xAC};
+	
+	// there is only one input so we have only one list of stack items containing 2 items in this case
+	byte[] noOfStackItems = new byte[]{0x02};
+	byte[] segwitnessLength_1=new byte[]{(byte)0x48};
+	byte[] segwitnessScript_1 = new byte[]{(byte)0x30,(byte)0x45,(byte)0x02,(byte)0x21,(byte)0x00,(byte)0xBB,(byte)0x5F,(byte)0x78,(byte)0xE8,(byte)0xA1,(byte)0xBA,(byte)0x5E,(byte)0x14,(byte)0x26,(byte)0x1B,(byte)0x0A,(byte)0xD3,(byte)0x95,(byte)0x56,(byte)0xAF,(byte)0x9B,(byte)0x21,(byte)0xD9,(byte)0x1F,(byte)0x67,(byte)0x5D,(byte)0x38,(byte)0xC8,(byte)0xCD,(byte)0xAD,(byte)0x7E,(byte)0x7F,(byte)0x5D,(byte)0x21,(byte)0x00,(byte)0x4A,(byte)0xBD,(byte)0x02,(byte)0x20,(byte)0x4C,(byte)0x1E,(byte)0xAC,(byte)0xF1,(byte)0xF9,(byte)0xAC,(byte)0x1D,(byte)0xCC,(byte)0x61,(byte)0x63,(byte)0xF2,(byte)0x07,(byte)0xFC,(byte)0xBC,(byte)0x49,(byte)0x8B,(byte)0x32,(byte)0x4C,(byte)0xBE,(byte)0xF5,(byte)0x7F,(byte)0x83,(byte)0x9F,(byte)0xA2,(byte)0xC2,(byte)0x55,(byte)0x57,(byte)0x4B,(byte)0x2F,(byte)0x37,(byte)0x19,(byte)0xBC,(byte)0x01};
+	byte[] segwitnessLength_2=new byte[]{(byte)0x21};
+	byte[] segwitnessScript_2 = new byte[]{(byte)0x03,(byte)0xC5,(byte)0x3F,(byte)0xEA,(byte)0x9A,(byte)0xE5,(byte)0x61,(byte)0xB6,(byte)0x05,(byte)0x74,(byte)0xB2,(byte)0xD5,(byte)0x10,(byte)0x27,(byte)0x3F,(byte)0x7C,(byte)0x51,(byte)0x60,(byte)0x69,(byte)0x7E,(byte)0xB4,(byte)0x7B,(byte)0x48,(byte)0x8E,(byte)0x95,(byte)0xAD,(byte)0x62,(byte)0x91,(byte)0xBB,(byte)0xCB,(byte)0x5E,(byte)0x43,(byte)0xA2};
+	int lockTime = 0;
+	List<BitcoinTransactionInput> randomScriptWitnessInput = new ArrayList<BitcoinTransactionInput>(1);
+	randomScriptWitnessInput.add(new BitcoinTransactionInput(previousTransactionHash,previousTxOutIndex,txInScriptLength,txInScript,seqNo));
+	List<BitcoinTransactionOutput> randomScriptWitnessOutput = new ArrayList<BitcoinTransactionOutput>(2);
+	randomScriptWitnessOutput.add(new BitcoinTransactionOutput(value_1,txOutScriptLength_1,txOutScript_1));
+	randomScriptWitnessOutput.add(new BitcoinTransactionOutput(value_2,txOutScriptLength_2,txOutScript_2));
+	List<BitcoinScriptWitnessItem> randomScriptWitnessSWI = new ArrayList<BitcoinScriptWitnessItem>(1);
+	List<BitcoinScriptWitness> randomScriptWitnessSW = new ArrayList<BitcoinScriptWitness>(2);
+	randomScriptWitnessSW.add(new BitcoinScriptWitness(segwitnessLength_1,segwitnessScript_1));
+	randomScriptWitnessSW.add(new BitcoinScriptWitness(segwitnessLength_2,segwitnessScript_2));
+	randomScriptWitnessSWI.add(new BitcoinScriptWitnessItem(noOfStackItems,randomScriptWitnessSW));
+	 BitcoinTransaction randomScriptWitnessTransaction = new BitcoinTransaction(version,inCounter,randomScriptWitnessInput,outCounter,randomScriptWitnessOutput,lockTime);
+	byte[] genesisTransactionHash=BitcoinUtil.getTransactionHash(randomScriptWitnessTransaction);
+	 byte[] expectedHash = BitcoinUtil.reverseByteArray(new byte[]{(byte)0x47,(byte)0x52,(byte)0x1C,(byte)0x2A,(byte)0x13,(byte)0x45,(byte)0x5E,(byte)0x92,(byte)0xD3,(byte)0xBD,(byte)0x56,(byte)0x3F,(byte)0xAD,(byte)0xA5,(byte)0x78,(byte)0x6E,(byte)0x85,(byte)0xB4,(byte)0x5E,(byte)0x96,(byte)0x85,(byte)0xA8,(byte)0xC9,(byte)0xA3,(byte)0xFE,(byte)0xB8,(byte)0x9A,(byte)0x4F,(byte)0xB5,(byte)0x0D,(byte)0xAF,(byte)0xF5});
+	 assertArrayEquals("Hash for Genesis Transaction correctly calculated", expectedHash, genesisTransactionHash);
+  }
 
 
 } 

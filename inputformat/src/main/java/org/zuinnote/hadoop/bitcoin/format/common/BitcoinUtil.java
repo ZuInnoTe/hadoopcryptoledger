@@ -330,8 +330,12 @@ public static byte[] getTransactionHash(BitcoinTransaction transaction) throws I
 	}
 	if (segwit) {
 		for (int k=0;k<transaction.getBitcoinScriptWitness().size();k++) {
-			transactionBAOS.write(transaction.getBitcoinScriptWitness().get(k).getWitnessScriptLength());
-			transactionBAOS.write(transaction.getBitcoinScriptWitness().get(k).getWitnessScript());
+			BitcoinScriptWitnessItem currentItem = transaction.getBitcoinScriptWitness().get(k);
+			transactionBAOS.write(currentItem.getStackItemCounter());
+			for (int l=0;l<currentItem.getScriptWitnessList().size();l++) {
+				transactionBAOS.write(currentItem.getScriptWitnessList().get(k).getWitnessScriptLength());
+				transactionBAOS.write(currentItem.getScriptWitnessList().get(k).getWitnessScript());
+			}
 		}
 	}
 	byte[] lockTime=reverseByteArray(convertIntToByteArray(transaction.getLockTime()));

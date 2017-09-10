@@ -156,6 +156,17 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
 	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
  }
+ 
+ @Test
+ public void checkTestDataScriptWitness2NetAvailable() {
+	ClassLoader classLoader = getClass().getClassLoader();
+	String fileName="scriptwitness2.blk";
+	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
+	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	File file = new File(fileNameGenesis);
+	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
+	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+ }
 
 
 
@@ -350,6 +361,31 @@ public void parseScriptWitnessBlockAsBitcoinRawBlockHeap()  throws FileNotFoundE
 		ByteBuffer scriptwitnessByteBuffer = bbr.readRawBlock();
 		assertFalse("Random ScriptWitness Raw Block is HeapByteBuffer", scriptwitnessByteBuffer.isDirect());
 		assertEquals("Random ScriptWitness Raw Block has a size of 999283 bytes", 999283, scriptwitnessByteBuffer.limit());
+		
+	} finally {
+		if (bbr!=null) 
+			bbr.close();
+	}
+}
+
+
+@Test
+public void parseScriptWitness2BlockAsBitcoinRawBlockHeap()  throws FileNotFoundException, IOException, BitcoinBlockReadException {
+  ClassLoader classLoader = getClass().getClassLoader();
+	String fileName="scriptwitness2.blk";
+	String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+	File file = new File(fileNameBlock);
+	BitcoinBlockReader bbr = null;
+	boolean direct=false;
+	try {
+		FileInputStream fin = new FileInputStream(file);
+		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
+		ByteBuffer scriptwitnessByteBuffer = bbr.readRawBlock();
+		assertFalse("Random ScriptWitness Raw Block is HeapByteBuffer", scriptwitnessByteBuffer.isDirect());
+		assertEquals("Random ScriptWitness Raw Block has a size of 1000039 bytes", 1000039, scriptwitnessByteBuffer.limit());		
+		scriptwitnessByteBuffer = bbr.readRawBlock();
+		assertFalse("Random ScriptWitness Raw Block is HeapByteBuffer", scriptwitnessByteBuffer.isDirect());
+		assertEquals("Random ScriptWitness Raw Block has a size of 999312 bytes", 999312, scriptwitnessByteBuffer.limit());		
 		
 	} finally {
 		if (bbr!=null) 
@@ -553,6 +589,31 @@ public void parseScriptWitnessBlockAsBitcoinRawBlockDirect()  throws FileNotFoun
 			bbr.close();
 	}
 }
+
+@Test
+public void parseScriptWitness2BlockAsBitcoinRawBlockDirect()  throws FileNotFoundException, IOException, BitcoinBlockReadException {
+  ClassLoader classLoader = getClass().getClassLoader();
+	String fileName="scriptwitness2.blk";
+	String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+	File file = new File(fileNameBlock);
+	BitcoinBlockReader bbr = null;
+	boolean direct=true;
+	try {
+		FileInputStream fin = new FileInputStream(file);
+		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
+		ByteBuffer scriptwitnessByteBuffer = bbr.readRawBlock();
+		assertTrue("Random ScriptWitness Raw Block is DirectByteBuffer", scriptwitnessByteBuffer.isDirect());
+		assertEquals("Random ScriptWitness Raw Block has a size of 1000039 bytes", 1000039, scriptwitnessByteBuffer.limit());		
+		scriptwitnessByteBuffer = bbr.readRawBlock();
+		assertTrue("Random ScriptWitness Raw Block is DirectByteBuffer", scriptwitnessByteBuffer.isDirect());
+		assertEquals("Random ScriptWitness Raw Block has a size of 999312 bytes", 999312, scriptwitnessByteBuffer.limit());		
+		
+	} finally {
+		if (bbr!=null) 
+			bbr.close();
+	}
+}
+
 
 
   @Test
@@ -765,6 +826,29 @@ public void parseScriptWitnessBlockAsBitcoinBlockHeap() throws FileNotFoundExcep
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
 		assertEquals("Random ScriptWitness Block must contain exactly 470 transactions", 470, theBitcoinBlock.getTransactions().size());
+		
+	} finally {
+		if (bbr!=null) 
+			bbr.close();
+	}
+}
+
+
+@Test
+public void parseScriptWitness2BlockAsBitcoinBlockHeap() throws FileNotFoundException, IOException, BitcoinBlockReadException {
+	ClassLoader classLoader = getClass().getClassLoader();
+	String fileName="scriptwitness2.blk";
+	String fullFileNameString=classLoader.getResource("testdata/"+fileName).getFile();	
+	File file = new File(fullFileNameString);
+	BitcoinBlockReader bbr = null;
+	boolean direct=false;
+	try {
+		FileInputStream fin = new FileInputStream(file);
+		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
+		BitcoinBlock theBitcoinBlock = bbr.readBlock();
+		assertEquals("First random ScriptWitness Block must contain exactly 2191 transactions", 2191, theBitcoinBlock.getTransactions().size());
+		theBitcoinBlock = bbr.readBlock();
+		assertEquals("Second random ScriptWitness Block must contain exactly 2508 transactions", 2508, theBitcoinBlock.getTransactions().size());
 		
 	} finally {
 		if (bbr!=null) 
