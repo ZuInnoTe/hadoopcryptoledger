@@ -255,37 +255,6 @@ public class BitcoinUtilTest {
   @Test
   public void getTransactionHashSegWit() throws NoSuchAlgorithmException, IOException {
 	 // reconstruct the transaction from the a random segwit block
-	//  02000000 00010107 2135236D 2EBC78B6 ACE18897 03B18485 528712BD 70E07F4A 901140DE 38A2E801 00000017 1600144D 4D83ED5F 107B8D45 1E59A043 1A139279 6B2604FF FFFFFF02 4FE9243C 00000000 17A914F0 50C591EA 982673CC EDF52113 657B6783 03E6A187 157E9003 00000000 1976A914 FB2E1383 5E3988C7 8F760D4A C81E04EA F194EA92 88AC0248 30450221 00BB5F78 E8A1BA5E 14261B0A D39556AF 9B21D91F 675D38C8 CDAD7E7F 5D21004A BD02204C 1EACF1F9 AC1DCC61 63F207FC BC498B32 4CBEF57F 839FA2C2 55574B2F 3719BC01 2103C53F EA9AE561 B60574B2 D510273F 7C516069 7EB47B48 8E95AD62 91BBCB5E 43A20000 0000
-	    
-	 // previous tx out index
-		// 01 000000
-	  // 0x17 inscript size
-	  // inscript
-	// 1600144D 4D83ED5F 107B8D45 1E59A043 1A139279 6B2604
-	  //seqno
-	// FF FFFFFF
-	  // out counter
-	 // 02
-	  // value
-	  //4FE9243C 00000000  // reverse 3C24E94F
-	  
-	  // out script size 0x17
-	  // outscript A914F0 50C591EA 982673CC EDF52113 657B6783 03E6A187 
-	  
-	  //value
-	  // 157E9003 00000000 
-	  //out script size 0x19
-	  // outscript 76A914 FB2E1383 5E3988C7 8F760D4A C81E04EA F194EA92 88AC
-	  
-	  // no of witnesses: 0x02
-	  // size witness script 0x48
-	  // witness script 30450221 00BB5F78 E8A1BA5E 14261B0A D39556AF 9B21D91F 675D38C8 CDAD7E7F 5D21004A BD02204C 1EACF1F9 AC1DCC61 63F207FC BC498B32 4CBEF57F 839FA2C2 55574B2F 3719BC01 
-	  // size of witness script 0x21
-	  // script: 03C53F EA9AE561 B60574B2 D510273F 7C516069 7EB47B48 8E95AD62 91BBCB5E 43A2
-	  // lock time: 0000 0000
-	  
-	  // transact hash: 47521c2a13455e92d3bd563fada5786e85b45e9685a8c9a3feb89a4fb50daff5
-
 	int version=2;
 	byte marker=0x00;
 	byte flag=0x01;
@@ -323,9 +292,9 @@ public class BitcoinUtilTest {
 	randomScriptWitnessSW.add(new BitcoinScriptWitness(segwitnessLength_2,segwitnessScript_2));
 	randomScriptWitnessSWI.add(new BitcoinScriptWitnessItem(noOfStackItems,randomScriptWitnessSW));
 	 BitcoinTransaction randomScriptWitnessTransaction = new BitcoinTransaction(version,inCounter,randomScriptWitnessInput,outCounter,randomScriptWitnessOutput,lockTime);
-	byte[] genesisTransactionHash=BitcoinUtil.getTransactionHash(randomScriptWitnessTransaction);
+	byte[] randomScriptWitnessTransactionHash=BitcoinUtil.getTransactionHash(randomScriptWitnessTransaction);
 	 byte[] expectedHash = BitcoinUtil.reverseByteArray(new byte[]{(byte)0x47,(byte)0x52,(byte)0x1C,(byte)0x2A,(byte)0x13,(byte)0x45,(byte)0x5E,(byte)0x92,(byte)0xD3,(byte)0xBD,(byte)0x56,(byte)0x3F,(byte)0xAD,(byte)0xA5,(byte)0x78,(byte)0x6E,(byte)0x85,(byte)0xB4,(byte)0x5E,(byte)0x96,(byte)0x85,(byte)0xA8,(byte)0xC9,(byte)0xA3,(byte)0xFE,(byte)0xB8,(byte)0x9A,(byte)0x4F,(byte)0xB5,(byte)0x0D,(byte)0xAF,(byte)0xF5});
-	 assertArrayEquals("Hash for Genesis Transaction correctly calculated", expectedHash, genesisTransactionHash);
+	 assertArrayEquals("Hash for Random ScriptWitness Transaction correctly calculated", expectedHash, randomScriptWitnessTransactionHash);
   }
 
 
