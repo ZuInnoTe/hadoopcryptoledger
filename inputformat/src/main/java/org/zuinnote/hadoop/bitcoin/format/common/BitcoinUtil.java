@@ -333,8 +333,8 @@ public static byte[] getTransactionHash(BitcoinTransaction transaction) throws I
 			BitcoinScriptWitnessItem currentItem = transaction.getBitcoinScriptWitness().get(k);
 			transactionBAOS.write(currentItem.getStackItemCounter());
 			for (int l=0;l<currentItem.getScriptWitnessList().size();l++) {
-				transactionBAOS.write(currentItem.getScriptWitnessList().get(k).getWitnessScriptLength());
-				transactionBAOS.write(currentItem.getScriptWitnessList().get(k).getWitnessScript());
+				transactionBAOS.write(currentItem.getScriptWitnessList().get(l).getWitnessScriptLength());
+				transactionBAOS.write(currentItem.getScriptWitnessList().get(l).getWitnessScript());
 			}
 		}
 	}
