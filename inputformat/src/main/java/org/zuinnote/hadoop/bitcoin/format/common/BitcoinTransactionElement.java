@@ -16,6 +16,7 @@
 
 package org.zuinnote.hadoop.bitcoin.format.common;
 
+@Deprecated
 public class BitcoinTransactionElement {
     private byte[] blockHash;
     private int transactionIdxInBlock;
