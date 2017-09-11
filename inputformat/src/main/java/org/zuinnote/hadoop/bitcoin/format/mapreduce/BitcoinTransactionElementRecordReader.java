@@ -32,6 +32,8 @@ import org.apache.commons.logging.Log;
 
 import org.zuinnote.hadoop.bitcoin.format.common.*;
 
+
+@Deprecated
 public class BitcoinTransactionElementRecordReader extends AbstractBitcoinRecordReader<BytesWritable, BitcoinTransactionElement> {
 
     private static final Log LOG = LogFactory.getLog(BitcoinTransactionElementRecordReader.class.getName());
