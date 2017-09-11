@@ -35,6 +35,7 @@ import org.apache.hadoop.conf.Configuration;
 
 import org.zuinnote.hadoop.bitcoin.format.common.*;
 
+@Deprecated
 public class BitcoinTransactionElementRecordReaderTest {
     @Test
     public void testRead() throws IOException,InterruptedException {

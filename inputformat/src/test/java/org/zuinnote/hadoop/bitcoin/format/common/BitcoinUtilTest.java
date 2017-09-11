@@ -205,6 +205,7 @@ public class BitcoinUtilTest {
   }
 
 
+  @Deprecated
   @Test
   public void getBlockHash() throws NoSuchAlgorithmException, IOException {
     ClassLoader classLoader = getClass().getClassLoader();

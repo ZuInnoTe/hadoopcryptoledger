@@ -12,6 +12,7 @@ import java.io.IOException;
 
 import org.zuinnote.hadoop.bitcoin.format.common.*;
 
+@Deprecated
 public class BitcoinTransactionElementRecordReaderTest {
     @Test
     public void testRead() throws IOException {
