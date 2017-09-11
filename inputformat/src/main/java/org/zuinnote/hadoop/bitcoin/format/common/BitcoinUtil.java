@@ -366,6 +366,7 @@ public static byte[] getTransactionHash(BitcoinTransaction transaction) throws I
 * @throws java.io.IOException in case of errors reading from the InputStream
 *
 */
+@Deprecated
 	public static byte[] getBlockHash(BitcoinBlock block) throws IOException {
 		ByteArrayOutputStream blockBAOS = new ByteArrayOutputStream();
 		blockBAOS.write(reverseByteArray(convertIntToByteArray(block.getVersion())));
