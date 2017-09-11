@@ -143,6 +143,7 @@ public void set(BitcoinTransaction newTransaction) {
 	this.listOfInputs=newTransaction.getListOfInputs();
 	this.outCounter=newTransaction.getOutCounter();
 	this.listOfOutputs=newTransaction.getListOfOutputs();
+	this.listOfScriptWitnessItem=newTransaction.getBitcoinScriptWitness();
 	this.lockTime=newTransaction.getLockTime();
 	
 }
