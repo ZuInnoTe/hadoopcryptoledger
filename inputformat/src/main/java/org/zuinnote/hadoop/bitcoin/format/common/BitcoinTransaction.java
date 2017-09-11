@@ -139,6 +139,8 @@ public int getLockTime() {
 
 public void set(BitcoinTransaction newTransaction) {
 	this.version=newTransaction.getVersion();
+	this.marker=newTransaction.getMarker();
+	this.flag=newTransaction.getFlag();
 	this.inCounter=newTransaction.getInCounter();
 	this.listOfInputs=newTransaction.getListOfInputs();
 	this.outCounter=newTransaction.getOutCounter();
