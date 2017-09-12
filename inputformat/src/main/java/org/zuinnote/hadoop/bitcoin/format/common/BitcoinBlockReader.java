@@ -177,6 +177,7 @@ public List<BitcoinTransaction> parseTransactions(ByteBuffer rawByteBuffer,long 
 		if (currentNoOfInputs==0) {
 			// this seems to be segwit - lets be sure
 			// check segwit flag
+			rawByteBuffer.mark();
 			byte segwitFlag = rawByteBuffer.get();
 			if (segwitFlag!=0) {
 				// load the real number of inputs
@@ -187,6 +188,7 @@ public List<BitcoinTransaction> parseTransactions(ByteBuffer rawByteBuffer,long 
 				currentNoOfInputs=BitcoinUtil.getVarInt(currentInCounterVarInt);
 			} else {
 				LOG.warn("It seems a block with 0 transaction inputs was found");
+				rawByteBuffer.reset();
 			}
 		}
 		// read inputs
