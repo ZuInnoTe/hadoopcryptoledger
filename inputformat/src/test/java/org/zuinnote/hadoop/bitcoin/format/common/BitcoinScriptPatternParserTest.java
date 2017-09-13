@@ -93,7 +93,37 @@ public class BitcoinScriptPatternParserTest {
   }
 
 
+@Test
+public void testPaymentSegwitP2HashSynthetic() {
+	// synthetic because it is not based on real Bitcoin blockchain data
+      byte[] txOutScriptP2Hash= new byte[]{(byte)0x00,(byte)0x14,(byte)0x00,(byte)0x01,(byte)0x02,(byte)0x03,(byte)0x04,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08,(byte)0x09,(byte)0x0A,(byte)0x0B,(byte)0x0C,(byte)0x0D,(byte)0x0E,(byte)0x0F,(byte)0x10,(byte)0x11,(byte)0x12,(byte)0x13};
+	
+     String result =  BitcoinScriptPatternParser.getPaymentDestination(txOutScriptP2Hash);
+	String comparatorText = "P2WPKH_000102030405060708090A0B0C0D0E0F10111213";
+	assertEquals("Payment destination of script should be P2WPKH", comparatorText, result);
+}
 
+
+@Test
+public void testPaymentSegwitP2WSHSynthetic() {
+	// synthetic because it is not based on real Bitcoin blockchain data
+      byte[] txOutScriptP2Hash= new byte[]{(byte)0x00,(byte)0x20,(byte)0x00,(byte)0x01,(byte)0x02,(byte)0x03,(byte)0x04,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08,(byte)0x09,(byte)0x0A,(byte)0x0B,(byte)0x0C,(byte)0x0D,(byte)0x0E,(byte)0x0F,(byte)0x10,(byte)0x11,(byte)0x12,(byte)0x13,(byte)0x14,(byte)0x15,(byte)0x16,(byte)0x17,(byte)0x18,(byte)0x19,(byte)0x1A,(byte)0x1B,(byte)0x1C,(byte)0x1D,(byte)0x1E,(byte)0x1F};
+
+	String result =  BitcoinScriptPatternParser.getPaymentDestination(txOutScriptP2Hash);
+	String comparatorText = "P2WSH_000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F";
+	assertEquals("Payment destination of script should be P2WSH", comparatorText, result);
+}
+
+
+
+@Test
+public void testPaymentSegwitPubKeySynthetic() {
+	// synthetic because it is not based on real Bitcoin blockchain data
+	byte[] txOutScriptP2WPKHP2SH = new byte[]{(byte)0xA9,(byte)0x14,(byte)0x00,(byte)0x01,(byte)0x02,(byte)0x03,(byte)0x04,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08,(byte)0x09,(byte)0x0A,(byte)0x0B,(byte)0x0C,(byte)0x0D,(byte)0x0E,(byte)0x0F,(byte)0x10,(byte)0x11,(byte)0x12,(byte)0x13,(byte)0x87};
+	  String result = BitcoinScriptPatternParser.getPaymentDestination(txOutScriptP2WPKHP2SH);
+	String comparatorText = "P2WPKHP2SH_000102030405060708090A0B0C0D0E0F10111213";
+	assertEquals("Payment destination of script should be P2WPKHP2SH", comparatorText,result);
+}
 
 
 }

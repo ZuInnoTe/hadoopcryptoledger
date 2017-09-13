@@ -43,10 +43,15 @@ public static String getPaymentDestination(byte[] scriptPubKey) {
 	if (scriptPubKey.length==0) {
 		return "anyone"; // need to check also ScriptSig for OP_TRUE
 	}
-	// test if standard transaction Bitcoin address including Segwit
+	// test if standard transaction Bitcoin address (20 byte) including Segwit
 	String payToHashSegwit = checkP2WPKHP2SH(scriptPubKey);
 	if (payToHashSegwit!=null) {
 		return payToHashSegwit;
+	}
+	// test if standard transaction to Bitcoin address (32 byte) including Segwit
+	String payToP2WSHSegwit = checkP2WSH(scriptPubKey);
+	if (payToP2WSHSegwit!=null) {
+		return payToP2WSHSegwit;
 	}
 	// test if standard transaction public key including Segwit
 	String payToPubKeySegwit = checkP2WPKH(scriptPubKey);
@@ -113,6 +118,24 @@ private static String checkP2WPKHP2SH(byte[] scriptPubKey) {
 	if (validStart && validEnd){
 		byte[] keyhash = Arrays.copyOfRange(scriptPubKey, 2, 22);
 		return "P2WPKHP2SH_"+BitcoinUtil.convertByteArrayToHexString(keyhash);
+	}
+	return null;
+}
+
+
+/**
+ * Checks if scriptPubKey is about a transaction for 1-of-2 multi-signature version 0 pay-to-witness-script-hash (P2WSH)
+ * Note that we return only the keyhash, but more information can be found in the witness (cf. https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki)
+ * 
+ * 
+ * @param scriptPubKey
+ * @return null, if transaction is not about P2WPKH, a string starting with "P2WPKH_keyhash"
+ */
+
+private static String checkP2WSH(byte[] scriptPubKey) {
+	if ((scriptPubKey.length==34) && (scriptPubKey[0]==0) && (scriptPubKey[1]==0x20)){
+		byte[] keyhash = Arrays.copyOfRange(scriptPubKey, 2, 34);
+		return "P2WSH_"+BitcoinUtil.convertByteArrayToHexString(keyhash);
 	}
 	return null;
 }
