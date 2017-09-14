@@ -32,7 +32,7 @@ private BitcoinScriptPatternParser() {
 *
 * @param scriptPubKey output script of a transaction
 *
-* @return a string in the following format in case of (1) a standard transfer to a Bitcoin address : "bitcoinaddress_ADRESS" where ADDRESS is the Bitcoin address, (2) an (obsolete) transfer to a public key: "bitcoinpupkey_PUBKEY" where PUBKEY is the public key, (3) in case of output that cannot be spent: "unspendable", (4) in case anyone can spend: "anyone", (5) in case of transaction puzzle: "puzzle_HASH256" where HASH256 is the puzzle (6) in all other cases null (different type of Bitcoin transaction)
+* @return a string in the following format in case of (1) a transfer for pay-to-witness-public-key-hash: P2WPKH_address (2)  for pay-to-witness-public-key-hash pay-to-witness-public-key-hash (P2WPKH) nested in BIP16 P2SH: P2WPKHP2SH_address (3) a transaction for 1-of-2 multi-signature version 0 pay-to-witness-script-hash (P2WSH): P2WSH_address (4) a standard transfer to a Bitcoin address : "bitcoinaddress_ADRESS" where ADDRESS is the Bitcoin address, (5) an (obsolete) transfer to a public key: "bitcoinpupkey_PUBKEY" where PUBKEY is the public key, (6) in case of output that cannot be spent: "unspendable", (7) in case anyone can spend: "anyone", (8) in case of transaction puzzle: "puzzle_HASH256" where HASH256 is the puzzle (9) in all other cases null (different type of Bitcoin transaction)
 **/
 
 public static String getPaymentDestination(byte[] scriptPubKey) {
@@ -105,7 +105,7 @@ private static String checkP2WPKH(byte[] scriptPubKey) {
  * (2) in scriptSig (keyhash)
  * 
  * @param scriptPubKey
- * @return null, if transaction is not about P2WSH, a string starting with "P2WSH_keyhash"
+ * @return null, if transaction is not about P2WPKHP2SH_, a string starting with "P2WPKHP2SH_keyhash"
  */
 
 private static String checkP2WPKHP2SH(byte[] scriptPubKey) {
@@ -129,7 +129,7 @@ private static String checkP2WPKHP2SH(byte[] scriptPubKey) {
  * 
  * 
  * @param scriptPubKey
- * @return null, if transaction is not about P2WPKH, a string starting with "P2WPKH_keyhash"
+ * @return null, if transaction is not about P2WSH, a string starting with "P2WSH_keyhash"
  */
 
 private static String checkP2WSH(byte[] scriptPubKey) {
