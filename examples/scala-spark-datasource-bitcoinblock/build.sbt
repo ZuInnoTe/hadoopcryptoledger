@@ -32,7 +32,7 @@ itJacoco.settings
 
 assemblyJarName in assembly := "example-hcl-spark-scala-ds-bitcoinblock.jar"
 
-libraryDependencies += "com.github.zuinnote" %% "spark-hadoopcryptoledger-ds" % "1.0.5" % "compile"
+libraryDependencies += "com.github.zuinnote" %% "spark-hadoopcryptoledger-ds" % "1.0.6" % "compile"
 
 libraryDependencies += "org.apache.spark" %% "spark-core" % "1.5.0" % "provided"
 

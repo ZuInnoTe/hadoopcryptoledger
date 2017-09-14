@@ -9,7 +9,7 @@ compileJava.options.encoding = 'UTF-8'
 
 group = "com.github.zuinnote"
 archivesBaseName = "hadoopcryptoledger-flinkdatasource"
-version = "1.0.5"
+version = "1.0.6"
 
 
 jar {
@@ -71,7 +71,7 @@ dependencies {
    // hadoop lib for driver
      provided("org.apache.hadoop:hadoop-client:2.7.0")
        // hadoop crypto ledger library
-   provided("com.github.zuinnote:hadoopcryptoledger-fileformat:1.0.5")
+   provided("com.github.zuinnote:hadoopcryptoledger-fileformat:1.0.6")
     // flink api
    provided("org.apache.flink:flink-java:1.2.0")
    // log4j2
@@ -84,7 +84,7 @@ publishing {
         maven(MavenPublication) {
             groupId 'com.github.zuinnote'
             artifactId 'hadoopcryptoledger-flinkdatasource'
-            version '1.0.4'
+            version '1.0.6'
 
             from components.java
         }
