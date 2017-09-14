@@ -21,7 +21,7 @@ import org.apache.flink.core.fs.FileSystem
 
 import org.zuinnote.flink.bitcoin._
 
-import import org.zuinnote.hadoop.bitcoin.format.mapred.AbstractBitcoinRecordReader
+import  org.zuinnote.hadoop.bitcoin.format.mapred.AbstractBitcoinRecordReader
 
 /**
 *
