@@ -21,8 +21,9 @@ import org.apache.flink.core.fs.FileSystem
 
 import org.zuinnote.flink.bitcoin._
 
+import import org.zuinnote.hadoop.bitcoin.format.mapred.AbstractBitcoinRecordReader
+
 /**
-* Author: Jörn Franke <zuinnote@gmail.com>
 *
 */
 
