@@ -11,7 +11,7 @@ compileJava.options.encoding = 'UTF-8'
 
 group = "com.github.zuinnote"
 archivesBaseName = "hadoopcryptoledger-fileformat"
-version = "1.0.5"
+version = "1.0.6"
 
 
 jar {
@@ -98,7 +98,7 @@ publishing {
         maven(MavenPublication) {
             groupId 'com.github.zuinnote'
             artifactId 'hadoopcryptoledger-fileformat'
-            version '1.0.5'
+            version '1.0.6'
 
             from components.java
         }
