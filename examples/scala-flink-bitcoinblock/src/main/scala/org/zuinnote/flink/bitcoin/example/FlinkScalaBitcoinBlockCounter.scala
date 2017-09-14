@@ -36,7 +36,7 @@ object FlinkScalaBitcoinBlockCounter {
 
 
       def countTotalTransactions(env: ExecutionEnvironment, inputFile: String, outputFile: String): Unit = {
-        val inputFormat = new BitcoinBlockFlinkInputFormat(1024*1024,"F9BEB4D9",false)
+        val inputFormat = new BitcoinBlockFlinkInputFormat(2*1024*1024,"F9BEB4D9",false)
         val blockChainData = env.readFile(inputFormat, inputFile)
         val totalTransactionCounts = blockChainData.map{bitcoinBlock => ("Number of Transactions: ",bitcoinBlock.getTransactions().size())}
           .groupBy(0)
