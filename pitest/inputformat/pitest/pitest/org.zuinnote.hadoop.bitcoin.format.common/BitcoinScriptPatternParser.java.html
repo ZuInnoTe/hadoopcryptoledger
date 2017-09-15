@@ -549,7 +549,7 @@ body{
 <span>
 </span>
 </td>
-<td class=''><pre><span  class=''>* @return a string in the following format in case of (1) a standard transfer to a Bitcoin address : &#34;bitcoinaddress_ADRESS&#34; where ADDRESS is the Bitcoin address, (2) an (obsolete) transfer to a public key: &#34;bitcoinpupkey_PUBKEY&#34; where PUBKEY is the public key, (3) in case of output that cannot be spent: &#34;unspendable&#34;, (4) in case anyone can spend: &#34;anyone&#34;, (5) in case of transaction puzzle: &#34;puzzle_HASH256&#34; where HASH256 is the puzzle (6) in all other cases null (different type of Bitcoin transaction)</span></pre></td></tr>
+<td class=''><pre><span  class=''>* @return a string in the following format in case of (1) a transfer for pay-to-witness-public-key-hash: P2WPKH_address (2)  for pay-to-witness-public-key-hash pay-to-witness-public-key-hash (P2WPKH) nested in BIP16 P2SH: P2WPKHP2SH_address (3) a transaction for 1-of-2 multi-signature version 0 pay-to-witness-script-hash (P2WSH): P2WSH_address (4) a standard transfer to a Bitcoin address : &#34;bitcoinaddress_ADRESS&#34; where ADDRESS is the Bitcoin address, (5) an (obsolete) transfer to a public key: &#34;bitcoinpupkey_PUBKEY&#34; where PUBKEY is the public key, (6) in case of output that cannot be spent: &#34;unspendable&#34;, (7) in case anyone can spend: &#34;anyone&#34;, (8) in case of transaction puzzle: &#34;puzzle_HASH256&#34; where HASH256 is the puzzle (9) in all other cases null (different type of Bitcoin transaction)</span></pre></td></tr>
 
 
 <tr>
@@ -1628,7 +1628,7 @@ body{
 <span>
 </span>
 </td>
-<td class=''><pre><span  class=''> * @return null, if transaction is not about P2WSH, a string starting with &#34;P2WSH_keyhash&#34;</span></pre></td></tr>
+<td class=''><pre><span  class=''> * @return null, if transaction is not about P2WPKHP2SH_, a string starting with &#34;P2WPKHP2SH_keyhash&#34;</span></pre></td></tr>
 
 
 <tr>
@@ -1985,7 +1985,7 @@ body{
 <span>
 </span>
 </td>
-<td class=''><pre><span  class=''> * @return null, if transaction is not about P2WPKH, a string starting with &#34;P2WPKH_keyhash&#34;</span></pre></td></tr>
+<td class=''><pre><span  class=''> * @return null, if transaction is not about P2WSH, a string starting with &#34;P2WSH_keyhash&#34;</span></pre></td></tr>
 
 
 <tr>
@@ -2813,7 +2813,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@57ad2aa7_39'/> 
 
-<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getPaymentDestination<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentSegwitPubKeySynthetic(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> negated conditional &rarr; KILLED</p> 
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getPaymentDestination<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentNull(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> negated conditional &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -2833,7 +2833,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@57ad2aa7_43'/> 
 
-<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getPaymentDestination<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentSegwitPubKeySynthetic(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> negated conditional &rarr; KILLED</p> 
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getPaymentDestination<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentSegwitP2HashSynthetic(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> negated conditional &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -2853,7 +2853,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@57ad2aa7_48'/> 
 
-<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getPaymentDestination<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentSegwitPubKeySynthetic(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> negated conditional &rarr; KILLED</p> 
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getPaymentDestination<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentSegwitP2HashSynthetic(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> negated conditional &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -2873,7 +2873,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@57ad2aa7_53'/> 
 
-<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getPaymentDestination<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentPubKeyGenesis(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> negated conditional &rarr; KILLED</p> 
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getPaymentDestination<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentSegwitP2HashSynthetic(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> negated conditional &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -2893,7 +2893,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@57ad2aa7_58'/> 
 
-<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getPaymentDestination<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentPubKeyGenesis(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> negated conditional &rarr; KILLED</p> 
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getPaymentDestination<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentSegwitP2HashSynthetic(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> negated conditional &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -2913,7 +2913,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@57ad2aa7_63'/> 
 
-<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getPaymentDestination<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentPubKeyGenesis(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> negated conditional &rarr; KILLED</p> 
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getPaymentDestination<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentPuzzle(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> negated conditional &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -2933,7 +2933,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@57ad2aa7_68'/> 
 
-<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getPaymentDestination<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentPubKeyGenesis(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> negated conditional &rarr; KILLED</p> 
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getPaymentDestination<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentPuzzle(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> negated conditional &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -2983,7 +2983,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@57ad2aa7_77'/> 
 
-<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getPaymentDestination<br/><b>Killed by : </b>none</span></span> changed conditional boundary &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>getPaymentDestination<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentUnspendable(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> Replaced bitwise AND with OR &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>getPaymentDestination<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentUnspendable(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>getPaymentDestination<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentInvalid(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> negated conditional &rarr; KILLED</p> 
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getPaymentDestination<br/><b>Killed by : </b>none</span></span> changed conditional boundary &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>getPaymentDestination<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentUnspendable(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> Replaced bitwise AND with OR &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>getPaymentDestination<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentUnspendable(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>getPaymentDestination<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentUnspendable(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> negated conditional &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -3033,7 +3033,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@57ad2aa7_98'/> 
 
-<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>checkP2WPKH<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentPubKeyGenesis(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> mutated return of Object value for org/zuinnote/hadoop/bitcoin/format/common/BitcoinScriptPatternParser::checkP2WPKH to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>checkP2WPKH<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentPuzzle(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> mutated return of Object value for org/zuinnote/hadoop/bitcoin/format/common/BitcoinScriptPatternParser::checkP2WPKH to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -3043,7 +3043,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@57ad2aa7_112'/> 
 
-<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>checkP2WPKHP2SH<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentSegwitPubKeySynthetic(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> negated conditional &rarr; KILLED</p> 
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>checkP2WPKHP2SH<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentSegwitP2HashSynthetic(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> negated conditional &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -3053,7 +3053,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@57ad2aa7_113'/> 
 
-<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>checkP2WPKHP2SH<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentSegwitPubKeySynthetic(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> negated conditional &rarr; KILLED</p> 
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>checkP2WPKHP2SH<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentSegwitP2HashSynthetic(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> negated conditional &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -3063,7 +3063,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@57ad2aa7_114'/> 
 
-<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>checkP2WPKHP2SH<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentPubKeyGenesis(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> mutated return of Object value for org/zuinnote/hadoop/bitcoin/format/common/BitcoinScriptPatternParser::checkP2WPKHP2SH to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>checkP2WPKHP2SH<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentSegwitP2HashSynthetic(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> mutated return of Object value for org/zuinnote/hadoop/bitcoin/format/common/BitcoinScriptPatternParser::checkP2WPKHP2SH to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -3143,7 +3143,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@57ad2aa7_140'/> 
 
-<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>checkP2WSH<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentPubKeyGenesis(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> mutated return of Object value for org/zuinnote/hadoop/bitcoin/format/common/BitcoinScriptPatternParser::checkP2WSH to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>checkP2WSH<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentSegwitP2HashSynthetic(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> mutated return of Object value for org/zuinnote/hadoop/bitcoin/format/common/BitcoinScriptPatternParser::checkP2WSH to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -3153,7 +3153,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@57ad2aa7_154'/> 
 
-<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>checkPayToHash<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentInvalid(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> negated conditional &rarr; KILLED</p> 
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>checkPayToHash<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentUnspendable(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> negated conditional &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -3163,7 +3163,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@57ad2aa7_155'/> 
 
-<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>checkPayToHash<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentInvalid(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> negated conditional &rarr; KILLED</p> 
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>checkPayToHash<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentUnspendable(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> negated conditional &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -3173,7 +3173,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@57ad2aa7_156'/> 
 
-<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>checkPayToHash<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentPubKeyGenesis(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> mutated return of Object value for org/zuinnote/hadoop/bitcoin/format/common/BitcoinScriptPatternParser::checkPayToHash to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>checkPayToHash<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentPuzzle(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> mutated return of Object value for org/zuinnote/hadoop/bitcoin/format/common/BitcoinScriptPatternParser::checkPayToHash to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -3233,7 +3233,7 @@ body{
 
 <a name='grouporg.pitest.mutationtest.report.html.SourceFile@57ad2aa7_177'/> 
 
-<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>checkPayToPubKey<br/><b>Killed by : </b>none</span></span> changed conditional boundary &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>checkPayToPubKey<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentPubKeyGenesis(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> Replaced integer subtraction with addition &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>checkPayToPubKey<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentPubKeyGenesis(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> Replaced bitwise AND with OR &rarr; KILLED</p> <p class='KILLED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>checkPayToPubKey<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentPubKeyGenesis(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>5.<span><b>5</b><br/><b>Location : </b>checkPayToPubKey<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentPubKeyGenesis(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> negated conditional &rarr; KILLED</p> 
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>checkPayToPubKey<br/><b>Killed by : </b>none</span></span> changed conditional boundary &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>checkPayToPubKey<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentPuzzle(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> Replaced integer subtraction with addition &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>checkPayToPubKey<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentPubKeyGenesis(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> Replaced bitwise AND with OR &rarr; KILLED</p> <p class='KILLED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>checkPayToPubKey<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentPubKeyGenesis(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>5.<span><b>5</b><br/><b>Location : </b>checkPayToPubKey<br/><b>Killed by : </b>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentPuzzle(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest)</span></span> negated conditional &rarr; KILLED</p> 
 </td>
 </tr>
 <tr>
@@ -3284,7 +3284,7 @@ body{
 
 <h2>Tests examined</h2>
 <ul>
-<li>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentPuzzle(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest) (0 ms)</li><li>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentP2Hash(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest) (37 ms)</li><li>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentInvalid(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest) (1 ms)</li><li>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentUnspendable(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest) (1 ms)</li><li>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentSegwitPubKeySynthetic(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest) (0 ms)</li><li>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentSegwitP2WSHSynthetic(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest) (1 ms)</li><li>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentNull(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest) (2 ms)</li><li>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentSegwitP2HashSynthetic(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest) (1 ms)</li><li>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentAnyone(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest) (43 ms)</li><li>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentPubKeyGenesis(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest) (0 ms)</li>
+<li>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentPuzzle(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest) (1 ms)</li><li>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentP2Hash(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest) (44 ms)</li><li>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentInvalid(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest) (2 ms)</li><li>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentUnspendable(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest) (1 ms)</li><li>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentSegwitPubKeySynthetic(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest) (1 ms)</li><li>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentSegwitP2WSHSynthetic(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest) (1 ms)</li><li>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentNull(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest) (2 ms)</li><li>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentSegwitP2HashSynthetic(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest) (1 ms)</li><li>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentAnyone(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest) (48 ms)</li><li>org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest.testPaymentPubKeyGenesis(org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest) (2 ms)</li>
 </ul>
 
 <br/>
