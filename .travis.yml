@@ -9,12 +9,12 @@ language: java
 script:
 - jdk_switcher use openjdk7
 - ./gradlew clean
-- ./gradlew build
+- travis_wait ./gradlew build
 - ./gradlew test
 - ./gradlew integrationTest
 - jdk_switcher use oraclejdk8
 - ./gradlew clean
-- ./gradlew build
+- travis_wait ./gradlew build
 - ./gradlew test
 - ./gradlew integrationTest
 - ./gradlew pitest
