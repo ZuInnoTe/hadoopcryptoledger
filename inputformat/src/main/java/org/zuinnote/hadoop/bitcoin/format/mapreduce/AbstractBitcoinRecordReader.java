@@ -53,7 +53,7 @@ public static final String CONF_MAXBLOCKSIZE="hadoopcryptoledger.bitcoinblockinp
 public static final String CONF_FILTERMAGIC="hadoopcryptoledger.bitcoinblockinputformat.filter.magic";
 public static final String CONF_USEDIRECTBUFFER="hadoopcryptoledeger.bitcoinblockinputformat.usedirectbuffer";
 public static final int DEFAULT_BUFFERSIZE=64*1024;
-public static final int DEFAULT_MAXSIZE_BITCOINBLOCK=2 * 1024 * 1024;
+public static final int DEFAULT_MAXSIZE_BITCOINBLOCK=4 * 1024 * 1024;
 public static final String DEFAULT_MAGIC = "F9BEB4D9";
 public static final boolean DEFAULT_USEDIRECTBUFFER=false;
 
