@@ -9,7 +9,7 @@ compileJava.options.encoding = 'UTF-8'
 
 group = "com.github.zuinnote"
 archivesBaseName = "hadoopcryptoledger-hiveserde"
-version = "1.0.6"
+version = "1.0.7"
 
 
 jar {
@@ -89,7 +89,7 @@ publishing {
         maven(MavenPublication) {
             groupId 'com.github.zuinnote'
             artifactId 'hadoopcryptoledger-hiveserde'
-            version '1.0.6'
+            version '1.0.7'
 
             from components.java
         }
