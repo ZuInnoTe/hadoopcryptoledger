@@ -290,6 +290,7 @@ public static boolean compareMagics (byte[] magic1,byte[] magic2) {
 /**
 * Calculates the double SHA256-Hash of a transaction in little endian format. This could be used for certain analysis scenario where one want to investigate the referenced transaction used as an input for a Transaction. Furthermore, it can be used as a unique identifier of the transaction
 *
+* It corresponds to the Bitcoin specification of txid (https://bitcoincore.org/en/segwit_wallet_dev/)
 *
 * @param transaction The BitcoinTransaction of which we want to calculate the hash
 *
@@ -305,10 +306,80 @@ public static byte[] getTransactionHash(BitcoinTransaction transaction) throws I
 	
 	byte[] version = reverseByteArray(convertIntToByteArray(transaction.getVersion()));
 	transactionBAOS.write(version);
+	byte[] inCounter = transaction.getInCounter();
+	transactionBAOS.write(inCounter);
+	for (int i=0;i<transaction.getListOfInputs().size();i++) {
+		transactionBAOS.write(transaction.getListOfInputs().get(i).getPrevTransactionHash());
+		transactionBAOS.write(reverseByteArray(convertIntToByteArray((int)(transaction.getListOfInputs().get(i).getPreviousTxOutIndex()))));
+		transactionBAOS.write(transaction.getListOfInputs().get(i).getTxInScriptLength());
+		transactionBAOS.write(transaction.getListOfInputs().get(i).getTxInScript());
+		transactionBAOS.write(reverseByteArray(convertIntToByteArray((int)(transaction.getListOfInputs().get(i).getSeqNo()))));
+	}
+	byte[] outCounter = transaction.getOutCounter();
+	transactionBAOS.write(outCounter);
+	for (int j=0;j<transaction.getListOfOutputs().size();j++) {
+		transactionBAOS.write(reverseByteArray(convertLongToByteArray(transaction.getListOfOutputs().get(j).getValue())));		
+		transactionBAOS.write(transaction.getListOfOutputs().get(j).getTxOutScriptLength());
+		transactionBAOS.write(transaction.getListOfOutputs().get(j).getTxOutScript());
+	}	
+	byte[] lockTime=reverseByteArray(convertIntToByteArray(transaction.getLockTime()));
+	transactionBAOS.write(lockTime);
+	byte[] transactionByteArray= transactionBAOS.toByteArray();
+	byte[] firstRoundHash;
+	byte[] secondRoundHash;
+	try {
+		MessageDigest digest = MessageDigest.getInstance("SHA-256");
+		firstRoundHash = digest.digest(transactionByteArray);
+		secondRoundHash = digest.digest(firstRoundHash);
+	} catch (NoSuchAlgorithmException nsae) {
+		LOG.error(nsae);
+		return new byte[0];
+	}
+	return secondRoundHash;
+}
+
+
+/**
+* Calculates the double SHA256-Hash of a transaction in little endian format. It serve as a unique identifier of a transaction, but cannot be used to link the outputs of other transactions as input
+*
+* It corresponds to the Bitcoin specification of wtxid (https://bitcoincore.org/en/segwit_wallet_dev/)
+*
+* @param transaction The BitcoinTransaction of which we want to calculate the hash
+*
+* @return byte array containing the hash of the transaction. Note: This one can be compared to a prevTransactionHash. However, if you want to search for it in popular blockchain explorers then you need to apply the function BitcoinUtil.reverseByteArray to it!
+*
+*
+* @throws java.io.IOException in case of errors reading from the InputStream
+*
+*/
+
+public static byte[] getTransactionHashSegwit(BitcoinTransaction transaction) throws IOException{
+	// convert transaction to byte array
+	ByteArrayOutputStream transactionBAOS = new ByteArrayOutputStream();
+	
+	byte[] version = reverseByteArray(convertIntToByteArray(transaction.getVersion()));
+	transactionBAOS.write(version);
 	// check if segwit
 	boolean segwit=false;
 	if ((transaction.getMarker()==0) && (transaction.getFlag()!=0)) {
 		segwit=true;
+		// we still need to check the case that all witness script stack items for all input transactions are of size 0 => traditional transaction hash calculation
+		// cf. https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki
+			// A non-witness program (defined hereinafter) txin MUST be associated with an empty witness field, represented by a 0x00. If all txins are not witness program, a transaction's wtxid is equal to its txid. 
+		boolean emptyWitness=true;
+		for (int k=0;k<transaction.getBitcoinScriptWitness().size();k++) {
+			BitcoinScriptWitnessItem currentItem = transaction.getBitcoinScriptWitness().get(k);
+			if (currentItem.getStackItemCounter().length>1) {
+				emptyWitness=false;
+				break;
+			} else if ((currentItem.getStackItemCounter().length==1) && (currentItem.getStackItemCounter()[0]!=0x00)) {
+				emptyWitness=false;
+				break;
+			}
+		}
+		if (emptyWitness==true) {
+			return BitcoinUtil.getTransactionHashSegwit(transaction);
+		}
 		transactionBAOS.write(transaction.getMarker());
 		transactionBAOS.write(transaction.getFlag());
 	}
