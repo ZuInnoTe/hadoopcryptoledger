@@ -16,33 +16,35 @@
 
 package org.zuinnote.hadoop.bitcoin.hive.udf;
 
-import org.apache.hadoop.io.BytesWritable; 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-
-import org.apache.hadoop.hive.ql.udf.generic.GenericUDF;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.hive.ql.exec.Description;
-import org.apache.hadoop.hive.ql.metadata.HiveException;
 import org.apache.hadoop.hive.ql.exec.UDFArgumentException;
 import org.apache.hadoop.hive.ql.exec.UDFArgumentLengthException;
-import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
-
+import org.apache.hadoop.hive.ql.metadata.HiveException;
+import org.apache.hadoop.hive.ql.udf.generic.GenericUDF;
+import org.apache.hadoop.hive.ql.udf.generic.GenericUDF.DeferredObject;
 import org.apache.hadoop.hive.serde2.objectinspector.ListObjectInspector;
-import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectInspectorFactory;
-import org.apache.hadoop.hive.serde2.objectinspector.primitive.WritableBinaryObjectInspector;
-import org.apache.hadoop.hive.serde2.objectinspector.primitive.WritableIntObjectInspector;
-import org.apache.hadoop.hive.serde2.objectinspector.primitive.WritableLongObjectInspector;
+import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.StructField;
 import org.apache.hadoop.hive.serde2.objectinspector.StructObjectInspector;
+import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectInspectorFactory;
+import org.apache.hadoop.hive.serde2.objectinspector.primitive.WritableBinaryObjectInspector;
+import org.apache.hadoop.hive.serde2.objectinspector.primitive.WritableByteObjectInspector;
+import org.apache.hadoop.hive.serde2.objectinspector.primitive.WritableIntObjectInspector;
+import org.apache.hadoop.hive.serde2.objectinspector.primitive.WritableLongObjectInspector;
+import org.apache.hadoop.io.BytesWritable;
+import org.zuinnote.hadoop.bitcoin.format.common.BitcoinTransaction;
+import org.zuinnote.hadoop.bitcoin.format.common.BitcoinTransactionInput;
+import org.zuinnote.hadoop.bitcoin.format.common.BitcoinTransactionOutput;
+import org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptWitness;
+import org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptWitnessItem;
+import org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtil;
 
-import org.zuinnote.hadoop.bitcoin.format.common.*;
-
-import org.apache.commons.logging.LogFactory;
-import org.apache.commons.logging.Log;
-
-import java.io.IOException;
-
-import java.util.List;
-import java.util.ArrayList;
 
 /*
 * Generic UDF to calculate the hash value of a transaction (txid). It can be used to create a graph of transactions (cf. https://en.bitcoin.it/wiki/Transaction#general_format_.28inside_a_block.29_of_each_input_of_a_transaction_-_Txin)
@@ -50,16 +52,17 @@ import java.util.ArrayList;
 *
 */
 @Description(
-	name = "hclBitcoinTransactionHash",
-	value = "_FUNC_(Struct<BitcoinTransaction>) - calculates the hash of a BitcoinTransaction (txid) and returns it as byte array",
+	name = "hclBitcoinTransactionHashSegwit",
+	value = "_FUNC_(Struct<BitcoinTransaction>) - calculates the hash of a BitcoinTransaction with segwit (wtxid) and returns it as byte array",
 	extended = "Example:\n" +
-	"  > SELECT hclBitcoinTransactionHash(transactions[0]) FROM BitcoinBlockChain LIMIT 1;\n")
-public class BitcoinTransactionHashUDF extends GenericUDF {
+	"  > SELECT hclBitcoinTransactionHashSegwit(transactions[0]) FROM BitcoinBlockChain LIMIT 1;\n")
+public class BitcoinTransactionHashSegwitUDF extends GenericUDF {
 
 
 private static final Log LOG = LogFactory.getLog(BitcoinTransactionHashUDF.class.getName());
 
 private StructObjectInspector soi;
+private WritableByteObjectInspector wbyoi;
 private WritableBinaryObjectInspector wboi;
 private WritableIntObjectInspector wioi;
 private WritableLongObjectInspector wloi;
@@ -106,6 +109,7 @@ public ObjectInspector initialize(ObjectInspector[] arguments) throws UDFArgumen
 	this.wboi = PrimitiveObjectInspectorFactory.writableBinaryObjectInspector;
 	this.wioi = PrimitiveObjectInspectorFactory.writableIntObjectInspector;
 	this.wloi = PrimitiveObjectInspectorFactory.writableLongObjectInspector;
+	this.wbyoi = PrimitiveObjectInspectorFactory.writableByteObjectInspector;
 	// the UDF returns the hash value of a BitcoinTransaction as byte array
 	return PrimitiveObjectInspectorFactory.writableBinaryObjectInspector;
 }
@@ -132,22 +136,29 @@ public Object evaluate(DeferredObject[] arguments) throws HiveException {
 		// check if all bitcointransaction fields are available <struct<version:int,incounter:binary,outcounter:binary,listofinputs:array<struct<prevtransactionhash:binary,previoustxoutindex:bigint,txinscriptlength:binary,txinscript:binary,seqno:bigint>>,listofoutputs:array<struct<value:bigint,txoutscriptlength:binary,txoutscript:binary>>,locktime:int>
 		Object originalObject=arguments[0].get();
 		StructField versionSF=soi.getStructFieldRef("version");
+		StructField markerSF=soi.getStructFieldRef("marker");
+		StructField flagSF=soi.getStructFieldRef("flag");
 		StructField incounterSF=soi.getStructFieldRef("incounter");
 		StructField outcounterSF=soi.getStructFieldRef("outcounter");
 		StructField listofinputsSF=soi.getStructFieldRef("listofinputs");
 		StructField listofoutputsSF=soi.getStructFieldRef("listofoutputs");
+		StructField listofscriptwitnessitemSF=soi.getStructFieldRef("listofscriptwitnessitem");
 		StructField locktimeSF=soi.getStructFieldRef("locktime");
 		boolean inputsNull =  (incounterSF==null) || (listofinputsSF==null);
 		boolean outputsNull = (outcounterSF==null) || (listofoutputsSF==null);
 		boolean otherAttributeNull = (versionSF==null) || (locktimeSF==null);
-		if (inputsNull || outputsNull || otherAttributeNull) {
-			LOG.warn("Structure does not correspond to BitcoinTransaction");
+		boolean segwitInformationNull = (markerSF==null) || (flagSF==null) || (listofscriptwitnessitemSF==null);
+		if (inputsNull || outputsNull || otherAttributeNull || segwitInformationNull) {
+			LOG.info("Structure does not correspond to BitcoinTransaction");
 			return null;
 		} 
 		int version = wioi.get(soi.getStructFieldData(originalObject,versionSF));
+		byte marker = wbyoi.get(soi.getStructFieldData(originalObject, markerSF));
+		byte flag =  wbyoi.get(soi.getStructFieldData(originalObject, flagSF));
 		byte[] inCounter = wboi.getPrimitiveJavaObject(soi.getStructFieldData(originalObject,incounterSF));
 		byte[] outCounter = wboi.getPrimitiveJavaObject(soi.getStructFieldData(originalObject,outcounterSF));
 		int locktime = wioi.get(soi.getStructFieldData(originalObject,locktimeSF));
+		
 		Object listofinputsObject = soi.getStructFieldData(originalObject,listofinputsSF);
 		ListObjectInspector loiInputs=(ListObjectInspector)listofinputsSF.getFieldObjectInspector();
 		List<BitcoinTransactionInput> listOfInputsArray = readListOfInputsFromTable(loiInputs,listofinputsObject);
@@ -155,12 +166,16 @@ public Object evaluate(DeferredObject[] arguments) throws HiveException {
 		Object listofoutputsObject = soi.getStructFieldData(originalObject,listofoutputsSF);
 		ListObjectInspector loiOutputs=(ListObjectInspector)listofoutputsSF.getFieldObjectInspector();
 		List<BitcoinTransactionOutput> listOfOutputsArray = readListOfOutputsFromTable(loiOutputs,listofoutputsObject);
-		bitcoinTransaction = new BitcoinTransaction(version,inCounter,listOfInputsArray,outCounter,listOfOutputsArray,locktime);
+		
+		Object listofscriptwitnessitemObject =  soi.getStructFieldData(originalObject,listofscriptwitnessitemSF);
+		ListObjectInspector loiScriptWitnessItem=(ListObjectInspector)listofscriptwitnessitemSF.getFieldObjectInspector();
+		List<BitcoinScriptWitnessItem> listOfScriptWitnessitemArray = readListOfBitcoinScriptWitnessFromTable(loiScriptWitnessItem,listofscriptwitnessitemObject);
+		bitcoinTransaction = new BitcoinTransaction(marker, flag, version,inCounter,listOfInputsArray,outCounter,listOfOutputsArray,listOfScriptWitnessitemArray,locktime);
 
 	}
 	byte[] transactionHash=null;
 	try {
-		 transactionHash = BitcoinUtil.getTransactionHash(bitcoinTransaction);
+		 transactionHash = BitcoinUtil.getTransactionHashSegwit(bitcoinTransaction);
 	}  catch (IOException ioe) {
 		LOG.error(ioe);
 		throw new HiveException(ioe.toString());
@@ -238,6 +253,52 @@ StructObjectInspector listOfOutputsElementObjectInspector = (StructObjectInspect
 	}
 return result;
 }
+/**
+* Read list of Bitcoin ScriptWitness items from a table in Hive in any format (e.g. ORC, Parquet)
+*
+* @param loi ObjectInspector for processing the Object containing a list
+* @param listOfScriptWitnessItemObject object containing the list of scriptwitnessitems of a Bitcoin Transaction
+*
+* @return a list of BitcoinScriptWitnessItem 
+*
+*/
 
-
+private List<BitcoinScriptWitnessItem> readListOfBitcoinScriptWitnessFromTable(ListObjectInspector loi, Object listOfScriptWitnessItemObject) {
+int listLength=loi.getListLength(listOfScriptWitnessItemObject);
+List<BitcoinScriptWitnessItem> result = new ArrayList<>(listLength);
+StructObjectInspector listOfScriptwitnessItemElementObjectInspector = (StructObjectInspector)loi.getListElementObjectInspector();
+for (int i=0;i<listLength;i++) {
+	Object currentlistofscriptwitnessitemObject = loi.getListElement(listOfScriptWitnessItemObject,i);
+	StructField stackitemcounterSF = listOfScriptwitnessItemElementObjectInspector.getStructFieldRef("stackitemcounter");
+	StructField scriptwitnesslistSF = listOfScriptwitnessItemElementObjectInspector.getStructFieldRef("scriptwitnesslist");
+	boolean scriptwitnessitemNull = (stackitemcounterSF==null) || (scriptwitnesslistSF==null) ; 
+	if (scriptwitnessitemNull) {
+		LOG.warn("Invalid BitcoinScriptWitnessItem detected at position "+i);
+		return new ArrayList<>();
+	}
+	byte[] stackItemCounter = wboi.getPrimitiveJavaObject(listOfScriptwitnessItemElementObjectInspector.getStructFieldData(currentlistofscriptwitnessitemObject,stackitemcounterSF));
+	Object listofscriptwitnessObject =  soi.getStructFieldData(listOfScriptwitnessItemElementObjectInspector,scriptwitnesslistSF);
+	ListObjectInspector loiScriptWitness=(ListObjectInspector)scriptwitnesslistSF.getFieldObjectInspector();
+	StructObjectInspector listOfScriptwitnessElementObjectInspector = (StructObjectInspector)loiScriptWitness.getListElementObjectInspector();
+	int listWitnessLength = 	loiScriptWitness.getListLength(listofscriptwitnessObject);
+	List<BitcoinScriptWitness> currentScriptWitnessList = new ArrayList<>(listWitnessLength);
+	for (int j=0;j<listWitnessLength;j++) {
+		Object currentlistofscriptwitnessObject = loi.getListElement(listofscriptwitnessObject,j);
+		
+		StructField witnessscriptlengthSF = listOfScriptwitnessItemElementObjectInspector.getStructFieldRef("witnessscriptlength");
+		StructField witnessscriptSF = listOfScriptwitnessItemElementObjectInspector.getStructFieldRef("witnessscript");
+		boolean scriptwitnessNull = (witnessscriptlengthSF==null)  || (witnessscriptSF==null);
+		if (scriptwitnessNull) {
+			LOG.warn("Invalid BitcoinScriptWitness detected at position "+j+ "for BitcoinScriptWitnessItem "+i);
+			return new ArrayList<>();
+		}
+		byte[] scriptWitnessLength = wboi.getPrimitiveJavaObject(listOfScriptwitnessElementObjectInspector.getStructFieldData(currentlistofscriptwitnessObject,witnessscriptlengthSF));
+		byte[] scriptWitness = wboi.getPrimitiveJavaObject(listOfScriptwitnessElementObjectInspector.getStructFieldData(currentlistofscriptwitnessObject,witnessscriptSF));
+		currentScriptWitnessList.add(new BitcoinScriptWitness(scriptWitnessLength,scriptWitness));
+	}
+	BitcoinScriptWitnessItem currentBitcoinScriptWitnessItem = new BitcoinScriptWitnessItem(stackItemCounter,currentScriptWitnessList);
+	result.add(currentBitcoinScriptWitnessItem);
+}
+return result;
+}
 }
