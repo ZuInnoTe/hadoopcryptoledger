@@ -28,30 +28,59 @@ import java.util.ArrayList;
 /** This is simply for testing the UDF **/
 public class TestBitcoinTransaction implements Writable {
 
-	
+private ByteWritable flag;
+private ByteWritable marker;
 private IntWritable version;
 private BytesWritable inCounter;
 private BytesWritable outCounter;
 private List<TestBitcoinTransactionInput> listOfInputs;
 private List<TestBitcoinTransactionOutput> listOfOutputs;
+private List<TestBitcoinScriptWitnessItem> listOfScriptWitnessItem;
 private IntWritable lockTime;
 
 public TestBitcoinTransaction() {
+	this.marker=new ByteWritable((byte) 0x01);
+	this.flag=new ByteWritable((byte) 0x00);
 	this.version=new IntWritable(0);
 	this.inCounter=new BytesWritable(new byte[0]);
 	this.outCounter=new BytesWritable(new byte[0]);
 	this.listOfInputs=new ArrayList<TestBitcoinTransactionInput>();
 	this.listOfOutputs=new ArrayList<TestBitcoinTransactionOutput>();
+	this.listOfScriptWitnessItem=new ArrayList<TestBitcoinScriptWitnessItem>();
 	this.lockTime=new IntWritable(0);
 }
 
 public TestBitcoinTransaction(int version, byte[] inCounter, List<TestBitcoinTransactionInput> listOfInputs, byte[] outCounter, List<TestBitcoinTransactionOutput> listOfOutputs, int lockTime) {
+	this.marker=new ByteWritable((byte) 0x01);
+	this.flag=new ByteWritable((byte) 0x00);
 	this.version=new IntWritable(version);
 	this.inCounter=new BytesWritable(inCounter);
 	this.listOfInputs=listOfInputs;
 	this.outCounter=new BytesWritable(outCounter);
 	this.listOfOutputs=listOfOutputs;
+	this.listOfScriptWitnessItem=new ArrayList<TestBitcoinScriptWitnessItem>();
 	this.lockTime=new IntWritable(lockTime);
+}
+
+public TestBitcoinTransaction(byte marker, byte flag, int version, byte[] inCounter, List<TestBitcoinTransactionInput> listOfInputs, byte[] outCounter, List<TestBitcoinTransactionOutput> listOfOutputs, List<TestBitcoinScriptWitnessItem> listOfScriptWitnessItem,int lockTime) {
+	this.marker=new ByteWritable(marker);
+	this.flag=new ByteWritable(flag);
+	this.version=new IntWritable(version);
+	this.inCounter=new BytesWritable(inCounter);
+	this.listOfInputs=listOfInputs;
+	this.outCounter=new BytesWritable(outCounter);
+	this.listOfOutputs=listOfOutputs;
+	this.listOfScriptWitnessItem=listOfScriptWitnessItem;
+	this.lockTime=new IntWritable(lockTime);
+}
+
+
+public ByteWritable getMarker() {
+	return this.marker;
+}
+
+public ByteWritable getFlag() {
+	return this.flag;
 }
 
 public IntWritable getVersion() {
@@ -74,16 +103,23 @@ public List<TestBitcoinTransactionOutput> getListOfOutputs() {
 	return this.listOfOutputs;
 }
 
+public List<TestBitcoinScriptWitnessItem> getListOfScriptWitnessItem() {
+	return this.listOfScriptWitnessItem;
+}
+
 public IntWritable getLockTime() {
 	return this.lockTime;
 }
 
 public void set(TestBitcoinTransaction newTransaction) {
+	this.marker=newTransaction.getMarker();
+	this.flag=newTransaction.getFlag();
 	this.version=newTransaction.getVersion();
 	this.inCounter=newTransaction.getInCounter();
 	this.listOfInputs=newTransaction.getListOfInputs();
 	this.outCounter=newTransaction.getOutCounter();
 	this.listOfOutputs=newTransaction.getListOfOutputs();
+	this.listOfScriptWitnessItem=newTransaction.getListOfScriptWitnessItem();
 	this.lockTime=newTransaction.getLockTime();
 	
 }

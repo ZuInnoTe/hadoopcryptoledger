@@ -277,7 +277,7 @@ for (int i=0;i<listLength;i++) {
 		return new ArrayList<>();
 	}
 	byte[] stackItemCounter = wboi.getPrimitiveJavaObject(listOfScriptwitnessItemElementObjectInspector.getStructFieldData(currentlistofscriptwitnessitemObject,stackitemcounterSF));
-	Object listofscriptwitnessObject =  soi.getStructFieldData(listOfScriptwitnessItemElementObjectInspector,scriptwitnesslistSF);
+	Object listofscriptwitnessObject =  soi.getStructFieldData(currentlistofscriptwitnessitemObject,scriptwitnesslistSF);
 	ListObjectInspector loiScriptWitness=(ListObjectInspector)scriptwitnesslistSF.getFieldObjectInspector();
 	StructObjectInspector listOfScriptwitnessElementObjectInspector = (StructObjectInspector)loiScriptWitness.getListElementObjectInspector();
 	int listWitnessLength = 	loiScriptWitness.getListLength(listofscriptwitnessObject);
@@ -285,8 +285,8 @@ for (int i=0;i<listLength;i++) {
 	for (int j=0;j<listWitnessLength;j++) {
 		Object currentlistofscriptwitnessObject = loi.getListElement(listofscriptwitnessObject,j);
 		
-		StructField witnessscriptlengthSF = listOfScriptwitnessItemElementObjectInspector.getStructFieldRef("witnessscriptlength");
-		StructField witnessscriptSF = listOfScriptwitnessItemElementObjectInspector.getStructFieldRef("witnessscript");
+		StructField witnessscriptlengthSF = listOfScriptwitnessElementObjectInspector.getStructFieldRef("witnessscriptlength");
+		StructField witnessscriptSF = listOfScriptwitnessElementObjectInspector.getStructFieldRef("witnessscript");
 		boolean scriptwitnessNull = (witnessscriptlengthSF==null)  || (witnessscriptSF==null);
 		if (scriptwitnessNull) {
 			LOG.warn("Invalid BitcoinScriptWitness detected at position "+j+ "for BitcoinScriptWitnessItem "+i);
