@@ -77,7 +77,7 @@ private WritableLongObjectInspector wloi;
 
 @Override
 public String getDisplayString(String[] arg0) {
-	return "hclBitcoinTransactionHash()";
+	return "hclBitcoinTransactionHashSegwit()";
 }
 
 /**
