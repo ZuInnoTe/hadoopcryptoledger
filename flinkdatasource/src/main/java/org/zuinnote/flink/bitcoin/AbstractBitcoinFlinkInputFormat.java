@@ -29,7 +29,7 @@ import org.apache.flink.core.fs.FileInputSplit;
 import org.zuinnote.hadoop.bitcoin.format.common.BitcoinBlockReader;
 import org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtil;
 import org.zuinnote.hadoop.bitcoin.format.exception.HadoopCryptoLedgerConfigurationException;
-import org.zuinnote.hadoop.bitcoin.format.mapred.AbstractBitcoinRecordReader;
+import org.zuinnote.hadoop.bitcoin.format.mapreduce.AbstractBitcoinRecordReader;
 
 public abstract class AbstractBitcoinFlinkInputFormat<E> extends FileInputFormat<E> {
 
