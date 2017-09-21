@@ -32,6 +32,11 @@ itJacoco.settings
 
 assemblyJarName in assembly := "example-hcl-spark-scala-ds-bitcoinblock.jar"
 
+assemblyMergeStrategy in assembly := {
+ case PathList("META-INF", xs @ _*) => MergeStrategy.discard
+ case x => MergeStrategy.first
+}
+
 libraryDependencies += "com.github.zuinnote" %% "spark-hadoopcryptoledger-ds" % "1.0.7" % "compile"
 
 libraryDependencies += "org.apache.spark" %% "spark-core" % "1.5.0" % "provided"
