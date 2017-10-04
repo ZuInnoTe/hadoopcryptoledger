@@ -54,6 +54,9 @@ public class NamecoinUtil {
 	 * @return  Name operation: "OP_NAME_NEW", "OP_NAME_FIRST_UPDATE", "OP_NAME_UPDATE" or in case it cannot be determined: "unknown"
 	 */
 	public static String getNameOperation(byte[] scriptPubKey) {
+		if (scriptPubKey==null) {
+			return NamecoinUtil.STR_OP_UNKNOWN;
+		}
 		if (scriptPubKey.length>1)  {
 			byte nameOp=scriptPubKey[0];
 			switch(nameOp) {
