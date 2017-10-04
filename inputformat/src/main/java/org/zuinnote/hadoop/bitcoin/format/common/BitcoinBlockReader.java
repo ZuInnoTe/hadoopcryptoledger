@@ -27,6 +27,8 @@ import java.nio.ByteOrder;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
 
@@ -41,12 +43,14 @@ private static final Log LOG = LogFactory.getLog(BitcoinBlockReader.class.getNam
 
 private int maxSizeBitcoinBlock=0; 
 private boolean useDirectBuffer=false;
-
+private boolean readAuxPow=false;
 private boolean filterSpecificMagic=false;
 private byte[][] specificMagicByteArray;
 private ByteBuffer preAllocatedDirectByteBuffer;
 
 private InputStream bin;
+
+
 /**
 * Create a BitcoinBlock reader that reads from the given stream and uses the given parameters for configuration. Note it assumed that the validity of this configuration is checked by BitcoinBlockRecordReader
 * @param in Input stream to read from
@@ -55,8 +59,20 @@ private InputStream bin;
 * @param specificMagicByteArray filters by specific block magic numbers if not null. 
 * @param useDirectBuffer experimental feature to use a DirectByteBuffer instead of a HeapByteBuffer
 **/
+public BitcoinBlockReader(InputStream in,  int maxSizeBitcoinBlock, int bufferSize, byte[][] specificMagicByteArray, boolean useDirectBuffer) {
+	this(in,maxSizeBitcoinBlock,bufferSize, specificMagicByteArray, useDirectBuffer, false);
+}
+/**
+* Create a BitcoinBlock reader that reads from the given stream and uses the given parameters for configuration. Note it assumed that the validity of this configuration is checked by BitcoinBlockRecordReader
+* @param in Input stream to read from
+* @param maxSizeBitcoinBlock Maximum size of a Bitcoinblock.
+* @param bufferSize size of the memory buffer for the givenInputStream
+* @param specificMagicByteArray filters by specific block magic numbers if not null. 
+* @param useDirectBuffer experimental feature to use a DirectByteBuffer instead of a HeapByteBuffer
+* @param readAuxPow true if auxPow information should be parsed, false if not
+**/
 
-public BitcoinBlockReader(InputStream in, int maxSizeBitcoinBlock, int bufferSize, byte[][] specificMagicByteArray, boolean useDirectBuffer) {
+public BitcoinBlockReader(InputStream in, int maxSizeBitcoinBlock, int bufferSize, byte[][] specificMagicByteArray, boolean useDirectBuffer, boolean readAuxPow) {
 	this.maxSizeBitcoinBlock=maxSizeBitcoinBlock;
 	this.specificMagicByteArray=specificMagicByteArray;
 	this.useDirectBuffer=useDirectBuffer;
@@ -71,6 +87,7 @@ public BitcoinBlockReader(InputStream in, int maxSizeBitcoinBlock, int bufferSiz
 	if (this.useDirectBuffer) { // in case of a DirectByteBuffer we do allocation only once for the maximum size of one block, otherwise we will have a high cost for reallocation
 		preAllocatedDirectByteBuffer=ByteBuffer.allocateDirect(this.maxSizeBitcoinBlock);
 	}
+	this.readAuxPow=readAuxPow;
 }
 
 
@@ -127,9 +144,12 @@ public BitcoinBlock readBlock() throws BitcoinBlockReadException {
 	rawByteBuffer.get(currentBits,0,4);
 	// nonce
 	int currentNonce=rawByteBuffer.getInt();
+	
+	// parse AuxPOW (if available)
+	BitcoinAuxPOW auxPOW=parseAuxPow(rawByteBuffer);
 	// read var int from transaction counter
-		
 	long currentTransactionCounter=BitcoinUtil.convertVarIntByteBufferToLong(rawByteBuffer);
+
 	// parse transactions 
 	List<BitcoinTransaction> allBlockTransactions=parseTransactions(rawByteBuffer,currentTransactionCounter);
 	if (allBlockTransactions.size()!=currentTransactionCounter) {
@@ -145,9 +165,110 @@ public BitcoinBlock readBlock() throws BitcoinBlockReadException {
 	result.setTransactionCounter(currentTransactionCounter);
 	result.setHashPrevBlock(currentHashPrevBlock);
 	result.setHashMerkleRoot(currentHashMerkleRoot);
+	result.setAuxPOW(auxPOW);
 	result.setTransactions(allBlockTransactions);
 	return result;
 }
+
+
+
+/**
+ * Parses AuxPOW information (cf. https://en.bitcoin.it/wiki/Merged_mining_specification)
+ * 
+ * @param rawByteBuffer
+ * @return
+ */
+public BitcoinAuxPOW parseAuxPow(ByteBuffer rawByteBuffer) {
+	if (!this.readAuxPow) {
+		return null;
+	}
+	// in case it does not contain auxpow we need to reset
+	rawByteBuffer.mark();
+	int currentVersion=rawByteBuffer.getInt();
+	byte[] currentInCounterVarInt=BitcoinUtil.convertVarIntByteBufferToByteArray(rawByteBuffer);
+	byte[] currentTransactionInputPrevTransactionHash=new byte[32];
+	rawByteBuffer.get(currentTransactionInputPrevTransactionHash,0,32);
+	byte[] prevTxOutIdx = new byte[4];
+	rawByteBuffer.get(prevTxOutIdx,0,4);
+	// detect auxPow
+	rawByteBuffer.reset();
+	byte[] expectedPrevTransactionHash=new byte[]{0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+	byte[] expectedPrevOutIdx = new byte[] {(byte)0xFF,(byte)0xFF,(byte)0xFF,(byte)0xFF};
+
+	if ((!(Arrays.equals(prevTxOutIdx,expectedPrevOutIdx))||(!(Arrays.equals(currentTransactionInputPrevTransactionHash,expectedPrevTransactionHash))))) {
+		return null;
+	}
+	// continue reading auxPow
+ 	// txIn (for all of them)
+	currentVersion=rawByteBuffer.getInt();
+	
+	currentInCounterVarInt=BitcoinUtil.convertVarIntByteBufferToByteArray(rawByteBuffer);
+	long currentNoOfInputs=BitcoinUtil.getVarInt(currentInCounterVarInt);
+	List<BitcoinTransactionInput> currentTransactionInput = parseTransactionInputs(rawByteBuffer, currentNoOfInputs);
+
+	// txOut (for all of them)
+	byte[] currentOutCounterVarInt=BitcoinUtil.convertVarIntByteBufferToByteArray(rawByteBuffer);
+	long currentNoOfOutput=BitcoinUtil.getVarInt(currentOutCounterVarInt);
+	List<BitcoinTransactionOutput> currentTransactionOutput = parseTransactionOutputs(rawByteBuffer,currentNoOfOutput);
+	int lockTime = rawByteBuffer.getInt();
+	BitcoinTransaction coinbaseTransaction= new BitcoinTransaction(currentVersion,currentInCounterVarInt,currentTransactionInput, currentOutCounterVarInt, currentTransactionOutput,lockTime);
+
+	// read branches
+	// coinbase branch
+	byte[] coinbaseParentBlockHeaderHash=new byte[32];
+	rawByteBuffer.get(coinbaseParentBlockHeaderHash,0,32);
+	
+	BitcoinAuxPOWBranch coinbaseBranch = parseAuxPOWBranch(rawByteBuffer);
+	
+	// auxchain branch
+	BitcoinAuxPOWBranch auxChainBranch = parseAuxPOWBranch(rawByteBuffer);
+
+	// parent Block header
+	
+	byte[] parentBlockBits=new byte[4];
+	byte[] parentBlockHashMerkleRoot=new byte[32];
+	byte[] parentBlockHashPrevBlock=new byte[32];
+	
+	// version
+
+	int parentBlockVersion=rawByteBuffer.getInt();
+	// hashPrevBlock
+	rawByteBuffer.get(parentBlockHashPrevBlock,0,32);
+	// hashMerkleRoot
+	rawByteBuffer.get(parentBlockHashMerkleRoot,0,32);	
+	// time 
+	int parentBlockTime=rawByteBuffer.getInt();
+	// bits/difficulty
+	rawByteBuffer.get(parentBlockBits,0,4);
+	// nonce
+	int parentBlockNonce=rawByteBuffer.getInt();
+	BitcoinAuxPOWBlockHeader parentBlockheader = new BitcoinAuxPOWBlockHeader(parentBlockVersion, parentBlockHashPrevBlock, parentBlockHashMerkleRoot, parentBlockTime, parentBlockBits, parentBlockNonce);
+
+	return new BitcoinAuxPOW(currentVersion, coinbaseTransaction, coinbaseParentBlockHeaderHash, coinbaseBranch, auxChainBranch, parentBlockheader);
+}
+
+
+/**
+ * Parse an AUXPowBranch
+ * 
+ * @param rawByteBuffer ByteBuffer from which the AuxPOWBranch should be parsed
+ * 
+ * @return AuxPOWBranch
+ */
+public BitcoinAuxPOWBranch parseAuxPOWBranch(ByteBuffer rawByteBuffer) {
+
+	byte[] noOfLinksVarInt=BitcoinUtil.convertVarIntByteBufferToByteArray(rawByteBuffer);
+	long currentNoOfLinks=BitcoinUtil.getVarInt(noOfLinksVarInt);
+	ArrayList<byte[]> links = new ArrayList((int)currentNoOfLinks);
+	for (int i=0;i<currentNoOfLinks;i++) {
+		byte[] currentLink = new byte[32];
+		rawByteBuffer.get(currentLink,0,32);
+		links.add(currentLink);
+	}
+	byte[] branchSideBitmask=new byte[4];
+	rawByteBuffer.get(branchSideBitmask,0,4);
+	return new BitcoinAuxPOWBranch(noOfLinksVarInt, links, branchSideBitmask);
+}	
 
 /**
 * Parses the Bitcoin transactions in a byte buffer. 
@@ -192,43 +313,14 @@ public List<BitcoinTransaction> parseTransactions(ByteBuffer rawByteBuffer,long 
 			}
 		}
 		// read inputs
-		ArrayList<BitcoinTransactionInput> currentTransactionInput = new ArrayList<>((int)currentNoOfInputs);
-		
-		for (int i=0;i<currentNoOfInputs;i++) {
-			// read previous Hash of Transaction
-			byte[] currentTransactionInputPrevTransactionHash=new byte[32];
-			rawByteBuffer.get(currentTransactionInputPrevTransactionHash,0,32);
-			// read previousTxOutIndex
-			long currentTransactionInputPrevTxOutIdx=BitcoinUtil.convertSignedIntToUnsigned(rawByteBuffer.getInt());
-			// read InScript length (Potential Internal Exceed Java Type)
-			byte[] currentTransactionTxInScriptLengthVarInt=BitcoinUtil.convertVarIntByteBufferToByteArray(rawByteBuffer);
-			long currentTransactionTxInScriptSize=BitcoinUtil.getVarInt(currentTransactionTxInScriptLengthVarInt);
-			// read inScript
-			int currentTransactionTxInScriptSizeInt=(int)currentTransactionTxInScriptSize;
-			byte[] currentTransactionInScript=new byte[currentTransactionTxInScriptSizeInt];
-			rawByteBuffer.get(currentTransactionInScript,0,currentTransactionTxInScriptSizeInt);
-			// read sequence no
-			long currentTransactionInputSeqNo=BitcoinUtil.convertSignedIntToUnsigned(rawByteBuffer.getInt());
-			// add input
-			currentTransactionInput.add(new BitcoinTransactionInput(currentTransactionInputPrevTransactionHash,currentTransactionInputPrevTxOutIdx,currentTransactionTxInScriptLengthVarInt,currentTransactionInScript,currentTransactionInputSeqNo));	
-		}
+		List<BitcoinTransactionInput> currentTransactionInput = parseTransactionInputs(rawByteBuffer, currentNoOfInputs);
+				
 		// read outCounter
 		byte[] currentOutCounterVarInt=BitcoinUtil.convertVarIntByteBufferToByteArray(rawByteBuffer);
 		long currentNoOfOutput=BitcoinUtil.getVarInt(currentOutCounterVarInt);
 		// read outputs
-		ArrayList<BitcoinTransactionOutput> currentTransactionOutput = new ArrayList<>((int)(currentNoOfOutput));
-		for (int i=0;i<currentNoOfOutput;i++) {
-			// read value
-			long currentTransactionOutputValue = rawByteBuffer.getLong();
-			// read outScript length (Potential Internal Exceed Java Type)
-			byte[] currentTransactionTxOutScriptLengthVarInt=BitcoinUtil.convertVarIntByteBufferToByteArray(rawByteBuffer);
-			long currentTransactionTxOutScriptSize=BitcoinUtil.getVarInt(currentTransactionTxOutScriptLengthVarInt);
-			int currentTransactionTxOutScriptSizeInt=(int)(currentTransactionTxOutScriptSize);
-			// read outScript
-			byte[] currentTransactionOutScript=new byte[currentTransactionTxOutScriptSizeInt];
-			rawByteBuffer.get(currentTransactionOutScript,0,currentTransactionTxOutScriptSizeInt);
-			currentTransactionOutput.add(new BitcoinTransactionOutput(currentTransactionOutputValue,currentTransactionTxOutScriptLengthVarInt,currentTransactionOutScript));
-		}
+		List<BitcoinTransactionOutput> currentTransactionOutput = parseTransactionOutputs(rawByteBuffer,currentNoOfOutput);
+				
 		List<BitcoinScriptWitnessItem> currentListOfTransactionSegwits;
 		if (segwit) {
 			// read segwit data
@@ -264,6 +356,66 @@ public List<BitcoinTransaction> parseTransactions(ByteBuffer rawByteBuffer,long 
 		resultTransactions.add(new BitcoinTransaction(marker,flag,currentVersion,currentInCounterVarInt,currentTransactionInput,currentOutCounterVarInt,currentTransactionOutput,currentListOfTransactionSegwits,currentTransactionLockTime));
 	}
 	return resultTransactions;
+}
+
+
+/*
+* Parses the Bitcoin transaction inputs in a byte buffer. 
+*
+* @param rawByteBuffer ByteBuffer from which the transaction inputs have to be parsed
+* @param noOfTransactionInputs Number of expected transaction inputs
+*
+* @return Array of transactions
+ * 
+ */
+public List<BitcoinTransactionInput> parseTransactionInputs(ByteBuffer rawByteBuffer, long noOfTransactionInputs) {
+	ArrayList<BitcoinTransactionInput> currentTransactionInput = new ArrayList<>((int)noOfTransactionInputs);
+	
+	for (int i=0;i<noOfTransactionInputs;i++) {
+		// read previous Hash of Transaction
+		byte[] currentTransactionInputPrevTransactionHash=new byte[32];
+		rawByteBuffer.get(currentTransactionInputPrevTransactionHash,0,32);
+		// read previousTxOutIndex
+		long currentTransactionInputPrevTxOutIdx=BitcoinUtil.convertSignedIntToUnsigned(rawByteBuffer.getInt());
+		// read InScript length (Potential Internal Exceed Java Type)
+		byte[] currentTransactionTxInScriptLengthVarInt=BitcoinUtil.convertVarIntByteBufferToByteArray(rawByteBuffer);
+		long currentTransactionTxInScriptSize=BitcoinUtil.getVarInt(currentTransactionTxInScriptLengthVarInt);
+		// read inScript
+		int currentTransactionTxInScriptSizeInt=(int)currentTransactionTxInScriptSize;
+		byte[] currentTransactionInScript=new byte[currentTransactionTxInScriptSizeInt];
+		rawByteBuffer.get(currentTransactionInScript,0,currentTransactionTxInScriptSizeInt);
+		// read sequence no
+		long currentTransactionInputSeqNo=BitcoinUtil.convertSignedIntToUnsigned(rawByteBuffer.getInt());
+		// add input
+		currentTransactionInput.add(new BitcoinTransactionInput(currentTransactionInputPrevTransactionHash,currentTransactionInputPrevTxOutIdx,currentTransactionTxInScriptLengthVarInt,currentTransactionInScript,currentTransactionInputSeqNo));	
+	}
+	return currentTransactionInput;
+}
+
+/*
+* Parses the Bitcoin transaction outputs in a byte buffer. 
+*
+* @param rawByteBuffer ByteBuffer from which the transaction outputs have to be parsed
+* @param noOfTransactionInputs Number of expected transaction outputs
+*
+* @return Array of transactions
+ * 
+ */
+public List<BitcoinTransactionOutput> parseTransactionOutputs(ByteBuffer rawByteBuffer, long noOfTransactionOutputs) {
+	ArrayList<BitcoinTransactionOutput> currentTransactionOutput = new ArrayList<>((int)(noOfTransactionOutputs));
+	for (int i=0;i<noOfTransactionOutputs;i++) {
+		// read value
+		long currentTransactionOutputValue = rawByteBuffer.getLong();
+		// read outScript length (Potential Internal Exceed Java Type)
+		byte[] currentTransactionTxOutScriptLengthVarInt=BitcoinUtil.convertVarIntByteBufferToByteArray(rawByteBuffer);
+		long currentTransactionTxOutScriptSize=BitcoinUtil.getVarInt(currentTransactionTxOutScriptLengthVarInt);
+		int currentTransactionTxOutScriptSizeInt=(int)(currentTransactionTxOutScriptSize);
+		// read outScript
+		byte[] currentTransactionOutScript=new byte[currentTransactionTxOutScriptSizeInt];
+		rawByteBuffer.get(currentTransactionOutScript,0,currentTransactionTxOutScriptSizeInt);
+		currentTransactionOutput.add(new BitcoinTransactionOutput(currentTransactionOutputValue,currentTransactionTxOutScriptLengthVarInt,currentTransactionOutScript));
+	}
+	return currentTransactionOutput;
 }
 
 /*

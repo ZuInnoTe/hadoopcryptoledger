@@ -300,7 +300,7 @@ public class BitcoinUtilTest {
 	 
 	 //74700E2CE030013E2E10FCFD06DF99C7826E41C725CA5C467660BFA4874F65BF
 	 byte[] expectedHashSegwit = BitcoinUtil.reverseByteArray(new byte[]{(byte)0x74,(byte)0x70,(byte)0x0E,(byte)0x2C,(byte)0xE0,(byte)0x30,(byte)0x01,(byte)0x3E,(byte)0x2E,(byte)0x10,(byte)0xFC,(byte)0xFD,(byte)0x06,(byte)0xDF,(byte)0x99,(byte)0xC7,(byte)0x82,(byte)0x6E,(byte)0x41,(byte)0xC7,(byte)0x25,(byte)0xCA,(byte)0x5C,(byte)0x46,(byte)0x76,(byte)0x60,(byte)0xBF,(byte)0xA4,(byte)0x87,(byte)0x4F,(byte)0x65,(byte)0xBF});
-	 assertArrayEquals("Hash for Random ScriptWitness Transaction correctly calculated (wxId)", expectedHashSegwit, randomScriptWitnessTransactionHashSegWit);
+	 assertArrayEquals("Hash for Random ScriptWitness Transaction correctly calculated (wtxId)", expectedHashSegwit, randomScriptWitnessTransactionHashSegWit);
 
 	 
   }

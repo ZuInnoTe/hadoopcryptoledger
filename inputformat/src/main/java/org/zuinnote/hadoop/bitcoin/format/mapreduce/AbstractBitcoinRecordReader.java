@@ -22,9 +22,6 @@ import org.zuinnote.hadoop.bitcoin.format.exception.HadoopCryptoLedgerConfigurat
 import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.ByteBuffer;
-
 
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FileSystem;
@@ -52,16 +49,19 @@ public static final String CONF_BUFFERSIZE="io.file.buffer.size";
 public static final String CONF_MAXBLOCKSIZE="hadoopcryptoledger.bitcoinblockinputformat.maxblocksize";
 public static final String CONF_FILTERMAGIC="hadoopcryptoledger.bitcoinblockinputformat.filter.magic";
 public static final String CONF_USEDIRECTBUFFER="hadoopcryptoledeger.bitcoinblockinputformat.usedirectbuffer";
+public static final String CONF_READAUXPOW="hadoopcryptoledger.bitcoinblockinputformat.readauxpow";
 public static final int DEFAULT_BUFFERSIZE=64*1024;
 public static final int DEFAULT_MAXSIZE_BITCOINBLOCK=8 * 1024 * 1024;
 public static final String DEFAULT_MAGIC = "F9BEB4D9";
 public static final boolean DEFAULT_USEDIRECTBUFFER=false;
+public static final boolean DEFAULT_READAUXPOW=false;
 
 private static final Log LOG = LogFactory.getLog(AbstractBitcoinRecordReader.class.getName());
 
 private int bufferSize=0;
 private int maxSizeBitcoinBlock=0; 
 private boolean useDirectBuffer=false;
+private boolean readAuxPOW=false;
 private String specificMagic="";
 private String[] specificMagicStringArray;
 private byte[][] specificMagicByteArray;
@@ -105,6 +105,7 @@ public AbstractBitcoinRecordReader(Configuration conf) throws HadoopCryptoLedger
 		}
 	}	
 	this.useDirectBuffer=conf.getBoolean(AbstractBitcoinRecordReader.CONF_USEDIRECTBUFFER,AbstractBitcoinRecordReader.DEFAULT_USEDIRECTBUFFER);
+	this.readAuxPOW=conf.getBoolean(AbstractBitcoinRecordReader.CONF_READAUXPOW,AbstractBitcoinRecordReader.DEFAULT_READAUXPOW);
 }
 
 
@@ -134,17 +135,17 @@ public void initialize(InputSplit split, TaskAttemptContext context) throws IOEx
       	if (codec instanceof SplittableCompressionCodec) {
 		
         	final SplitCompressionInputStream cIn =((SplittableCompressionCodec)codec).createInputStream(fileIn, decompressor, start, end,SplittableCompressionCodec.READ_MODE.CONTINUOUS);
-				bbr = new BitcoinBlockReader(cIn, this.maxSizeBitcoinBlock,this.bufferSize,this.specificMagicByteArray,this.useDirectBuffer);
+				bbr = new BitcoinBlockReader(cIn, this.maxSizeBitcoinBlock,this.bufferSize,this.specificMagicByteArray,this.useDirectBuffer,this.readAuxPOW);
 		start = cIn.getAdjustedStart();
        		end = cIn.getAdjustedEnd();
         	filePosition = cIn; // take pos from compressed stream
       } else {
-	bbr = new BitcoinBlockReader(codec.createInputStream(fileIn,decompressor), this.maxSizeBitcoinBlock,this.bufferSize,this.specificMagicByteArray,this.useDirectBuffer);
+	bbr = new BitcoinBlockReader(codec.createInputStream(fileIn,decompressor), this.maxSizeBitcoinBlock,this.bufferSize,this.specificMagicByteArray,this.useDirectBuffer,readAuxPOW);
 	filePosition = fileIn;
       }
     } else {
       fileIn.seek(start);
-      bbr = new BitcoinBlockReader(fileIn, this.maxSizeBitcoinBlock,this.bufferSize,this.specificMagicByteArray,this.useDirectBuffer);  
+      bbr = new BitcoinBlockReader(fileIn, this.maxSizeBitcoinBlock,this.bufferSize,this.specificMagicByteArray,this.useDirectBuffer,readAuxPOW);  
       filePosition = fileIn;
     }
     // seek to block start (for the case a block overlaps a split)

@@ -22,9 +22,6 @@ import org.zuinnote.hadoop.bitcoin.format.exception.HadoopCryptoLedgerConfigurat
 import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
 
 import java.io.IOException;
-import java.io.InputStream;
-
-import java.nio.ByteBuffer;
 
 
 import org.apache.hadoop.fs.FSDataInputStream;
@@ -54,16 +51,19 @@ public static final String CONF_BUFFERSIZE=org.zuinnote.hadoop.bitcoin.format.ma
 public static final String CONF_MAXBLOCKSIZE=org.zuinnote.hadoop.bitcoin.format.mapreduce.AbstractBitcoinRecordReader.CONF_MAXBLOCKSIZE;
 public static final String CONF_FILTERMAGIC=org.zuinnote.hadoop.bitcoin.format.mapreduce.AbstractBitcoinRecordReader.CONF_FILTERMAGIC;
 public static final String CONF_USEDIRECTBUFFER=org.zuinnote.hadoop.bitcoin.format.mapreduce.AbstractBitcoinRecordReader.CONF_USEDIRECTBUFFER;
+public static final String CONF_READAUXPOW=org.zuinnote.hadoop.bitcoin.format.mapreduce.AbstractBitcoinRecordReader.CONF_READAUXPOW;
 public static final int DEFAULT_BUFFERSIZE=org.zuinnote.hadoop.bitcoin.format.mapreduce.AbstractBitcoinRecordReader.DEFAULT_BUFFERSIZE;
 public static final int DEFAULT_MAXSIZE_BITCOINBLOCK=org.zuinnote.hadoop.bitcoin.format.mapreduce.AbstractBitcoinRecordReader.DEFAULT_MAXSIZE_BITCOINBLOCK;
 public static final String DEFAULT_MAGIC = org.zuinnote.hadoop.bitcoin.format.mapreduce.AbstractBitcoinRecordReader.DEFAULT_MAGIC;
 public static final boolean DEFAULT_USEDIRECTBUFFER=org.zuinnote.hadoop.bitcoin.format.mapreduce.AbstractBitcoinRecordReader.DEFAULT_USEDIRECTBUFFER;
+public static final boolean DEFAULT_READAUXPOW=org.zuinnote.hadoop.bitcoin.format.mapreduce.AbstractBitcoinRecordReader.DEFAULT_READAUXPOW;
 
 private static final Log LOG = LogFactory.getLog(AbstractBitcoinRecordReader.class.getName());
 
 private int bufferSize=0;
 private int maxSizeBitcoinBlock=0; 
 private boolean useDirectBuffer=false;
+private boolean readAuxPOW=false;
 private String specificMagic="";
 private String[] specificMagicStringArray;
 private byte[][] specificMagicByteArray;
@@ -118,6 +118,7 @@ public AbstractBitcoinRecordReader(FileSplit split,JobConf job, Reporter reporte
 		}
 	}	
 	this.useDirectBuffer=conf.getBoolean(AbstractBitcoinRecordReader.CONF_USEDIRECTBUFFER,AbstractBitcoinRecordReader.DEFAULT_USEDIRECTBUFFER);
+	this.readAuxPOW=conf.getBoolean(AbstractBitcoinRecordReader.CONF_READAUXPOW,AbstractBitcoinRecordReader.DEFAULT_READAUXPOW);
     // Initialize start and end of split
     start = split.getStart();
     end = start + split.getLength();
@@ -132,19 +133,19 @@ public AbstractBitcoinRecordReader(FileSplit split,JobConf job, Reporter reporte
       	if (codec instanceof SplittableCompressionCodec) {
 		LOG.debug("SplittableCompressionCodec");
         	final SplitCompressionInputStream cIn =((SplittableCompressionCodec)codec).createInputStream(fileIn, decompressor, start, end,SplittableCompressionCodec.READ_MODE.CONTINUOUS);
-		bbr = new BitcoinBlockReader(cIn, this.maxSizeBitcoinBlock,this.bufferSize,this.specificMagicByteArray,this.useDirectBuffer);  
+		bbr = new BitcoinBlockReader(cIn, this.maxSizeBitcoinBlock,this.bufferSize,this.specificMagicByteArray,this.useDirectBuffer,this.readAuxPOW);  
 		start = cIn.getAdjustedStart();
        		end = cIn.getAdjustedEnd();
         	filePosition = cIn; // take pos from compressed stream
       } else {
 	LOG.debug("Not-splitable compression codec");
-	bbr = new BitcoinBlockReader(codec.createInputStream(fileIn,decompressor), this.maxSizeBitcoinBlock,this.bufferSize,this.specificMagicByteArray,this.useDirectBuffer);
+	bbr = new BitcoinBlockReader(codec.createInputStream(fileIn,decompressor), this.maxSizeBitcoinBlock,this.bufferSize,this.specificMagicByteArray,this.useDirectBuffer,this.readAuxPOW);
         filePosition = fileIn;
       }
     } else {
       LOG.debug("Processing file without compression");
       fileIn.seek(start);
-      bbr = new BitcoinBlockReader(fileIn, this.maxSizeBitcoinBlock,this.bufferSize,this.specificMagicByteArray,this.useDirectBuffer);  
+      bbr = new BitcoinBlockReader(fileIn, this.maxSizeBitcoinBlock,this.bufferSize,this.specificMagicByteArray,this.useDirectBuffer,this.readAuxPOW);  
       filePosition = fileIn;
     }
     // initialize reader

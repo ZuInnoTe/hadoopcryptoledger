@@ -37,7 +37,10 @@ object SparkScalaNamecoinBlockCounter {
         val conf = new SparkConf().setAppName("Spark-Scala NamecoinBlock Analytics (hadoopcryptoledger)")
 	val sc=new SparkContext(conf)
 	val hadoopConf = new Configuration()
+	// Namecoin network magic
 	 hadoopConf.set("hadoopcryptoledger.bitcoinblockinputformat.filter.magic","F9BEB4FE")
+	 // Namecoin auxpow 
+	 hadoopConf.set("hadoopcryptoledger.bitcoinblockinputformat.readauxpow","true")
 	jobTotalNumOfTransactions(sc,hadoopConf,args(0),args(1))
 	sc.stop()
       }

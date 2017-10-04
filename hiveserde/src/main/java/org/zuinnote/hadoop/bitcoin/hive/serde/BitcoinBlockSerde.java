@@ -61,6 +61,7 @@ public static final String CONF_MAXBLOCKSIZE=AbstractBitcoinRecordReader.CONF_MA
 public static final String CONF_FILTERMAGIC=AbstractBitcoinRecordReader.CONF_FILTERMAGIC;
 public static final String CONF_USEDIRECTBUFFER=AbstractBitcoinRecordReader.CONF_USEDIRECTBUFFER;
 public static final String CONF_ISSPLITABLE=AbstractBitcoinFileInputFormat.CONF_ISSPLITABLE;
+public static final String CONF_READAUXPOW=AbstractBitcoinRecordReader.CONF_READAUXPOW;
 
 private static final Log LOG = LogFactory.getLog(BitcoinBlockSerde.class.getName());
 private ObjectInspector bitcoinBlockObjectInspector;
@@ -112,10 +113,15 @@ public void initialize(Configuration conf, Properties tbl) {
 		conf.setBoolean(BitcoinBlockSerde.CONF_USEDIRECTBUFFER, Boolean.parseBoolean(useDirectBufferStr));
 		LOG.info("Use direct buffer: "+useDirectBufferStr);
 	}
-	String isSplitableStr= tbl.getProperty(CONF_ISSPLITABLE);
+	String isSplitableStr= tbl.getProperty(BitcoinBlockSerde.CONF_ISSPLITABLE);
 	if (isSplitableStr!=null) {
 		conf.setBoolean(BitcoinBlockSerde.CONF_ISSPLITABLE, Boolean.parseBoolean(isSplitableStr));
 		LOG.info("Enable splitable heuristic: "+isSplitableStr);
+	}
+	String readAuxPOWStr= tbl.getProperty(BitcoinBlockSerde.CONF_READAUXPOW);
+	if (readAuxPOWStr!=null) {
+		conf.setBoolean(BitcoinBlockSerde.CONF_READAUXPOW, Boolean.parseBoolean(readAuxPOWStr));
+		LOG.info("Enable read aux pow: "+readAuxPOWStr);
 	}
 	LOG.debug("Finish initializion BitcoinBlockSerde");
  

@@ -65,11 +65,13 @@ private static final byte[][] DEFAULT_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB4
         tblProperties.setProperty(BitcoinBlockSerde.CONF_FILTERMAGIC, "A0A0A0A0");
 	tblProperties.setProperty(BitcoinBlockSerde.CONF_USEDIRECTBUFFER,"true");
 	tblProperties.setProperty(BitcoinBlockSerde.CONF_ISSPLITABLE,"true");
+	tblProperties.setProperty(BitcoinBlockSerde.CONF_READAUXPOW,"true");
 	testSerde.initialize(conf,tblProperties);
 	assertEquals("MAXBLOCKSIZE set correctly", 1, conf.getInt(BitcoinBlockSerde.CONF_MAXBLOCKSIZE,2));	
 	assertEquals("FILTERMAGIC set correctly", "A0A0A0A0", conf.get(BitcoinBlockSerde.CONF_FILTERMAGIC,"B0B0B0B0"));
 	assertTrue("USEDIRECTBUFFER set correctly", conf.getBoolean(BitcoinBlockSerde.CONF_USEDIRECTBUFFER,false));	
 	assertTrue("ISSPLITABLE set correctly", conf.getBoolean(BitcoinBlockSerde.CONF_ISSPLITABLE,false));
+	assertTrue("ISSPLITABLE set correctly", conf.getBoolean(BitcoinBlockSerde.CONF_READAUXPOW,false));
   }
 
  @Test

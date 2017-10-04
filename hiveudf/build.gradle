@@ -9,7 +9,7 @@ compileJava.options.encoding = 'UTF-8'
 
 group = "com.github.zuinnote"
 archivesBaseName = "hadoopcryptoledger-hiveudf"
-version = "1.0.7"
+version = "1.0.8"
 
 
 jar {
@@ -77,8 +77,8 @@ dependencies {
        // hadoop crypto ledger library
 
 
-   provided("com.github.zuinnote:hadoopcryptoledger-fileformat:1.0.7")
-   provided("com.github.zuinnote:hadoopcryptoledger-hiveserde:1.0.7")
+   provided("com.github.zuinnote:hadoopcryptoledger-fileformat:1.0.8")
+   provided("com.github.zuinnote:hadoopcryptoledger-hiveserde:1.0.8")
     // hive serde API
    provided("org.apache.hive:hive-serde:1.2.0")
    provided("org.apache.hive:hive-exec:1.2.0")

@@ -41,6 +41,7 @@ private long transactionCounter;
 private byte[] hashPrevBlock;
 private byte[] hashMerkleRoot;
 private List<BitcoinTransaction> transactions;
+private BitcoinAuxPOW auxPOW;
 
 public BitcoinBlock() {
 	this.magicNo=new byte[0];
@@ -49,6 +50,7 @@ public BitcoinBlock() {
 	this.hashPrevBlock=new byte[0];
 	this.hashMerkleRoot=new byte[0];
 	this.transactions=new ArrayList<>();
+	this.auxPOW=new BitcoinAuxPOW();
 }
 
 
@@ -134,6 +136,15 @@ public void setTransactions(List<BitcoinTransaction> transactions) {
 	this.transactions=transactions;
 }
 
+public BitcoinAuxPOW getAuxPOW() {
+	return this.auxPOW;
+}
+
+
+public void setAuxPOW(BitcoinAuxPOW auxPOW) {
+	this.auxPOW = auxPOW;
+}
+
 public void set(BitcoinBlock newBitcoinBlock) {
 	this.blockSize=newBitcoinBlock.getBlockSize();
 	this.magicNo=newBitcoinBlock.getMagicNo();
@@ -145,6 +156,7 @@ public void set(BitcoinBlock newBitcoinBlock) {
 	this.hashPrevBlock=newBitcoinBlock.getHashPrevBlock();
 	this.hashMerkleRoot=newBitcoinBlock.getHashMerkleRoot();
 	this.transactions=newBitcoinBlock.getTransactions();
+	this.auxPOW=newBitcoinBlock.getAuxPOW();
 }
 
 /** Writable **/
@@ -158,5 +170,8 @@ public void set(BitcoinBlock newBitcoinBlock) {
   public void readFields(DataInput dataInput) throws IOException {
     throw new UnsupportedOperationException("readFields unsupported");
   }
+
+
+
 
 }
