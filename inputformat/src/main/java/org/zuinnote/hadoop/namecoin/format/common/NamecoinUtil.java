@@ -15,7 +15,12 @@
 **/
 package org.zuinnote.hadoop.namecoin.format.common;
 
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+import java.util.Arrays;
+
 import org.mortbay.log.Log;
+import org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtil;
 
 public class NamecoinUtil {
 	public final static byte OP_NAME_NEW=0x51;
@@ -29,6 +34,7 @@ public class NamecoinUtil {
 	
 	/** 
 	 * Extracts a Namecoin field name (String) and value field (a JSON object) from a script. Please note that not all Namecoin transactions do contain Namecoin fields, some are coinbase (ie mining) transactions and others are regular transactions to transfer Namecoins (comparable to Bitcoin transactions=
+	 * Additionally, you can extract only information related to the OPs NAME_FIRSTUPDATE and NAME_UPDATE, because NAME_NEW does not contain the name, but only a script hash that is used by NAME_FIRSTUPDATE to define the name
 	 * 
 	 * There are certain naming conventions that helps to identify the type of field, e.g. if name starts with:
 	 * (1) d/ then it is a domain name
@@ -43,7 +49,40 @@ public class NamecoinUtil {
 	 * @return Array of size 2 where the first entry is the name (e.g. d/example) and the second entry is a JSON object serialized as String, null if not a valid Namecoin DNS field
 	 */
 	public static String[] extractNamecoinField(byte[] scriptPubKey) {
+		// check if valid script
+		if ((scriptPubKey==null) || (scriptPubKey.length<2)) {
 			return null;
+		}
+		// only firstupdate and update work
+		    if (!((scriptPubKey[0]==NamecoinUtil.OP_NAME_UDPATE)|| (scriptPubKey[0]==NamecoinUtil.OP_NAME_FIRSTUPDATE))) {
+		    		return null;
+		    }
+		    String[] result = new String[2];
+		    // convert script into ByteBuffer
+		    ByteBuffer scriptByteBuffer = ByteBuffer.wrap(scriptPubKey);
+		    // skip op
+		    scriptByteBuffer.get();
+		    // read name
+		    		// get size
+		    		long nameSize=BitcoinUtil.convertVarIntByteBufferToLong(scriptByteBuffer);
+		    		// extract name
+		    		byte[] nameByteArray = new byte[(int)nameSize];
+		    		scriptByteBuffer.get(nameByteArray);
+		    		String name = new String(nameByteArray,Charset.forName("UTF-8"));
+		    		result[0]=name;
+		    	if (scriptPubKey[0]==NamecoinUtil.OP_NAME_FIRSTUPDATE) {
+		    	// skip intermediate information
+		    		long intermediateInformationSize = BitcoinUtil.convertVarIntByteBufferToLong(scriptByteBuffer);
+		    		byte[] intermediateInformation=new byte[(int)intermediateInformationSize];
+		    		scriptByteBuffer.get(intermediateInformation);
+		    	}
+		    // read value
+		    		long valueSize = BitcoinUtil.convertVarIntByteBufferToLong(scriptByteBuffer);
+		    		byte[] valueByteArray = new byte[(int)valueSize];
+		    		scriptByteBuffer.get(valueByteArray);
+		    		String value = new String (valueByteArray, Charset.forName("UTF-8"));
+		    		result[1]=value;
+			return result;
 	}
 	
 	

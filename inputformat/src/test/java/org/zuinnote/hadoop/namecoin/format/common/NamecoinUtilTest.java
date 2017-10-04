@@ -19,6 +19,7 @@ package org.zuinnote.hadoop.namecoin.format.common;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertArrayEquals;
 import org.junit.Test;
@@ -28,9 +29,36 @@ public class NamecoinUtilTest {
 	
 	
 	@Test
-	public void extractNamecoinField() {
-		// test for domain
-		// test for id
+	public void extractNamecoinFieldFirstUpdate() {
+		String firstUpdateScript ="520A642F666C6173687570641460C7B068EDEA60281DAF424C38D8DAB87C96CF993D7B226970223A223134352E3234392E3130362E323238222C226D6170223A7B222A223A7B226970223A223134352E3234392E3130362E323238227D7D7D6D6D76A91451B4FC93AAB8CBDBD0AC9BC8EAF824643FC1E29B88AC";
+		String[] result=NamecoinUtil.extractNamecoinField(BitcoinUtil.convertHexStringToByteArray(firstUpdateScript));
+		assertNotNull("Valid result obtained", result);
+		// test for domain name
+		assertEquals("Domain name of first update detected correctly","d/flashupd",result[0]);
+		// test for domain value
+		assertEquals("Domain value of first update detected correctly","{\"ip\":\"145.249.106.228\",\"map\":{\"*\":{\"ip\":\"145.249.106.228\"}}}",result[1]);
+		
+	}
+	
+	
+	@Test
+	public void extractNamecoinFieldUpdate() {
+		String updateScript = "5309642F70616E656C6B612D7B226970223A22382E382E382E38222C226D6170223A7B222A223A7B226970223A22382E382E382E38227D7D7D6D7576A9148D804B079AC79AD0CA108A4E5B679DB591FF069B88AC";
+		String[] result=NamecoinUtil.extractNamecoinField(BitcoinUtil.convertHexStringToByteArray(updateScript));
+		assertNotNull("Valid result obtained", result);
+		// test for domain name
+		assertEquals("Domain name of first update detected correctly","d/panelka",result[0]);
+		// test for domain value
+		assertEquals("Domain value of first update detected correctly","{\"ip\":\"8.8.8.8\",\"map\":{\"*\":{\"ip\":\"8.8.8.8\"}}}",result[1]);
+		
+	}
+	
+	@Test
+	public void extractNamecoinFieldInvalid() {
+		String[] resultNull = NamecoinUtil.extractNamecoinField(null);
+		assertNull("Null script leads to null result",resultNull);
+		String[] resultInvalid = NamecoinUtil.extractNamecoinField(new byte[] {0x01,0x02,0x03});
+		assertNull("Invalid script leads to null result",resultInvalid);
 	}
 	
 	@Test
