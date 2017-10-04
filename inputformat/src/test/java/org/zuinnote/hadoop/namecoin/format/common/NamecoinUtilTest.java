@@ -88,10 +88,6 @@ public class NamecoinUtilTest {
 	}
 	
 	
-	@Test
-	public void mergeJSONs() {
-		// 
-	}
-	
+
 
 }
