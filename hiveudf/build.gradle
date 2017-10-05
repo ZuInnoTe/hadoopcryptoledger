@@ -43,6 +43,9 @@ repositories {
 
 }
 
+test {
+    testLogging.showStandardStreams = true
+}
 
 configurations {
 	provided

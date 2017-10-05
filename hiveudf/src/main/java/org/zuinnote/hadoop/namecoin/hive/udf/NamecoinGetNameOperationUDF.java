@@ -13,30 +13,26 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 **/
-
 package org.zuinnote.hadoop.namecoin.hive.udf;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.hive.ql.exec.UDF;
-import org.apache.hadoop.io.ArrayWritable;
 import org.apache.hadoop.io.BytesWritable;
 import org.apache.hadoop.io.Text;
-import org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtil;
 import org.zuinnote.hadoop.namecoin.format.common.NamecoinUtil;
 
-public class NamecoinExtractFieldUDF extends UDF {
-	private static final Log LOG = LogFactory.getLog(NamecoinExtractFieldUDF.class.getName());
-	
+public class NamecoinGetNameOperationUDF extends UDF {
+	private static final Log LOG = LogFactory.getLog(NamecoinGetNameOperationUDF.class.getName());
+
 	/**
-	 * Analyzes txOutScript (ScriptPubKey) of an output of a Namecoin Transaction to determine the key (usually the domain name or identity) and the value (more information, such as subdomains, ips etc.)
+	 * Analyzes txOutScript (ScriptPubKey) of an output of a Namecoin Transaction to determine the name operation (if any)
 	 * 
 	 * @param input BytesWritable containing a txOutScript of a Namecoin Transaction
-	 * @return ArrayWritable with two entries, the first one for the key and the second one for the value
+	 * @return Text containing the type of name operation, cf. NamecoinUtil.getNameOperation
 	 */
-	 public ArrayWritable evaluate(BytesWritable input) {
-		String[] nameField= NamecoinUtil.extractNamecoinField(input.copyBytes());
-		return  new ArrayWritable(nameField);
+	 public Text evaluate(BytesWritable input) {
+		String nameOperation= NamecoinUtil.getNameOperation(input.copyBytes());
+		return new Text(nameOperation);
 	 }
-	 
 }
