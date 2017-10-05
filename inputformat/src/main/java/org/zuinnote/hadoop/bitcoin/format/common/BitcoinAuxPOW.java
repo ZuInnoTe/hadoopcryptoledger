@@ -47,7 +47,7 @@ public class BitcoinAuxPOW {
 		this.parentBlockHeader=parentBlockHeader;
 	}
 	
-	public int getAuxVersion() {
+	public int getVersion() {
 		return version;
 	}
 
