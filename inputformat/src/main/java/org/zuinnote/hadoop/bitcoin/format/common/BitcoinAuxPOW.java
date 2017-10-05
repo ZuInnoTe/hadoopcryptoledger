@@ -21,7 +21,7 @@ import java.util.List;
 public class BitcoinAuxPOW {
 	private int version;
 	private BitcoinTransaction coinbaseTransaction;
-	private byte[] coinbaseParentBlockHeader;
+	private byte[] parentBlockHeaderHash;
 	private BitcoinAuxPOWBranch coinbaseBranch;
 	private BitcoinAuxPOWBranch auxBlockChainBranch;
 	private BitcoinAuxPOWBlockHeader parentBlockHeader;
@@ -38,10 +38,10 @@ public class BitcoinAuxPOW {
 		this.parentBlockHeader=null;
 	}
 	
-	public BitcoinAuxPOW(int version, BitcoinTransaction coinbaseTransaction, byte[] coinbaseParentBlockHeader, BitcoinAuxPOWBranch coinbaseBranch, BitcoinAuxPOWBranch auxBlockChainBranch, BitcoinAuxPOWBlockHeader parentBlockHeader) {
+	public BitcoinAuxPOW(int version, BitcoinTransaction coinbaseTransaction, byte[] parentBlockHeaderHash, BitcoinAuxPOWBranch coinbaseBranch, BitcoinAuxPOWBranch auxBlockChainBranch, BitcoinAuxPOWBlockHeader parentBlockHeader) {
 		this.version=version;
 		this.coinbaseTransaction=coinbaseTransaction;
-		this.coinbaseParentBlockHeader=coinbaseParentBlockHeader;
+		this.parentBlockHeaderHash=parentBlockHeaderHash;
 		this.coinbaseBranch=coinbaseBranch;
 		this.auxBlockChainBranch=auxBlockChainBranch;
 		this.parentBlockHeader=parentBlockHeader;
@@ -69,8 +69,8 @@ public class BitcoinAuxPOW {
 		return coinbaseTransaction;
 	}
 
-	public byte[] getCoinbaseParentBlockHeader() {
-		return coinbaseParentBlockHeader;
+	public byte[] getparentBlockHeaderHash() {
+		return parentBlockHeaderHash;
 	}
 
 
