@@ -69,7 +69,7 @@ public class BitcoinAuxPOW {
 		return coinbaseTransaction;
 	}
 
-	public byte[] getparentBlockHeaderHash() {
+	public byte[] getParentBlockHeaderHash() {
 		return parentBlockHeaderHash;
 	}
 
