@@ -39,6 +39,7 @@ public abstract class AbstractBitcoinFlinkInputFormat<E> extends FileInputFormat
 	private int maxSizeBitcoinBlock;
 	private byte [][] specificMagicArray;
 	private boolean useDirectBuffer;
+	private boolean readAuxPOW;
 	/**
 	 * 
 	 */
@@ -49,6 +50,10 @@ public abstract class AbstractBitcoinFlinkInputFormat<E> extends FileInputFormat
 	}
 	
 	public AbstractBitcoinFlinkInputFormat(int maxSizeBitcoinBlock, String specificMagicStr, boolean useDirectBuffer) throws HadoopCryptoLedgerConfigurationException {
+		this(maxSizeBitcoinBlock,specificMagicStr,useDirectBuffer,false);
+	}
+	
+	public AbstractBitcoinFlinkInputFormat(int maxSizeBitcoinBlock, String specificMagicStr, boolean useDirectBuffer, boolean readAuxPOW) throws HadoopCryptoLedgerConfigurationException {
 		this.maxSizeBitcoinBlock=maxSizeBitcoinBlock;
 		this.useDirectBuffer=useDirectBuffer;
 		if ((specificMagicStr!=null) && (specificMagicStr.length()>0)) {
@@ -61,7 +66,8 @@ public abstract class AbstractBitcoinFlinkInputFormat<E> extends FileInputFormat
 					}
 					this.specificMagicArray[i]=currentMagicNo;
 			}
-		}	
+		}
+		this.readAuxPOW=readAuxPOW;
 	}
 	
 	/*
@@ -76,7 +82,7 @@ public abstract class AbstractBitcoinFlinkInputFormat<E> extends FileInputFormat
 		super.open(split);
 		LOG.debug("Initialize Bitcoin reader");
 		// temporary measure to set buffer size to 1, otherwise we cannot guarantee that checkpointing works
-		bbr = new BitcoinBlockReader(this.stream,this.maxSizeBitcoinBlock,1,this.specificMagicArray,this.useDirectBuffer);
+		bbr = new BitcoinBlockReader(this.stream,this.maxSizeBitcoinBlock,1,this.specificMagicArray,this.useDirectBuffer,this.readAuxPOW);
 	}
 
 	

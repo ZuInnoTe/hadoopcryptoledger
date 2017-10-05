@@ -44,6 +44,11 @@ public class BitcoinBlockFlinkInputFormat extends AbstractBitcoinFlinkInputForma
 	
 	public BitcoinBlockFlinkInputFormat(int maxSizeBitcoinBlock,  String specificMagicStr,
 			boolean useDirectBuffer) throws HadoopCryptoLedgerConfigurationException {
+		this(maxSizeBitcoinBlock, specificMagicStr, useDirectBuffer,false);
+	}
+	
+	public BitcoinBlockFlinkInputFormat(int maxSizeBitcoinBlock,  String specificMagicStr,
+			boolean useDirectBuffer, boolean readAuxPOW) throws HadoopCryptoLedgerConfigurationException {
 		super(maxSizeBitcoinBlock, specificMagicStr, useDirectBuffer);
 		this.isEndReached=false;
 	}
