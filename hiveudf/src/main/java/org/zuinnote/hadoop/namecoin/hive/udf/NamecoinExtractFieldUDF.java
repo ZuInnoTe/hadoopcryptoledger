@@ -41,7 +41,7 @@ public class NamecoinExtractFieldUDF extends UDF {
 		for (int i=0;i<nameField.length;i++) {
 			nameFieldText[i]=new Text(nameField[i]);
 		}
-		return  new ArrayList<>(Arrays.asList(nameFieldText));
+		return  new ArrayList<Text>(Arrays.asList(nameFieldText));
 	 }
 	 
 }
