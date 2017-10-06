@@ -22,24 +22,21 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.hadoop.hive.ql.exec.UDF;
 import org.apache.hadoop.hive.ql.exec.UDFArgumentException;
 import org.apache.hadoop.hive.ql.exec.UDFArgumentLengthException;
 import org.apache.hadoop.hive.ql.metadata.HiveException;
 import org.apache.hadoop.hive.ql.udf.generic.GenericUDF;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspectorFactory;
-import org.apache.hadoop.hive.serde2.objectinspector.StructObjectInspector;
+import org.apache.hadoop.hive.serde2.objectinspector.primitive.BinaryObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectInspectorFactory;
-import org.apache.hadoop.hive.serde2.objectinspector.primitive.WritableBinaryObjectInspector;
 import org.apache.hadoop.io.BytesWritable;
 import org.apache.hadoop.io.Text;
-import org.zuinnote.hadoop.bitcoin.format.common.BitcoinTransaction;
 import org.zuinnote.hadoop.namecoin.format.common.NamecoinUtil;
 
 public class NamecoinExtractFieldUDF extends GenericUDF {
 	private static final Log LOG = LogFactory.getLog(NamecoinExtractFieldUDF.class.getName());
-	private WritableBinaryObjectInspector wboi;
+	private BinaryObjectInspector wboi;
 
 	 
 	 /**
@@ -62,11 +59,11 @@ public class NamecoinExtractFieldUDF extends GenericUDF {
 	  	if (arguments.length != 1) {
 	      		throw new UDFArgumentLengthException("namecoinExtractField only takes one argument: Binary ");
 		}
-		if (!(arguments[0] instanceof WritableBinaryObjectInspector)) { 
+		if (!(arguments[0] instanceof BinaryObjectInspector)) { 
 			throw new UDFArgumentException("first argument must be a Binary containing a Namecoin script");
 		}
 		// these are only used for bitcointransaction structs exported to other formats, such as ORC
-		this.wboi = (WritableBinaryObjectInspector)arguments[0];;
+		this.wboi = (BinaryObjectInspector)arguments[0];
 		// the UDF returns the hash value of a BitcoinTransaction as byte array
 		return ObjectInspectorFactory.getStandardListObjectInspector(PrimitiveObjectInspectorFactory.writableStringObjectInspector);
 	}
