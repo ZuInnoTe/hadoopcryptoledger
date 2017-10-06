@@ -18,6 +18,7 @@ package org.zuinnote.hadoop.namecoin.hive.udf;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -35,7 +36,7 @@ public class NamecoinExtractFieldUDF extends UDF {
 	 * @param input BytesWritable containing a txOutScript of a Namecoin Transaction
 	 * @return ArrayWritable with two entries, the first one for the key and the second one for the value
 	 */
-	 public ArrayList<Text> evaluate(BytesWritable input) {
+	 public List<Text> evaluate(BytesWritable input) {
 		String[] nameField= NamecoinUtil.extractNamecoinField(input.copyBytes());
 		Text[] nameFieldText= new Text[nameField.length];
 		for (int i=0;i<nameField.length;i++) {
