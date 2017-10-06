@@ -29,8 +29,8 @@ jacoco.settings
 itJacoco.settings
 
 
-libraryDependencies += "com.github.zuinnote" % "hadoopcryptoledger-flinkdatasource" % "1.0.7" % "compile"
-libraryDependencies += "com.github.zuinnote" % "hadoopcryptoledger-fileformat" % "1.0.7" % "compile"
+libraryDependencies += "com.github.zuinnote" % "hadoopcryptoledger-flinkdatasource" % "1.0.8" % "compile"
+libraryDependencies += "com.github.zuinnote" % "hadoopcryptoledger-fileformat" % "1.0.8" % "compile"
 libraryDependencies += "org.apache.flink" %% "flink-scala" % "1.2.0" % "provided" 
 
 libraryDependencies += "org.apache.flink" % "flink-shaded-hadoop2" % "1.2.0" % "provided"  
