@@ -85,6 +85,9 @@ public class NamecoinExtractFieldUDF extends GenericUDF {
 		}
 		byte[] txOutScript = wboi.getPrimitiveJavaObject(arguments[0].get());
 		String[] nameField= NamecoinUtil.extractNamecoinField(txOutScript);
+		if (nameField==null) {
+			return null;
+		}
 		Text[] nameFieldText= new Text[nameField.length];
 		for (int i=0;i<nameField.length;i++) {
 			nameFieldText[i]=new Text(nameField[i]);
