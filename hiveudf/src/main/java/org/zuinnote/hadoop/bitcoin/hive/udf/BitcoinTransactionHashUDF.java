@@ -117,7 +117,7 @@ public ObjectInspector initialize(ObjectInspector[] arguments) throws UDFArgumen
 *
 * @return BytesWritable containing a byte array with the double hash of the BitcoinTransaction
 *
-* @throws org.apache.hadoop.hive.ql.metadata.HiveException in case an itnernal HiveError occurred
+* @throws org.apache.hadoop.hive.ql.metadata.HiveException in case an internal HiveError occurred
 */
 
 @Override
