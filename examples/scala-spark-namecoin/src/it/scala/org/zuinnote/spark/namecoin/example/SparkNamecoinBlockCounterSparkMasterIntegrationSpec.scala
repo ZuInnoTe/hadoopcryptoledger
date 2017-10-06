@@ -143,6 +143,7 @@ override def beforeAll(): Unit = {
     	val inputFile=new Path(fileNameFullLocal)
     	dfsCluster.getFileSystem().copyFromLocalFile(false, false, inputFile, DFS_INPUT_DIR)	
 	Given("Configuration")
+	 conf.set("hadoopcryptoledger.bitcoinblockinputformat.readauxpow","true")
 	 conf.set("hadoopcryptoledger.bitcoinblockinputformat.filter.magic","F9BEB4FE")
 	When("count total transactions")
 	SparkScalaNamecoinBlockCounter.jobTotalNumOfTransactions(sc,conf,dfsCluster.getFileSystem().getUri().toString()+DFS_INPUT_DIR_NAME,dfsCluster.getFileSystem().getUri().toString()+DFS_OUTPUT_DIR_NAME)
