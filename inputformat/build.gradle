@@ -63,8 +63,8 @@ sourceSets {
 }
 
 pitest {
-    targetClasses = ['org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtil','org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParser']  //by default "${project.group}.*"
-    targetTests = ['org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtilTest','org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest']
+    targetClasses = ['org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtil','org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParser','org.zuinnote.hadoop.namecoin.format.common.NamecoinUtil']  //by default "${project.group}.*"
+    targetTests = ['org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtilTest','org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest','org.zuinnote.hadoop.namecoin.format.common.NamecoinUtilTest']
     timestampedReports = false
     threads = 4
     outputFormats = ['XML', 'HTML']
