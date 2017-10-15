@@ -2,4 +2,6 @@ org.zuinnote.hadoop.bitcoin.format.common
 org.zuinnote.hadoop.bitcoin.format.exception
 org.zuinnote.hadoop.bitcoin.format.mapred
 org.zuinnote.hadoop.bitcoin.format.mapreduce
+org.zuinnote.hadoop.ethereum.format.common
+org.zuinnote.hadoop.ethereum.format.common.rlp
 org.zuinnote.hadoop.namecoin.format.common
