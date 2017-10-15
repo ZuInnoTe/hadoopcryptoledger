@@ -11,7 +11,7 @@ compileJava.options.encoding = 'UTF-8'
 
 group = "com.github.zuinnote"
 archivesBaseName = "hadoopcryptoledger-fileformat"
-version = "1.0.8"
+version = "1.1.0"
 
 
 jar {
@@ -63,8 +63,8 @@ sourceSets {
 }
 
 pitest {
-    targetClasses = ['org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtil','org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParser','org.zuinnote.hadoop.namecoin.format.common.NamecoinUtil']  //by default "${project.group}.*"
-    targetTests = ['org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtilTest','org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest','org.zuinnote.hadoop.namecoin.format.common.NamecoinUtilTest']
+    targetClasses = ['org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtil','org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParser','org.zuinnote.hadoop.namecoin.format.common.NamecoinUtil','org.zuinnote.hadoop.ethereum.format.common.EthereumUtil']  //by default "${project.group}.*"
+    targetTests = ['org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtilTest','org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest','org.zuinnote.hadoop.namecoin.format.common.NamecoinUtilTest','org.zuinnote.hadoop.ethereum.format.common.EthereumUtilTest']
     timestampedReports = false
     threads = 4
     outputFormats = ['XML', 'HTML']
@@ -98,7 +98,7 @@ publishing {
         maven(MavenPublication) {
             groupId 'com.github.zuinnote'
             artifactId 'hadoopcryptoledger-fileformat'
-            version '1.0.8'
+            version '1.1.0'
 
             from components.java
         }
