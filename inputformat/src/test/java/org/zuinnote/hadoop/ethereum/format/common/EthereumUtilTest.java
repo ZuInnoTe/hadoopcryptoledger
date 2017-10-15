@@ -14,7 +14,7 @@
 * limitations under the License.
 **/
 
-package org.zuinnote.hadoop.ethereum.common;
+package org.zuinnote.hadoop.ethereum.format.common;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;

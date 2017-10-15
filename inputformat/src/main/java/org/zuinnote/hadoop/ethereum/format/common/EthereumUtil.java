@@ -166,14 +166,14 @@ private static RLPList decodeRLPList(ByteBuffer bb) {
 	long payloadSize=0;
 	if ((firstByteUnsigned>=0xc0) && (firstByteUnsigned<=0xf7)) {
 		// length of the list in bytes
-		payloadSize=firstByteUnsigned - 0xc0;
+		payloadSize=(long)(firstByteUnsigned) - 0xc0;
 		
 	} else if ((firstByteUnsigned>=0xf8) && (firstByteUnsigned<=0xff)) {
 		// read size of indicator (size of the size)
-		int NoOfBytesSize = firstByteUnsigned-0xf7;
-		byte[] indicator = new byte[NoOfBytesSize+1];
+		int noOfBytesSize = firstByteUnsigned-0xf7;
+		byte[] indicator = new byte[noOfBytesSize+1];
 		indicator[0]=firstByte;
-		bb.get(indicator, 1, NoOfBytesSize);
+		bb.get(indicator, 1, noOfBytesSize);
 		// read the size of the data
 		byte[] rawDataNumber=Arrays.copyOfRange(indicator, 1, indicator.length);
 		ByteBuffer byteBuffer = ByteBuffer.wrap(rawDataNumber);
@@ -226,6 +226,7 @@ public static int convertToInt(RLPElement rpe) {
 }
 
 public static long convertToLong(RLPElement rpe) {
+	
 	return 0;
 }
 public static String convertToString(RLPElement rpe) {
