@@ -151,8 +151,52 @@ private static RLPElement decodeRLPElement(ByteBuffer bb) {
 	return result;
 }
 
+
+/**
+ * Determines the size of a RLP list. Note: it does not change the position in the ByteBuffer
+ * 
+ * @param bb
+ * @return -1 if not an RLP encoded list, otherwise size of list INCLUDING the prefix of the list (e.g. byte that indicates that it is a list and size of list in bytes) in bytes 
+ */
+
+public static long getRLPListSize(ByteBuffer bb) {
+	long result=-1;
+	bb.mark();
+	byte detector = bb.get();
+	int unsignedDetector=detector & 0xFF;
+	if ((unsignedDetector>=0xc0) && (unsignedDetector<=0xf7)) {
+		result=unsignedDetector; // small list
+	} else
+		if ((unsignedDetector>=0xf8) && (unsignedDetector<=0xff)) {
+			// the first byte
+			// large list
+			// read size of indicator (size of the size)
+			int noOfBytesSize = unsignedDetector-0xf7;
+			byte[] indicator = new byte[noOfBytesSize+1];
+			indicator[0]=detector;
+			bb.get(indicator, 1, noOfBytesSize);
+			result=indicator.length;
+			// read the size of the data
+			byte[] rawDataNumber=Arrays.copyOfRange(indicator, 1, indicator.length);
+			ByteBuffer byteBuffer = ByteBuffer.wrap(rawDataNumber);
+			if (indicator.length<3) { // byte
+				result+=byteBuffer.get();
+			} else if (indicator.length<4) { // short
+				result+=byteBuffer.getShort();
+			} else if (indicator.length<6) { // int
+				result+=byteBuffer.getInt();
+			} else if (indicator.length<10) { // long
+				result+=byteBuffer.getLong();
+			}
+			
+		}
+	bb.reset();
+	return result;	
+}
+
+
 /*
- * Decodes an RLPList from the given ByteBuffer. This list may contain further RLPList and Elements that are decoded as well
+ * Decodes an RLPList from the given ByteBuffer. This list may contain further RLPList and RLPElements that are decoded as well
  * 
  *  @param bb Bytebuffer containing an RLPList
  *  
