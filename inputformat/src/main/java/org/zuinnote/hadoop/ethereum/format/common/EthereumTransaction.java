@@ -15,11 +15,17 @@
 **/
 package org.zuinnote.hadoop.ethereum.format.common;
 
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
+
+import org.apache.hadoop.io.Writable;
+
 /**
  * 
  *
  */
-public class EthereumTransaction {
+public class EthereumTransaction implements Writable {
 
 private byte[] nonce;
 private byte[] value;
@@ -31,4 +37,103 @@ private byte[] gasLimit;
 private byte[] data;
 private byte[] hash;
 private int chainId;
+
+public EthereumTransaction() {
+	// please use setter to set the data
+}
+
+@Override
+public void write(DataOutput out) throws IOException {
+	   throw new UnsupportedOperationException("write unsupported");	
+}
+
+@Override
+public void readFields(DataInput in) throws IOException {
+	   throw new UnsupportedOperationException("readFields unsupported");
+}
+
+public byte[] getNonce() {
+	return nonce;
+}
+
+public void setNonce(byte[] nonce) {
+	this.nonce = nonce;
+}
+
+public byte[] getValue() {
+	return value;
+}
+
+public void setValue(byte[] value) {
+	this.value = value;
+}
+
+public byte[] getReceiveAddress() {
+	return receiveAddress;
+}
+
+public void setReceiveAddress(byte[] receiveAddress) {
+	this.receiveAddress = receiveAddress;
+}
+
+public byte[] getSendAddress() {
+	return sendAddress;
+}
+
+public void setSendAddress(byte[] sendAddress) {
+	this.sendAddress = sendAddress;
+}
+
+public byte[] getGasPrice() {
+	return gasPrice;
+}
+
+public void setGasPrice(byte[] gasPrice) {
+	this.gasPrice = gasPrice;
+}
+
+public byte[] getGasLimit() {
+	return gasLimit;
+}
+
+public void setGasLimit(byte[] gasLimit) {
+	this.gasLimit = gasLimit;
+}
+
+public byte[] getData() {
+	return data;
+}
+
+public void setData(byte[] data) {
+	this.data = data;
+}
+
+public byte[] getHash() {
+	return hash;
+}
+
+public void setHash(byte[] hash) {
+	this.hash = hash;
+}
+
+public int getChainId() {
+	return chainId;
+}
+
+public void setChainId(int chainId) {
+	this.chainId = chainId;
+}
+
+public void set(EthereumTransaction newTransaction) {
+	this.nonce=newTransaction.getNonce();
+	this.value=newTransaction.getValue();
+	this.receiveAddress=newTransaction.getReceiveAddress();
+	this.sendAddress=newTransaction.getSendAddress();
+	this.gasPrice=newTransaction.getGasPrice();
+	this.gasLimit=newTransaction.getGasLimit();
+	this.data=newTransaction.getData();
+	this.hash=newTransaction.getHash();
+	this.chainId=newTransaction.getChainId();
+}
+
 }

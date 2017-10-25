@@ -15,13 +15,61 @@
 **/
 package org.zuinnote.hadoop.ethereum.format.common;
 
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
 import java.util.List;
 
+import org.apache.hadoop.io.Writable;
 
-public class EthereumBlock {
+
+public class EthereumBlock implements Writable {
 private EthereumBlockHeader ethereumBlockHeader;
 private List<EthereumBlockHeader> uncleHeader;
 private List<EthereumTransaction> ethereumTransactions;
+
+
+
+private EthereumBlock() {
+	
+}
+
+public EthereumBlock(EthereumBlockHeader ethereumBlockHeader, List<EthereumBlockHeader> uncleHeader, List<EthereumTransaction> ethereumTransactions) {
+	this.ethereumBlockHeader=ethereumBlockHeader;
+	this.uncleHeader=uncleHeader;
+	this.ethereumTransactions=ethereumTransactions;
+}
+
+public EthereumBlockHeader getEthereumBlockHeader() {
+	return ethereumBlockHeader;
+}
+
+
+public List<EthereumBlockHeader> getUncleHeader() {
+	return uncleHeader;
+}
+
+
+
+public List<EthereumTransaction> getEthereumTransactions() {
+	return ethereumTransactions;
+}
+
+public void set(EthereumBlock newBlock) {
+	this.ethereumBlockHeader=newBlock.getEthereumBlockHeader();
+	this.uncleHeader=newBlock.getUncleHeader();
+	this.ethereumTransactions=newBlock.getEthereumTransactions();
+}
+
+@Override
+public void write(DataOutput out) throws IOException {
+	   throw new UnsupportedOperationException("write unsupported");	
+}
+
+@Override
+public void readFields(DataInput in) throws IOException {
+	   throw new UnsupportedOperationException("readFields unsupported");
+}
 
 
 }
