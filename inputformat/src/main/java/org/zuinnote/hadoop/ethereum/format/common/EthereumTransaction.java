@@ -37,6 +37,9 @@ private byte[] gasLimit;
 private byte[] data;
 private byte[] hash;
 private int chainId;
+private byte[] sig_v;
+private byte[] sig_r;
+private byte[] sig_s;
 
 public EthereumTransaction() {
 	// please use setter to set the data
@@ -134,6 +137,30 @@ public void set(EthereumTransaction newTransaction) {
 	this.data=newTransaction.getData();
 	this.hash=newTransaction.getHash();
 	this.chainId=newTransaction.getChainId();
+}
+
+public byte[] getSig_v() {
+	return sig_v;
+}
+
+public void setSig_v(byte[] sig_v) {
+	this.sig_v = sig_v;
+}
+
+public byte[] getSig_r() {
+	return sig_r;
+}
+
+public void setSig_r(byte[] sig_r) {
+	this.sig_r = sig_r;
+}
+
+public byte[] getSig_s() {
+	return sig_s;
+}
+
+public void setSig_s(byte[] sig_s) {
+	this.sig_s = sig_s;
 }
 
 }

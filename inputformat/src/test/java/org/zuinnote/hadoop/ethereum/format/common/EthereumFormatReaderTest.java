@@ -70,5 +70,46 @@ public class EthereumFormatReaderTest {
 			}
 		}
 	  }
+	 
+	 @Test
+	  public void parseGenesisBlockAsEthereumRawBlockDirect() throws IOException, EthereumBlockReadException {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="ethgenesis.bin";
+		String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
+		File file = new File(fileNameGenesis);
+		boolean direct=true;
+		FileInputStream fin = new FileInputStream(file);
+		EthereumBlockReader ebr = null;
+		try {
+			ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUMBLOCK, this.DEFAULT_BUFFERSIZE,direct);
+			ByteBuffer genesisByteBuffer = ebr.readRawBlock();
+			assertTrue("Raw Genesis Block is DirectByteBuffer", genesisByteBuffer.isDirect());
+			assertEquals("Raw Genesis block has a size of 540 bytes", 540, genesisByteBuffer.limit());
+		} finally {
+			if (ebr!=null) {
+				ebr.close();
+			}
+		}
+	  }
+	 
+	 @Test
+	  public void parseGenesisBlockAsEthereumBlockHeap() throws IOException, EthereumBlockReadException {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="ethgenesis.bin";
+		String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
+		File file = new File(fileNameGenesis);
+		boolean direct=false;
+		FileInputStream fin = new FileInputStream(file);
+		EthereumBlockReader ebr = null;
+		try {
+			ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUMBLOCK, this.DEFAULT_BUFFERSIZE,direct);
+			EthereumBlock eblock = ebr.readBlock();
+			//assertEquals("Raw Genesis block has a size of 540 bytes", 540, genesisByteBuffer.limit());
+		} finally {
+			if (ebr!=null) {
+				ebr.close();
+			}
+		}
+	  }
 
 }

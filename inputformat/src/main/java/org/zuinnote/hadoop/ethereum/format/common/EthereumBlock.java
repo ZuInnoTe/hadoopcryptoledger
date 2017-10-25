@@ -25,8 +25,9 @@ import org.apache.hadoop.io.Writable;
 
 public class EthereumBlock implements Writable {
 private EthereumBlockHeader ethereumBlockHeader;
-private List<EthereumBlockHeader> uncleHeader;
 private List<EthereumTransaction> ethereumTransactions;
+private List<EthereumBlockHeader> uncleHeaders;
+
 
 
 
@@ -34,10 +35,10 @@ private EthereumBlock() {
 	
 }
 
-public EthereumBlock(EthereumBlockHeader ethereumBlockHeader, List<EthereumBlockHeader> uncleHeader, List<EthereumTransaction> ethereumTransactions) {
+public EthereumBlock(EthereumBlockHeader ethereumBlockHeader,  List<EthereumTransaction> ethereumTransactions, List<EthereumBlockHeader> uncleHeaders) {
 	this.ethereumBlockHeader=ethereumBlockHeader;
-	this.uncleHeader=uncleHeader;
 	this.ethereumTransactions=ethereumTransactions;
+	this.uncleHeaders=uncleHeaders;
 }
 
 public EthereumBlockHeader getEthereumBlockHeader() {
@@ -45,8 +46,8 @@ public EthereumBlockHeader getEthereumBlockHeader() {
 }
 
 
-public List<EthereumBlockHeader> getUncleHeader() {
-	return uncleHeader;
+public List<EthereumBlockHeader> getUncleHeaders() {
+	return uncleHeaders;
 }
 
 
@@ -57,7 +58,7 @@ public List<EthereumTransaction> getEthereumTransactions() {
 
 public void set(EthereumBlock newBlock) {
 	this.ethereumBlockHeader=newBlock.getEthereumBlockHeader();
-	this.uncleHeader=newBlock.getUncleHeader();
+	this.uncleHeaders=newBlock.getUncleHeaders();
 	this.ethereumTransactions=newBlock.getEthereumTransactions();
 }
 

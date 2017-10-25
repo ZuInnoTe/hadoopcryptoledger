@@ -20,9 +20,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.zuinnote.hadoop.ethereum.format.common.rlp.RLPElement;
+import org.zuinnote.hadoop.ethereum.format.common.rlp.RLPList;
+import org.zuinnote.hadoop.ethereum.format.common.rlp.RLPObject;
 import org.zuinnote.hadoop.ethereum.format.exception.EthereumBlockReadException;
 
 /**
@@ -74,13 +79,88 @@ public class EthereumBlockReader {
 	/*
 	 * 
 	 * Read a block into a Java object of the class Ethereum Block. This makes analysis very easy, but might be slower for some type of analytics where you are only interested in small parts of the block. In this case it is recommended to use {@link #readRawBlock}
+	 * Basically, one raw Ethereum Block contains an RLP encoded list, which is parsed into processable Java objects
+	 * 
 	 * @return
 	 */
 	
-	public EthereumBlock readBlock() {
-		return null;
+	public EthereumBlock readBlock() throws IOException, EthereumBlockReadException {
+		ByteBuffer rawBlock = this.readRawBlock();
+		if (rawBlock==null) {
+			return null;
+		}
+		RLPObject blockObject =  EthereumUtil.rlpDecodeNextItem(rawBlock);
+		if ((blockObject==null) || (!(blockObject instanceof RLPList))){
+			throw new EthereumBlockReadException("Invalid Ethereum Block: Not encoded RLOPList");
+		}
+		RLPList block = (RLPList)blockObject;
+		// block header
+		RLPList rlpHeader = (RLPList) block.getRlpList().get(0);
+		// transactions
+		RLPList rlpTransactions = (RLPList) block.getRlpList().get(1);
+		// uncles
+		RLPList rlpUncles =  (RLPList) block.getRlpList().get(2);
+		//// create header object
+		EthereumBlockHeader ethereumBlockHeader = parseRLPBlockHeader(rlpHeader);
+		List<EthereumTransaction> ethereumTransactions = parseRLPTransactions(rlpTransactions);
+		List<EthereumBlockHeader> uncleHeaders = parseRLPUncleHeaders(rlpUncles);	
+		return new EthereumBlock(ethereumBlockHeader,ethereumTransactions,uncleHeaders);
 	}
 	
+	private EthereumBlockHeader parseRLPBlockHeader(RLPList rlpHeader) {
+		EthereumBlockHeader result = new EthereumBlockHeader();
+		result.setParentHash(((RLPElement) rlpHeader.getRlpList().get(0)).getRawData());
+		result.setUncleHash(((RLPElement) rlpHeader.getRlpList().get(1)).getRawData());
+		result.setCoinBase(((RLPElement) rlpHeader.getRlpList().get(2)).getRawData());
+		result.setStateRoot(((RLPElement) rlpHeader.getRlpList().get(3)).getRawData());
+		result.setTxTrieRoot(((RLPElement) rlpHeader.getRlpList().get(4)).getRawData());
+		result.setReceiptTrieRoot(((RLPElement) rlpHeader.getRlpList().get(5)).getRawData());
+		result.setLogsBloom(((RLPElement) rlpHeader.getRlpList().get(6)).getRawData());
+		result.setDifficulty(((RLPElement) rlpHeader.getRlpList().get(7)).getRawData());
+		result.setNumber(EthereumUtil.convertToLong(((RLPElement) rlpHeader.getRlpList().get(8))));
+		result.setGasLimit(((RLPElement) rlpHeader.getRlpList().get(9)).getRawData());
+		result.setGasUsed(EthereumUtil.convertToLong(((RLPElement) rlpHeader.getRlpList().get(10))));
+		result.setTimestamp(EthereumUtil.convertToLong(((RLPElement) rlpHeader.getRlpList().get(11))));
+		result.setExtraData(((RLPElement) rlpHeader.getRlpList().get(12)).getRawData());
+		result.setMixHash(((RLPElement) rlpHeader.getRlpList().get(13)).getRawData());
+		result.setNonce(((RLPElement) rlpHeader.getRlpList().get(14)).getRawData());
+		return result;
+	}
+	
+	private List<EthereumTransaction> parseRLPTransactions(RLPList rlpTransactions) {
+		ArrayList<EthereumTransaction> result = new ArrayList<>(rlpTransactions.getRlpList().size());
+		for (int i=0;i<rlpTransactions.getRlpList().size();i++) {
+			RLPList currenTransactionRLP = (RLPList) rlpTransactions.getRlpList().get(i);
+			EthereumTransaction currentTransaction = new EthereumTransaction();
+			currentTransaction.setNonce(((RLPElement)currenTransactionRLP.getRlpList().get(0)).getRawData());
+			currentTransaction.setGasPrice(((RLPElement)currenTransactionRLP.getRlpList().get(1)).getRawData());
+			currentTransaction.setGasLimit(((RLPElement)currenTransactionRLP.getRlpList().get(2)).getRawData());
+			currentTransaction.setReceiveAddress(((RLPElement)currenTransactionRLP.getRlpList().get(3)).getRawData());
+			currentTransaction.setValue(((RLPElement)currenTransactionRLP.getRlpList().get(4)).getRawData());
+			currentTransaction.setData(((RLPElement)currenTransactionRLP.getRlpList().get(5)).getRawData());
+			currentTransaction.setSig_v(((RLPElement)currenTransactionRLP.getRlpList().get(6)).getRawData());
+			currentTransaction.setSig_r(((RLPElement)currenTransactionRLP.getRlpList().get(7)).getRawData());
+			currentTransaction.setSig_s(((RLPElement)currenTransactionRLP.getRlpList().get(8)).getRawData());
+			currentTransaction.setChainId(EthereumUtil.calculateChainId(((RLPElement)currenTransactionRLP.getRlpList().get(6))).intValue());
+			result.add(currentTransaction);
+		}
+		return result;
+	}
+	
+	private List<EthereumBlockHeader> parseRLPUncleHeaders(RLPList rlpUncles) {
+		ArrayList<EthereumBlockHeader> result = new ArrayList<>(rlpUncles.getRlpList().size());
+		for (int i=0;i<rlpUncles.getRlpList().size();i++) {
+			RLPList currentUncleRLP = (RLPList) rlpUncles.getRlpList().get(i);
+			EthereumBlockHeader currentUncle = this.parseRLPBlockHeader(currentUncleRLP);
+			result.add(currentUncle);
+		}
+		return result;
+	}
+
+
+
+
+
 	/*
 	 * Reads a raw Ethereum block into a ByteBuffer. This method is recommended if you are only interested in a small part of the block and do not need the deserialization of the full block, ie in case you generally skip a lot of blocks
 	 * 

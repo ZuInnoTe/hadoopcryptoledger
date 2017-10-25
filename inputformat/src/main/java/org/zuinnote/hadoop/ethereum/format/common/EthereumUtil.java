@@ -32,9 +32,11 @@ import org.zuinnote.hadoop.ethereum.format.common.rlp.RLPObject;
  *
  */
 public class EthereumUtil {
-	public final static int RLP_OBJECTTYPE_INVALID = -1;
-	public final static int RLP_OBJECTTYPE_ELEMENT = 0;
-	public final static int RLP_OBJECTTYPE_LIST = 1;
+	public static final int RLP_OBJECTTYPE_INVALID = -1;
+	public static final int RLP_OBJECTTYPE_ELEMENT = 0;
+	public static final int RLP_OBJECTTYPE_LIST = 1;
+	public static final int CHAIN_ID_INC = 35; // EIP-255, chainId encoded in V
+	public static final int LOWER_REAL_V = 27; // EIP-255, chainId encoded in V
 
 	private static final Log LOG = LogFactory.getLog(EthereumUtil.class.getName());
 	/** RLP functionality for Ethereum: https://github.com/ethereum/wiki/wiki/RLP **/
@@ -253,25 +255,59 @@ private static RLPList decodeRLPList(ByteBuffer bb) {
 	return new RLPList(payloadList);
 }
 
+/*** Ethereum-specific functionaloity **/
 
+public static Long calculateChainId(RLPElement rpe) {
+	Long result=null;
+	if (rpe.getRawData().length==4) {
+		long rawResult=EthereumUtil.convertToInt(rpe);
+		if (!((rawResult == EthereumUtil.LOWER_REAL_V) || (rawResult== (LOWER_REAL_V+1)))) {
+			result = (rawResult-EthereumUtil.CHAIN_ID_INC)/2;
+		} 
+	}
+	return result;
+}
 
 /** Data types conversions for Ethereum **/
 
 public static byte convertToByte(RLPElement rpe) {
-	return 0;
+	byte result=0;
+	if ((rpe.getRawData()==null) || (rpe.getRawData().length==0)) {
+		result=0;
+	} else {
+		 result=rpe.getRawData()[0];
+	}
+	return result;
 }
 
 public static short convertToShort(RLPElement rpe) {
-	return 0;
+	short result=0;
+	if ((rpe.getRawData()==null) || (rpe.getRawData().length==0)) {
+		result=0;
+	} else {
+		 result=ByteBuffer.wrap(rpe.getRawData()).getShort();
+	}
+	return result;
 }
 
 public static int convertToInt(RLPElement rpe) {
-	return 0;
+	int result=0;
+	if ((rpe.getRawData()==null) || (rpe.getRawData().length==0)) {
+		result=0;
+	} else {
+		 result=ByteBuffer.wrap(rpe.getRawData()).getInt();
+	}
+	return result;
 }
 
 public static long convertToLong(RLPElement rpe) {
-	
-	return 0;
+	long result=0;
+	if ((rpe.getRawData()==null) || (rpe.getRawData().length==0)) {
+		result=0;
+	} else {
+		 result=ByteBuffer.wrap(rpe.getRawData()).getLong();
+	}
+	return result;
 }
 public static String convertToString(RLPElement rpe) {
 	return null;
