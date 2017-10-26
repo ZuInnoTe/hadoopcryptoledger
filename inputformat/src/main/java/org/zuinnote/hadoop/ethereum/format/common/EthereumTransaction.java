@@ -36,7 +36,6 @@ private byte[] gasLimit;
 
 private byte[] data;
 private byte[] hash;
-private int chainId;
 private byte[] sig_v;
 private byte[] sig_r;
 private byte[] sig_s;
@@ -119,13 +118,6 @@ public void setHash(byte[] hash) {
 	this.hash = hash;
 }
 
-public int getChainId() {
-	return chainId;
-}
-
-public void setChainId(int chainId) {
-	this.chainId = chainId;
-}
 
 public void set(EthereumTransaction newTransaction) {
 	this.nonce=newTransaction.getNonce();
@@ -136,7 +128,6 @@ public void set(EthereumTransaction newTransaction) {
 	this.gasLimit=newTransaction.getGasLimit();
 	this.data=newTransaction.getData();
 	this.hash=newTransaction.getHash();
-	this.chainId=newTransaction.getChainId();
 }
 
 public byte[] getSig_v() {

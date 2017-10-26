@@ -15,6 +15,7 @@
 **/
 package org.zuinnote.hadoop.ethereum.format.common;
 
+import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -270,47 +271,118 @@ public static Long calculateChainId(RLPElement rpe) {
 
 /** Data types conversions for Ethereum **/
 
-public static byte convertToByte(RLPElement rpe) {
-	byte result=0;
-	if ((rpe.getRawData()==null) || (rpe.getRawData().length==0)) {
-		result=0;
-	} else {
-		 result=rpe.getRawData()[0];
+/***
+ * Converts a variable size number (e.g. byte,short,int,long) in a RLPElement to long
+ *  
+ * @param rpe RLPElement containing a number
+ * @return number as long or null if not a correct number
+ */
+public static Long convertVarNumberToLong(RLPElement rpe) {
+		Long result=0L;
+		if (rpe.getRawData()!=null) {
+			switch(rpe.getRawData().length) {
+				case 1: result=(long) EthereumUtil.convertToByte(rpe); break;
+				case	 2: result=(long) EthereumUtil.convertToShort(rpe); break;
+				case 4: result=(long) EthereumUtil.convertToInt(rpe); break;
+				case 8: result=EthereumUtil.convertToLong(rpe); break;
+				default: break;
+			}
+		}
+		return result;
+}
+
+/**
+ * Converts a byte in a RLPElement to byte
+ * 
+ * @param rpe RLP element containing a raw byte
+ * @return byte or null if not byte
+ */
+
+public static Byte convertToByte(RLPElement rpe) {
+	Byte result=0;
+	if ((rpe.getRawData()!=null) || (rpe.getRawData().length==1)) {
+			result=rpe.getRawData()[0];
+	} 
+	return result;
+}
+
+/**
+ * Converts a short in a RLPElement to short
+ * 
+ * @param rpe RLP element containing a raw short
+ * @return short or null if not short
+ */
+
+public static Short convertToShort(RLPElement rpe) {
+	Short result=0;
+	if ((rpe.getRawData()!=null) || (rpe.getRawData().length==2)) {
+			result=ByteBuffer.wrap(rpe.getRawData()).getShort();
+	} 
+	return result;
+}
+
+/**
+ * Converts a int in a RLPElement to int
+ * 
+ * @param rpe RLP element containing a raw int
+ * @return int or null if not int
+ */
+
+public static Integer convertToInt(RLPElement rpe) {
+	Integer result=0;
+	if ((rpe.getRawData()!=null) || (rpe.getRawData().length==4)) {
+			result=ByteBuffer.wrap(rpe.getRawData()).getInt();
 	}
 	return result;
 }
 
-public static short convertToShort(RLPElement rpe) {
-	short result=0;
-	if ((rpe.getRawData()==null) || (rpe.getRawData().length==0)) {
-		result=0;
-	} else {
-		 result=ByteBuffer.wrap(rpe.getRawData()).getShort();
-	}
+/**
+ * Converts a long in a RLPElement to long
+ * 
+ * @param rpe RLP element containing a raw long
+ * @return long or null if not long
+ */
+
+public static Long convertToLong(RLPElement rpe) {
+	Long result=0L;
+	if ((rpe.getRawData()!=null) || (rpe.getRawData().length==8)) {
+			result=ByteBuffer.wrap(rpe.getRawData()).getLong();
+	} 
 	return result;
 }
 
-public static int convertToInt(RLPElement rpe) {
-	int result=0;
-	if ((rpe.getRawData()==null) || (rpe.getRawData().length==0)) {
-		result=0;
-	} else {
-		 result=ByteBuffer.wrap(rpe.getRawData()).getInt();
-	}
+
+/***
+ * Converts a UTF-8 String in a RLPElement to String
+ * 
+ * @param rpe RLP element containing a raw String
+ * @return string or null if not String
+ * @throws UnsupportedEncodingException if UTF-8 is not supported
+ */
+
+public static String convertToString(RLPElement rpe) throws UnsupportedEncodingException {
+	String result=null;
+	if (!((rpe.getRawData()==null) || (rpe.getRawData().length==0))) {
+			result=new String(rpe.getRawData(), "UTF-8");
+	} 
 	return result;
 }
 
-public static long convertToLong(RLPElement rpe) {
-	long result=0;
-	if ((rpe.getRawData()==null) || (rpe.getRawData().length==0)) {
-		result=0;
-	} else {
-		 result=ByteBuffer.wrap(rpe.getRawData()).getLong();
-	}
+/***
+ * Converts a String in a RLPElement to String
+ * 
+ * @param rpe RLP element containing a raw String
+ * @param encoding encoding of the raw String
+ * @return string or null if not String
+ * @throws UnsupportedEncodingException 
+ */
+
+public static String convertToString(RLPElement rpe, String encoding) throws UnsupportedEncodingException {
+	String result=null;
+	if (!((rpe.getRawData()==null) || (rpe.getRawData().length==0))) {
+			result=new String(rpe.getRawData(), encoding);
+	} 
 	return result;
-}
-public static String convertToString(RLPElement rpe) {
-	return null;
 }
 
 /** Hex functionality **/

@@ -41,7 +41,6 @@ public class EthereumBlockHeader implements Serializable {
 	private byte[] mixHash;
 	private byte[] extraData;
 	private byte[] nonce;
-	private byte[] hashCache;
 	
 
 	
@@ -231,15 +230,7 @@ public class EthereumBlockHeader implements Serializable {
 
 
 
-	public byte[] getHashCache() {
-		return hashCache;
-	}
-
-
-
-	public void setHashCache(byte[] hashCache) {
-		this.hashCache = hashCache;
-	}
+	
 	
 	public void set(EthereumBlockHeader newEthereumBlockHeader) {
 		this.parentHash=newEthereumBlockHeader.getParentHash();
@@ -257,7 +248,6 @@ public class EthereumBlockHeader implements Serializable {
 		this.mixHash=newEthereumBlockHeader.getMixHash();
 		this.extraData=newEthereumBlockHeader.getExtraData();
 		this.nonce=newEthereumBlockHeader.getNonce();
-		this.hashCache=newEthereumBlockHeader.getHashCache();
 	}
 
 	

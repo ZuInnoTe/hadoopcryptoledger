@@ -107,6 +107,13 @@ public class EthereumBlockReader {
 		return new EthereumBlock(ethereumBlockHeader,ethereumTransactions,uncleHeaders);
 	}
 	
+	/***
+	 * Parses an RLP encoded Ethereum block header into a Java object
+	 * 
+	 * @param rlpHeader RLP encoded ethereum block header
+	 * @return object of type Ethereum Block Header
+	 */
+	
 	private EthereumBlockHeader parseRLPBlockHeader(RLPList rlpHeader) {
 		EthereumBlockHeader result = new EthereumBlockHeader();
 		result.setParentHash(((RLPElement) rlpHeader.getRlpList().get(0)).getRawData());
@@ -117,16 +124,22 @@ public class EthereumBlockReader {
 		result.setReceiptTrieRoot(((RLPElement) rlpHeader.getRlpList().get(5)).getRawData());
 		result.setLogsBloom(((RLPElement) rlpHeader.getRlpList().get(6)).getRawData());
 		result.setDifficulty(((RLPElement) rlpHeader.getRlpList().get(7)).getRawData());
-		result.setNumber(EthereumUtil.convertToLong(((RLPElement) rlpHeader.getRlpList().get(8))));
+		result.setNumber(EthereumUtil.convertVarNumberToLong(((RLPElement) rlpHeader.getRlpList().get(8))));
 		result.setGasLimit(((RLPElement) rlpHeader.getRlpList().get(9)).getRawData());
-		result.setGasUsed(EthereumUtil.convertToLong(((RLPElement) rlpHeader.getRlpList().get(10))));
-		result.setTimestamp(EthereumUtil.convertToLong(((RLPElement) rlpHeader.getRlpList().get(11))));
+		result.setGasUsed(EthereumUtil.convertVarNumberToLong(((RLPElement) rlpHeader.getRlpList().get(10))));
+		result.setTimestamp(EthereumUtil.convertVarNumberToLong(((RLPElement) rlpHeader.getRlpList().get(11))));
 		result.setExtraData(((RLPElement) rlpHeader.getRlpList().get(12)).getRawData());
 		result.setMixHash(((RLPElement) rlpHeader.getRlpList().get(13)).getRawData());
 		result.setNonce(((RLPElement) rlpHeader.getRlpList().get(14)).getRawData());
 		return result;
 	}
 	
+	/***
+	 *  Parses an RLP encoded list of transactions into a list of Java objects of type EthereumTransaction
+	 * 
+	 * @param rlpTransactions RLP encoded list of transactions
+	 * @return List with Java objects of type EthereumTransaction
+	 */
 	private List<EthereumTransaction> parseRLPTransactions(RLPList rlpTransactions) {
 		ArrayList<EthereumTransaction> result = new ArrayList<>(rlpTransactions.getRlpList().size());
 		for (int i=0;i<rlpTransactions.getRlpList().size();i++) {
@@ -141,7 +154,6 @@ public class EthereumBlockReader {
 			currentTransaction.setSig_v(((RLPElement)currenTransactionRLP.getRlpList().get(6)).getRawData());
 			currentTransaction.setSig_r(((RLPElement)currenTransactionRLP.getRlpList().get(7)).getRawData());
 			currentTransaction.setSig_s(((RLPElement)currenTransactionRLP.getRlpList().get(8)).getRawData());
-			currentTransaction.setChainId(EthereumUtil.calculateChainId(((RLPElement)currenTransactionRLP.getRlpList().get(6))).intValue());
 			result.add(currentTransaction);
 		}
 		return result;
