@@ -122,7 +122,9 @@ private static RLPElement decodeRLPElement(ByteBuffer bb) {
 		int noOfBytes = firstByteUnsigned - 0x80;
 		// read raw data
 		byte[] rawData = new byte[noOfBytes];
-		bb.get(rawData);
+		if (noOfBytes > 0) {
+			bb.get(rawData);
+		}
 		result=new RLPElement(indicator,rawData);
 	} else if ((firstByteUnsigned>=0xb8) && (firstByteUnsigned<=0xbf)) {
 		// read size of indicator (size of the size)
@@ -135,7 +137,7 @@ private static RLPElement decodeRLPElement(ByteBuffer bb) {
 		ByteBuffer byteBuffer = ByteBuffer.wrap(rawDataNumber);
 		long noOfBytes = 0;
 		if (indicator.length<3) { // byte
-			noOfBytes=byteBuffer.get();
+			noOfBytes=byteBuffer.get() & 0xFF;
 		} else if (indicator.length<4) { // short
 			noOfBytes=byteBuffer.getShort();
 		} else if (indicator.length<6) { // int
@@ -183,7 +185,7 @@ public static long getRLPListSize(ByteBuffer bb) {
 			byte[] rawDataNumber=Arrays.copyOfRange(indicator, 1, indicator.length);
 			ByteBuffer byteBuffer = ByteBuffer.wrap(rawDataNumber);
 			if (indicator.length<3) { // byte
-				result+=byteBuffer.get();
+				result+=byteBuffer.get() & 0xFF;
 			} else if (indicator.length<4) { // short
 				result+=byteBuffer.getShort();
 			} else if (indicator.length<6) { // int
@@ -210,10 +212,11 @@ private static RLPList decodeRLPList(ByteBuffer bb) {
 
 	byte firstByte = bb.get();
 	int firstByteUnsigned = firstByte & 0xFF;
-	long payloadSize=0;
+	long payloadSize=-1;
 	if ((firstByteUnsigned>=0xc0) && (firstByteUnsigned<=0xf7)) {
 		// length of the list in bytes
-		payloadSize=(long)(firstByteUnsigned) - 0xc0;
+		int offsetSmallList = 0xc0 & 0xff;
+		payloadSize=(long)(firstByteUnsigned) - offsetSmallList;
 		
 	} else if ((firstByteUnsigned>=0xf8) && (firstByteUnsigned<=0xff)) {
 		// read size of indicator (size of the size)
@@ -224,15 +227,19 @@ private static RLPList decodeRLPList(ByteBuffer bb) {
 		// read the size of the data
 		byte[] rawDataNumber=Arrays.copyOfRange(indicator, 1, indicator.length);
 		ByteBuffer byteBuffer = ByteBuffer.wrap(rawDataNumber);
-		if (indicator.length<3) { // byte
-			payloadSize=byteBuffer.get();
-		} else if (indicator.length<4) { // short
+		if (indicator.length==2) { // byte
+			payloadSize=byteBuffer.get() & 0xFF;
+		} else if (indicator.length ==3) { // short
 			payloadSize=byteBuffer.getShort();
-		} else if (indicator.length<6) { // int
+		} else if (indicator.length==5) { // int
 			payloadSize=byteBuffer.getInt();
-		} else if (indicator.length<10) { // long
+		} else if (indicator.length==9) { // long
 			payloadSize=byteBuffer.getLong();
+		} else {
+			LOG.error("Invalid indicator");
 		}
+	} else {
+		LOG.error("Invalid RLP encoded list detected");
 	}
 	ArrayList<RLPObject> payloadList=new ArrayList<>();
 	if (payloadSize>0) {
