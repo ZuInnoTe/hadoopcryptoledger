@@ -265,15 +265,32 @@ private static RLPList decodeRLPList(ByteBuffer bb) {
 
 /*** Ethereum-specific functionaloity **/
 
-public static Long calculateChainId(RLPElement rpe) {
+
+/**
+ * Calculates the chain Id
+ * 
+ * @param eTrans Ethereum Transaction of which the chain id should be calculated
+ * @return chainId: 0, Ethereum testnet (aka Olympic); 1: Ethereum mainet (aka Frontier, Homestead, Metropolis) - also Classic (from fork) -also Expanse (alternative Ethereum implementation), 2 Morden (Ethereum testnet, now Ethereum classic testnet), 3 Ropsten public cross-client Ethereum testnet, 4: Rinkeby Geth Ethereum testnet, 42 Kovan, public Parity Ethereum testnet, 7762959 Musicoin, music blockchain
+ */
+public static Long calculateChainId(EthereumTransaction eTrans) {
 	Long result=null;
-	if (rpe.getRawData().length==4) {
-		long rawResult=EthereumUtil.convertToInt(rpe);
+		long rawResult=EthereumUtil.convertToInt(new RLPElement(new byte[0],eTrans.getSig_v()));
 		if (!((rawResult == EthereumUtil.LOWER_REAL_V) || (rawResult== (LOWER_REAL_V+1)))) {
 			result = (rawResult-EthereumUtil.CHAIN_ID_INC)/2;
-		} 
 	}
 	return result;
+}
+
+/**
+ * Calculate the address to which Ether has been sent
+ * 
+ * @param eTrans Ethereum Transaction
+ * @return byte array containing the send address
+ */
+public static byte[] calculateSendAddress(EthereumTransaction eTrans) {
+	// calculate v
+	// generate signature
+	return null;
 }
 
 /** Data types conversions for Ethereum **/

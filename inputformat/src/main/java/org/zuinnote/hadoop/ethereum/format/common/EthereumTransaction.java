@@ -30,12 +30,10 @@ public class EthereumTransaction implements Writable {
 private byte[] nonce;
 private byte[] value;
 private byte[] receiveAddress;
-private byte[] sendAddress;
 private byte[] gasPrice;
 private byte[] gasLimit;
 
 private byte[] data;
-private byte[] hash;
 private byte[] sig_v;
 private byte[] sig_r;
 private byte[] sig_s;
@@ -78,13 +76,6 @@ public void setReceiveAddress(byte[] receiveAddress) {
 	this.receiveAddress = receiveAddress;
 }
 
-public byte[] getSendAddress() {
-	return sendAddress;
-}
-
-public void setSendAddress(byte[] sendAddress) {
-	this.sendAddress = sendAddress;
-}
 
 public byte[] getGasPrice() {
 	return gasPrice;
@@ -110,24 +101,15 @@ public void setData(byte[] data) {
 	this.data = data;
 }
 
-public byte[] getHash() {
-	return hash;
-}
-
-public void setHash(byte[] hash) {
-	this.hash = hash;
-}
 
 
 public void set(EthereumTransaction newTransaction) {
 	this.nonce=newTransaction.getNonce();
 	this.value=newTransaction.getValue();
 	this.receiveAddress=newTransaction.getReceiveAddress();
-	this.sendAddress=newTransaction.getSendAddress();
 	this.gasPrice=newTransaction.getGasPrice();
 	this.gasLimit=newTransaction.getGasLimit();
 	this.data=newTransaction.getData();
-	this.hash=newTransaction.getHash();
 }
 
 public byte[] getSig_v() {
