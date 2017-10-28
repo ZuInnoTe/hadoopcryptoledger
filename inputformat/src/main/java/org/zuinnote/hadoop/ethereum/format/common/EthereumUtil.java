@@ -227,13 +227,13 @@ private static RLPList decodeRLPList(ByteBuffer bb) {
 		// read the size of the data
 		byte[] rawDataNumber=Arrays.copyOfRange(indicator, 1, indicator.length);
 		ByteBuffer byteBuffer = ByteBuffer.wrap(rawDataNumber);
-		if (indicator.length==2) { // byte
+		if (indicator.length<3) { // byte
 			payloadSize=byteBuffer.get() & 0xFF;
-		} else if (indicator.length ==3) { // short
+		} else if (indicator.length<4) { // short
 			payloadSize=byteBuffer.getShort();
-		} else if (indicator.length==5) { // int
+		} else if (indicator.length<6) { // int
 			payloadSize=byteBuffer.getInt();
-		} else if (indicator.length==9) { // long
+		} else if (indicator.length<10) { // long
 			payloadSize=byteBuffer.getLong();
 		} else {
 			LOG.error("Invalid indicator");
@@ -287,12 +287,14 @@ public static Long calculateChainId(RLPElement rpe) {
 public static Long convertVarNumberToLong(RLPElement rpe) {
 		Long result=0L;
 		if (rpe.getRawData()!=null) {
-			switch(rpe.getRawData().length) {
-				case 1: result=(long) EthereumUtil.convertToByte(rpe); break;
-				case	 2: result=(long) EthereumUtil.convertToShort(rpe); break;
-				case 4: result=(long) EthereumUtil.convertToInt(rpe); break;
-				case 8: result=EthereumUtil.convertToLong(rpe); break;
-				default: break;
+			if (rpe.getRawData().length<2) {
+				result=(long) EthereumUtil.convertToByte(rpe);
+			} else if (rpe.getRawData().length<3) {
+				result = (long) EthereumUtil.convertToShort(rpe);
+			} else if (rpe.getRawData().length<5) {
+				result=(long) EthereumUtil.convertToInt(rpe);
+			} else if (rpe.getRawData().length<9) {
+				result=EthereumUtil.convertToLong(rpe);
 			}
 		}
 		return result;
@@ -322,9 +324,21 @@ public static Byte convertToByte(RLPElement rpe) {
 
 public static Short convertToShort(RLPElement rpe) {
 	Short result=0;
-	if ((rpe.getRawData()!=null) || (rpe.getRawData().length==2)) {
-			result=ByteBuffer.wrap(rpe.getRawData()).getShort();
-	} 
+	byte[] rawBytes=rpe.getRawData();
+	int dtSize=2;
+	if ((rawBytes!=null)) {
+			// fill leading zeros
+			if (rawBytes.length<dtSize) {
+				byte[] fullBytes=new byte[dtSize];
+				int dtDiff=dtSize-rawBytes.length;
+				for (int i=0;i<rawBytes.length;i++) {
+					fullBytes[dtDiff+i]=rawBytes[i];
+					result=ByteBuffer.wrap(fullBytes).getShort();
+				}
+			} else {
+				result=ByteBuffer.wrap(rawBytes).getShort();
+			}
+	}
 	return result;
 }
 
@@ -337,8 +351,20 @@ public static Short convertToShort(RLPElement rpe) {
 
 public static Integer convertToInt(RLPElement rpe) {
 	Integer result=0;
-	if ((rpe.getRawData()!=null) || (rpe.getRawData().length==4)) {
-			result=ByteBuffer.wrap(rpe.getRawData()).getInt();
+	byte[] rawBytes=rpe.getRawData();
+	int dtSize=4;
+	if ((rawBytes!=null)) {
+			// fill leading zeros
+			if (rawBytes.length<dtSize) {
+				byte[] fullBytes=new byte[dtSize];
+				int dtDiff=dtSize-rawBytes.length;
+				for (int i=0;i<rawBytes.length;i++) {
+					fullBytes[dtDiff+i]=rawBytes[i];
+					result=ByteBuffer.wrap(fullBytes).getInt();
+				}
+			} else {
+				result=ByteBuffer.wrap(rawBytes).getInt();
+			}
 	}
 	return result;
 }
@@ -352,9 +378,21 @@ public static Integer convertToInt(RLPElement rpe) {
 
 public static Long convertToLong(RLPElement rpe) {
 	Long result=0L;
-	if ((rpe.getRawData()!=null) || (rpe.getRawData().length==8)) {
-			result=ByteBuffer.wrap(rpe.getRawData()).getLong();
-	} 
+	byte[] rawBytes=rpe.getRawData();
+	int dtSize=8;
+	if ((rawBytes!=null)) {
+			// fill leading zeros
+			if (rawBytes.length<dtSize) {
+				byte[] fullBytes=new byte[dtSize];
+				int dtDiff=dtSize-rawBytes.length;
+				for (int i=0;i<rawBytes.length;i++) {
+					fullBytes[dtDiff+i]=rawBytes[i];
+					result=ByteBuffer.wrap(fullBytes).getLong();
+				}
+			} else {
+				result=ByteBuffer.wrap(rawBytes).getLong();
+			}
+	}
 	return result;
 }
 
