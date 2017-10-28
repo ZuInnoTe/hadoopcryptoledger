@@ -287,6 +287,9 @@ public static Long calculateChainId(RLPElement rpe) {
 public static Long convertVarNumberToLong(RLPElement rpe) {
 		Long result=0L;
 		if (rpe.getRawData()!=null) {
+			if (rpe.getRawData().length==0) {
+				result=0L;
+			} else
 			if (rpe.getRawData().length<2) {
 				result=(long) EthereumUtil.convertToByte(rpe);
 			} else if (rpe.getRawData().length<3) {
