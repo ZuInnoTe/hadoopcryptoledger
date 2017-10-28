@@ -144,16 +144,22 @@ public class EthereumBlockReader {
 		ArrayList<EthereumTransaction> result = new ArrayList<>(rlpTransactions.getRlpList().size());
 		for (int i=0;i<rlpTransactions.getRlpList().size();i++) {
 			RLPList currenTransactionRLP = (RLPList) rlpTransactions.getRlpList().get(i);
+		
+		
 			EthereumTransaction currentTransaction = new EthereumTransaction();
 			currentTransaction.setNonce(((RLPElement)currenTransactionRLP.getRlpList().get(0)).getRawData());
 			currentTransaction.setGasPrice(((RLPElement)currenTransactionRLP.getRlpList().get(1)).getRawData());
 			currentTransaction.setGasLimit(((RLPElement)currenTransactionRLP.getRlpList().get(2)).getRawData());
 			currentTransaction.setReceiveAddress(((RLPElement)currenTransactionRLP.getRlpList().get(3)).getRawData());
 			currentTransaction.setValue(((RLPElement)currenTransactionRLP.getRlpList().get(4)).getRawData());
+
 			currentTransaction.setData(((RLPElement)currenTransactionRLP.getRlpList().get(5)).getRawData());
+			if (((RLPElement)currenTransactionRLP.getRlpList().get(6)).getRawData().length>0) {
 			currentTransaction.setSig_v(((RLPElement)currenTransactionRLP.getRlpList().get(6)).getRawData());
-			currentTransaction.setSig_r(((RLPElement)currenTransactionRLP.getRlpList().get(7)).getRawData());
-			currentTransaction.setSig_s(((RLPElement)currenTransactionRLP.getRlpList().get(8)).getRawData());
+
+				currentTransaction.setSig_r(((RLPElement)currenTransactionRLP.getRlpList().get(7)).getRawData());
+				currentTransaction.setSig_s(((RLPElement)currenTransactionRLP.getRlpList().get(8)).getRawData());
+			}
 			result.add(currentTransaction);
 		}
 		return result;
