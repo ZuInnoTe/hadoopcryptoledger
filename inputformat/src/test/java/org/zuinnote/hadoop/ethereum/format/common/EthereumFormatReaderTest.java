@@ -56,6 +56,61 @@ public class EthereumFormatReaderTest {
 	  }
 	 
 	 @Test
+	  public void checkTestDataBlock1Available() {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="eth1.bin";
+		String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
+		assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+		File file = new File(fileNameGenesis);
+		assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
+		assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	  }
+	 
+	 @Test
+	  public void checkTestDataBlock1346406Available() {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="eth1346406.bin";
+		String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
+		assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+		File file = new File(fileNameGenesis);
+		assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
+		assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	  }
+	 
+	 @Test
+	  public void checkTestDataBlock3346406Available() {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="eth3346406.bin";
+		String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
+		assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+		File file = new File(fileNameGenesis);
+		assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
+		assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	  }
+	 
+	 @Test
+	  public void checkTestDataBlock0to10Available() {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="eth0to10.bin";
+		String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
+		assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+		File file = new File(fileNameGenesis);
+		assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
+		assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	  }
+	 
+	 @Test
+	  public void checkTestDataBlock351000to3510010Available() {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="eth351000to3510010.bin";
+		String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
+		assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+		File file = new File(fileNameGenesis);
+		assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
+		assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	  }
+	 
+	 @Test
 	  public void parseGenesisBlockAsEthereumRawBlockHeap() throws IOException, EthereumBlockReadException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="ethgenesis.bin";
@@ -90,6 +145,297 @@ public class EthereumFormatReaderTest {
 			ByteBuffer blockByteBuffer = ebr.readRawBlock();
 			assertTrue("Raw Genesis Block is DirectByteBuffer", blockByteBuffer.isDirect());
 			assertEquals("Raw Genesis block has a size of 540 bytes", 540, blockByteBuffer.limit());
+		} finally {
+			if (ebr!=null) {
+				ebr.close();
+			}
+		}
+	  }
+	 
+	 @Test
+	  public void parseBlockOneAsEthereumRawBlockHeap() throws IOException, EthereumBlockReadException {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="eth1.bin";
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		File file = new File(fileNameBlock);
+		boolean direct=false;
+		FileInputStream fin = new FileInputStream(file);
+		EthereumBlockReader ebr = null;
+		try {
+			ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUMBLOCK, this.DEFAULT_BUFFERSIZE,direct);
+			ByteBuffer blockByteBuffer = ebr.readRawBlock();
+			assertFalse("Raw block 1 is HeapByteBuffer", blockByteBuffer.isDirect());
+			assertEquals("Raw block 1 has a size of 537 bytes", 537, blockByteBuffer.limit());
+		} finally {
+			if (ebr!=null) {
+				ebr.close();
+			}
+		}
+	  }
+	 
+	 @Test
+	  public void parseBlockOneAsEthereumRawBlockDirect() throws IOException, EthereumBlockReadException {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="eth1.bin";
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		File file = new File(fileNameBlock);
+		boolean direct=true;
+		FileInputStream fin = new FileInputStream(file);
+		EthereumBlockReader ebr = null;
+		try {
+			ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUMBLOCK, this.DEFAULT_BUFFERSIZE,direct);
+			ByteBuffer blockByteBuffer = ebr.readRawBlock();
+			assertTrue("Raw block 1 is DirectByteBuffer", blockByteBuffer.isDirect());
+			assertEquals("Raw block 1 has a size of 537 bytes", 537, blockByteBuffer.limit());
+		} finally {
+			if (ebr!=null) {
+				ebr.close();
+			}
+		}
+	  }
+	 
+	 @Test
+	  public void parseBlock1346406AsEthereumRawBlockHeap() throws IOException, EthereumBlockReadException {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="eth1346406.bin";
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		File file = new File(fileNameBlock);
+		boolean direct=false;
+		FileInputStream fin = new FileInputStream(file);
+		EthereumBlockReader ebr = null;
+		try {
+			ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUMBLOCK, this.DEFAULT_BUFFERSIZE,direct);
+			ByteBuffer blockByteBuffer = ebr.readRawBlock();
+			assertFalse("Raw block 1346406 is HeapByteBuffer", blockByteBuffer.isDirect());
+			assertEquals("Raw block 1346406 has a size of 1223 bytes", 1223, blockByteBuffer.limit());
+		} finally {
+			if (ebr!=null) {
+				ebr.close();
+			}
+		}
+	  }
+	 
+	 @Test
+	  public void parseBlock1346406AsEthereumRawBlockDirect() throws IOException, EthereumBlockReadException {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="eth1346406.bin";
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		File file = new File(fileNameBlock);
+		boolean direct=true;
+		FileInputStream fin = new FileInputStream(file);
+		EthereumBlockReader ebr = null;
+		try {
+			ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUMBLOCK, this.DEFAULT_BUFFERSIZE,direct);
+			ByteBuffer blockByteBuffer = ebr.readRawBlock();
+			assertTrue("Raw block 1346406 is DirectByteBuffer", blockByteBuffer.isDirect());
+			assertEquals("Raw block 1346406 has a size of 1223 bytes", 1223, blockByteBuffer.limit());
+		} finally {
+			if (ebr!=null) {
+				ebr.close();
+			}
+		}
+	  }
+	 
+	 @Test
+	  public void parseBlock3346406AsEthereumRawBlockHeap() throws IOException, EthereumBlockReadException {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="eth3346406.bin";
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		File file = new File(fileNameBlock);
+		boolean direct=false;
+		FileInputStream fin = new FileInputStream(file);
+		EthereumBlockReader ebr = null;
+		try {
+			ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUMBLOCK, this.DEFAULT_BUFFERSIZE,direct);
+			ByteBuffer blockByteBuffer = ebr.readRawBlock();
+			assertFalse("Raw block 3346406 is HeapByteBuffer", blockByteBuffer.isDirect());
+			assertEquals("Raw block 3346406 has a size of 2251 bytes", 2251, blockByteBuffer.limit());
+		} finally {
+			if (ebr!=null) {
+				ebr.close();
+			}
+		}
+	  }
+	 
+	 @Test
+	  public void parseBlock3346406AsEthereumRawBlockDirect() throws IOException, EthereumBlockReadException {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="eth3346406.bin";
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		File file = new File(fileNameBlock);
+		boolean direct=true;
+		FileInputStream fin = new FileInputStream(file);
+		EthereumBlockReader ebr = null;
+		try {
+			ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUMBLOCK, this.DEFAULT_BUFFERSIZE,direct);
+			ByteBuffer blockByteBuffer = ebr.readRawBlock();
+			assertTrue("Raw block 3346406 is DirectByteBuffer", blockByteBuffer.isDirect());
+			assertEquals("Raw block 3346406 has a size of 2251 bytes", 2251, blockByteBuffer.limit());
+		} finally {
+			if (ebr!=null) {
+				ebr.close();
+			}
+		}
+	  }
+	 
+	 @Test
+	  public void parseBlock0to10AsEthereumRawBlockHeap() throws IOException, EthereumBlockReadException {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="eth0to10.bin";
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		File file = new File(fileNameBlock);
+		boolean direct=false;
+		FileInputStream fin = new FileInputStream(file);
+		EthereumBlockReader ebr = null;
+		try {
+			ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUMBLOCK, this.DEFAULT_BUFFERSIZE,direct);
+			ByteBuffer blockByteBuffer = ebr.readRawBlock();
+			assertFalse("Raw block 0 is HeapByteBuffer", blockByteBuffer.isDirect());
+			assertEquals("Raw block 0 has a size of 540 bytes", 540, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 1 has a size of 537 bytes", 537, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 2 has a size of 544 bytes", 544, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 3 has a size of 1079 bytes", 1079, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 4 has a size of 1079 bytes", 1079, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 5 has a size of 537 bytes", 537, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 6 has a size of 537 bytes", 537, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 7 has a size of 1078 bytes", 1078, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 8 has a size of 537 bytes", 537, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 9 has a size of 544 bytes", 544, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 10 has a size of 537 bytes", 537, blockByteBuffer.limit());
+		} finally {
+			if (ebr!=null) {
+				ebr.close();
+			}
+		}
+	  }
+	 
+	 @Test
+	  public void parseBlock0to10AsEthereumRawBlockDirect() throws IOException, EthereumBlockReadException {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="eth0to10.bin";
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		File file = new File(fileNameBlock);
+		boolean direct=true;
+		FileInputStream fin = new FileInputStream(file);
+		EthereumBlockReader ebr = null;
+		try {
+			ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUMBLOCK, this.DEFAULT_BUFFERSIZE,direct);
+			ByteBuffer blockByteBuffer = ebr.readRawBlock();
+			assertTrue("Raw block 0 is DirectByteBuffer", blockByteBuffer.isDirect());
+			assertEquals("Raw block 0 has a size of 540 bytes", 540, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 1 has a size of 537 bytes", 537, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 2 has a size of 544 bytes", 544, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 3 has a size of 1079 bytes", 1079, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 4 has a size of 1079 bytes", 1079, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 5 has a size of 537 bytes", 537, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 6 has a size of 537 bytes", 537, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 7 has a size of 1078 bytes", 1078, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 8 has a size of 537 bytes", 537, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 9 has a size of 544 bytes", 544, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 10 has a size of 537 bytes", 537, blockByteBuffer.limit());
+		} finally {
+			if (ebr!=null) {
+				ebr.close();
+			}
+		}
+	  }
+	 
+	 @Test
+	  public void parseBlock35100to351010AsEthereumRawBlockHeap() throws IOException, EthereumBlockReadException {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="eth351000to3510010.bin";
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		File file = new File(fileNameBlock);
+		boolean direct=false;
+		FileInputStream fin = new FileInputStream(file);
+		EthereumBlockReader ebr = null;
+		try {
+			ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUMBLOCK, this.DEFAULT_BUFFERSIZE,direct);
+			ByteBuffer blockByteBuffer = ebr.readRawBlock();
+			assertFalse("Raw block 3510000 is HeapByteBuffer", blockByteBuffer.isDirect());
+			assertEquals("Raw block 3510000 has a size of 2842 bytes", 2842, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 3510001 has a size of 539 bytes", 539, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 3510002 has a size of 2595 bytes", 2595, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 3510003 has a size of 11636 bytes", 11636, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 3510004 has a size of 1335 bytes", 1335, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 3510005 has a size of 9126 bytes", 9126, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 3510006 has a size of 7807 bytes", 7807, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 3510007 has a size of 532 bytes", 532, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 3510008 has a size of 1393 bytes", 1393, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 3510009 has a size of 1217 bytes", 1217, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 3510010 has a size of 1016 bytes", 1016, blockByteBuffer.limit());
+		} finally {
+			if (ebr!=null) {
+				ebr.close();
+			}
+		}
+	  }
+	 
+	 
+	 @Test
+	  public void parseBlock35100to351010AsEthereumRawBlockDirect() throws IOException, EthereumBlockReadException {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="eth351000to3510010.bin";
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		File file = new File(fileNameBlock);
+		boolean direct=true;
+		FileInputStream fin = new FileInputStream(file);
+		EthereumBlockReader ebr = null;
+		try {
+			ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUMBLOCK, this.DEFAULT_BUFFERSIZE,direct);
+			ByteBuffer blockByteBuffer = ebr.readRawBlock();
+			assertTrue("Raw block 3510000 is DirecteBuffer", blockByteBuffer.isDirect());
+			assertEquals("Raw block 3510000 has a size of 2842 bytes", 2842, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 3510001 has a size of 539 bytes", 539, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 3510002 has a size of 2595 bytes", 2595, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 3510003 has a size of 11636 bytes", 11636, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 3510004 has a size of 1335 bytes", 1335, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 3510005 has a size of 9126 bytes", 9126, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 3510006 has a size of 7807 bytes", 7807, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 3510007 has a size of 532 bytes", 532, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 3510008 has a size of 1393 bytes", 1393, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 3510009 has a size of 1217 bytes", 1217, blockByteBuffer.limit());
+			blockByteBuffer = ebr.readRawBlock();
+			assertEquals("Raw block 3510010 has a size of 1016 bytes", 1016, blockByteBuffer.limit());
 		} finally {
 			if (ebr!=null) {
 				ebr.close();
