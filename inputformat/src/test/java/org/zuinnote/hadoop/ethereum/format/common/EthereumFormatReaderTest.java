@@ -1195,5 +1195,435 @@ public class EthereumFormatReaderTest {
 			}
 		}
 	  }
+	 
+	 @Test
+	  public void parseBlock0to10AsEthereumBlockHeap() throws IOException, EthereumBlockReadException {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="eth0to10.bin";
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		File file = new File(fileNameBlock);
+		boolean direct=false;
+		FileInputStream fin = new FileInputStream(file);
+		EthereumBlockReader ebr = null;
+		try {
+			ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUMBLOCK, this.DEFAULT_BUFFERSIZE,direct);
+			EthereumBlock eblock = ebr.readBlock();
+			EthereumBlockHeader eblockHeader = eblock.getEthereumBlockHeader();
+			List<EthereumTransaction> eTransactions = eblock.getEthereumTransactions();
+			List<EthereumBlockHeader> eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 0 contains 0 transactions", 0, eTransactions.size());
+			assertEquals("Block 0 contains 0 uncleHeaders",0, eUncles.size());
+			byte[] expectedParentHash = new byte[] {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};		
+			assertArrayEquals("Block 0 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 1 contains 0 transactions", 0, eTransactions.size());
+			assertEquals("Block 1 contains 0 uncleHeaders",0, eUncles.size());
+			expectedParentHash = new byte[] {(byte) 0xD4,(byte) 0xE5,0x67,0x40,(byte) 0xF8,0x76,(byte) 0xAE,(byte) 0xF8,(byte) 0xC0,0x10,(byte) 0xB8,0x6A,0x40,(byte) 0xD5,(byte) 0xF5,0x67,0x45,(byte) 0xA1,0x18,(byte) 0xD0,(byte) 0x90,0x6A,0x34,(byte) 0xE6,(byte) 0x9A,(byte) 0xEC,(byte) 0x8C,0x0D,(byte) 0xB1,(byte) 0xCB,(byte) 0x8F,(byte) 0xA3};
+			assertArrayEquals("Block 1 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 2 contains 0 transactions", 0, eTransactions.size());
+			assertEquals("Block 2 contains 0 uncleHeaders",0, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0x88,(byte)0xe9,(byte)0x6d,(byte)0x45,(byte)0x37,(byte)0xbe,(byte)0xa4,(byte)0xd9,(byte)0xc0,(byte)0x5d,(byte)0x12,(byte)0x54,(byte)0x99,(byte)0x07,(byte)0xb3,(byte)0x25,(byte)0x61,(byte)0xd3,(byte)0xbf,(byte)0x31,(byte)0xf4,(byte)0x5a,(byte)0xae,(byte)0x73,(byte)0x4c,(byte)0xdc,(byte)0x11,(byte)0x9f,(byte)0x13,(byte)0x40,(byte)0x6c,(byte)0xb6};
+			assertArrayEquals("Block 2 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 3 contains 0 transactions", 0, eTransactions.size());
+			assertEquals("Block 3 contains 1 uncleHeaders",1, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0xb4,(byte)0x95,(byte)0xa1,(byte)0xd7,(byte)0xe6,(byte)0x66,(byte)0x31,(byte)0x52,(byte)0xae,(byte)0x92,(byte)0x70,(byte)0x8d,(byte)0xa4,(byte)0x84,(byte)0x33,(byte)0x37,(byte)0xb9,(byte)0x58,(byte)0x14,(byte)0x60,(byte)0x15,(byte)0xa2,(byte)0x80,(byte)0x2f,(byte)0x41,(byte)0x93,(byte)0xa4,(byte)0x10,(byte)0x04,(byte)0x46,(byte)0x98,(byte)0xc9};
+			assertArrayEquals("Block 3 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 4 contains 0 transactions", 0, eTransactions.size());
+			assertEquals("Block 4 contains 1 uncleHeaders",1, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0x3d,(byte)0x61,(byte)0x22,(byte)0x66,(byte)0x0c,(byte)0xc8,(byte)0x24,(byte)0x37,(byte)0x6f,(byte)0x11,(byte)0xee,(byte)0x84,(byte)0x2f,(byte)0x83,(byte)0xad,(byte)0xdc,(byte)0x35,(byte)0x25,(byte)0xe2,(byte)0xdd,(byte)0x67,(byte)0x56,(byte)0xb9,(byte)0xbc,(byte)0xf0,(byte)0xaf,(byte)0xfa,(byte)0x6a,(byte)0xa8,(byte)0x8c,(byte)0xf7,(byte)0x41};
+			assertArrayEquals("Block 4 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 5 contains 0 transactions", 0, eTransactions.size());
+			assertEquals("Block 5 contains 0 uncleHeaders",0, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0x23,(byte)0xad,(byte)0xf5,(byte)0xa3,(byte)0xbe,(byte)0x0f,(byte)0x52,(byte)0x35,(byte)0xb3,(byte)0x69,(byte)0x41,(byte)0xbc,(byte)0xb2,(byte)0x9b,(byte)0x62,(byte)0x50,(byte)0x42,(byte)0x78,(byte)0xec,(byte)0x5b,(byte)0x9c,(byte)0xdf,(byte)0xa2,(byte)0x77,(byte)0xb9,(byte)0x92,(byte)0xba,(byte)0x4a,(byte)0x7a,(byte)0x3c,(byte)0xd3,(byte)0xa2};
+			assertArrayEquals("Block 5 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 6 contains 0 transactions", 0, eTransactions.size());
+			assertEquals("Block 6 contains 0 uncleHeaders",0, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0xf3,(byte)0x7c,(byte)0x63,(byte)0x2d,(byte)0x36,(byte)0x1e,(byte)0x0a,(byte)0x93,(byte)0xf0,(byte)0x8b,(byte)0xa2,(byte)0x9b,(byte)0x1a,(byte)0x2c,(byte)0x70,(byte)0x8d,(byte)0x9c,(byte)0xaa,(byte)0x3e,(byte)0xe1,(byte)0x9d,(byte)0x1e,(byte)0xe8,(byte)0xd2,(byte)0xa0,(byte)0x26,(byte)0x12,(byte)0xbf,(byte)0xfe,(byte)0x49,(byte)0xf0,(byte)0xa9};
+			assertArrayEquals("Block 6 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 7 contains 0 transactions", 0, eTransactions.size());
+			assertEquals("Block 7 contains 1 uncleHeaders",1, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0x1f,(byte)0x1a,(byte)0xed,(byte)0x8e,(byte)0x36,(byte)0x94,(byte)0xa0,(byte)0x67,(byte)0x49,(byte)0x6c,(byte)0x24,(byte)0x8e,(byte)0x61,(byte)0x87,(byte)0x9c,(byte)0xda,(byte)0x99,(byte)0xb0,(byte)0x70,(byte)0x9a,(byte)0x1d,(byte)0xfb,(byte)0xac,(byte)0xd0,(byte)0xb6,(byte)0x93,(byte)0x75,(byte)0x0d,(byte)0xf0,(byte)0x6b,(byte)0x32,(byte)0x6e};
+			assertArrayEquals("Block 7 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 8 contains 0 transactions", 0, eTransactions.size());
+			assertEquals("Block 8 contains 0 uncleHeaders",0, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0xe0,(byte)0xc7,(byte)0xc0,(byte)0xb4,(byte)0x6e,(byte)0x11,(byte)0x6b,(byte)0x87,(byte)0x43,(byte)0x54,(byte)0xdc,(byte)0xe6,(byte)0xf6,(byte)0x4b,(byte)0x85,(byte)0x81,(byte)0xbd,(byte)0x23,(byte)0x91,(byte)0x86,(byte)0xb0,(byte)0x3f,(byte)0x30,(byte)0xa9,(byte)0x78,(byte)0xe3,(byte)0xdc,(byte)0x38,(byte)0x65,(byte)0x6f,(byte)0x72,(byte)0x3a};
+			assertArrayEquals("Block 8 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 9 contains 0 transactions", 0, eTransactions.size());
+			assertEquals("Block 9 contains 0 uncleHeaders",0, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0x2c,(byte)0xe9,(byte)0x43,(byte)0x42,(byte)0xdf,(byte)0x18,(byte)0x6b,(byte)0xab,(byte)0x41,(byte)0x65,(byte)0xc2,(byte)0x68,(byte)0xc4,(byte)0x3a,(byte)0xb9,(byte)0x82,(byte)0xd3,(byte)0x60,(byte)0xc9,(byte)0x47,(byte)0x4f,(byte)0x42,(byte)0x9f,(byte)0xec,(byte)0x55,(byte)0x65,(byte)0xad,(byte)0xfc,(byte)0x5d,(byte)0x1f,(byte)0x25,(byte)0x8b};
+			assertArrayEquals("Block 9 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 10 contains 0 transactions", 0, eTransactions.size());
+			assertEquals("Block 10 contains 0 uncleHeaders",0, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0x99,(byte)0x7e,(byte)0x47,(byte)0xbf,(byte)0x4c,(byte)0xac,(byte)0x50,(byte)0x9c,(byte)0x62,(byte)0x77,(byte)0x53,(byte)0xc0,(byte)0x63,(byte)0x85,(byte)0xac,(byte)0x86,(byte)0x66,(byte)0x41,(byte)0xec,(byte)0x6f,(byte)0x88,(byte)0x37,(byte)0x34,(byte)0xff,(byte)0x79,(byte)0x44,(byte)0x41,(byte)0x10,(byte)0x00,(byte)0xdc,(byte)0x57,(byte)0x6e};
+			assertArrayEquals("Block 10 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+
+			} finally {
+			if (ebr!=null) {
+				ebr.close();
+			}
+		}
+	  }
+	 
+	 @Test
+	  public void parseBlock0to10AsEthereumBlockDirect() throws IOException, EthereumBlockReadException {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="eth0to10.bin";
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		File file = new File(fileNameBlock);
+		boolean direct=true;
+		FileInputStream fin = new FileInputStream(file);
+		EthereumBlockReader ebr = null;
+		try {
+			ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUMBLOCK, this.DEFAULT_BUFFERSIZE,direct);
+			EthereumBlock eblock = ebr.readBlock();
+			EthereumBlockHeader eblockHeader = eblock.getEthereumBlockHeader();
+			List<EthereumTransaction> eTransactions = eblock.getEthereumTransactions();
+			List<EthereumBlockHeader> eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 0 contains 0 transactions", 0, eTransactions.size());
+			assertEquals("Block 0 contains 0 uncleHeaders",0, eUncles.size());
+			byte[] expectedParentHash = new byte[] {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};		
+			assertArrayEquals("Block 0 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 1 contains 0 transactions", 0, eTransactions.size());
+			assertEquals("Block 1 contains 0 uncleHeaders",0, eUncles.size());
+			expectedParentHash = new byte[] {(byte) 0xD4,(byte) 0xE5,0x67,0x40,(byte) 0xF8,0x76,(byte) 0xAE,(byte) 0xF8,(byte) 0xC0,0x10,(byte) 0xB8,0x6A,0x40,(byte) 0xD5,(byte) 0xF5,0x67,0x45,(byte) 0xA1,0x18,(byte) 0xD0,(byte) 0x90,0x6A,0x34,(byte) 0xE6,(byte) 0x9A,(byte) 0xEC,(byte) 0x8C,0x0D,(byte) 0xB1,(byte) 0xCB,(byte) 0x8F,(byte) 0xA3};
+			assertArrayEquals("Block 1 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 2 contains 0 transactions", 0, eTransactions.size());
+			assertEquals("Block 2 contains 0 uncleHeaders",0, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0x88,(byte)0xe9,(byte)0x6d,(byte)0x45,(byte)0x37,(byte)0xbe,(byte)0xa4,(byte)0xd9,(byte)0xc0,(byte)0x5d,(byte)0x12,(byte)0x54,(byte)0x99,(byte)0x07,(byte)0xb3,(byte)0x25,(byte)0x61,(byte)0xd3,(byte)0xbf,(byte)0x31,(byte)0xf4,(byte)0x5a,(byte)0xae,(byte)0x73,(byte)0x4c,(byte)0xdc,(byte)0x11,(byte)0x9f,(byte)0x13,(byte)0x40,(byte)0x6c,(byte)0xb6};
+			assertArrayEquals("Block 2 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 3 contains 0 transactions", 0, eTransactions.size());
+			assertEquals("Block 3 contains 1 uncleHeaders",1, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0xb4,(byte)0x95,(byte)0xa1,(byte)0xd7,(byte)0xe6,(byte)0x66,(byte)0x31,(byte)0x52,(byte)0xae,(byte)0x92,(byte)0x70,(byte)0x8d,(byte)0xa4,(byte)0x84,(byte)0x33,(byte)0x37,(byte)0xb9,(byte)0x58,(byte)0x14,(byte)0x60,(byte)0x15,(byte)0xa2,(byte)0x80,(byte)0x2f,(byte)0x41,(byte)0x93,(byte)0xa4,(byte)0x10,(byte)0x04,(byte)0x46,(byte)0x98,(byte)0xc9};
+			assertArrayEquals("Block 3 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 4 contains 0 transactions", 0, eTransactions.size());
+			assertEquals("Block 4 contains 1 uncleHeaders",1, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0x3d,(byte)0x61,(byte)0x22,(byte)0x66,(byte)0x0c,(byte)0xc8,(byte)0x24,(byte)0x37,(byte)0x6f,(byte)0x11,(byte)0xee,(byte)0x84,(byte)0x2f,(byte)0x83,(byte)0xad,(byte)0xdc,(byte)0x35,(byte)0x25,(byte)0xe2,(byte)0xdd,(byte)0x67,(byte)0x56,(byte)0xb9,(byte)0xbc,(byte)0xf0,(byte)0xaf,(byte)0xfa,(byte)0x6a,(byte)0xa8,(byte)0x8c,(byte)0xf7,(byte)0x41};
+			assertArrayEquals("Block 4 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 5 contains 0 transactions", 0, eTransactions.size());
+			assertEquals("Block 5 contains 0 uncleHeaders",0, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0x23,(byte)0xad,(byte)0xf5,(byte)0xa3,(byte)0xbe,(byte)0x0f,(byte)0x52,(byte)0x35,(byte)0xb3,(byte)0x69,(byte)0x41,(byte)0xbc,(byte)0xb2,(byte)0x9b,(byte)0x62,(byte)0x50,(byte)0x42,(byte)0x78,(byte)0xec,(byte)0x5b,(byte)0x9c,(byte)0xdf,(byte)0xa2,(byte)0x77,(byte)0xb9,(byte)0x92,(byte)0xba,(byte)0x4a,(byte)0x7a,(byte)0x3c,(byte)0xd3,(byte)0xa2};
+			assertArrayEquals("Block 5 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 6 contains 0 transactions", 0, eTransactions.size());
+			assertEquals("Block 6 contains 0 uncleHeaders",0, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0xf3,(byte)0x7c,(byte)0x63,(byte)0x2d,(byte)0x36,(byte)0x1e,(byte)0x0a,(byte)0x93,(byte)0xf0,(byte)0x8b,(byte)0xa2,(byte)0x9b,(byte)0x1a,(byte)0x2c,(byte)0x70,(byte)0x8d,(byte)0x9c,(byte)0xaa,(byte)0x3e,(byte)0xe1,(byte)0x9d,(byte)0x1e,(byte)0xe8,(byte)0xd2,(byte)0xa0,(byte)0x26,(byte)0x12,(byte)0xbf,(byte)0xfe,(byte)0x49,(byte)0xf0,(byte)0xa9};
+			assertArrayEquals("Block 6 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 7 contains 0 transactions", 0, eTransactions.size());
+			assertEquals("Block 7 contains 1 uncleHeaders",1, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0x1f,(byte)0x1a,(byte)0xed,(byte)0x8e,(byte)0x36,(byte)0x94,(byte)0xa0,(byte)0x67,(byte)0x49,(byte)0x6c,(byte)0x24,(byte)0x8e,(byte)0x61,(byte)0x87,(byte)0x9c,(byte)0xda,(byte)0x99,(byte)0xb0,(byte)0x70,(byte)0x9a,(byte)0x1d,(byte)0xfb,(byte)0xac,(byte)0xd0,(byte)0xb6,(byte)0x93,(byte)0x75,(byte)0x0d,(byte)0xf0,(byte)0x6b,(byte)0x32,(byte)0x6e};
+			assertArrayEquals("Block 7 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 8 contains 0 transactions", 0, eTransactions.size());
+			assertEquals("Block 8 contains 0 uncleHeaders",0, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0xe0,(byte)0xc7,(byte)0xc0,(byte)0xb4,(byte)0x6e,(byte)0x11,(byte)0x6b,(byte)0x87,(byte)0x43,(byte)0x54,(byte)0xdc,(byte)0xe6,(byte)0xf6,(byte)0x4b,(byte)0x85,(byte)0x81,(byte)0xbd,(byte)0x23,(byte)0x91,(byte)0x86,(byte)0xb0,(byte)0x3f,(byte)0x30,(byte)0xa9,(byte)0x78,(byte)0xe3,(byte)0xdc,(byte)0x38,(byte)0x65,(byte)0x6f,(byte)0x72,(byte)0x3a};
+			assertArrayEquals("Block 8 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 9 contains 0 transactions", 0, eTransactions.size());
+			assertEquals("Block 9 contains 0 uncleHeaders",0, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0x2c,(byte)0xe9,(byte)0x43,(byte)0x42,(byte)0xdf,(byte)0x18,(byte)0x6b,(byte)0xab,(byte)0x41,(byte)0x65,(byte)0xc2,(byte)0x68,(byte)0xc4,(byte)0x3a,(byte)0xb9,(byte)0x82,(byte)0xd3,(byte)0x60,(byte)0xc9,(byte)0x47,(byte)0x4f,(byte)0x42,(byte)0x9f,(byte)0xec,(byte)0x55,(byte)0x65,(byte)0xad,(byte)0xfc,(byte)0x5d,(byte)0x1f,(byte)0x25,(byte)0x8b};
+			assertArrayEquals("Block 9 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 10 contains 0 transactions", 0, eTransactions.size());
+			assertEquals("Block 10 contains 0 uncleHeaders",0, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0x99,(byte)0x7e,(byte)0x47,(byte)0xbf,(byte)0x4c,(byte)0xac,(byte)0x50,(byte)0x9c,(byte)0x62,(byte)0x77,(byte)0x53,(byte)0xc0,(byte)0x63,(byte)0x85,(byte)0xac,(byte)0x86,(byte)0x66,(byte)0x41,(byte)0xec,(byte)0x6f,(byte)0x88,(byte)0x37,(byte)0x34,(byte)0xff,(byte)0x79,(byte)0x44,(byte)0x41,(byte)0x10,(byte)0x00,(byte)0xdc,(byte)0x57,(byte)0x6e};
+			assertArrayEquals("Block 10 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+
+			} finally {
+			if (ebr!=null) {
+				ebr.close();
+			}
+		}
+	  }
+	 
+	 
+	 @Test
+	  public void parseBlock3510000to3510010AsEthereumBlockHeap() throws IOException, EthereumBlockReadException {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="eth351000to3510010.bin";
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		File file = new File(fileNameBlock);
+		boolean direct=false;
+		FileInputStream fin = new FileInputStream(file);
+		EthereumBlockReader ebr = null;
+		try {
+			ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUMBLOCK, this.DEFAULT_BUFFERSIZE,direct);
+			EthereumBlock eblock = ebr.readBlock();
+			EthereumBlockHeader eblockHeader = eblock.getEthereumBlockHeader();
+			List<EthereumTransaction> eTransactions = eblock.getEthereumTransactions();
+			List<EthereumBlockHeader> eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 3510000 contains 15 transactions", 15, eTransactions.size());
+			assertEquals("Block 3510000 contains 0 uncleHeaders",0, eUncles.size());
+			byte[] expectedParentHash = new byte[] {(byte)0x63,(byte)0x74,(byte)0x6f,(byte)0x5b,(byte)0xcf,(byte)0xa3,(byte)0xab,(byte)0x25,(byte)0xda,(byte)0xcf,(byte)0x01,(byte)0xd8,(byte)0x89,(byte)0x50,(byte)0xdc,(byte)0x06,(byte)0x55,(byte)0x6b,(byte)0x8f,(byte)0xd9,(byte)0x30,(byte)0xd6,(byte)0xff,(byte)0xa3,(byte)0x01,(byte)0x31,(byte)0xd7,(byte)0xfe,(byte)0xe6,(byte)0xe1,(byte)0x58,(byte)0x5e};		
+			assertArrayEquals("Block 3510000 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 3510001 contains 0 transactions", 0, eTransactions.size());
+			assertEquals("Block 3510001 contains 0 uncleHeaders",0, eUncles.size());
+			expectedParentHash = new byte[] {(byte)0xc5,(byte)0xaf,(byte)0xd4,(byte)0x24,(byte)0x4a,(byte)0xa5,(byte)0x49,(byte)0x0a,(byte)0x44,(byte)0xad,(byte)0xa6,(byte)0xd4,(byte)0x61,(byte)0x1c,(byte)0x8b,(byte)0xe2,(byte)0x4c,(byte)0x85,(byte)0x0d,(byte)0x83,(byte)0x00,(byte)0x1e,(byte)0xb3,(byte)0xea,(byte)0x98,(byte)0x8a,(byte)0xdc,(byte)0xd5,(byte)0x7c,(byte)0x66,(byte)0x48,(byte)0x7c};
+			assertArrayEquals("Block 3510001 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 3510002 contains 18 transactions", 18, eTransactions.size());
+			assertEquals("Block 3510002 contains 0 uncleHeaders",0, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0x05,(byte)0x6e,(byte)0x99,(byte)0xc7,(byte)0xde,(byte)0x41,(byte)0x7c,(byte)0x50,(byte)0x4e,(byte)0xcd,(byte)0x61,(byte)0xd7,(byte)0xdd,(byte)0x4e,(byte)0x46,(byte)0x8e,(byte)0xa9,(byte)0xe4,(byte)0x71,(byte)0xd1,(byte)0x35,(byte)0x49,(byte)0x0b,(byte)0x24,(byte)0x51,(byte)0x49,(byte)0xbe,(byte)0x51,(byte)0xfd,(byte)0xa8,(byte)0x46,(byte)0x8a};
+			assertArrayEquals("Block 3510002 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 3510003 contains 64 transactions", 64, eTransactions.size());
+			assertEquals("Block 3510003 contains 2 uncleHeaders",2, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0xd7,(byte)0x24,(byte)0x0d,(byte)0x4f,(byte)0x3c,(byte)0xc7,(byte)0x6f,(byte)0x70,(byte)0x35,(byte)0x93,(byte)0xcd,(byte)0xce,(byte)0x37,(byte)0x3f,(byte)0x21,(byte)0x07,(byte)0x7c,(byte)0xaf,(byte)0x56,(byte)0x76,(byte)0x06,(byte)0xf5,(byte)0x5a,(byte)0xc9,(byte)0xa8,(byte)0x77,(byte)0x7f,(byte)0x1d,(byte)0xce,(byte)0xd0,(byte)0xec,(byte)0x3c};
+			assertArrayEquals("Block 3510003 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 3510004 contains 7 transactions", 7, eTransactions.size());
+			assertEquals("Block 3510004 contains 0 uncleHeaders",0, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0xe5,(byte)0x5e,(byte)0x35,(byte)0x21,(byte)0x50,(byte)0xbd,(byte)0x91,(byte)0xaa,(byte)0xe9,(byte)0x66,(byte)0xdc,(byte)0x5c,(byte)0xb6,(byte)0x16,(byte)0x33,(byte)0x6a,(byte)0xb1,(byte)0x33,(byte)0x05,(byte)0xfb,(byte)0xc5,(byte)0x2d,(byte)0xb6,(byte)0x3b,(byte)0xa4,(byte)0xf6,(byte)0x4f,(byte)0x63,(byte)0xd8,(byte)0x75,(byte)0x88,(byte)0xbd};
+			assertArrayEquals("Block 3510004 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 3510005 contains 47 transactions", 47, eTransactions.size());
+			assertEquals("Block 3510005 contains 0 uncleHeaders",0, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0x4c,(byte)0x75,(byte)0xc3,(byte)0x33,(byte)0xef,(byte)0xd5,(byte)0x9b,(byte)0x16,(byte)0x76,(byte)0xeb,(byte)0x8b,(byte)0x17,(byte)0xd3,(byte)0xc0,(byte)0x6f,(byte)0xf1,(byte)0x13,(byte)0xed,(byte)0xce,(byte)0xe5,(byte)0x7d,(byte)0xfb,(byte)0x1a,(byte)0x10,(byte)0xf1,(byte)0xff,(byte)0xba,(byte)0x6e,(byte)0x65,(byte)0xb1,(byte)0x1b,(byte)0x0d};
+			assertArrayEquals("Block 3510005 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 3510006 contains 44 transactions", 44, eTransactions.size());
+			assertEquals("Block 3510006 contains 0 uncleHeaders",0, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0x58,(byte)0xf1,(byte)0x8f,(byte)0x87,(byte)0xc9,(byte)0xe3,(byte)0xfc,(byte)0xc4,(byte)0x8b,(byte)0x65,(byte)0xd9,(byte)0x33,(byte)0xc2,(byte)0x1e,(byte)0xf9,(byte)0x25,(byte)0x16,(byte)0x14,(byte)0x7f,(byte)0xb0,(byte)0xed,(byte)0x4f,(byte)0x6b,(byte)0x2b,(byte)0x91,(byte)0x50,(byte)0x7b,(byte)0x29,(byte)0xc4,(byte)0xfe,(byte)0x45,(byte)0x60};
+			assertArrayEquals("Block 3510006 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 3510007 contains 0 transactions", 0, eTransactions.size());
+			assertEquals("Block 3510007 contains 0 uncleHeaders",0, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0x75,(byte)0x04,(byte)0xc7,(byte)0xc8,(byte)0x42,(byte)0xdc,(byte)0x25,(byte)0xcc,(byte)0x5d,(byte)0x5e,(byte)0x6d,(byte)0x7c,(byte)0x29,(byte)0xb0,(byte)0x6c,(byte)0xb7,(byte)0x0f,(byte)0x1c,(byte)0xcd,(byte)0x0f,(byte)0x65,(byte)0xb2,(byte)0x67,(byte)0x47,(byte)0xef,(byte)0x7e,(byte)0xcb,(byte)0xa5,(byte)0x2e,(byte)0x8c,(byte)0x4c,(byte)0x24};
+			assertArrayEquals("Block 7 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 3510008 contains 7 transactions", 7, eTransactions.size());
+			assertEquals("Block 3510008 contains 0 uncleHeaders",0, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0x13,(byte)0xb4,(byte)0xa2,(byte)0xc5,(byte)0xce,(byte)0xf4,(byte)0x80,(byte)0xed,(byte)0xd4,(byte)0x82,(byte)0x8a,(byte)0x6a,(byte)0xb1,(byte)0x46,(byte)0xd2,(byte)0x0b,(byte)0x20,(byte)0x41,(byte)0x0d,(byte)0xda,(byte)0xa4,(byte)0x91,(byte)0xb7,(byte)0xc5,(byte)0x54,(byte)0x34,(byte)0xd0,(byte)0x16,(byte)0x5a,(byte)0x49,(byte)0xa3,(byte)0xe6};
+			assertArrayEquals("Block 3510008 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 3510009 contains 6 transactions", 6, eTransactions.size());
+			assertEquals("Block 3510009 contains 0 uncleHeaders",0, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0x72,(byte)0x89,(byte)0x48,(byte)0x45,(byte)0x1d,(byte)0x1c,(byte)0xaf,(byte)0xae,(byte)0xad,(byte)0x86,(byte)0xe6,(byte)0x9e,(byte)0x8e,(byte)0x50,(byte)0x21,(byte)0xbf,(byte)0x85,(byte)0xf3,(byte)0x8b,(byte)0x19,(byte)0xe7,(byte)0x0c,(byte)0x73,(byte)0xa2,(byte)0x8f,(byte)0xc7,(byte)0x27,(byte)0x4a,(byte)0x89,(byte)0xa3,(byte)0xbd,(byte)0xba};
+			assertArrayEquals("Block 3510009 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 3510010 contains 4 transactions", 4, eTransactions.size());
+			assertEquals("Block 3510010 contains 0 uncleHeaders",0, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0xc5,(byte)0x75,(byte)0xa6,(byte)0x40,(byte)0x4f,(byte)0x86,(byte)0xa4,(byte)0xb6,(byte)0x38,(byte)0x32,(byte)0x79,(byte)0x23,(byte)0x26,(byte)0xc5,(byte)0xb0,(byte)0xf6,(byte)0xf2,(byte)0x5e,(byte)0xa9,(byte)0xd8,(byte)0x83,(byte)0x42,(byte)0xf9,(byte)0xf6,(byte)0xf1,(byte)0xe7,(byte)0xed,(byte)0x21,(byte)0xc8,(byte)0x58,(byte)0x02,(byte)0x38};
+			assertArrayEquals("Block 3510010 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+
+			} finally {
+			if (ebr!=null) {
+				ebr.close();
+			}
+		}
+	  }
+	 
+	 
+	 @Test
+	  public void parseBlock3510000to3510010AsEthereumBlockDirect() throws IOException, EthereumBlockReadException {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="eth351000to3510010.bin";
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		File file = new File(fileNameBlock);
+		boolean direct=true;
+		FileInputStream fin = new FileInputStream(file);
+		EthereumBlockReader ebr = null;
+		try {
+			ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUMBLOCK, this.DEFAULT_BUFFERSIZE,direct);
+			EthereumBlock eblock = ebr.readBlock();
+			EthereumBlockHeader eblockHeader = eblock.getEthereumBlockHeader();
+			List<EthereumTransaction> eTransactions = eblock.getEthereumTransactions();
+			List<EthereumBlockHeader> eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 3510000 contains 15 transactions", 15, eTransactions.size());
+			assertEquals("Block 3510000 contains 0 uncleHeaders",0, eUncles.size());
+			byte[] expectedParentHash = new byte[] {(byte)0x63,(byte)0x74,(byte)0x6f,(byte)0x5b,(byte)0xcf,(byte)0xa3,(byte)0xab,(byte)0x25,(byte)0xda,(byte)0xcf,(byte)0x01,(byte)0xd8,(byte)0x89,(byte)0x50,(byte)0xdc,(byte)0x06,(byte)0x55,(byte)0x6b,(byte)0x8f,(byte)0xd9,(byte)0x30,(byte)0xd6,(byte)0xff,(byte)0xa3,(byte)0x01,(byte)0x31,(byte)0xd7,(byte)0xfe,(byte)0xe6,(byte)0xe1,(byte)0x58,(byte)0x5e};		
+			assertArrayEquals("Block 3510000 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 3510001 contains 0 transactions", 0, eTransactions.size());
+			assertEquals("Block 3510001 contains 0 uncleHeaders",0, eUncles.size());
+			expectedParentHash = new byte[] {(byte)0xc5,(byte)0xaf,(byte)0xd4,(byte)0x24,(byte)0x4a,(byte)0xa5,(byte)0x49,(byte)0x0a,(byte)0x44,(byte)0xad,(byte)0xa6,(byte)0xd4,(byte)0x61,(byte)0x1c,(byte)0x8b,(byte)0xe2,(byte)0x4c,(byte)0x85,(byte)0x0d,(byte)0x83,(byte)0x00,(byte)0x1e,(byte)0xb3,(byte)0xea,(byte)0x98,(byte)0x8a,(byte)0xdc,(byte)0xd5,(byte)0x7c,(byte)0x66,(byte)0x48,(byte)0x7c};
+			assertArrayEquals("Block 3510001 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 3510002 contains 18 transactions", 18, eTransactions.size());
+			assertEquals("Block 3510002 contains 0 uncleHeaders",0, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0x05,(byte)0x6e,(byte)0x99,(byte)0xc7,(byte)0xde,(byte)0x41,(byte)0x7c,(byte)0x50,(byte)0x4e,(byte)0xcd,(byte)0x61,(byte)0xd7,(byte)0xdd,(byte)0x4e,(byte)0x46,(byte)0x8e,(byte)0xa9,(byte)0xe4,(byte)0x71,(byte)0xd1,(byte)0x35,(byte)0x49,(byte)0x0b,(byte)0x24,(byte)0x51,(byte)0x49,(byte)0xbe,(byte)0x51,(byte)0xfd,(byte)0xa8,(byte)0x46,(byte)0x8a};
+			assertArrayEquals("Block 3510002 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 3510003 contains 64 transactions", 64, eTransactions.size());
+			assertEquals("Block 3510003 contains 2 uncleHeaders",2, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0xd7,(byte)0x24,(byte)0x0d,(byte)0x4f,(byte)0x3c,(byte)0xc7,(byte)0x6f,(byte)0x70,(byte)0x35,(byte)0x93,(byte)0xcd,(byte)0xce,(byte)0x37,(byte)0x3f,(byte)0x21,(byte)0x07,(byte)0x7c,(byte)0xaf,(byte)0x56,(byte)0x76,(byte)0x06,(byte)0xf5,(byte)0x5a,(byte)0xc9,(byte)0xa8,(byte)0x77,(byte)0x7f,(byte)0x1d,(byte)0xce,(byte)0xd0,(byte)0xec,(byte)0x3c};
+			assertArrayEquals("Block 3510003 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 3510004 contains 7 transactions", 7, eTransactions.size());
+			assertEquals("Block 3510004 contains 0 uncleHeaders",0, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0xe5,(byte)0x5e,(byte)0x35,(byte)0x21,(byte)0x50,(byte)0xbd,(byte)0x91,(byte)0xaa,(byte)0xe9,(byte)0x66,(byte)0xdc,(byte)0x5c,(byte)0xb6,(byte)0x16,(byte)0x33,(byte)0x6a,(byte)0xb1,(byte)0x33,(byte)0x05,(byte)0xfb,(byte)0xc5,(byte)0x2d,(byte)0xb6,(byte)0x3b,(byte)0xa4,(byte)0xf6,(byte)0x4f,(byte)0x63,(byte)0xd8,(byte)0x75,(byte)0x88,(byte)0xbd};
+			assertArrayEquals("Block 3510004 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 3510005 contains 47 transactions", 47, eTransactions.size());
+			assertEquals("Block 3510005 contains 0 uncleHeaders",0, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0x4c,(byte)0x75,(byte)0xc3,(byte)0x33,(byte)0xef,(byte)0xd5,(byte)0x9b,(byte)0x16,(byte)0x76,(byte)0xeb,(byte)0x8b,(byte)0x17,(byte)0xd3,(byte)0xc0,(byte)0x6f,(byte)0xf1,(byte)0x13,(byte)0xed,(byte)0xce,(byte)0xe5,(byte)0x7d,(byte)0xfb,(byte)0x1a,(byte)0x10,(byte)0xf1,(byte)0xff,(byte)0xba,(byte)0x6e,(byte)0x65,(byte)0xb1,(byte)0x1b,(byte)0x0d};
+			assertArrayEquals("Block 3510005 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 3510006 contains 44 transactions", 44, eTransactions.size());
+			assertEquals("Block 3510006 contains 0 uncleHeaders",0, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0x58,(byte)0xf1,(byte)0x8f,(byte)0x87,(byte)0xc9,(byte)0xe3,(byte)0xfc,(byte)0xc4,(byte)0x8b,(byte)0x65,(byte)0xd9,(byte)0x33,(byte)0xc2,(byte)0x1e,(byte)0xf9,(byte)0x25,(byte)0x16,(byte)0x14,(byte)0x7f,(byte)0xb0,(byte)0xed,(byte)0x4f,(byte)0x6b,(byte)0x2b,(byte)0x91,(byte)0x50,(byte)0x7b,(byte)0x29,(byte)0xc4,(byte)0xfe,(byte)0x45,(byte)0x60};
+			assertArrayEquals("Block 3510006 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 3510007 contains 0 transactions", 0, eTransactions.size());
+			assertEquals("Block 3510007 contains 0 uncleHeaders",0, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0x75,(byte)0x04,(byte)0xc7,(byte)0xc8,(byte)0x42,(byte)0xdc,(byte)0x25,(byte)0xcc,(byte)0x5d,(byte)0x5e,(byte)0x6d,(byte)0x7c,(byte)0x29,(byte)0xb0,(byte)0x6c,(byte)0xb7,(byte)0x0f,(byte)0x1c,(byte)0xcd,(byte)0x0f,(byte)0x65,(byte)0xb2,(byte)0x67,(byte)0x47,(byte)0xef,(byte)0x7e,(byte)0xcb,(byte)0xa5,(byte)0x2e,(byte)0x8c,(byte)0x4c,(byte)0x24};
+			assertArrayEquals("Block 7 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 3510008 contains 7 transactions", 7, eTransactions.size());
+			assertEquals("Block 3510008 contains 0 uncleHeaders",0, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0x13,(byte)0xb4,(byte)0xa2,(byte)0xc5,(byte)0xce,(byte)0xf4,(byte)0x80,(byte)0xed,(byte)0xd4,(byte)0x82,(byte)0x8a,(byte)0x6a,(byte)0xb1,(byte)0x46,(byte)0xd2,(byte)0x0b,(byte)0x20,(byte)0x41,(byte)0x0d,(byte)0xda,(byte)0xa4,(byte)0x91,(byte)0xb7,(byte)0xc5,(byte)0x54,(byte)0x34,(byte)0xd0,(byte)0x16,(byte)0x5a,(byte)0x49,(byte)0xa3,(byte)0xe6};
+			assertArrayEquals("Block 3510008 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 3510009 contains 6 transactions", 6, eTransactions.size());
+			assertEquals("Block 3510009 contains 0 uncleHeaders",0, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0x72,(byte)0x89,(byte)0x48,(byte)0x45,(byte)0x1d,(byte)0x1c,(byte)0xaf,(byte)0xae,(byte)0xad,(byte)0x86,(byte)0xe6,(byte)0x9e,(byte)0x8e,(byte)0x50,(byte)0x21,(byte)0xbf,(byte)0x85,(byte)0xf3,(byte)0x8b,(byte)0x19,(byte)0xe7,(byte)0x0c,(byte)0x73,(byte)0xa2,(byte)0x8f,(byte)0xc7,(byte)0x27,(byte)0x4a,(byte)0x89,(byte)0xa3,(byte)0xbd,(byte)0xba};
+			assertArrayEquals("Block 3510009 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+			assertEquals("Block 3510010 contains 4 transactions", 4, eTransactions.size());
+			assertEquals("Block 3510010 contains 0 uncleHeaders",0, eUncles.size());
+			expectedParentHash = new byte[]  {(byte)0xc5,(byte)0x75,(byte)0xa6,(byte)0x40,(byte)0x4f,(byte)0x86,(byte)0xa4,(byte)0xb6,(byte)0x38,(byte)0x32,(byte)0x79,(byte)0x23,(byte)0x26,(byte)0xc5,(byte)0xb0,(byte)0xf6,(byte)0xf2,(byte)0x5e,(byte)0xa9,(byte)0xd8,(byte)0x83,(byte)0x42,(byte)0xf9,(byte)0xf6,(byte)0xf1,(byte)0xe7,(byte)0xed,(byte)0x21,(byte)0xc8,(byte)0x58,(byte)0x02,(byte)0x38};
+			assertArrayEquals("Block 3510010 contains a correct 32 byte parent hash", expectedParentHash, eblockHeader.getParentHash());
+
+			} finally {
+			if (ebr!=null) {
+				ebr.close();
+			}
+		}
+	  }
 
 }
