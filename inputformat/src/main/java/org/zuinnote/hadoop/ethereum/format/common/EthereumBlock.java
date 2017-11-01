@@ -31,7 +31,7 @@ private List<EthereumBlockHeader> uncleHeaders;
 
 
 
-private EthereumBlock() {
+public EthereumBlock() {
 	
 }
 
