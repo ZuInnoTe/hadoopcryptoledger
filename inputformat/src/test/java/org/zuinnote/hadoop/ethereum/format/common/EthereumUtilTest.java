@@ -18,18 +18,28 @@ package org.zuinnote.hadoop.ethereum.format.common;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.List;
 
 import org.junit.Test;
 import org.zuinnote.hadoop.ethereum.format.common.EthereumUtil;
 import org.zuinnote.hadoop.ethereum.format.common.rlp.RLPElement;
 import org.zuinnote.hadoop.ethereum.format.common.rlp.RLPList;
 import org.zuinnote.hadoop.ethereum.format.common.rlp.RLPObject;
+import org.zuinnote.hadoop.ethereum.format.exception.EthereumBlockReadException;
 
 public class EthereumUtilTest {
-	
+	static final int DEFAULT_BUFFERSIZE=64*1024;
+	static final int DEFAULT_MAXSIZE_ETHEREUMBLOCK=1 * 1024 * 1024;
 	
 	public final static byte[] TEST_RLP_ELEMENT_STRING = new byte[] {(byte) 0x83,'d','o','g'};
 	public final static byte[] TEST_RLP_LIST_STRING = new byte[] {(byte) 0xc8,(byte) 0x83,'c','a','t',(byte) 0x83,'d','o','g'};
@@ -41,7 +51,17 @@ public class EthereumUtilTest {
 	public final static byte[] TEST_RLP_ELEMENT_LARGESTRING = new byte[] {(byte) 0xb8,0x4E, 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
 	public final static byte[] TEST_RLP_LIST_LARGELIST = new byte[] {(byte) 0xf8,0x50,(byte) 0xb8,0x4E, 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
 
-	
+	 @Test
+	  public void checkTestDataBlock1346406Available() {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="eth1346406.bin";
+		String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
+		assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+		File file = new File(fileNameGenesis);
+		assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
+		assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	  }
+	 
    @Test
    public void decodeRLPElementString() {
 	   ByteBuffer wrapper = ByteBuffer.wrap(EthereumUtilTest.TEST_RLP_ELEMENT_STRING);
@@ -134,6 +154,44 @@ public class EthereumUtilTest {
 	   assertArrayEquals("List first object indicator is correct", new byte[] {(byte) 0xb8,(byte)0x4E}, element.getIndicator());
 	   byte[] expectedRawData = new byte[]{'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
 	   assertArrayEquals("List first object raw data is correct", expectedRawData,element.getRawData());
+   }
+   
+   @Test
+   public void getTransActionHashBlock1346406Transaction0() throws IOException, EthereumBlockReadException {
+	   ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="eth1346406.bin";
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		File file = new File(fileNameBlock);
+		boolean direct=false;
+		FileInputStream fin = new FileInputStream(file);
+		EthereumBlockReader ebr = null;
+		try {
+			ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUMBLOCK, this.DEFAULT_BUFFERSIZE,direct);
+			EthereumBlock eblock = ebr.readBlock();
+			List<EthereumTransaction> eTrans = eblock.getEthereumTransactions();
+			EthereumTransaction trans0 = eTrans.get(0);
+			byte[] expectedHash = new byte[] {(byte)0xe2,(byte)0x7e,(byte)0x92,(byte)0x88,(byte)0xe2,(byte)0x9c,(byte)0xc8,(byte)0xeb,(byte)0x78,(byte)0xf9,(byte)0xf7,(byte)0x68,(byte)0xd8,(byte)0x9b,(byte)0xf1,(byte)0xcd,(byte)0x4b,(byte)0x68,(byte)0xb7,(byte)0x15,(byte)0xa3,(byte)0x8b,(byte)0x95,(byte)0xd4,(byte)0x6d,(byte)0x77,(byte)0x86,(byte)0x18,(byte)0xcb,(byte)0x10,(byte)0x4d,(byte)0x58};
+			assertArrayEquals("Block 1346406 Transaction 1 hash is correctly calculated",expectedHash,EthereumUtil.getTransactionHash(trans0));
+			EthereumTransaction trans1 = eTrans.get(1);
+			expectedHash = new byte[] {(byte)0x7a,(byte)0x23,(byte)0x2a,(byte)0xa2,(byte)0xae,(byte)0x6a,(byte)0x5e,(byte)0x1f,(byte)0x32,(byte)0xca,(byte)0x3a,(byte)0xc9,(byte)0x3f,(byte)0x4f,(byte)0xdb,(byte)0x77,(byte)0x98,(byte)0x3e,(byte)0x93,(byte)0x2b,(byte)0x38,(byte)0x09,(byte)0x93,(byte)0x56,(byte)0x44,(byte)0x42,(byte)0x08,(byte)0xc6,(byte)0x9d,(byte)0x40,(byte)0x86,(byte)0x81};
+			assertArrayEquals("Block 1346406 Transaction 2 hash is correctly calculated",expectedHash,EthereumUtil.getTransactionHash(trans1));
+			EthereumTransaction trans2 = eTrans.get(2);
+			expectedHash = new byte[] {(byte)0x14,(byte)0x33,(byte)0xe3,(byte)0xcb,(byte)0x66,(byte)0x2f,(byte)0x66,(byte)0x8d,(byte)0x87,(byte)0xb8,(byte)0x35,(byte)0x55,(byte)0x34,(byte)0x5a,(byte)0x20,(byte)0xcc,(byte)0xf8,(byte)0x70,(byte)0x6f,(byte)0x25,(byte)0x21,(byte)0x49,(byte)0x18,(byte)0xe2,(byte)0xf8,(byte)0x1f,(byte)0xe3,(byte)0xd2,(byte)0x1c,(byte)0x9d,(byte)0x5b,(byte)0x23};
+			assertArrayEquals("Block 1346406 Transaction 3 hash is correctly calculated",expectedHash,EthereumUtil.getTransactionHash(trans2));
+			EthereumTransaction trans3 = eTrans.get(3);
+			expectedHash = new byte[] {(byte)0x39,(byte)0x22,(byte)0xf7,(byte)0xf6,(byte)0x0a,(byte)0x33,(byte)0xa1,(byte)0x2d,(byte)0x13,(byte)0x9d,(byte)0x67,(byte)0xfa,(byte)0x53,(byte)0x30,(byte)0xdb,(byte)0xfd,(byte)0xba,(byte)0x42,(byte)0xa4,(byte)0xb7,(byte)0x67,(byte)0x29,(byte)0x6e,(byte)0xff,(byte)0x64,(byte)0x15,(byte)0xee,(byte)0xa3,(byte)0x2d,(byte)0x8a,(byte)0x7b,(byte)0x2b};
+			assertArrayEquals("Block 1346406 Transaction 4 hash is correctly calculated",expectedHash,EthereumUtil.getTransactionHash(trans3));
+			EthereumTransaction trans4 = eTrans.get(4);
+			expectedHash = new byte[] {(byte)0xbb,(byte)0x7c,(byte)0xaa,(byte)0x23,(byte)0x38,(byte)0x5a,(byte)0x0f,(byte)0x73,(byte)0x75,(byte)0x3f,(byte)0x9e,(byte)0x28,(byte)0xd8,(byte)0xf0,(byte)0x60,(byte)0x2f,(byte)0xe2,(byte)0xe7,(byte)0x2d,(byte)0x87,(byte)0xe1,(byte)0xe0,(byte)0x95,(byte)0x52,(byte)0x75,(byte)0x28,(byte)0xd1,(byte)0x44,(byte)0x88,(byte)0x5d,(byte)0x6b,(byte)0x51};
+			assertArrayEquals("Block 1346406 Transaction 5 hash is correctly calculated",expectedHash,EthereumUtil.getTransactionHash(trans4));
+			EthereumTransaction trans5 = eTrans.get(5);
+			expectedHash = new byte[] {(byte)0xbc,(byte)0xde,(byte)0x6f,(byte)0x49,(byte)0x84,(byte)0x2c,(byte)0x6d,(byte)0x73,(byte)0x8d,(byte)0x64,(byte)0x32,(byte)0x8f,(byte)0x78,(byte)0x09,(byte)0xb1,(byte)0xd4,(byte)0x9b,(byte)0xf0,(byte)0xff,(byte)0x3f,(byte)0xfa,(byte)0x46,(byte)0x0f,(byte)0xdd,(byte)0xd2,(byte)0x7f,(byte)0xd4,(byte)0x2b,(byte)0x7a,(byte)0x01,(byte)0xfc,(byte)0x9a};
+			assertArrayEquals("Block 1346406 Transaction 6 hash is correctly calculated",expectedHash,EthereumUtil.getTransactionHash(trans5));
+		} finally {
+			if (ebr!=null) {
+				ebr.close();
+			}
+		}
    }
 	
 }

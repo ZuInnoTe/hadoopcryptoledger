@@ -17,13 +17,17 @@ package org.zuinnote.hadoop.ethereum.format.common;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.xml.bind.DatatypeConverter;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.bouncycastle.crypto.digests.SHA3Digest;
+import org.bouncycastle.jcajce.provider.digest.Keccak;
 import org.zuinnote.hadoop.ethereum.format.common.rlp.RLPElement;
 import org.zuinnote.hadoop.ethereum.format.common.rlp.RLPList;
 import org.zuinnote.hadoop.ethereum.format.common.rlp.RLPObject;
@@ -38,6 +42,7 @@ public class EthereumUtil {
 	public static final int RLP_OBJECTTYPE_LIST = 1;
 	public static final int CHAIN_ID_INC = 35; // EIP-255, chainId encoded in V
 	public static final int LOWER_REAL_V = 27; // EIP-255, chainId encoded in V
+	public static final int HASH_SIZE = 256;
 
 	private static final Log LOG = LogFactory.getLog(EthereumUtil.class.getName());
 	/** RLP functionality for Ethereum: https://github.com/ethereum/wiki/wiki/RLP **/
@@ -156,6 +161,89 @@ private static RLPElement decodeRLPElement(ByteBuffer bb) {
 	return result;
 }
 
+private static byte[] encodeRLPElement(byte[] rawData) {
+	byte[] result=null;
+	if ((rawData==null) || (rawData.length==0)) {
+		return new byte[] {(byte) 0x80};
+	} else
+	if (rawData.length<=55) {
+			if ((rawData.length==1) && (rawData[0]<=(byte)0x7F)) {
+				return new byte[] {rawData[0]};
+			}
+			 result=new byte[rawData.length+1];
+			result[0]=(byte) (0x80+rawData.length);
+			for (int i=0;i<rawData.length;i++) {
+				result[i+1]=rawData[i];
+			}
+	} else {
+		ByteBuffer bb = ByteBuffer.allocate(4);
+		bb.order(ByteOrder.LITTLE_ENDIAN);
+		bb.putInt(rawData.length);
+		byte[] intArray = bb.array();
+		int intSize=0;
+		for (int i=0;i<intArray.length;i++) {
+			if (intArray[i]==0) {
+				break;
+			} else {
+				intSize++;
+			}
+		}
+		 result = new byte[1+intSize+rawData.length];
+		result[0]=(byte) (0xb7+intSize);
+		for (int i=0;i<intSize;i++) {
+			result[i+1]=intArray[i];
+		}
+		for (int i=0;i<rawData.length;i++) {
+			result[1+intSize+i]=rawData[i];
+		}
+	}
+	return result;
+}
+
+private static byte[] encodeRLPList(List<byte[]> rawElementList) {
+	byte[] result;
+	int totalSize=0;
+	if ((rawElementList==null) || (rawElementList.size()==0)) {
+		return new byte[] {(byte) 0xc0};
+	}
+	for (int i=0;i<rawElementList.size();i++) {
+		totalSize+=rawElementList.get(i).length;
+	}
+	int currentPosition=0;
+	if (totalSize<=55) {
+		result = new byte[1+totalSize];
+		result[0]=(byte) (0xc0+totalSize);
+		currentPosition=1;
+	} else {
+		ByteBuffer bb = ByteBuffer.allocate(4);
+		bb.order(ByteOrder.LITTLE_ENDIAN);
+		bb.putInt(totalSize);
+		byte[] intArray = bb.array();
+		int intSize=0;
+		for (int i=0;i<intArray.length;i++) {
+			if (intArray[i]==0x00) {
+				break;
+			} else {
+				intSize++;
+			}
+		}
+		 result = new byte[1+intSize+totalSize];
+		 result[0]=(byte) (0xf7+intSize & 0xFF);
+		 for (int i=0;i<intSize;i++) {
+			 result[i+1]=intArray[i];
+		 }
+		 currentPosition=1+intSize;
+	}
+	// copy list items
+	for (int i=0;i<rawElementList.size();i++) {
+		byte[] currentElement=rawElementList.get(i);
+		for (int j=0;j<currentElement.length;j++) {
+			result[currentPosition]=currentElement[j];
+			currentPosition++;
+		}
+	}
+	return result;
+}
 
 /**
  * Determines the size of a RLP list. Note: it does not change the position in the ByteBuffer
@@ -281,16 +369,28 @@ public static Long calculateChainId(EthereumTransaction eTrans) {
 	return result;
 }
 
-/**
- * Calculate the address to which Ether has been sent
+
+/***
+ * Calculates the hash of a transaction
  * 
- * @param eTrans Ethereum Transaction
- * @return byte array containing the send address
+ * @param eTrans transaction
+ * @return transaction hash as KECCAK-256
  */
-public static byte[] calculateSendAddress(EthereumTransaction eTrans) {
-	// calculate v
-	// generate signature
-	return null;
+public static byte[] getTransactionHash(EthereumTransaction eTrans) {
+	ArrayList<byte[]> rlpTransaction = new ArrayList<>();
+	rlpTransaction.add(EthereumUtil.encodeRLPElement(eTrans.getNonce()));
+	rlpTransaction.add(EthereumUtil.encodeRLPElement(eTrans.getGasPrice()));
+	rlpTransaction.add(EthereumUtil.encodeRLPElement(eTrans.getGasLimit()));
+	rlpTransaction.add(EthereumUtil.encodeRLPElement(eTrans.getReceiveAddress()));
+	rlpTransaction.add(EthereumUtil.encodeRLPElement(eTrans.getValue()));
+	rlpTransaction.add(EthereumUtil.encodeRLPElement(eTrans.getData()));
+	rlpTransaction.add(EthereumUtil.encodeRLPElement(eTrans.getSig_v()));
+	rlpTransaction.add(EthereumUtil.encodeRLPElement(eTrans.getSig_r()));
+	rlpTransaction.add(EthereumUtil.encodeRLPElement(eTrans.getSig_s()));
+	byte[] transEnc = EthereumUtil.encodeRLPList(rlpTransaction);
+	Keccak.Digest256 digest = new Keccak.Digest256();
+	digest.update(transEnc,0,transEnc.length);
+	return digest.digest();
 }
 
 /** Data types conversions for Ethereum **/
@@ -474,6 +574,23 @@ public static byte[] convertHexStringToByteArray(String hexString) {
 */
 public static String convertByteArrayToHexString(byte[] byteArray) {
     return DatatypeConverter.printHexBinary(byteArray);
+}
+
+
+/**
+* Reverses the order of the byte array
+*
+* @param inputByteArray array to be reversed
+*
+* @return inputByteArray in reversed order
+*
+**/
+public static byte[] reverseByteArray(byte[] inputByteArray) {
+	byte[] result=new byte[inputByteArray.length];
+	for (int i=inputByteArray.length-1;i>=0;i--) {
+		result[result.length-1-i]=inputByteArray[i];
+	}
+	return result;
 }
 
 

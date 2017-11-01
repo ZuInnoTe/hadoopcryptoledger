@@ -108,6 +108,8 @@ publishing {
 dependencies {
     // uml doclet for using planuml in javadoc
     umlDoclet "nl.talsmasoftware:umldoclet:1.0.8"
+    // bouncycastle libraries - only for Ethereum utility functions needed
+    compile("org.bouncycastle:bcprov-ext-jdk15on:1.58")
     // hadoop libraries
    provided("org.apache.hadoop:hadoop-common:2.7.0")
    provided("org.apache.hadoop:hadoop-mapreduce-client-common:2.7.0")
