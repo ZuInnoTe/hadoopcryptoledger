@@ -26,7 +26,6 @@ import javax.xml.bind.DatatypeConverter;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.bouncycastle.crypto.digests.SHA3Digest;
 import org.bouncycastle.jcajce.provider.digest.Keccak;
 import org.zuinnote.hadoop.ethereum.format.common.rlp.RLPElement;
 import org.zuinnote.hadoop.ethereum.format.common.rlp.RLPList;

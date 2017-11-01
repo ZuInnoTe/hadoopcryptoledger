@@ -91,7 +91,7 @@ public class EthereumBlockReader {
 		}
 		RLPObject blockObject =  EthereumUtil.rlpDecodeNextItem(rawBlock);
 		if ((blockObject==null) || (!(blockObject instanceof RLPList))){
-			throw new EthereumBlockReadException("Invalid Ethereum Block: Not encoded RLOPList");
+			throw new EthereumBlockReadException("Invalid Ethereum Block: Not encoded RLPList");
 		}
 		RLPList block = (RLPList)blockObject;
 		// block header
@@ -190,7 +190,14 @@ public class EthereumBlockReader {
 		// get size of list
 		this.in.mark(10);
 		byte[] listHeader = new byte[10];
-		this.in.read(listHeader);
+		int bRead=this.in.read(listHeader);
+		if (bRead==-1) {
+			// no further block to read
+			return result;
+		} else
+		if (bRead!=10) {
+			throw new EthereumBlockReadException("Error: Not enough block data available: "+String.valueOf(bRead));
+		}
 		ByteBuffer sizeByteBuffer=ByteBuffer.wrap(listHeader);
 		long blockSize = EthereumUtil.getRLPListSize(sizeByteBuffer); // gets block size including indicator
 		this.in.reset();
