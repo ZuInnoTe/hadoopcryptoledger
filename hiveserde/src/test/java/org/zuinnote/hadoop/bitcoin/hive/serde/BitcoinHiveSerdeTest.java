@@ -36,12 +36,13 @@ import org.apache.hadoop.conf.Configuration;
 import org.zuinnote.hadoop.bitcoin.format.common.BitcoinBlock;
 import org.zuinnote.hadoop.bitcoin.format.common.BitcoinBlockReader;
 import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
+import org.zuinnote.hadoop.bitcoin.format.mapred.AbstractBitcoinRecordReader;
 
 
 
 public class BitcoinHiveSerdeTest {
-private static final int DEFAULT_BUFFERSIZE=64*1024;
-private static final int DEFAULT_MAXSIZE_BITCOINBLOCK=1 * 1024 * 1024;
+private static final int DEFAULT_BUFFERSIZE=AbstractBitcoinRecordReader.DEFAULT_BUFFERSIZE;
+private static final int DEFAULT_MAXSIZE_BITCOINBLOCK=AbstractBitcoinRecordReader.DEFAULT_MAXSIZE_BITCOINBLOCK;
 private static final byte[][] DEFAULT_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB4,(byte)0xD9}};
 
 @Test

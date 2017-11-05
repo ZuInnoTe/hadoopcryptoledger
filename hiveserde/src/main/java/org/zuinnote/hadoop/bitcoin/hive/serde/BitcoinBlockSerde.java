@@ -92,7 +92,7 @@ public Class<? extends Writable> getSerializedClass() {
 
 @Override
 public void initialize(Configuration conf, Properties tbl) {
-	LOG.debug("Initializing BitcoinBlockSerde");
+	LOG.debug("Initializing");
    // get objectinspector with introspection for class BitcoinBlockStruct to reuse functionality
     bitcoinBlockObjectInspector = ObjectInspectorFactory
         .getReflectionObjectInspector(BitcoinBlock.class,
@@ -123,7 +123,7 @@ public void initialize(Configuration conf, Properties tbl) {
 		conf.setBoolean(BitcoinBlockSerde.CONF_READAUXPOW, Boolean.parseBoolean(readAuxPOWStr));
 		LOG.info("Enable read aux pow: "+readAuxPOWStr);
 	}
-	LOG.debug("Finish initializion BitcoinBlockSerde");
+	LOG.debug("Finish initializion");
  
 }
 
