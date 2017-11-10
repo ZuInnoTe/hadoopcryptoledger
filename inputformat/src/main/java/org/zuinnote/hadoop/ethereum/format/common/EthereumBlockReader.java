@@ -125,7 +125,7 @@ public class EthereumBlockReader {
 		result.setLogsBloom(((RLPElement) rlpHeader.getRlpList().get(6)).getRawData());
 		result.setDifficulty(((RLPElement) rlpHeader.getRlpList().get(7)).getRawData());
 		result.setNumber(EthereumUtil.convertVarNumberToLong(((RLPElement) rlpHeader.getRlpList().get(8))));
-		result.setGasLimit(((RLPElement) rlpHeader.getRlpList().get(9)).getRawData());
+		result.setGasLimit(EthereumUtil.convertVarNumberToLong(((RLPElement) rlpHeader.getRlpList().get(9))));
 		result.setGasUsed(EthereumUtil.convertVarNumberToLong(((RLPElement) rlpHeader.getRlpList().get(10))));
 		result.setTimestamp(EthereumUtil.convertVarNumberToLong(((RLPElement) rlpHeader.getRlpList().get(11))));
 		result.setExtraData(((RLPElement) rlpHeader.getRlpList().get(12)).getRawData());
@@ -148,10 +148,10 @@ public class EthereumBlockReader {
 		
 			EthereumTransaction currentTransaction = new EthereumTransaction();
 			currentTransaction.setNonce(((RLPElement)currenTransactionRLP.getRlpList().get(0)).getRawData());
-			currentTransaction.setGasPrice(((RLPElement)currenTransactionRLP.getRlpList().get(1)).getRawData());
-			currentTransaction.setGasLimit(((RLPElement)currenTransactionRLP.getRlpList().get(2)).getRawData());
+			currentTransaction.setGasPrice(EthereumUtil.convertVarNumberToLong(((RLPElement)currenTransactionRLP.getRlpList().get(1))));
+			currentTransaction.setGasLimit(EthereumUtil.convertVarNumberToLong((RLPElement)currenTransactionRLP.getRlpList().get(2)));
 			currentTransaction.setReceiveAddress(((RLPElement)currenTransactionRLP.getRlpList().get(3)).getRawData());
-			currentTransaction.setValue(((RLPElement)currenTransactionRLP.getRlpList().get(4)).getRawData());
+			currentTransaction.setValue(EthereumUtil.convertVarNumberToLong(((RLPElement)currenTransactionRLP.getRlpList().get(4))));
 
 			currentTransaction.setData(((RLPElement)currenTransactionRLP.getRlpList().get(5)).getRawData());
 			if (((RLPElement)currenTransactionRLP.getRlpList().get(6)).getRawData().length>0) {

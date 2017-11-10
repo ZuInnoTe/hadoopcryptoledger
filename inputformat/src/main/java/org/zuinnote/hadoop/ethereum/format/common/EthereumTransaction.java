@@ -28,10 +28,10 @@ import org.apache.hadoop.io.Writable;
 public class EthereumTransaction implements Writable {
 
 private byte[] nonce;
-private byte[] value;
+private long value;
 private byte[] receiveAddress;
-private byte[] gasPrice;
-private byte[] gasLimit;
+private long gasPrice;
+private long gasLimit;
 
 private byte[] data;
 private byte[] sig_v;
@@ -60,11 +60,11 @@ public void setNonce(byte[] nonce) {
 	this.nonce = nonce;
 }
 
-public byte[] getValue() {
+public long getValue() {
 	return value;
 }
 
-public void setValue(byte[] value) {
+public void setValue(long value) {
 	this.value = value;
 }
 
@@ -77,19 +77,19 @@ public void setReceiveAddress(byte[] receiveAddress) {
 }
 
 
-public byte[] getGasPrice() {
+public long getGasPrice() {
 	return gasPrice;
 }
 
-public void setGasPrice(byte[] gasPrice) {
+public void setGasPrice(long gasPrice) {
 	this.gasPrice = gasPrice;
 }
 
-public byte[] getGasLimit() {
+public long getGasLimit() {
 	return gasLimit;
 }
 
-public void setGasLimit(byte[] gasLimit) {
+public void setGasLimit(long gasLimit) {
 	this.gasLimit = gasLimit;
 }
 

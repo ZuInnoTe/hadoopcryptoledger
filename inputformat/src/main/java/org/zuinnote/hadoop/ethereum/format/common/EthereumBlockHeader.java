@@ -36,7 +36,7 @@ public class EthereumBlockHeader implements Serializable {
 	private byte[] difficulty;
 	private long timestamp;
 	private long number;
-	private byte[] gasLimit;
+	private long gasLimit;
 	private long gasUsed;
 	private byte[] mixHash;
 	private byte[] extraData;
@@ -170,13 +170,13 @@ public class EthereumBlockHeader implements Serializable {
 
 
 
-	public byte[] getGasLimit() {
+	public long getGasLimit() {
 		return gasLimit;
 	}
 
 
 
-	public void setGasLimit(byte[] gasLimit) {
+	public void setGasLimit(long gasLimit) {
 		this.gasLimit = gasLimit;
 	}
 

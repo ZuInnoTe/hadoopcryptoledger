@@ -42,7 +42,9 @@ public class EthereumUtil {
 	public static final int CHAIN_ID_INC = 35; // EIP-255, chainId encoded in V
 	public static final int LOWER_REAL_V = 27; // EIP-255, chainId encoded in V
 	public static final int HASH_SIZE = 256;
-
+	public static final int LONG_SIZE=8; // Size of a long in Ethereum
+	public static final int INT_SIZE=4; // Size of an integer in Ethereum
+	public static final int WORD_SIZE=2; // Size of a word in Ethereum
 	private static final Log LOG = LogFactory.getLog(EthereumUtil.class.getName());
 	/** RLP functionality for Ethereum: https://github.com/ethereum/wiki/wiki/RLP **/
 
@@ -378,10 +380,10 @@ public static Long calculateChainId(EthereumTransaction eTrans) {
 public static byte[] getTransactionHash(EthereumTransaction eTrans) {
 	ArrayList<byte[]> rlpTransaction = new ArrayList<>();
 	rlpTransaction.add(EthereumUtil.encodeRLPElement(eTrans.getNonce()));
-	rlpTransaction.add(EthereumUtil.encodeRLPElement(eTrans.getGasPrice()));
-	rlpTransaction.add(EthereumUtil.encodeRLPElement(eTrans.getGasLimit()));
+	rlpTransaction.add(EthereumUtil.encodeRLPElement(EthereumUtil.convertLongToVarInt(eTrans.getGasPrice())));
+	rlpTransaction.add(EthereumUtil.encodeRLPElement(EthereumUtil.convertLongToVarInt(eTrans.getGasLimit())));
 	rlpTransaction.add(EthereumUtil.encodeRLPElement(eTrans.getReceiveAddress()));
-	rlpTransaction.add(EthereumUtil.encodeRLPElement(eTrans.getValue()));
+	rlpTransaction.add(EthereumUtil.encodeRLPElement(EthereumUtil.convertLongToVarInt(eTrans.getValue())));
 	rlpTransaction.add(EthereumUtil.encodeRLPElement(eTrans.getData()));
 	rlpTransaction.add(EthereumUtil.encodeRLPElement(eTrans.getSig_v()));
 	rlpTransaction.add(EthereumUtil.encodeRLPElement(eTrans.getSig_r()));
@@ -444,12 +446,12 @@ public static Byte convertToByte(RLPElement rpe) {
 public static Short convertToShort(RLPElement rpe) {
 	Short result=0;
 	byte[] rawBytes=rpe.getRawData();
-	int dtSize=2;
+
 	if ((rawBytes!=null)) {
 			// fill leading zeros
-			if (rawBytes.length<dtSize) {
-				byte[] fullBytes=new byte[dtSize];
-				int dtDiff=dtSize-rawBytes.length;
+			if (rawBytes.length<EthereumUtil.WORD_SIZE) {
+				byte[] fullBytes=new byte[EthereumUtil.WORD_SIZE];
+				int dtDiff=EthereumUtil.WORD_SIZE-rawBytes.length;
 				for (int i=0;i<rawBytes.length;i++) {
 					fullBytes[dtDiff+i]=rawBytes[i];
 					result=ByteBuffer.wrap(fullBytes).getShort();
@@ -471,12 +473,11 @@ public static Short convertToShort(RLPElement rpe) {
 public static Integer convertToInt(RLPElement rpe) {
 	Integer result=0;
 	byte[] rawBytes=rpe.getRawData();
-	int dtSize=4;
 	if ((rawBytes!=null)) {
 			// fill leading zeros
-			if (rawBytes.length<dtSize) {
-				byte[] fullBytes=new byte[dtSize];
-				int dtDiff=dtSize-rawBytes.length;
+			if (rawBytes.length<EthereumUtil.INT_SIZE) {
+				byte[] fullBytes=new byte[EthereumUtil.INT_SIZE];
+				int dtDiff=EthereumUtil.INT_SIZE-rawBytes.length;
 				for (int i=0;i<rawBytes.length;i++) {
 					fullBytes[dtDiff+i]=rawBytes[i];
 					result=ByteBuffer.wrap(fullBytes).getInt();
@@ -498,12 +499,11 @@ public static Integer convertToInt(RLPElement rpe) {
 public static Long convertToLong(RLPElement rpe) {
 	Long result=0L;
 	byte[] rawBytes=rpe.getRawData();
-	int dtSize=8;
 	if ((rawBytes!=null)) {
 			// fill leading zeros
-			if (rawBytes.length<dtSize) {
-				byte[] fullBytes=new byte[dtSize];
-				int dtDiff=dtSize-rawBytes.length;
+			if (rawBytes.length<EthereumUtil.LONG_SIZE) {
+				byte[] fullBytes=new byte[EthereumUtil.LONG_SIZE];
+				int dtDiff=EthereumUtil.LONG_SIZE-rawBytes.length;
 				for (int i=0;i<rawBytes.length;i++) {
 					fullBytes[dtDiff+i]=rawBytes[i];
 					result=ByteBuffer.wrap(fullBytes).getLong();
@@ -515,6 +515,28 @@ public static Long convertToLong(RLPElement rpe) {
 	return result;
 }
 
+/***
+ * Converts long to variable number without leading zeros
+ * 
+ * @param value
+ * @return byte array containing variable number (without leading zeros)
+ */
+public static byte[] convertLongToVarInt(long value) {
+	// to make it threadsafe - could be optimized at a later stage
+	ByteBuffer longBB = ByteBuffer.allocate(EthereumUtil.LONG_SIZE);
+	
+	longBB.putLong(value);
+	byte[] result = longBB.array();
+	int leadingZeros=0;
+	for (int i=0;i<result.length;i++) {
+		if (result[i]==0) {
+			leadingZeros++;
+		} else {
+			break;
+		}
+	}
+	 return Arrays.copyOfRange(result, leadingZeros, result.length);
+}
 
 /***
  * Converts a UTF-8 String in a RLPElement to String
