@@ -18,7 +18,7 @@
 * This test "unit tests" the application with a local Spark master
 *
 */
-package org.zuinnote.spark.bitcoin.example
+package org.zuinnote.spark.ethereum.example
 
 import java.util.ArrayList
 
@@ -26,7 +26,7 @@ import java.util.ArrayList
 import org.scalatest.{FlatSpec, BeforeAndAfterAll, GivenWhenThen, Matchers}
 
 
-class SparkBitcoinBlockCounterSpec extends FlatSpec with BeforeAndAfterAll with GivenWhenThen with Matchers  {
+class SparkEthereumBlockCounterSpec extends FlatSpec with BeforeAndAfterAll with GivenWhenThen with Matchers  {
 
 
 override def beforeAll(): Unit = {
