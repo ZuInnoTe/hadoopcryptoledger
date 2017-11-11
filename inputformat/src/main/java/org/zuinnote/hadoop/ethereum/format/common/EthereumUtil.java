@@ -59,12 +59,7 @@ public class EthereumUtil {
 	private static final Log LOG = LogFactory.getLog(EthereumUtil.class.getName());
 
 
-	public static final ECDomainParameters CURVE;	 // needed for getSentAddress
-	static {
-	    X9ECParameters params = SECNamedCurves.getByName("secp256k1");
-	    CURVE = new ECDomainParameters(params.getCurve(), params.getG(), params.getN(), params.getH());
 
-	}
 
 /** RLP functionality for Ethereum: https://github.com/ethereum/wiki/wiki/RLP **/
 
@@ -443,6 +438,10 @@ public static byte[] getTransactionHashWithoutSignature(EthereumTransaction eTra
  * @return sent address as byte array
  */
 public static byte[] getSendAddress(EthereumTransaction eTrans) {
+	// init, maybe we move this out to save time
+	X9ECParameters params = SECNamedCurves.getByName("secp256k1");
+	ECDomainParameters CURVE=new ECDomainParameters(params.getCurve(), params.getG(), params.getN(), params.getH());	 // needed for getSentAddress
+
   // transaction hash without signature data
 	byte[] transactionHash = EthereumUtil.getTransactionHashWithoutSignature(eTrans);
   // signature to address

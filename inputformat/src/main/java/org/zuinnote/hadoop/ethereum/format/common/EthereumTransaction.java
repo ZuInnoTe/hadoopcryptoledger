@@ -110,6 +110,9 @@ public void set(EthereumTransaction newTransaction) {
 	this.gasPrice=newTransaction.getGasPrice();
 	this.gasLimit=newTransaction.getGasLimit();
 	this.data=newTransaction.getData();
+	this.sig_v=newTransaction.getSig_v();
+	this.sig_r=newTransaction.getSig_r();
+	this.sig_s=newTransaction.getSig_s();
 }
 
 public byte[] getSig_v() {
