@@ -383,7 +383,8 @@ private static RLPList decodeRLPList(ByteBuffer bb) {
  */
 public static Long calculateChainId(EthereumTransaction eTrans) {
 	Long result=null;
-		long rawResult=EthereumUtil.convertToInt(new RLPElement(new byte[0],eTrans.getSig_v()));
+		long rawResult=EthereumUtil.convertVarNumberToLong(new RLPElement(new byte[0],eTrans.getSig_v()));
+		LOG.debug(String.valueOf(rawResult));
 		if (!((rawResult == EthereumUtil.LOWER_REAL_V) || (rawResult== (LOWER_REAL_V+1)))) {
 			result = (rawResult-EthereumUtil.CHAIN_ID_INC)/2;
 	}
