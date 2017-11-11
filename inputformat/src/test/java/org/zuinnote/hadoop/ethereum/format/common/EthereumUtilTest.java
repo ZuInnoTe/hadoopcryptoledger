@@ -157,7 +157,7 @@ public class EthereumUtilTest {
    }
    
    @Test
-   public void getTransActionHashBlock1346406Transaction0() throws IOException, EthereumBlockReadException {
+   public void getTransActionHashBlock1346406() throws IOException, EthereumBlockReadException {
 	   ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="eth1346406.bin";
 		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
@@ -193,5 +193,44 @@ public class EthereumUtilTest {
 			}
 		}
    }
+   
+   @Test
+   public void getTransActionSendAddressBlock1346406() throws IOException, EthereumBlockReadException {
+     ClassLoader classLoader = getClass().getClassLoader();
+    String fileName="eth1346406.bin";
+    String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
+    File file = new File(fileNameBlock);
+    boolean direct=false;
+    FileInputStream fin = new FileInputStream(file);
+    EthereumBlockReader ebr = null;
+    try {
+      ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUMBLOCK, this.DEFAULT_BUFFERSIZE,direct);
+      EthereumBlock eblock = ebr.readBlock();
+      List<EthereumTransaction> eTrans = eblock.getEthereumTransactions();
+      EthereumTransaction trans0 = eTrans.get(0);
+      byte[] expectedSentAddress = new byte[] {(byte)0x39,(byte)0x42,(byte)0x4b,(byte)0xd2,(byte)0x8a,(byte)0x22,(byte)0x23,(byte)0xda,(byte)0x3e,(byte)0x14,(byte)0xbf,(byte)0x79,(byte)0x3c,(byte)0xf7,(byte)0xf8,(byte)0x20,(byte)0x8e,(byte)0xe9,(byte)0x98,(byte)0x0a};
+      assertArrayEquals("Block 1346406 Transaction 1 send address is correctly calculated",expectedSentAddress,EthereumUtil.getSendAddress(trans0));
+      EthereumTransaction trans1 = eTrans.get(1);
+      expectedSentAddress = new byte[] {(byte)0x4b,(byte)0xb9,(byte)0x60,(byte)0x91,(byte)0xee,(byte)0x9d,(byte)0x80,(byte)0x2e,(byte)0xd0,(byte)0x39,(byte)0xc4,(byte)0xd1,(byte)0xa5,(byte)0xf6,(byte)0x21,(byte)0x6f,(byte)0x90,(byte)0xf8,(byte)0x1b,(byte)0x01};
+      assertArrayEquals("Block 1346406 Transaction 2 send address is correctly calculated",expectedSentAddress,EthereumUtil.getSendAddress(trans1));
+      EthereumTransaction trans2 = eTrans.get(2);
+      expectedSentAddress = new byte[] {(byte)0x63,(byte)0xa9,(byte)0x97,(byte)0x5b,(byte)0xa3,(byte)0x1b,(byte)0x0b,(byte)0x96,(byte)0x26,(byte)0xb3,(byte)0x43,(byte)0x00,(byte)0xf7,(byte)0xf6,(byte)0x27,(byte)0x14,(byte)0x7d,(byte)0xf1,(byte)0xf5,(byte)0x26};
+      assertArrayEquals("Block 1346406 Transaction 3 send address is correctly calculated",expectedSentAddress,EthereumUtil.getSendAddress(trans2));
+      EthereumTransaction trans3 = eTrans.get(3);
+      expectedSentAddress = new byte[] {(byte)0x63,(byte)0xa9,(byte)0x97,(byte)0x5b,(byte)0xa3,(byte)0x1b,(byte)0x0b,(byte)0x96,(byte)0x26,(byte)0xb3,(byte)0x43,(byte)0x00,(byte)0xf7,(byte)0xf6,(byte)0x27,(byte)0x14,(byte)0x7d,(byte)0xf1,(byte)0xf5,(byte)0x26};
+     assertArrayEquals("Block 1346406 Transaction 4 send address is correctly calculated",expectedSentAddress,EthereumUtil.getSendAddress(trans3));
+      EthereumTransaction trans4 = eTrans.get(4);
+      expectedSentAddress = new byte[] {(byte)0x63,(byte)0xa9,(byte)0x97,(byte)0x5b,(byte)0xa3,(byte)0x1b,(byte)0x0b,(byte)0x96,(byte)0x26,(byte)0xb3,(byte)0x43,(byte)0x00,(byte)0xf7,(byte)0xf6,(byte)0x27,(byte)0x14,(byte)0x7d,(byte)0xf1,(byte)0xf5,(byte)0x26};
+      assertArrayEquals("Block 1346406 Transaction 5 send address is correctly calculated",expectedSentAddress,EthereumUtil.getSendAddress(trans4));
+      EthereumTransaction trans5 = eTrans.get(5);
+      expectedSentAddress = new byte[] {(byte)0x63,(byte)0xa9,(byte)0x97,(byte)0x5b,(byte)0xa3,(byte)0x1b,(byte)0x0b,(byte)0x96,(byte)0x26,(byte)0xb3,(byte)0x43,(byte)0x00,(byte)0xf7,(byte)0xf6,(byte)0x27,(byte)0x14,(byte)0x7d,(byte)0xf1,(byte)0xf5,(byte)0x26};
+      assertArrayEquals("Block 1346406 Transaction 6 send address is correctly calculated",expectedSentAddress,EthereumUtil.getSendAddress(trans5));
+    } finally {
+      if (ebr!=null) {
+        ebr.close();
+      }
+    }
+   }
+   
 	
 }

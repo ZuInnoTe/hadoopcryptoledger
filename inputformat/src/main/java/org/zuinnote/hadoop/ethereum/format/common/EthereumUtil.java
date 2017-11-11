@@ -16,6 +16,7 @@
 package org.zuinnote.hadoop.ethereum.format.common;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
@@ -26,10 +27,19 @@ import javax.xml.bind.DatatypeConverter;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.bouncycastle.asn1.sec.SECNamedCurves;
+import org.bouncycastle.asn1.x9.X9ECParameters;
+import org.bouncycastle.asn1.x9.X9IntegerConverter;
+import org.bouncycastle.crypto.digests.SHA3Digest;
+import org.bouncycastle.crypto.params.ECDomainParameters;
 import org.bouncycastle.jcajce.provider.digest.Keccak;
+import org.bouncycastle.math.ec.ECAlgorithms;
+import org.bouncycastle.math.ec.ECCurve;
+import org.bouncycastle.math.ec.ECPoint;
 import org.zuinnote.hadoop.ethereum.format.common.rlp.RLPElement;
 import org.zuinnote.hadoop.ethereum.format.common.rlp.RLPList;
 import org.zuinnote.hadoop.ethereum.format.common.rlp.RLPObject;
+
 
 /**
  *
@@ -45,8 +55,18 @@ public class EthereumUtil {
 	public static final int LONG_SIZE=8; // Size of a long in Ethereum
 	public static final int INT_SIZE=4; // Size of an integer in Ethereum
 	public static final int WORD_SIZE=2; // Size of a word in Ethereum
+	
 	private static final Log LOG = LogFactory.getLog(EthereumUtil.class.getName());
-	/** RLP functionality for Ethereum: https://github.com/ethereum/wiki/wiki/RLP **/
+
+
+	public static final ECDomainParameters CURVE;	 // needed for getSentAddress
+	static {
+	    X9ECParameters params = SECNamedCurves.getByName("secp256k1");
+	    CURVE = new ECDomainParameters(params.getCurve(), params.getG(), params.getN(), params.getH());
+
+	}
+
+/** RLP functionality for Ethereum: https://github.com/ethereum/wiki/wiki/RLP **/
 
 
 /**
@@ -393,6 +413,92 @@ public static byte[] getTransactionHash(EthereumTransaction eTrans) {
 	digest.update(transEnc,0,transEnc.length);
 	return digest.digest();
 }
+
+/***
+ * Calculates the hash of a transaction without signature
+ * 
+ * @param eTrans transaction
+ * @return transaction hash as KECCAK-256
+ */
+public static byte[] getTransactionHashWithoutSignature(EthereumTransaction eTrans) {
+	ArrayList<byte[]> rlpTransaction = new ArrayList<>();
+	rlpTransaction.add(EthereumUtil.encodeRLPElement(eTrans.getNonce()));
+	rlpTransaction.add(EthereumUtil.encodeRLPElement(EthereumUtil.convertLongToVarInt(eTrans.getGasPrice())));
+	rlpTransaction.add(EthereumUtil.encodeRLPElement(EthereumUtil.convertLongToVarInt(eTrans.getGasLimit())));
+	rlpTransaction.add(EthereumUtil.encodeRLPElement(eTrans.getReceiveAddress()));
+	rlpTransaction.add(EthereumUtil.encodeRLPElement(EthereumUtil.convertLongToVarInt(eTrans.getValue())));
+	rlpTransaction.add(EthereumUtil.encodeRLPElement(eTrans.getData()));
+	byte[] transEnc = EthereumUtil.encodeRLPList(rlpTransaction);
+	Keccak.Digest256 digest = new Keccak.Digest256();
+	digest.update(transEnc,0,transEnc.length);
+	return digest.digest();
+}
+
+/**
+ * Calculates the sent address of an EthereumTransaction. Note this can be a costly operation to calculate.
+ *
+ *
+ * @param eTrans transaction
+ * @return sent address as byte array
+ */
+public static byte[] getSendAddress(EthereumTransaction eTrans) {
+  // transaction hash without signature data
+	byte[] transactionHash = EthereumUtil.getTransactionHashWithoutSignature(eTrans);
+  // signature to address
+	BigInteger bR = new BigInteger(1,eTrans.getSig_r());
+	BigInteger bS = new BigInteger(1,eTrans.getSig_s());
+  // calculate v for signature
+	byte v =(byte) (eTrans.getSig_v()[0]);
+	if (!((v == EthereumUtil.LOWER_REAL_V) || (v== (LOWER_REAL_V+1)))) {
+		v = EthereumUtil.LOWER_REAL_V;
+		if (((int)v%2 == 0)) {
+			v = (byte) (v+0x01);
+		}
+	}
+	
+	boolean compressedKey= false;
+	// the following lines are inspired from ECKey.java of EthereumJ, but adapted to the hadoopcryptoledger context
+	if (v < 27 || v > 34) {
+		throw new RuntimeException("Header out of range");
+	}
+	if (v>=31) {
+		compressedKey = true;
+		v -=4;
+	}
+	int receiverId = v - 27;
+	BigInteger n = CURVE.getN();
+    BigInteger i = BigInteger.valueOf((long) receiverId / 2);
+    BigInteger x = bR.add(i.multiply(n));
+    ECCurve.Fp curve = (ECCurve.Fp) CURVE.getCurve();
+    BigInteger prime = curve.getQ();
+    if (x.compareTo(prime) >= 0) {
+        return null;
+     }
+    // decompress Key
+    X9IntegerConverter x9 = new X9IntegerConverter();
+    byte[] compEnc = x9.integerToBytes(x, 1 + x9.getByteLength(CURVE.getCurve()));
+    boolean yBit=(receiverId & 1) == 1;
+    compEnc[0] = (byte)(yBit ? 0x03 : 0x02);
+    ECPoint R =  CURVE.getCurve().decodePoint(compEnc);
+    if (!R.multiply(n).isInfinity()) {
+    		return null;
+    }
+    BigInteger e = new BigInteger(1,transactionHash);
+    BigInteger eInv = BigInteger.ZERO.subtract(e).mod(n);
+    BigInteger rInv = bR.modInverse(n);
+    BigInteger srInv = rInv.multiply(bS).mod(n);
+    BigInteger eInvrInv = rInv.multiply(eInv).mod(n);
+    ECPoint.Fp q = (ECPoint.Fp) ECAlgorithms.sumOfTwoMultiplies(CURVE.getG(), eInvrInv, R, srInv);
+    byte[] pubKey=q.getEncoded(false);
+    // now we need to convert the public key into an ethereum sent address which is the last 20 bytes of 32 byte KECCAK-256 Hash of the key.
+	Keccak.Digest256 digest256 = new Keccak.Digest256();
+	digest256.update(pubKey,1,pubKey.length-1);
+	byte[] kcck = digest256.digest();
+    return Arrays.copyOfRange(kcck,12,kcck.length);
+}
+
+
+
 
 /** Data types conversions for Ethereum **/
 
