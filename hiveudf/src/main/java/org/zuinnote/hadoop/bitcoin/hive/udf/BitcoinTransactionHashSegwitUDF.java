@@ -47,7 +47,7 @@ import org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtil;
 
 
 /*
-* Generic UDF to calculate the hash value of a transaction (txid). It can be used to create a graph of transactions (cf. https://en.bitcoin.it/wiki/Transaction#general_format_.28inside_a_block.29_of_each_input_of_a_transaction_-_Txin)
+* Generic UDF to calculate the hash value of a transaction (wtxid). It cannot be used to create a graph of transactions 
 *
 *
 */
