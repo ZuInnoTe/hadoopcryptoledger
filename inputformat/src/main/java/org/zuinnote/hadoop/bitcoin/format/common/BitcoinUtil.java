@@ -425,40 +425,5 @@ public static byte[] getTransactionHashSegwit(BitcoinTransaction transaction) th
 	return secondRoundHash;
 }
 
-/**
-* Calculates the double SHA256-Hash of a block in little endian format. 
-*
-*
-* @param block The BitcoinTransaction of which we want to calculate the hash
-*
-* @return byte array containing the hash of the block.
-*
-*
-* @throws java.io.IOException in case of errors reading from the InputStream
-*
-*/
-@Deprecated
-	public static byte[] getBlockHash(BitcoinBlock block) throws IOException {
-		ByteArrayOutputStream blockBAOS = new ByteArrayOutputStream();
-		blockBAOS.write(reverseByteArray(convertIntToByteArray(block.getVersion())));
-		blockBAOS.write(block.getHashPrevBlock());
-		blockBAOS.write(block.getHashMerkleRoot());
-		blockBAOS.write(reverseByteArray(convertIntToByteArray(block.getTime())));
-		blockBAOS.write(block.getBits());
-		blockBAOS.write(reverseByteArray(convertIntToByteArray(block.getNonce())));
-		byte[] blockByteArray = blockBAOS.toByteArray();
-		byte[] firstRoundHash;
-		byte[] secondRoundHash;
-		try {
-			MessageDigest digest = MessageDigest.getInstance("SHA-256");
-			firstRoundHash = digest.digest(blockByteArray);
-			secondRoundHash = digest.digest(firstRoundHash);
-		} catch (NoSuchAlgorithmException nsae) {
-			LOG.error(nsae);
-			return new byte[0];
-		}
-		return reverseByteArray(secondRoundHash);
-    }
-
 
 }
