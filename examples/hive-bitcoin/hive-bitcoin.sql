@@ -3,11 +3,11 @@ create database blockchains;
 
 use blockchains;
 
--- create external table representing Bitcoin Blockchain data stored in /user/cloudera/bitcoin/input
-create external table BitcoinBlockchain ROW FORMAT SERDE 'org.zuinnote.hadoop.bitcoin.hive.serde.BitcoinBlockSerde' STORED AS INPUTFORMAT 'org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinBlockFileInputFormat' OUTPUTFORMAT 'org.apache.hadoop.mapred.lib.NullOutputFormat' LOCATION '/user/cloudera/bitcoin/input' TBLPROPERTIES("hadoopcryptoledger.bitcoinblockinputformat.filter.magic"="F9BEB4D9");
+-- create external table representing Bitcoin Blockchain data stored in /user/bitcoin/input
+create external table BitcoinBlockchain ROW FORMAT SERDE 'org.zuinnote.hadoop.bitcoin.hive.serde.BitcoinBlockSerde' STORED AS INPUTFORMAT 'org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinBlockFileInputFormat' OUTPUTFORMAT 'org.apache.hadoop.mapred.lib.NullOutputFormat' LOCATION '/user/bitcoin/input' TBLPROPERTIES("hadoopcryptoledger.bitcoinblockinputformat.filter.magic"="F9BEB4D9");
 
 -- create external table representing Bitcoin Blockchain data from Testnet3
-create external table BitcoinBlockchainTestNet3 ROW FORMAT SERDE 'org.zuinnote.hadoop.bitcoin.hive.serde.BitcoinBlockSerde' STORED AS INPUTFORMAT 'org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinBlockFileInputFormat' OUTPUTFORMAT 'org.apache.hadoop.mapred.lib.NullOutputFormat' LOCATION '/user/cloudera/bitcoin/input' TBLPROPERTIES("hadoopcryptoledger.bitcoinblockinputformat.filter.magic"="0B110907");
+create external table BitcoinBlockchainTestNet3 ROW FORMAT SERDE 'org.zuinnote.hadoop.bitcoin.hive.serde.BitcoinBlockSerde' STORED AS INPUTFORMAT 'org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinBlockFileInputFormat' OUTPUTFORMAT 'org.apache.hadoop.mapred.lib.NullOutputFormat' LOCATION '/user/bitcoin/input' TBLPROPERTIES("hadoopcryptoledger.bitcoinblockinputformat.filter.magic"="0B110907");
 
 -- The following example counts the number of blocks:
 
