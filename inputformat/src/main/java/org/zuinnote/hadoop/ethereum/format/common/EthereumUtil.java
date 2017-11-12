@@ -379,7 +379,6 @@ private static RLPList decodeRLPList(ByteBuffer bb) {
 public static Long calculateChainId(EthereumTransaction eTrans) {
 	Long result=null;
 		long rawResult=EthereumUtil.convertVarNumberToLong(new RLPElement(new byte[0],eTrans.getSig_v()));
-		LOG.debug(String.valueOf(rawResult));
 		if (!((rawResult == EthereumUtil.LOWER_REAL_V) || (rawResult== (LOWER_REAL_V+1)))) {
 			result = (rawResult-EthereumUtil.CHAIN_ID_INC)/2;
 	}
@@ -388,7 +387,7 @@ public static Long calculateChainId(EthereumTransaction eTrans) {
 
 
 /***
- * Calculates the hash of a transaction
+ * Calculates the hash of a transaction. Note this requires that you have Bouncy castle as a dependency in your project
  * 
  * @param eTrans transaction
  * @return transaction hash as KECCAK-256
@@ -411,7 +410,7 @@ public static byte[] getTransactionHash(EthereumTransaction eTrans) {
 }
 
 /***
- * Calculates the hash of a transaction without signature
+ * Calculates the hash of a transaction without signature. Note this requires that you have Bouncy castle as a dependency in your project
  * 
  * @param eTrans transaction
  * @return transaction hash as KECCAK-256
@@ -431,7 +430,7 @@ public static byte[] getTransactionHashWithoutSignature(EthereumTransaction eTra
 }
 
 /**
- * Calculates the sent address of an EthereumTransaction. Note this can be a costly operation to calculate.
+ * Calculates the sent address of an EthereumTransaction. Note this can be a costly operation to calculate. . This requires that you have Bouncy castle as a dependency in your project
  *
  *
  * @param eTrans transaction
