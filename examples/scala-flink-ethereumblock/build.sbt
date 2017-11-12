@@ -31,6 +31,8 @@ itJacoco.settings
 
 libraryDependencies += "com.github.zuinnote" % "hadoopcryptoledger-flinkdatasource" % "1.1.0" % "compile"
 libraryDependencies += "com.github.zuinnote" % "hadoopcryptoledger-fileformat" % "1.1.0" % "compile"
+// needed for certain functionality related to Ethereum in EthereumUtil
+libraryDependencies += "org.bouncycastle" % "bcprov-ext-jdk15on" % "1.58" % "compile"
 libraryDependencies += "org.apache.flink" %% "flink-scala" % "1.2.0" % "provided" 
 
 libraryDependencies += "org.apache.flink" % "flink-shaded-hadoop2" % "1.2.0" % "provided"  

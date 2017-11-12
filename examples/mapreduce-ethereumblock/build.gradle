@@ -66,6 +66,8 @@ sourceSets {
 dependencies {
    // hadoop lib for driver
      provided("org.apache.hadoop:hadoop-client:2.7.0")
+        // bouncycastle libraries - only for Ethereum utility functions needed
+    compile("org.bouncycastle:bcprov-ext-jdk15on:1.58")
        // hadoop crypto ledger library
    compile("com.github.zuinnote:hadoopcryptoledger-fileformat:1.1.0")
     testCompile group: 'org.jmockit', name: 'jmockit', version: '1.30'

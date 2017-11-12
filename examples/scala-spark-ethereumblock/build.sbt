@@ -31,6 +31,9 @@ itJacoco.settings
 
 libraryDependencies += "com.github.zuinnote" % "hadoopcryptoledger-fileformat" % "1.1.0" % "compile"
 
+// needed for certain functionality related to Ethereum in EthereumUtil
+libraryDependencies += "org.bouncycastle" % "bcprov-ext-jdk15on" % "1.58" % "compile"
+
 libraryDependencies += "org.apache.spark" %% "spark-core" % "1.5.0" % "provided"
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.1" % "test,it"
