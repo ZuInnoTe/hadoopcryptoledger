@@ -44,6 +44,7 @@ configurations {
 	provided
 	integrationTestCompile.extendsFrom testCompile
     	integrationTestRuntime.extendsFrom testRuntime
+    	extraJar
 }
 
 eclipse {
@@ -74,7 +75,7 @@ dependencies {
    provided("com.github.zuinnote:hadoopcryptoledger-fileformat:1.1.0")
    provided("com.github.zuinnote:hadoopcryptoledger-hiveserde:1.1.0")
    // we need to mandatory add the BC library
-     compile("org.bouncycastle:bcprov-ext-jdk15on:1.58")
+     provided("org.bouncycastle:bcprov-ext-jdk15on:1.58")
     // hive serde API
    provided("org.apache.hive:hive-serde:1.2.0")
    provided("org.apache.hive:hive-exec:1.2.0")
@@ -93,7 +94,6 @@ jar {
  
    // note this builds one fat jar and it is not recommended for production use - just for illustration purpose
       from (configurations.compile.collect { entry -> zipTree(entry) }) {
-        exclude 'META-INF/MANIFEST.MF'
         exclude 'META-INF/*.SF'
         exclude 'META-INF/*.DSA'
         exclude 'META-INF/*.RSA'
