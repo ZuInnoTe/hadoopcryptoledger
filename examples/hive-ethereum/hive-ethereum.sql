@@ -11,3 +11,6 @@ select count(*) from EthereumBlockchain;
 
 -- count the number of transactions
 select count(*) from EthereumBlockchain LATERAL VIEW explode(ethereumTransactions) exploded_transactions;
+
+-- summarize the value of all transactions
+select SUM(exptran.value) FROM (select * from EthereumBlockchain LATERAL VIEW explode(ethereumTransactions) exploded_transactions as exptran) ttable;  
