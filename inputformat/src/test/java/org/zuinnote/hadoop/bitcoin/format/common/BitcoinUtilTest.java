@@ -205,29 +205,7 @@ public class BitcoinUtilTest {
   }
 
 
-  @Deprecated
-  @Test
-  public void getBlockHash() throws NoSuchAlgorithmException, IOException {
-    ClassLoader classLoader = getClass().getClassLoader();
-    String fullFileNameString=classLoader.getResource("testdata/genesis.blk").getFile();
-    File file = new File(fullFileNameString);
-    BitcoinBlockReader bbr = null;
-    boolean direct=false;
-    try {
-      FileInputStream fin = new FileInputStream(file);
-      bbr = new BitcoinBlockReader(fin,BitcoinFormatReaderTest.DEFAULT_MAXSIZE_BITCOINBLOCK,BitcoinFormatReaderTest.DEFAULT_BUFFERSIZE,BitcoinFormatReaderTest.DEFAULT_MAGIC,false);
-      BitcoinBlock genesisBlock = bbr.readBlock();
 
-
-      Assert.assertEquals("000000000019D6689C085AE165831E934FF763AE46A2A6C172B3F1B60A8CE26F",BitcoinUtil.convertByteArrayToHexString(BitcoinUtil.getBlockHash(genesisBlock)));
-
-    } catch (BitcoinBlockReadException e) {
-      Assert.fail("Block reading has been failed");
-    } finally {
-      if (bbr!=null)
-        bbr.close();
-    }
-  }
   @Test
   public void getTransactionHash() throws NoSuchAlgorithmException, IOException {
 	 // reconstruct the transaction from the genesis block
