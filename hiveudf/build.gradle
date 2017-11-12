@@ -3,6 +3,7 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 apply plugin: 'jacoco'
 
+
 sourceCompatibility = 1.7
 compileJava.options.encoding = 'UTF-8'
 
@@ -84,7 +85,8 @@ dependencies {
 
 jar {
     manifest {
-        attributes 'Implementation-Title': 'ZuInnoTe - Hadoop CryptoLedger Analytics Library - Hive UDF', 'Implementation-Version': version
+        attributes 'Implementation-Title': 'ZuInnoTe - Hadoop CryptoLedger Analytics Library - Hive UDF', 'Implementation-Version': version,
+        'Class-Path': configurations.runtime.files.collect {"$it.name"}.join(' ')
     }
 
     baseName = 'hadoopcryptoledger-hiveudf'
