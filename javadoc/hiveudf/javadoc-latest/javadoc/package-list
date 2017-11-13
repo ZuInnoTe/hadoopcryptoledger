@@ -1,2 +1,3 @@
 org.zuinnote.hadoop.bitcoin.hive.udf
+org.zuinnote.hadoop.ethereum.hive.udf
 org.zuinnote.hadoop.namecoin.hive.udf
