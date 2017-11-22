@@ -16,49 +16,45 @@
 
 package org.zuinnote.hadoop.bitcoin.format.common;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertArrayEquals;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.util.List;
 import java.util.ArrayList;
 
 import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.security.NoSuchAlgorithmException;
 
+import org.junit.jupiter.api.Test;
 import org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtil;
-import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
 
 public class BitcoinUtilTest {
 
   @Test
   public void convertSignedIntToUnsigned() {
     long unsignedint = BitcoinUtil.convertSignedIntToUnsigned(-1);
-    assertEquals("-1 from signed int must be 4294967295L unsigned", 4294967295L,unsignedint);
+    assertEquals( 4294967295L,unsignedint,"-1 from signed int must be 4294967295L unsigned");
   }
 
   @Test
   public void convertIntToByteArray() {
     byte[] intByteArray = BitcoinUtil.convertIntToByteArray(1);
     byte[] comparatorArray = new byte[]{0x00,0x00,0x00,0x01};
-    assertArrayEquals("1 in int must be equivalent to the array {0x00,0x00,0x00,0x01}", comparatorArray,intByteArray);
+    assertArrayEquals( comparatorArray,intByteArray,"1 in int must be equivalent to the array {0x00,0x00,0x00,0x01}");
   }
 
   @Test
   public void convertLongToByteArray() {
     byte[] longByteArray = BitcoinUtil.convertLongToByteArray(1L);
     byte[] comparatorArray = new byte[]{0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01};
-    assertArrayEquals("1 in int must be equivalent to the array {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01}", comparatorArray,longByteArray);
+    assertArrayEquals( comparatorArray,longByteArray,"1 in int must be equivalent to the array {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01}");
   }
 
   @Test
@@ -68,7 +64,7 @@ public class BitcoinUtilTest {
     ByteBuffer testByteBuffer = ByteBuffer.allocate(1).put(originVarInt);
     testByteBuffer.flip();
     byte[] varIntByteArray = BitcoinUtil.convertVarIntByteBufferToByteArray(testByteBuffer);
-    assertArrayEquals("0x01 in ByteBuffer must be equivalent to the varint represented in array {0x01}", originVarInt,varIntByteArray);
+    assertArrayEquals( originVarInt,varIntByteArray,"0x01 in ByteBuffer must be equivalent to the varint represented in array {0x01}");
   }
 
   @Test
@@ -77,7 +73,7 @@ public class BitcoinUtilTest {
    ByteBuffer testByteBuffer = ByteBuffer.allocate(1).put(new byte[]{0x01});
     testByteBuffer.flip();
     long convertedLong = BitcoinUtil.convertVarIntByteBufferToLong(testByteBuffer);
-    assertEquals("0x01 in ByteBuffer must be 1 as a long",1L, convertedLong);
+    assertEquals(1L, convertedLong,"0x01 in ByteBuffer must be 1 as a long");
   }
 
 
@@ -86,28 +82,28 @@ public class BitcoinUtilTest {
   public void getVarIntByte() {
     byte[] originalVarInt = new byte[] {0x01};
     long convertedVarInt = BitcoinUtil.getVarInt(originalVarInt);
-    assertEquals("varInt {0x01} must be 1 as long", 1L,convertedVarInt);
+    assertEquals( 1L,convertedVarInt,"varInt {0x01} must be 1 as long");
   }
 
   @Test
   public void getVarIntWord() {
     byte[] originalVarInt = new byte[] {(byte)0xFD,0x01,0x00};
     long convertedVarInt = BitcoinUtil.getVarInt(originalVarInt);
-    assertEquals("varInt {0xFD,0x01,0x00} must be 1 as long", 1L, convertedVarInt);
+    assertEquals( 1L, convertedVarInt,"varInt {0xFD,0x01,0x00} must be 1 as long");
   }
 
   @Test
   public void getVarIntDWord() {
     byte[] originalVarInt = new byte[] {(byte)0xFE,0x01,0x00,0x00,0x00};
     long convertedVarInt = BitcoinUtil.getVarInt(originalVarInt);
-    assertEquals("varInt {0xFE,0x01,0x00,0x00,0x00} must be 1 as long", 1L, convertedVarInt);
+    assertEquals( 1L, convertedVarInt,"varInt {0xFE,0x01,0x00,0x00,0x00} must be 1 as long");
   }
 
   @Test
   public void getVarIntQWord() {
     byte[] originalVarInt = new byte[] {(byte)0xFF,0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
     long convertedVarInt = BitcoinUtil.getVarInt(originalVarInt);
-    assertEquals("varInt {0xFF,0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00} must be 1 as long", 1L, convertedVarInt);
+    assertEquals( 1L, convertedVarInt,"varInt {0xFF,0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00} must be 1 as long");
   }
 
 
@@ -115,14 +111,14 @@ public class BitcoinUtilTest {
   public void getVarIntSizeByte() {
     byte[] originalVarInt = new byte[] {0x02};
     byte varIntSize = BitcoinUtil.getVarIntSize(originalVarInt[0]);
-    assertEquals("varInt {0x02} must be of size 1", 1, varIntSize);
+    assertEquals( 1, varIntSize,"varInt {0x02} must be of size 1");
   }
 
   @Test
   public void getVarIntSizeWord() {
     byte[] originalVarInt = new byte[] {(byte)0xFD,0x01,0x00};
     byte varIntSize = BitcoinUtil.getVarIntSize(originalVarInt[0]);
-    assertEquals("varInt {0xFD,0x01,0x00} must be of size 3", 3, varIntSize);
+    assertEquals( 3, varIntSize,"varInt {0xFD,0x01,0x00} must be of size 3");
   }
 
 
@@ -130,7 +126,7 @@ public class BitcoinUtilTest {
   public void getVarIntSizeDWord() {
     byte[] originalVarInt = new byte[] {(byte)0xFE,0x01,0x00,0x00,0x00};
     byte varIntSize = BitcoinUtil.getVarIntSize(originalVarInt[0]);
-    assertEquals("varInt {0xFE,0x01,0x00,0x00,0x00} must be of size 5", 5, varIntSize);
+    assertEquals( 5, varIntSize,"varInt {0xFE,0x01,0x00,0x00,0x00} must be of size 5");
   }
 
 
@@ -138,7 +134,7 @@ public class BitcoinUtilTest {
   public void getVarIntSizeQWord() {
     byte[] originalVarInt = new byte[] {(byte)0xFF,0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
     byte varIntSize = BitcoinUtil.getVarIntSize(originalVarInt[0]);
-    assertEquals("varInt {0xFF,0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00} must be of size 9", 9, varIntSize);
+    assertEquals( 9, varIntSize,"varInt {0xFF,0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00} must be of size 9");
   }
 
 
@@ -146,7 +142,7 @@ public class BitcoinUtilTest {
   public void getSize() {
     byte[] blockSize = new byte[] {(byte)0x1D,0x01,0x00,0x00}; // this is the size of the genesis block
     long blockSizeLong = BitcoinUtil.getSize(blockSize);
-    assertEquals("Size in Array {0x1D,0x01,0x00,0x00} must be 285", 285, blockSizeLong);
+    assertEquals( 285, blockSizeLong,"Size in Array {0x1D,0x01,0x00,0x00} must be 285");
   }
 
 
@@ -155,7 +151,7 @@ public class BitcoinUtilTest {
     byte[] originalByteArray = new byte[]{0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08};
     byte[] resultByteArray = BitcoinUtil.reverseByteArray(originalByteArray);
     byte[] reverseByteArray = new byte[]{0x08,0x07,0x06,0x05,0x04,0x03,0x02,0x01};
-    assertArrayEquals("{0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08} is equivalent to {0x08,0x07,0x06,0x05,0x04,0x03,0x02,0x01} in reverse order", reverseByteArray, resultByteArray);
+    assertArrayEquals( reverseByteArray, resultByteArray,"{0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08} is equivalent to {0x08,0x07,0x06,0x05,0x04,0x03,0x02,0x01} in reverse order");
   }
 
 
@@ -164,7 +160,7 @@ public class BitcoinUtilTest {
     String hexString = "01FF02";
     byte[] resultArray = BitcoinUtil.convertHexStringToByteArray(hexString);
     byte[] expectedByteArray = new byte[]{0x01,(byte)0xFF,0x02};
-    assertArrayEquals("String \""+hexString+"\" is equivalent to byte array {0x01,0xFF,0x02}", expectedByteArray, resultArray);
+    assertArrayEquals( expectedByteArray, resultArray,"String \""+hexString+"\" is equivalent to byte array {0x01,0xFF,0x02}");
   }
 
   @Test
@@ -172,7 +168,7 @@ public class BitcoinUtilTest {
     byte[] hexByteArray = new byte[]{0x01,(byte)0xFF,0x02};
     String resultString = BitcoinUtil.convertByteArrayToHexString(hexByteArray);
     String expectedString = "01FF02";
-    assertEquals("Byte array {0x01,0xFF,0x02} is equivalent to Hex String \""+expectedString+"\"", expectedString, resultString);
+    assertEquals( expectedString, resultString,"Byte array {0x01,0xFF,0x02} is equivalent to Hex String \""+expectedString+"\"");
   }
 
 
@@ -183,7 +179,7 @@ public class BitcoinUtilTest {
     SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd");
     String genesisBlockDateString = simpleFormat.format(genesisBlockDate);
     String expectedDate="2009-01-03";
-    assertEquals("1231006505 is equivalent to the Date 2009-01-03", expectedDate, genesisBlockDateString);
+    assertEquals( expectedDate, genesisBlockDateString,"1231006505 is equivalent to the Date 2009-01-03");
   }
 
 
@@ -192,7 +188,7 @@ public class BitcoinUtilTest {
     byte[] inputMagic1 = new byte[]{(byte)0xF9,(byte)0xBE,(byte)0xB4,(byte)0xD9};
     byte[] inputMagic2 = new byte[]{(byte)0xF9,(byte)0xBE,(byte)0xB4,(byte)0xD9};
     boolean isSame = BitcoinUtil.compareMagics(inputMagic1,inputMagic2);
-    assertTrue("Magic 1 {0xF9,0xBE,0xB4,0xD9} is equivalent to Magic 2 {0xF9,0xBE,0xB4,0xD9}", isSame);
+    assertTrue( isSame,"Magic 1 {0xF9,0xBE,0xB4,0xD9} is equivalent to Magic 2 {0xF9,0xBE,0xB4,0xD9}");
   }
 
 
@@ -201,7 +197,7 @@ public class BitcoinUtilTest {
     byte[] inputMagic1 = new byte[]{(byte)0xF9,(byte)0xBE,(byte)0xB4,(byte)0xD9};
     byte[] inputMagic2 = new byte[]{(byte)0xFA,(byte)0xBF,(byte)0xB5,(byte)0xDA};
     boolean isSame = BitcoinUtil.compareMagics(inputMagic1,inputMagic2);
-    assertFalse("Magic 1 {0xF9,0xBE,0xB4,0xD9} is not equivalent to Magic 2 {0xFA,0xBF,0xB5,0xDA}", isSame);
+    assertFalse( isSame,"Magic 1 {0xF9,0xBE,0xB4,0xD9} is not equivalent to Magic 2 {0xFA,0xBF,0xB5,0xDA}");
   }
 
 
@@ -228,7 +224,7 @@ public class BitcoinUtilTest {
 	 BitcoinTransaction genesisTransaction = new BitcoinTransaction(version,inCounter,genesisInput,outCounter,genesisOutput,lockTime);
 	byte[] genesisTransactionHash=BitcoinUtil.getTransactionHash(genesisTransaction);
 	 byte[] expectedHash = BitcoinUtil.reverseByteArray(new byte[]{(byte)0x4A,(byte)0x5E,(byte)0x1E,(byte)0x4B,(byte)0xAA,(byte)0xB8,(byte)0x9F,(byte)0x3A,(byte)0x32,(byte)0x51,(byte)0x8A,(byte)0x88,(byte)0xC3,(byte)0x1B,(byte)0xC8,(byte)0x7F,(byte)0x61,(byte)0x8F,(byte)0x76,(byte)0x67,(byte)0x3E,(byte)0x2C,(byte)0xC7,(byte)0x7A,(byte)0xB2,(byte)0x12,(byte)0x7B,(byte)0x7A,(byte)0xFD,(byte)0xED,(byte)0xA3,(byte)0x3B});
-	 assertArrayEquals("Hash for Genesis Transaction correctly calculated", expectedHash, genesisTransactionHash);
+	 assertArrayEquals( expectedHash, genesisTransactionHash,"Hash for Genesis Transaction correctly calculated");
   }
 
   @Test
@@ -273,12 +269,12 @@ public class BitcoinUtilTest {
 	 BitcoinTransaction randomScriptWitnessTransaction = new BitcoinTransaction(marker,flag,version,inCounter,randomScriptWitnessInput,outCounter,randomScriptWitnessOutput,randomScriptWitnessSWI,lockTime);
 	byte[] randomScriptWitnessTransactionHash=BitcoinUtil.getTransactionHash(randomScriptWitnessTransaction);
 	 byte[] expectedHash = BitcoinUtil.reverseByteArray(new byte[]{(byte)0x47,(byte)0x52,(byte)0x1C,(byte)0x2A,(byte)0x13,(byte)0x45,(byte)0x5E,(byte)0x92,(byte)0xD3,(byte)0xBD,(byte)0x56,(byte)0x3F,(byte)0xAD,(byte)0xA5,(byte)0x78,(byte)0x6E,(byte)0x85,(byte)0xB4,(byte)0x5E,(byte)0x96,(byte)0x85,(byte)0xA8,(byte)0xC9,(byte)0xA3,(byte)0xFE,(byte)0xB8,(byte)0x9A,(byte)0x4F,(byte)0xB5,(byte)0x0D,(byte)0xAF,(byte)0xF5});
-	 assertArrayEquals("Hash for Random ScriptWitness Transaction correctly calculated (txId)", expectedHash, randomScriptWitnessTransactionHash);
+	 assertArrayEquals( expectedHash, randomScriptWitnessTransactionHash,"Hash for Random ScriptWitness Transaction correctly calculated (txId)");
 	 byte[] randomScriptWitnessTransactionHashSegWit=BitcoinUtil.getTransactionHashSegwit(randomScriptWitnessTransaction);
 	 
 	 //74700E2CE030013E2E10FCFD06DF99C7826E41C725CA5C467660BFA4874F65BF
 	 byte[] expectedHashSegwit = BitcoinUtil.reverseByteArray(new byte[]{(byte)0x74,(byte)0x70,(byte)0x0E,(byte)0x2C,(byte)0xE0,(byte)0x30,(byte)0x01,(byte)0x3E,(byte)0x2E,(byte)0x10,(byte)0xFC,(byte)0xFD,(byte)0x06,(byte)0xDF,(byte)0x99,(byte)0xC7,(byte)0x82,(byte)0x6E,(byte)0x41,(byte)0xC7,(byte)0x25,(byte)0xCA,(byte)0x5C,(byte)0x46,(byte)0x76,(byte)0x60,(byte)0xBF,(byte)0xA4,(byte)0x87,(byte)0x4F,(byte)0x65,(byte)0xBF});
-	 assertArrayEquals("Hash for Random ScriptWitness Transaction correctly calculated (wtxId)", expectedHashSegwit, randomScriptWitnessTransactionHashSegWit);
+	 assertArrayEquals( expectedHashSegwit, randomScriptWitnessTransactionHashSegWit,"Hash for Random ScriptWitness Transaction correctly calculated (wtxId)");
 
 	 
   }

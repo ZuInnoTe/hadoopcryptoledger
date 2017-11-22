@@ -16,10 +16,11 @@
 
 package org.zuinnote.hadoop.ethereum.format.mapreduce;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,12 +37,13 @@ import org.apache.hadoop.mapreduce.RecordReader;
 import org.apache.hadoop.mapreduce.TaskAttemptContext;
 import org.apache.hadoop.mapreduce.TaskAttemptID;
 import org.apache.hadoop.mapreduce.task.TaskAttemptContextImpl;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+
 import org.zuinnote.hadoop.ethereum.format.common.EthereumBlock;
 import org.zuinnote.hadoop.ethereum.format.exception.EthereumBlockReadException;
 
@@ -53,23 +55,23 @@ public class EthereumFormatHadoopTest {
 	private static Configuration defaultConf = new Configuration();
 	private static FileSystem localFs = null; 
 
-	   @BeforeClass
+	   @BeforeAll
 	    public static void oneTimeSetUp() throws IOException {
 	      // one-time initialization code   
 	      defaultConf.set("fs.defaultFS", "file:///");
 	      localFs = FileSystem.getLocal(defaultConf);
 	    }
 
-	    @AfterClass
+	    @AfterAll
 	    public static void oneTimeTearDown() {
 	        // one-time cleanup code
 	      }
 
-	    @Before
+	    @BeforeEach
 	    public void setUp() {
 	    }
 
-	    @After
+	    @AfterEach
 	    public void tearDown() {
 	       
 	}
@@ -79,10 +81,10 @@ public class EthereumFormatHadoopTest {
 			ClassLoader classLoader = getClass().getClassLoader();
 			String fileName="ethgenesis.bin";
 			String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-			assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+			assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 			File file = new File(fileNameGenesis);
-			assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-			assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+			assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+			assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
 		  }
 		 
 		 @Test
@@ -90,10 +92,10 @@ public class EthereumFormatHadoopTest {
 			ClassLoader classLoader = getClass().getClassLoader();
 			String fileName="eth1.bin";
 			String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-			assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+			assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 			File file = new File(fileNameGenesis);
-			assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-			assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+			assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+			assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
 		  }
 		 
 		 @Test
@@ -101,10 +103,10 @@ public class EthereumFormatHadoopTest {
 			ClassLoader classLoader = getClass().getClassLoader();
 			String fileName="eth1346406.bin";
 			String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-			assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+			assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 			File file = new File(fileNameGenesis);
-			assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-			assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+			assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+			assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
 		  }
 		 
 		 @Test
@@ -112,10 +114,10 @@ public class EthereumFormatHadoopTest {
 			ClassLoader classLoader = getClass().getClassLoader();
 			String fileName="eth3346406.bin";
 			String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-			assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+			assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 			File file = new File(fileNameGenesis);
-			assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-			assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+			assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+			assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
 		  }
 		 
 		 @Test
@@ -123,10 +125,10 @@ public class EthereumFormatHadoopTest {
 			ClassLoader classLoader = getClass().getClassLoader();
 			String fileName="eth0to10.bin";
 			String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-			assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+			assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 			File file = new File(fileNameGenesis);
-			assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-			assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+			assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+			assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
 		  }
 		 
 		 @Test
@@ -134,10 +136,10 @@ public class EthereumFormatHadoopTest {
 			ClassLoader classLoader = getClass().getClassLoader();
 			String fileName="eth351000to3510010.bin";
 			String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-			assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+			assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 			File file = new File(fileNameGenesis);
-			assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-			assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+			assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+			assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
 		  }
 		 
 		 @Test
@@ -145,10 +147,10 @@ public class EthereumFormatHadoopTest {
 			ClassLoader classLoader = getClass().getClassLoader();
 			String fileName="eth1346406.bin.bz2";
 			String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-			assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+			assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 			File file = new File(fileNameGenesis);
-			assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-			assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+			assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+			assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
 		  }
 		 
 		 @Test
@@ -156,10 +158,10 @@ public class EthereumFormatHadoopTest {
 			ClassLoader classLoader = getClass().getClassLoader();
 			String fileName="eth1346406.bin.gz";
 			String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-			assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+			assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 			File file = new File(fileNameGenesis);
-			assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-			assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+			assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+			assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
 		  }
 		 
 		 @Test
@@ -175,17 +177,17 @@ public class EthereumFormatHadoopTest {
 
 		    List<InputSplit> splits = format.getSplits(job);
 		    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
-		    assertEquals("Only one split generated for genesis block", 1, splits.size());
+		    assertEquals( 1, splits.size(),"Only one split generated for genesis block");
 		    	RecordReader<BytesWritable, EthereumBlock> reader = format.createRecordReader(splits.get(0), context);
-			assertNotNull("Format returned  null RecordReader", reader);
+			assertNotNull( reader,"Format returned  null RecordReader");
 			reader.initialize(splits.get(0),context);
 			BytesWritable key = new BytesWritable();	
 			EthereumBlock block = new EthereumBlock();
-			assertTrue("Input Split for genesis block contains at least one block", reader.nextKeyValue());
+			assertTrue( reader.nextKeyValue(),"Input Split for genesis block contains at least one block");
 			key=reader.getCurrentKey();
 			block=reader.getCurrentValue();
-			assertEquals("Genesis Block must have 0 transactions", 0, block.getEthereumTransactions().size());
-		    	assertFalse("No further blocks in genesis Block", reader.nextKeyValue());
+			assertEquals( 0, block.getEthereumTransactions().size(),"Genesis Block must have 0 transactions");
+		    	assertFalse( reader.nextKeyValue(),"No further blocks in genesis Block");
 		    	reader.close();
 			}
 		 
@@ -202,17 +204,17 @@ public class EthereumFormatHadoopTest {
 
 		    List<InputSplit> splits = format.getSplits(job);
 		    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
-		    assertEquals("Only one split generated for block 1", 1, splits.size());
+		    assertEquals( 1, splits.size(),"Only one split generated for block 1");
 		    	RecordReader<BytesWritable, EthereumBlock> reader = format.createRecordReader(splits.get(0), context);
-			assertNotNull("Format returned  null RecordReader", reader);
+			assertNotNull( reader,"Format returned  null RecordReader");
 			reader.initialize(splits.get(0),context);
 			BytesWritable key = new BytesWritable();	
 			EthereumBlock block = new EthereumBlock();
-			assertTrue("Input Split for block 1 contains at least one block", reader.nextKeyValue());
+			assertTrue( reader.nextKeyValue(),"Input Split for block 1 contains at least one block");
 			key=reader.getCurrentKey();
 			block=reader.getCurrentValue();
-			assertEquals("Block 1 must have 0 transactions", 0, block.getEthereumTransactions().size());
-		    	assertFalse("No further blocks in block 1", reader.nextKeyValue());
+			assertEquals( 0, block.getEthereumTransactions().size(),"Block 1 must have 0 transactions");
+		    	assertFalse( reader.nextKeyValue(),"No further blocks in block 1");
 		    	reader.close();
 			}
 		 
@@ -230,17 +232,17 @@ public class EthereumFormatHadoopTest {
 
 		    List<InputSplit> splits = format.getSplits(job);
 		    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
-		    assertEquals("Only one split generated for block 1346406", 1, splits.size());
+		    assertEquals( 1, splits.size(),"Only one split generated for block 1346406");
 		    	RecordReader<BytesWritable, EthereumBlock> reader = format.createRecordReader(splits.get(0), context);
-			assertNotNull("Format returned  null RecordReader", reader);
+			assertNotNull( reader,"Format returned  null RecordReader");
 			reader.initialize(splits.get(0),context);
 			BytesWritable key = new BytesWritable();	
 			EthereumBlock block = new EthereumBlock();
-			assertTrue("Input Split for block 1346406 contains at least one block", reader.nextKeyValue());
+			assertTrue( reader.nextKeyValue(),"Input Split for block 1346406 contains at least one block");
 			key=reader.getCurrentKey();
 			block=reader.getCurrentValue();
-			assertEquals("Block 1346406 must have 6 transactions", 6, block.getEthereumTransactions().size());
-		    	assertFalse("No further blocks in block 1346406", reader.nextKeyValue());
+			assertEquals( 6, block.getEthereumTransactions().size(),"Block 1346406 must have 6 transactions");
+		    	assertFalse( reader.nextKeyValue(),"No further blocks in block 1346406");
 		    	reader.close();
 			}
 		 
@@ -257,17 +259,17 @@ public class EthereumFormatHadoopTest {
 
 		    List<InputSplit> splits = format.getSplits(job);
 		    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
-		    assertEquals("Only one split generated for block 3346406", 1, splits.size());
+		    assertEquals( 1, splits.size(),"Only one split generated for block 3346406");
 		    	RecordReader<BytesWritable, EthereumBlock> reader = format.createRecordReader(splits.get(0), context);
-			assertNotNull("Format returned  null RecordReader", reader);
+			assertNotNull( reader,"Format returned  null RecordReader");
 			reader.initialize(splits.get(0),context);
 			BytesWritable key = new BytesWritable();	
 			EthereumBlock block = new EthereumBlock();
-			assertTrue("Input Split for block 3346406 contains at least one block", reader.nextKeyValue());
+			assertTrue( reader.nextKeyValue(),"Input Split for block 3346406 contains at least one block");
 			key=reader.getCurrentKey();
 			block=reader.getCurrentValue();
-			assertEquals("Block 3346406 must have 7 transactions", 7, block.getEthereumTransactions().size());
-		    	assertFalse("No further blocks in block 3346406", reader.nextKeyValue());
+			assertEquals( 7, block.getEthereumTransactions().size(),"Block 3346406 must have 7 transactions");
+		    	assertFalse( reader.nextKeyValue(),"No further blocks in block 3346406");
 		    	reader.close();
 			}
 		 
@@ -285,9 +287,9 @@ public class EthereumFormatHadoopTest {
 
 		    List<InputSplit> splits = format.getSplits(job);
 		    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
-		    assertEquals("Only one split generated for block 0..10", 1, splits.size());
+		    assertEquals( 1, splits.size(),"Only one split generated for block 0..10");
 		    	RecordReader<BytesWritable, EthereumBlock> reader = format.createRecordReader(splits.get(0), context);
-			assertNotNull("Format returned  null RecordReader", reader);
+			assertNotNull( reader,"Format returned  null RecordReader");
 			reader.initialize(splits.get(0),context);
 			BytesWritable key = new BytesWritable();	
 			EthereumBlock block = new EthereumBlock();
@@ -297,9 +299,9 @@ public class EthereumFormatHadoopTest {
 					count++;
 				}
 			}
-			assertEquals("Block 0..10 contains 11 blocks",11,count);
+			assertEquals(11,count,"Block 0..10 contains 11 blocks");
 
-		    	assertFalse("No further blocks in block 0..10", reader.nextKeyValue());
+		    	assertFalse( reader.nextKeyValue(),"No further blocks in block 0..10");
 		    	reader.close();
 			}
 		 
@@ -316,9 +318,9 @@ public class EthereumFormatHadoopTest {
 
 		    List<InputSplit> splits = format.getSplits(job);
 		    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
-		    assertEquals("Only one split generated for block 3510000 .. 3510010", 1, splits.size());
+		    assertEquals( 1, splits.size(),"Only one split generated for block 3510000 .. 3510010");
 		    	RecordReader<BytesWritable, EthereumBlock> reader = format.createRecordReader(splits.get(0), context);
-			assertNotNull("Format returned  null RecordReader", reader);
+			assertNotNull( reader,"Format returned  null RecordReader");
 			reader.initialize(splits.get(0),context);
 			BytesWritable key = new BytesWritable();	
 			EthereumBlock block = new EthereumBlock();
@@ -328,9 +330,9 @@ public class EthereumFormatHadoopTest {
 					count++;
 				}
 			}
-			assertEquals("Block 3510000 .. 3510010 contains 11 blocks",11,count);
+			assertEquals(11,count,"Block 3510000 .. 3510010 contains 11 blocks");
 
-		    	assertFalse("No further blocks in block 3510000 .. 3510010", reader.nextKeyValue());
+		    	assertFalse( reader.nextKeyValue(),"No further blocks in block 3510000 .. 3510010");
 		    	reader.close();
 			}
 		 
@@ -347,17 +349,17 @@ public class EthereumFormatHadoopTest {
 
 		    List<InputSplit> splits = format.getSplits(job);
 		    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
-		    assertEquals("Only one split generated for block 1346406", 1, splits.size());
+		    assertEquals( 1, splits.size(),"Only one split generated for block 1346406");
 		    	RecordReader<BytesWritable, EthereumBlock> reader = format.createRecordReader(splits.get(0), context);
-			assertNotNull("Format returned  null RecordReader", reader);
+			assertNotNull( reader,"Format returned  null RecordReader");
 			reader.initialize(splits.get(0),context);
 			BytesWritable key = new BytesWritable();	
 			EthereumBlock block = new EthereumBlock();
-			assertTrue("Input Split for block 1346406 contains at least one block", reader.nextKeyValue());
+			assertTrue( reader.nextKeyValue(),"Input Split for block 1346406 contains at least one block");
 			key=reader.getCurrentKey();
 			block=reader.getCurrentValue();
-			assertEquals("Block 1346406 must have 6 transactions", 6, block.getEthereumTransactions().size());
-		    	assertFalse("No further blocks in block 1346406", reader.nextKeyValue());
+			assertEquals( 6, block.getEthereumTransactions().size(),"Block 1346406 must have 6 transactions");
+		    	assertFalse( reader.nextKeyValue(),"No further blocks in block 1346406");
 		    	reader.close();
 			}
 		 
@@ -374,17 +376,17 @@ public class EthereumFormatHadoopTest {
 
 		    List<InputSplit> splits = format.getSplits(job);
 		    TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
-		    assertEquals("Only one split generated for block 1346406", 1, splits.size());
+		    assertEquals( 1, splits.size(),"Only one split generated for block 1346406");
 		    	RecordReader<BytesWritable, EthereumBlock> reader = format.createRecordReader(splits.get(0), context);
-			assertNotNull("Format returned  null RecordReader", reader);
+			assertNotNull( reader,"Format returned  null RecordReader");
 			reader.initialize(splits.get(0),context);
 			BytesWritable key = new BytesWritable();	
 			EthereumBlock block = new EthereumBlock();
-			assertTrue("Input Split for block 1346406 contains at least one block", reader.nextKeyValue());
+			assertTrue( reader.nextKeyValue(),"Input Split for block 1346406 contains at least one block");
 			key=reader.getCurrentKey();
 			block=reader.getCurrentValue();
-			assertEquals("Block 1346406 must have 6 transactions", 6, block.getEthereumTransactions().size());
-		    	assertFalse("No further blocks in block 1346406", reader.nextKeyValue());
+			assertEquals( 6, block.getEthereumTransactions().size(),"Block 1346406 must have 6 transactions");
+		    	assertFalse( reader.nextKeyValue(),"No further blocks in block 1346406");
 		    	reader.close();
 			}
 		 

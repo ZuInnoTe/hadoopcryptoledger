@@ -15,18 +15,18 @@
 **/
 package org.zuinnote.hadoop.namecoin.format.common;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.zuinnote.hadoop.bitcoin.format.common.BitcoinBlock;
 import org.zuinnote.hadoop.bitcoin.format.common.BitcoinBlockReader;
 import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
@@ -44,10 +44,10 @@ public class NamecoinAuxPOWTest {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="namecoingenesis.blk";
 		String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-		assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+		assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 		File file = new File(fileNameGenesis);
-		assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-		assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+		assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+		assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
 	  }
 	 
 	 
@@ -56,10 +56,10 @@ public class NamecoinAuxPOWTest {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="namecoinblock.blk";
 		String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-		assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+		assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 		File file = new File(fileNameGenesis);
-		assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-		assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+		assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+		assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
 	  }
 	 
 	 @Test
@@ -67,10 +67,10 @@ public class NamecoinAuxPOWTest {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="namecointhreedifferentopinoneblock.blk";
 		String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-		assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+		assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 		File file = new File(fileNameGenesis);
-		assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-		assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+		assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+		assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
 	  }
 	 
 	 @Test
@@ -86,13 +86,13 @@ public class NamecoinAuxPOWTest {
 				FileInputStream fin = new FileInputStream(file);
 				bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct,auxPow);
 				BitcoinBlock theBitcoinBlock = bbr.readBlock();
-				assertNotNull("Namecoin Genesis Block contains a block",theBitcoinBlock);
-				assertNull("Namecoin Genesis Block has no AuxPowInformation",theBitcoinBlock.getAuxPOW());
-				assertEquals("Namecoin Genesis Block must contain exactly one transaction", 1, theBitcoinBlock.getTransactions().size());
-				assertEquals("Namecoin Genesis Block must contain exactly one transaction with one input", 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
-				assertEquals("Namecoin Genesis Block must contain exactly one transaction with one input and script length 84", 84, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
-				assertEquals("Namecoin Genesis Block must contain exactly one transaction with one output", 1, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
-				assertEquals("Namecoin Genesis Block must contain exactly one transaction with one output and script length 67", 67, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
+				assertNotNull(theBitcoinBlock,"Namecoin Genesis Block contains a block");
+				assertNull(theBitcoinBlock.getAuxPOW(),"Namecoin Genesis Block has no AuxPowInformation");
+				assertEquals( 1, theBitcoinBlock.getTransactions().size(),"Namecoin Genesis Block must contain exactly one transaction");
+				assertEquals( 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size(),"Namecoin Genesis Block must contain exactly one transaction with one input");
+				assertEquals( 84, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length,"Namecoin Genesis Block must contain exactly one transaction with one input and script length 84");
+				assertEquals( 1, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size(),"Namecoin Genesis Block must contain exactly one transaction with one output");
+				assertEquals( 67, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length,"Namecoin Genesis Block must contain exactly one transaction with one output and script length 67");
 			} finally {
 				if (bbr!=null) 
 					bbr.close();
@@ -112,9 +112,9 @@ public class NamecoinAuxPOWTest {
 				FileInputStream fin = new FileInputStream(file);
 				bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct,auxPow);
 				BitcoinBlock theBitcoinBlock = bbr.readBlock();
-				assertNotNull("Namecoin Three Different Op in One Block contains a block",theBitcoinBlock);
-				assertNotNull("Namecoin Three Different Op in Block has AuxPowInformation",theBitcoinBlock.getAuxPOW());
-				assertEquals("Namecoin Three Different Op in Block must contain exactly 7 transactions", 7, theBitcoinBlock.getTransactions().size());
+				assertNotNull(theBitcoinBlock,"Namecoin Three Different Op in One Block contains a block");
+				assertNotNull(theBitcoinBlock.getAuxPOW(),"Namecoin Three Different Op in Block has AuxPowInformation");
+				assertEquals( 7, theBitcoinBlock.getTransactions().size(),"Namecoin Three Different Op in Block must contain exactly 7 transactions");
 					} finally {
 				if (bbr!=null) 
 					bbr.close();

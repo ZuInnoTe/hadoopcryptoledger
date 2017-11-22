@@ -3,7 +3,8 @@ apply plugin: 'maven-publish'
 apply plugin: 'signing'
 apply plugin: 'jacoco'
 apply plugin: 'org.owasp.dependencycheck'
-apply plugin: "info.solidsoft.pitest"
+apply plugin: 'info.solidsoft.pitest'
+apply plugin: 'org.junit.platform.gradle.plugin'
 
 
 sourceCompatibility = 1.7
@@ -11,7 +12,7 @@ compileJava.options.encoding = 'UTF-8'
 
 group = "com.github.zuinnote"
 archivesBaseName = "hadoopcryptoledger-fileformat"
-version = "1.1.0"
+version = "1.1.1"
 
 
 jar {
@@ -32,6 +33,24 @@ jacocoTestReport {
         xml.enabled true
         csv.enabled true
     }
+}
+
+// Integrate JaCoCo for jUnit5
+project.afterEvaluate {
+    def junitPlatformTestTask = project.tasks.getByName('junitPlatformTest')
+
+    // configure jacoco to analyze the junitPlatformTest task
+    jacoco {
+        applyTo junitPlatformTestTask
+    }
+
+    // create junit platform jacoco task
+    project.task(type: JacocoReport, "junitPlatformJacocoReport",
+            {
+                sourceDirectories = files("./src/main")
+                classDirectories = files("$buildDir/classes/main")
+                executionData junitPlatformTestTask
+            })
 }
 
 configurations {
@@ -98,7 +117,7 @@ publishing {
         maven(MavenPublication) {
             groupId 'com.github.zuinnote'
             artifactId 'hadoopcryptoledger-fileformat'
-            version '1.1.0'
+            version '1.1.1'
 
             from components.java
         }
@@ -116,7 +135,8 @@ dependencies {
    // JSR 374 JSON processing API
    compile("javax.json:javax.json-api:1.1")
    // log4j2
-   provided("org.apache.logging.log4j:log4j-api:2.4.1")
+   provided("org.apache.logging.log4j:log4j-api:2.9.1")
    // test
-   testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.0.2'
+	testRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.0.2'
 }

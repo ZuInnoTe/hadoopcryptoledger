@@ -16,33 +16,25 @@
 
 package org.zuinnote.hadoop.bitcoin.format.mapred;
 
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertNotNull;
 
 
-import org.junit.Test;
-import org.junit.BeforeClass;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.After;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import java.nio.ByteBuffer;
-
 import org.apache.hadoop.fs.*;
-import org.apache.hadoop.conf.*;
 import org.apache.hadoop.io.*;
 import org.apache.hadoop.mapred.*;
 import org.apache.hadoop.util.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.apache.hadoop.io.compress.BZip2Codec;
 import org.apache.hadoop.io.compress.GzipCodec;
 import org.apache.hadoop.io.compress.CompressionCodec;
@@ -50,7 +42,6 @@ import org.apache.hadoop.io.compress.CompressionCodec;
 import org.zuinnote.hadoop.bitcoin.format.common.*;
 
 import org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinBlockFileInputFormat;
-import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
 
 /**
 *
@@ -61,23 +52,23 @@ private static JobConf defaultConf = new JobConf();
 private static FileSystem localFs = null; 
 private static Reporter reporter = Reporter.NULL;
 
-   @BeforeClass
+   @BeforeAll
     public static void oneTimeSetUp() throws IOException {
       // one-time initialization code   
       defaultConf.set("fs.defaultFS", "file:///");
       localFs = FileSystem.getLocal(defaultConf);
     }
 
-    @AfterClass
+    @AfterAll
     public static void oneTimeTearDown() {
         // one-time cleanup code
       }
 
-    @Before
+    @BeforeEach
     public void setUp() {
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
        
     }
@@ -87,10 +78,10 @@ private static Reporter reporter = Reporter.NULL;
 	ClassLoader classLoader = getClass().getClassLoader();
 	String fileName="genesis.blk";
 	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 	File file = new File(fileNameGenesis);
-	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+	assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
   }
 
 
@@ -99,10 +90,10 @@ private static Reporter reporter = Reporter.NULL;
 	ClassLoader classLoader = getClass().getClassLoader();
 	String fileName="version1.blk";
 	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 	File file = new File(fileNameGenesis);
-	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+	assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
   }
 
  @Test
@@ -110,10 +101,10 @@ private static Reporter reporter = Reporter.NULL;
 	ClassLoader classLoader = getClass().getClassLoader();
 	String fileName="version2.blk";
 	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 	File file = new File(fileNameGenesis);
-	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+	assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
   }
 
 
@@ -122,10 +113,10 @@ private static Reporter reporter = Reporter.NULL;
 	ClassLoader classLoader = getClass().getClassLoader();
 	String fileName="version3.blk";
 	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 	File file = new File(fileNameGenesis);
-	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+	assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
   }
 
  @Test
@@ -133,10 +124,10 @@ private static Reporter reporter = Reporter.NULL;
 	ClassLoader classLoader = getClass().getClassLoader();
 	String fileName="version4.blk";
 	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 	File file = new File(fileNameGenesis);
-	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+	assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
   }
 
  @Test
@@ -144,10 +135,10 @@ private static Reporter reporter = Reporter.NULL;
 	ClassLoader classLoader = getClass().getClassLoader();
 	String fileName="version4comp.blk.gz";
 	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 	File file = new File(fileNameGenesis);
-	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+	assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
   }
 
  @Test
@@ -155,10 +146,10 @@ private static Reporter reporter = Reporter.NULL;
 	ClassLoader classLoader = getClass().getClassLoader();
 	String fileName="version4comp.blk.bz2";
 	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 	File file = new File(fileNameGenesis);
-	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+	assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
   }
 
 
@@ -167,10 +158,10 @@ private static Reporter reporter = Reporter.NULL;
 	ClassLoader classLoader = getClass().getClassLoader();
 	String fileName="reqseekversion1.blk";
 	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 	File file = new File(fileNameGenesis);
-	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+	assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
   }
 
  @Test
@@ -178,10 +169,10 @@ private static Reporter reporter = Reporter.NULL;
 	ClassLoader classLoader = getClass().getClassLoader();
 	String fileName="multiblock.blk";
 	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 	File file = new File(fileNameGenesis);
-	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+	assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
   }
 
 
@@ -198,16 +189,16 @@ private static Reporter reporter = Reporter.NULL;
     BitcoinRawBlockFileInputFormat format = new BitcoinRawBlockFileInputFormat();
     format.configure(job);
     InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for genesis block", 1, inputSplits.length);
+    assertEquals( 1, inputSplits.length,"Only one split generated for genesis block");
     	RecordReader<BytesWritable, BytesWritable> reader = format.getRecordReader(inputSplits[0], job, reporter);
-	assertNotNull("Format returned  null RecordReader", reader);
+	assertNotNull( reader,"Format returned  null RecordReader");
 	BytesWritable genesisKey = new BytesWritable();	
 	BytesWritable genesisBlock = new BytesWritable();
-	assertTrue("Input Split for genesis block contains at least one block", reader.next(genesisKey,genesisBlock));
-	assertEquals("Genesis Block must have size of 293", 293, genesisBlock.getLength());
+	assertTrue( reader.next(genesisKey,genesisBlock),"Input Split for genesis block contains at least one block");
+	assertEquals( 293, genesisBlock.getLength(),"Genesis Block must have size of 293");
 	BytesWritable emptyKey = new BytesWritable();
     	BytesWritable emptyBlock = new BytesWritable();
-    	assertFalse("No further blocks in genesis Block", reader.next(emptyKey,emptyBlock));
+    	assertFalse( reader.next(emptyKey,emptyBlock),"No further blocks in genesis Block");
 	reader.close();
   }
 
@@ -222,16 +213,16 @@ private static Reporter reporter = Reporter.NULL;
     BitcoinRawBlockFileInputFormat format = new BitcoinRawBlockFileInputFormat();
     format.configure(job);
     InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for block version 1", 1, inputSplits.length);
+    assertEquals( 1, inputSplits.length,"Only one split generated for block version 1");
     	RecordReader<BytesWritable, BytesWritable> reader = format.getRecordReader(inputSplits[0], job, reporter);
-	assertNotNull("Format returned  null RecordReader", reader);
+	assertNotNull( reader,"Format returned  null RecordReader");
 	BytesWritable key = new BytesWritable();	
 	BytesWritable block = new BytesWritable();
-	assertTrue("Input Split for block version contains at least one block", reader.next(key,block));
-	assertEquals("Random block version 1  must have size of 482 bytes", 482, block.getLength());
+	assertTrue( reader.next(key,block),"Input Split for block version contains at least one block");
+	assertEquals( 482, block.getLength(),"Random block version 1  must have size of 482 bytes");
 	BytesWritable emptyKey = new BytesWritable();
     	BytesWritable emptyBlock = new BytesWritable();
-    	assertFalse("No further blocks in block version 1", reader.next(emptyKey,emptyBlock));
+    	assertFalse( reader.next(emptyKey,emptyBlock),"No further blocks in block version 1");
 	reader.close();
   }
 
@@ -247,16 +238,16 @@ private static Reporter reporter = Reporter.NULL;
     BitcoinRawBlockFileInputFormat format = new BitcoinRawBlockFileInputFormat();
     format.configure(job);
     InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for block version 2", 1, inputSplits.length);
+    assertEquals( 1, inputSplits.length,"Only one split generated for block version 2");
     	RecordReader<BytesWritable, BytesWritable> reader = format.getRecordReader(inputSplits[0], job, reporter);
-	assertNotNull("Format returned  null RecordReader", reader);
+	assertNotNull( reader,"Format returned  null RecordReader");
 	BytesWritable key = new BytesWritable();	
 	BytesWritable block = new BytesWritable();
-	assertTrue("Input Split for block version contains at least one block", reader.next(key,block));
-	assertEquals("Random block version 2  must have size of 191.198 bytes", 191198, block.getLength());
+	assertTrue( reader.next(key,block),"Input Split for block version contains at least one block");
+	assertEquals( 191198, block.getLength(),"Random block version 2  must have size of 191.198 bytes");
 	BytesWritable emptyKey = new BytesWritable();
     	BytesWritable emptyBlock = new BytesWritable();
-    	assertFalse("No further blocks in block version 2", reader.next(emptyKey,emptyBlock));
+    	assertFalse( reader.next(emptyKey,emptyBlock),"No further blocks in block version 2");
 	reader.close();
   }
 
@@ -272,16 +263,16 @@ private static Reporter reporter = Reporter.NULL;
     BitcoinRawBlockFileInputFormat format = new BitcoinRawBlockFileInputFormat();
     format.configure(job);
     InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for block version 3", 1, inputSplits.length);
+    assertEquals( 1, inputSplits.length,"Only one split generated for block version 3");
     	RecordReader<BytesWritable, BytesWritable> reader = format.getRecordReader(inputSplits[0], job, reporter);
-	assertNotNull("Format returned  null RecordReader", reader);
+	assertNotNull( reader,"Format returned  null RecordReader");
 	BytesWritable key = new BytesWritable();	
 	BytesWritable block = new BytesWritable();
-	assertTrue("Input Split for block version contains at least one block", reader.next(key,block));
-	assertEquals("Random block version 3 must have size of 932.199 bytes", 932199, block.getLength());
+	assertTrue( reader.next(key,block),"Input Split for block version contains at least one block");
+	assertEquals( 932199, block.getLength(),"Random block version 3 must have size of 932.199 bytes");
 	BytesWritable emptyKey = new BytesWritable();
     	BytesWritable emptyBlock = new BytesWritable();
-    	assertFalse("No further blocks in block version 3", reader.next(emptyKey,emptyBlock));
+    	assertFalse( reader.next(emptyKey,emptyBlock),"No further blocks in block version 3");
 	reader.close();
   }
 
@@ -296,16 +287,16 @@ private static Reporter reporter = Reporter.NULL;
     BitcoinRawBlockFileInputFormat format = new BitcoinRawBlockFileInputFormat();
     format.configure(job);
     InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for block version 4", 1, inputSplits.length);
+    assertEquals( 1, inputSplits.length,"Only one split generated for block version 4");
     	RecordReader<BytesWritable, BytesWritable> reader = format.getRecordReader(inputSplits[0], job, reporter);
-	assertNotNull("Format returned  null RecordReader", reader);
+	assertNotNull( reader,"Format returned  null RecordReader");
 	BytesWritable key = new BytesWritable();	
 	BytesWritable block = new BytesWritable();
-	assertTrue("Input Split for block version contains at least one block", reader.next(key,block));
-	assertEquals("Random block version 4 must have a size of 998.039 bytes", 998039, block.getLength());
+	assertTrue( reader.next(key,block),"Input Split for block version contains at least one block");
+	assertEquals( 998039, block.getLength(),"Random block version 4 must have a size of 998.039 bytes");
 	BytesWritable emptyKey = new BytesWritable();
     	BytesWritable emptyBlock = new BytesWritable();
-    	assertFalse("No further blocks in block version 4", reader.next(emptyKey,emptyBlock));
+    	assertFalse( reader.next(emptyKey,emptyBlock),"No further blocks in block version 4");
 	reader.close();
   }
 
@@ -320,16 +311,16 @@ private static Reporter reporter = Reporter.NULL;
     BitcoinRawBlockFileInputFormat format = new BitcoinRawBlockFileInputFormat();
     format.configure(job);
     InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for block requiring seek version 1", 1, inputSplits.length);
+    assertEquals( 1, inputSplits.length,"Only one split generated for block requiring seek version 1");
     	RecordReader<BytesWritable, BytesWritable> reader = format.getRecordReader(inputSplits[0], job, reporter);
-	assertNotNull("Format returned  null RecordReader", reader);
+	assertNotNull( reader,"Format returned  null RecordReader");
 	BytesWritable key = new BytesWritable();	
 	BytesWritable block = new BytesWritable();
-	assertTrue("Input Split for block version contains at least one block", reader.next(key,block));
-	assertEquals("Random block requiring seek version 1 must have a size of 482 bytes", 482, block.getLength());
+	assertTrue( reader.next(key,block),"Input Split for block version contains at least one block");
+	assertEquals( 482, block.getLength(),"Random block requiring seek version 1 must have a size of 482 bytes");
 	BytesWritable emptyKey = new BytesWritable();
     	BytesWritable emptyBlock = new BytesWritable();
-    	assertFalse("No further blocks in block requiring seek version 1", reader.next(emptyKey,emptyBlock));
+    	assertFalse( reader.next(emptyKey,emptyBlock),"No further blocks in block requiring seek version 1");
 	reader.close();
   }
 
@@ -344,20 +335,20 @@ private static Reporter reporter = Reporter.NULL;
     BitcoinRawBlockFileInputFormat format = new BitcoinRawBlockFileInputFormat();
     format.configure(job);
     InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for multiblock", 1, inputSplits.length);
+    assertEquals( 1, inputSplits.length,"Only one split generated for multiblock");
     	RecordReader<BytesWritable, BytesWritable> reader = format.getRecordReader(inputSplits[0], job, reporter);
-	assertNotNull("Format returned  null RecordReader", reader);
+	assertNotNull( reader,"Format returned  null RecordReader");
 	BytesWritable key = new BytesWritable();	
 	BytesWritable block = new BytesWritable();
-	assertTrue("Input Split for multi block contains the genesis block", reader.next(key,block));
-	assertEquals("Genesis Block must have size of 293", 293, block.getLength());
-	assertTrue("Input Split for block version contains block version 1", reader.next(key,block));
-	assertEquals("Random block version 1  must have size of 482 bytes", 482, block.getLength());
-	assertTrue("Input Split for block version contains block version 2", reader.next(key,block));
-	assertEquals("Random block version 2  must have size of 191.198 bytes", 191198, block.getLength());
+	assertTrue( reader.next(key,block),"Input Split for multi block contains the genesis block");
+	assertEquals( 293, block.getLength(),"Genesis Block must have size of 293");
+	assertTrue( reader.next(key,block),"Input Split for block version contains block version 1");
+	assertEquals( 482, block.getLength(),"Random block version 1  must have size of 482 bytes");
+	assertTrue( reader.next(key,block),"Input Split for block version contains block version 2");
+	assertEquals( 191198, block.getLength(),"Random block version 2  must have size of 191.198 bytes");
 	BytesWritable emptyKey = new BytesWritable();
     	BytesWritable emptyBlock = new BytesWritable();
-    	assertFalse("No further blocks in multi block", reader.next(emptyKey,emptyBlock));
+    	assertFalse( reader.next(emptyKey,emptyBlock),"No further blocks in multi block");
 	reader.close();
   }
 
@@ -372,16 +363,16 @@ private static Reporter reporter = Reporter.NULL;
     BitcoinBlockFileInputFormat format = new BitcoinBlockFileInputFormat();
     format.configure(job);
     InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for genesis block", 1, inputSplits.length);
+    assertEquals( 1, inputSplits.length,"Only one split generated for genesis block");
     	RecordReader<BytesWritable, BitcoinBlock> reader = format.getRecordReader(inputSplits[0], job, reporter);
-	assertNotNull("Format returned  null RecordReader", reader);
+	assertNotNull( reader,"Format returned  null RecordReader");
 	BytesWritable genesisKey = new BytesWritable();	
 	BitcoinBlock genesisBlock = new BitcoinBlock();
-	assertTrue("Input Split for genesis block contains at least one block", reader.next(genesisKey,genesisBlock));
-	assertEquals("Genesis Block must contain exactly one transaction", 1, genesisBlock.getTransactions().size());
+	assertTrue( reader.next(genesisKey,genesisBlock),"Input Split for genesis block contains at least one block");
+	assertEquals( 1, genesisBlock.getTransactions().size(),"Genesis Block must contain exactly one transaction");
 	BytesWritable emptyKey = new BytesWritable();
     	BitcoinBlock emptyBlock = new BitcoinBlock();
-    	assertFalse("No further blocks in genesis Block", reader.next(emptyKey,emptyBlock));
+    	assertFalse( reader.next(emptyKey,emptyBlock),"No further blocks in genesis Block");
 	reader.close();
   }
 
@@ -396,16 +387,16 @@ private static Reporter reporter = Reporter.NULL;
     BitcoinBlockFileInputFormat format = new BitcoinBlockFileInputFormat();
     format.configure(job);
     InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for block version 1", 1, inputSplits.length);
+    assertEquals( 1, inputSplits.length,"Only one split generated for block version 1");
     	RecordReader<BytesWritable, BitcoinBlock> reader = format.getRecordReader(inputSplits[0], job, reporter);
-	assertNotNull("Format returned  null RecordReader", reader);
+	assertNotNull( reader,"Format returned  null RecordReader");
 	BytesWritable key = new BytesWritable();	
 	BitcoinBlock block = new BitcoinBlock();
-	assertTrue("Input Split for block version contains at least one block", reader.next(key,block));
-	assertEquals("Random block version 1  must contain exactly two transactions", 2, block.getTransactions().size());
+	assertTrue( reader.next(key,block),"Input Split for block version contains at least one block");
+	assertEquals( 2, block.getTransactions().size(),"Random block version 1  must contain exactly two transactions");
 	BytesWritable emptyKey = new BytesWritable();
     	BitcoinBlock emptyBlock = new BitcoinBlock();
-    	assertFalse("No further blocks in block version 1", reader.next(emptyKey,emptyBlock));
+    	assertFalse( reader.next(emptyKey,emptyBlock),"No further blocks in block version 1");
 	reader.close();
   }
 
@@ -421,16 +412,16 @@ private static Reporter reporter = Reporter.NULL;
     BitcoinBlockFileInputFormat format = new BitcoinBlockFileInputFormat();
     format.configure(job);
     InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for block version 2", 1, inputSplits.length);
+    assertEquals( 1, inputSplits.length,"Only one split generated for block version 2");
     	RecordReader<BytesWritable, BitcoinBlock> reader = format.getRecordReader(inputSplits[0], job, reporter);
-	assertNotNull("Format returned  null RecordReader", reader);
+	assertNotNull( reader,"Format returned  null RecordReader");
 	BytesWritable key = new BytesWritable();	
 	BitcoinBlock block = new BitcoinBlock();
-	assertTrue("Input Split for block version contains at least one block", reader.next(key,block));
-	assertEquals("Random block version 2  must contain exactly 343 transactions", 343, block.getTransactions().size());
+	assertTrue( reader.next(key,block),"Input Split for block version contains at least one block");
+	assertEquals( 343, block.getTransactions().size(),"Random block version 2  must contain exactly 343 transactions");
 	BytesWritable emptyKey = new BytesWritable();
     	BitcoinBlock emptyBlock = new BitcoinBlock();
-    	assertFalse("No further blocks in block version 2", reader.next(emptyKey,emptyBlock));
+    	assertFalse( reader.next(emptyKey,emptyBlock),"No further blocks in block version 2");
 	reader.close();
   }
 
@@ -446,16 +437,16 @@ private static Reporter reporter = Reporter.NULL;
     BitcoinBlockFileInputFormat format = new BitcoinBlockFileInputFormat();
     format.configure(job);
     InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for block version 3", 1, inputSplits.length);
+    assertEquals( 1, inputSplits.length,"Only one split generated for block version 3");
     	RecordReader<BytesWritable, BitcoinBlock> reader = format.getRecordReader(inputSplits[0], job, reporter);
-	assertNotNull("Format returned  null RecordReader", reader);
+	assertNotNull( reader,"Format returned  null RecordReader");
 	BytesWritable key = new BytesWritable();	
 	BitcoinBlock block = new BitcoinBlock();
-	assertTrue("Input Split for block version contains at least one block", reader.next(key,block));
-	assertEquals("Random block version 3 must contain exactly 1645 transactions", 1645, block.getTransactions().size());
+	assertTrue( reader.next(key,block),"Input Split for block version contains at least one block");
+	assertEquals( 1645, block.getTransactions().size(),"Random block version 3 must contain exactly 1645 transactions");
 	BytesWritable emptyKey = new BytesWritable();
     	BitcoinBlock emptyBlock = new BitcoinBlock();
-    	assertFalse("No further blocks in block version 3", reader.next(emptyKey,emptyBlock));
+    	assertFalse( reader.next(emptyKey,emptyBlock),"No further blocks in block version 3");
 	reader.close();
   }
 
@@ -470,16 +461,16 @@ private static Reporter reporter = Reporter.NULL;
     BitcoinBlockFileInputFormat format = new BitcoinBlockFileInputFormat();
     format.configure(job);
     InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for block version 4", 1, inputSplits.length);
+    assertEquals( 1, inputSplits.length,"Only one split generated for block version 4");
     	RecordReader<BytesWritable, BitcoinBlock> reader = format.getRecordReader(inputSplits[0], job, reporter);
-	assertNotNull("Format returned  null RecordReader", reader);
+	assertNotNull( reader,"Format returned  null RecordReader");
 	BytesWritable key = new BytesWritable();	
 	BitcoinBlock block = new BitcoinBlock();
-	assertTrue("Input Split for block version contains at least one block", reader.next(key,block));
-	assertEquals("Random block version 4 must contain exactly 936 transactions", 936, block.getTransactions().size());
+	assertTrue( reader.next(key,block),"Input Split for block version contains at least one block");
+	assertEquals( 936, block.getTransactions().size(),"Random block version 4 must contain exactly 936 transactions");
 	BytesWritable emptyKey = new BytesWritable();
     	BitcoinBlock emptyBlock = new BitcoinBlock();
-    	assertFalse("No further blocks in block version 4", reader.next(emptyKey,emptyBlock));
+    	assertFalse( reader.next(emptyKey,emptyBlock),"No further blocks in block version 4");
 	reader.close();
   }
 
@@ -494,16 +485,16 @@ private static Reporter reporter = Reporter.NULL;
     BitcoinBlockFileInputFormat format = new BitcoinBlockFileInputFormat();
     format.configure(job);
     InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for block requiring seek version 1", 1, inputSplits.length);
+    assertEquals( 1, inputSplits.length,"Only one split generated for block requiring seek version 1");
     	RecordReader<BytesWritable, BitcoinBlock> reader = format.getRecordReader(inputSplits[0], job, reporter);
-	assertNotNull("Format returned  null RecordReader", reader);
+	assertNotNull( reader,"Format returned  null RecordReader");
 	BytesWritable key = new BytesWritable();	
 	BitcoinBlock block = new BitcoinBlock();
-	assertTrue("Input Split for block version contains at least one block", reader.next(key,block));
-	assertEquals("Random block requiring seek version 1 must contain exactly two transactions", 2, block.getTransactions().size());
+	assertTrue( reader.next(key,block),"Input Split for block version contains at least one block");
+	assertEquals( 2, block.getTransactions().size(),"Random block requiring seek version 1 must contain exactly two transactions");
 	BytesWritable emptyKey = new BytesWritable();
     	BitcoinBlock emptyBlock = new BitcoinBlock();
-    	assertFalse("No further blocks in block requiring seek version 1", reader.next(emptyKey,emptyBlock));
+    	assertFalse( reader.next(emptyKey,emptyBlock),"No further blocks in block requiring seek version 1");
 	reader.close();
   }
 
@@ -518,20 +509,20 @@ private static Reporter reporter = Reporter.NULL;
     BitcoinBlockFileInputFormat format = new BitcoinBlockFileInputFormat();
     format.configure(job);
     InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for multiblock", 1, inputSplits.length);
+    assertEquals( 1, inputSplits.length,"Only one split generated for multiblock");
     	RecordReader<BytesWritable, BitcoinBlock> reader = format.getRecordReader(inputSplits[0], job, reporter);
-	assertNotNull("Format returned  null RecordReader", reader);
+	assertNotNull( reader,"Format returned  null RecordReader");
 	BytesWritable key = new BytesWritable();	
 	BitcoinBlock block = new BitcoinBlock();
-	assertTrue("Input Split for multi block contains the genesis block", reader.next(key,block));
-	assertEquals("Genesis Block must contain exactly one transaction", 1, block.getTransactions().size());
-	assertTrue("Input Split for block version contains block version 1", reader.next(key,block));
-	assertEquals("Random block version 1  must contain exactly two transactions", 2, block.getTransactions().size());
-	assertTrue("Input Split for block version contains at least one block", reader.next(key,block));
-	assertEquals("Random block version 2  must contain exactly 343 transactions", 343, block.getTransactions().size());
+	assertTrue( reader.next(key,block),"Input Split for multi block contains the genesis block");
+	assertEquals( 1, block.getTransactions().size(),"Genesis Block must contain exactly one transaction");
+	assertTrue( reader.next(key,block),"Input Split for block version contains block version 1");
+	assertEquals( 2, block.getTransactions().size(),"Random block version 1  must contain exactly two transactions");
+	assertTrue( reader.next(key,block),"Input Split for block version contains at least one block");
+	assertEquals( 343, block.getTransactions().size(),"Random block version 2  must contain exactly 343 transactions");
 	BytesWritable emptyKey = new BytesWritable();
     	BitcoinBlock emptyBlock = new BitcoinBlock();
-    	assertFalse("No further blocks in multi block", reader.next(emptyKey,emptyBlock));
+    	assertFalse( reader.next(emptyKey,emptyBlock),"No further blocks in multi block");
 	reader.close();
   }
 
@@ -547,16 +538,16 @@ private static Reporter reporter = Reporter.NULL;
     BitcoinTransactionFileInputFormat format = new BitcoinTransactionFileInputFormat();
     format.configure(job);
     InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for genesis block", 1, inputSplits.length);
+    assertEquals( 1, inputSplits.length,"Only one split generated for genesis block");
     	RecordReader<BytesWritable, BitcoinTransaction> reader = format.getRecordReader(inputSplits[0], job, reporter);
-	assertNotNull("Format returned  null RecordReader", reader);
+	assertNotNull( reader,"Format returned  null RecordReader");
 	BytesWritable key = new BytesWritable();	
 	BitcoinTransaction transaction = new BitcoinTransaction();
 	int transactCount=0;
 	while (reader.next(key,transaction)) {
 		transactCount++;
 	}
-	assertEquals("Genesis Block  must contain exactly one transactions", 1, transactCount);
+	assertEquals( 1, transactCount,"Genesis Block  must contain exactly one transactions");
 	reader.close();
   }
 
@@ -571,16 +562,16 @@ private static Reporter reporter = Reporter.NULL;
     BitcoinTransactionFileInputFormat format = new BitcoinTransactionFileInputFormat();
     format.configure(job);
     InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for block version 1", 1, inputSplits.length);
+    assertEquals( 1, inputSplits.length,"Only one split generated for block version 1");
     	RecordReader<BytesWritable, BitcoinTransaction> reader = format.getRecordReader(inputSplits[0], job, reporter);
-	assertNotNull("Format returned  null RecordReader", reader);
+	assertNotNull( reader,"Format returned  null RecordReader");
 	BytesWritable key = new BytesWritable();	
 	BitcoinTransaction transaction = new BitcoinTransaction();
 	int transactCount=0;
 	while (reader.next(key,transaction)) {
 		transactCount++;
 	}
-	assertEquals("Block version 1 must contain exactly two transactions", 2, transactCount);
+	assertEquals( 2, transactCount,"Block version 1 must contain exactly two transactions");
 	reader.close();
   }
 
@@ -595,16 +586,16 @@ private static Reporter reporter = Reporter.NULL;
     BitcoinTransactionFileInputFormat format = new BitcoinTransactionFileInputFormat();
     format.configure(job);
     InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for block version 2", 1, inputSplits.length);
+    assertEquals( 1, inputSplits.length,"Only one split generated for block version 2");
     	RecordReader<BytesWritable, BitcoinTransaction> reader = format.getRecordReader(inputSplits[0], job, reporter);
-	assertNotNull("Format returned  null RecordReader", reader);
+	assertNotNull( reader,"Format returned  null RecordReader");
 	BytesWritable key = new BytesWritable();	
 	BitcoinTransaction transaction = new BitcoinTransaction();
 	int transactCount=0;
 	while (reader.next(key,transaction)) {
 		transactCount++;
 	}
-	assertEquals("Block version 2 must contain exactly 343 transactions", 343, transactCount);
+	assertEquals( 343, transactCount,"Block version 2 must contain exactly 343 transactions");
 	reader.close();
   }
 
@@ -619,16 +610,16 @@ private static Reporter reporter = Reporter.NULL;
     BitcoinTransactionFileInputFormat format = new BitcoinTransactionFileInputFormat();
     format.configure(job);
     InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for block version 3", 1, inputSplits.length);
+    assertEquals( 1, inputSplits.length,"Only one split generated for block version 3");
     	RecordReader<BytesWritable, BitcoinTransaction> reader = format.getRecordReader(inputSplits[0], job, reporter);
-	assertNotNull("Format returned  null RecordReader", reader);
+	assertNotNull( reader,"Format returned  null RecordReader");
 	BytesWritable key = new BytesWritable();	
 	BitcoinTransaction transaction = new BitcoinTransaction();
 	int transactCount=0;
 	while (reader.next(key,transaction)) {
 		transactCount++;
 	}
-	assertEquals("Block version 3 must contain exactly 1645 transactions", 1645, transactCount);
+	assertEquals( 1645, transactCount,"Block version 3 must contain exactly 1645 transactions");
 	reader.close();
   }
 
@@ -643,16 +634,16 @@ private static Reporter reporter = Reporter.NULL;
     BitcoinTransactionFileInputFormat format = new BitcoinTransactionFileInputFormat();
     format.configure(job);
     InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for block version 4", 1, inputSplits.length);
+    assertEquals( 1, inputSplits.length,"Only one split generated for block version 4");
     	RecordReader<BytesWritable, BitcoinTransaction> reader = format.getRecordReader(inputSplits[0], job, reporter);
-	assertNotNull("Format returned  null RecordReader", reader);
+	assertNotNull( reader,"Format returned  null RecordReader");
 	BytesWritable key = new BytesWritable();	
 	BitcoinTransaction transaction = new BitcoinTransaction();
 	int transactCount=0;
 	while (reader.next(key,transaction)) {
 		transactCount++;
 	}
-	assertEquals("Block version 4 must contain exactly 936 transactions", 936, transactCount);
+	assertEquals( 936, transactCount,"Block version 4 must contain exactly 936 transactions");
 	reader.close();
   }
 
@@ -667,16 +658,16 @@ private static Reporter reporter = Reporter.NULL;
     BitcoinTransactionFileInputFormat format = new BitcoinTransactionFileInputFormat();
     format.configure(job);
     InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for block version 1 requiring seek", 1, inputSplits.length);
+    assertEquals( 1, inputSplits.length,"Only one split generated for block version 1 requiring seek");
     	RecordReader<BytesWritable, BitcoinTransaction> reader = format.getRecordReader(inputSplits[0], job, reporter);
-	assertNotNull("Format returned  null RecordReader", reader);
+	assertNotNull( reader,"Format returned  null RecordReader");
 	BytesWritable key = new BytesWritable();	
 	BitcoinTransaction transaction = new BitcoinTransaction();
 	int transactCount=0;
 	while (reader.next(key,transaction)) {
 		transactCount++;
 	}
-	assertEquals("Block version 1 requiring seek must contain exactly two transactions", 2, transactCount);
+	assertEquals( 2, transactCount,"Block version 1 requiring seek must contain exactly two transactions");
 	reader.close();
   }
 
@@ -691,16 +682,16 @@ private static Reporter reporter = Reporter.NULL;
     BitcoinTransactionFileInputFormat format = new BitcoinTransactionFileInputFormat();
     format.configure(job);
     InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for multi block", 1, inputSplits.length);
+    assertEquals( 1, inputSplits.length,"Only one split generated for multi block");
     	RecordReader<BytesWritable, BitcoinTransaction> reader = format.getRecordReader(inputSplits[0], job, reporter);
-	assertNotNull("Format returned  null RecordReader", reader);
+	assertNotNull( reader,"Format returned  null RecordReader");
 	BytesWritable key = new BytesWritable();	
 	BitcoinTransaction transaction = new BitcoinTransaction();
 	int transactCount=0;
 	while (reader.next(key,transaction)) {
 		transactCount++;
 	}
-	assertEquals("Multiblock must contain exactly 1+2+343=346 transactions", 346, transactCount);
+	assertEquals( 346, transactCount,"Multiblock must contain exactly 1+2+343=346 transactions");
 	reader.close();
   }
 
@@ -717,16 +708,16 @@ private static Reporter reporter = Reporter.NULL;
     BitcoinRawBlockFileInputFormat format = new BitcoinRawBlockFileInputFormat();
     format.configure(job);
     InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for compressed block", 1, inputSplits.length);
+    assertEquals( 1, inputSplits.length,"Only one split generated for compressed block");
     	RecordReader<BytesWritable, BytesWritable> reader = format.getRecordReader(inputSplits[0], job, reporter);
-	assertNotNull("Format returned  null RecordReader", reader);
+	assertNotNull( reader,"Format returned  null RecordReader");
 	BytesWritable key = new BytesWritable();	
 	BytesWritable block = new BytesWritable();
-	assertTrue("Input Split for block version contains at least one block", reader.next(key,block));
-	assertEquals("Compressed block must have a size of 998.039 bytes", 998039, block.getLength());
+	assertTrue( reader.next(key,block),"Input Split for block version contains at least one block");
+	assertEquals( 998039, block.getLength(),"Compressed block must have a size of 998.039 bytes");
 	BytesWritable emptyKey = new BytesWritable();
     	BytesWritable emptyBlock = new BytesWritable();
-    	assertFalse("No further blocks in compressed block", reader.next(emptyKey,emptyBlock));
+    	assertFalse( reader.next(emptyKey,emptyBlock),"No further blocks in compressed block");
 	reader.close();
   }
 
@@ -743,19 +734,19 @@ private static Reporter reporter = Reporter.NULL;
     BitcoinBlockFileInputFormat format = new BitcoinBlockFileInputFormat();
     format.configure(job);
     InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for compressed block", 1, inputSplits.length);
+    assertEquals( 1, inputSplits.length,"Only one split generated for compressed block");
     	RecordReader<BytesWritable, BitcoinBlock> reader = format.getRecordReader(inputSplits[0], job, reporter);
-	assertNotNull("Format returned  null RecordReader", reader);
+	assertNotNull( reader,"Format returned  null RecordReader");
 	BytesWritable key = new BytesWritable();	
 	BitcoinBlock block = new BitcoinBlock();
-	assertTrue("Input Split for block version contains at least one block", reader.next(key,block));
-	assertEquals("Compressed block must have at least 936 transactions", 936, block.getTransactions().size());
-	assertEquals("Compressed block must contain exactly 936 transactions of which the first has one input and script length 4", 4, block.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
-	assertEquals("Compressed block must contain exactly 936 transactions of which the first has two outputs", 2, block.getTransactions().get(0).getListOfOutputs().size());
-	assertEquals("Compressed block must contain exactly 936 transactions of which the first has two output and the first output script length 25", 25, block.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
+	assertTrue( reader.next(key,block),"Input Split for block version contains at least one block");
+	assertEquals( 936, block.getTransactions().size(),"Compressed block must have at least 936 transactions");
+	assertEquals( 4, block.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length,"Compressed block must contain exactly 936 transactions of which the first has one input and script length 4");
+	assertEquals( 2, block.getTransactions().get(0).getListOfOutputs().size(),"Compressed block must contain exactly 936 transactions of which the first has two outputs");
+	assertEquals( 25, block.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length,"Compressed block must contain exactly 936 transactions of which the first has two output and the first output script length 25");
 	BytesWritable emptyKey = new BytesWritable();
     	BitcoinBlock emptyBlock = new BitcoinBlock();
-    	assertFalse("No further blocks in compressed block", reader.next(emptyKey,emptyBlock));
+    	assertFalse( reader.next(emptyKey,emptyBlock),"No further blocks in compressed block");
 	reader.close();	
   }
 
@@ -774,16 +765,16 @@ private static Reporter reporter = Reporter.NULL;
     BitcoinTransactionFileInputFormat format = new BitcoinTransactionFileInputFormat();
     format.configure(job);
     InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for compressed block", 1, inputSplits.length);
+    assertEquals( 1, inputSplits.length,"Only one split generated for compressed block");
     	RecordReader<BytesWritable, BitcoinTransaction> reader = format.getRecordReader(inputSplits[0], job, reporter);
-	assertNotNull("Format returned  null RecordReader", reader);
+	assertNotNull( reader,"Format returned  null RecordReader");
 	BytesWritable key = new BytesWritable();	
 	BitcoinTransaction transaction = new BitcoinTransaction();
 	int transactCount=0;
 	while (reader.next(key,transaction)) {
 		transactCount++;
 	}
- 	assertEquals("Compressed block must have at least 936 transactions", 936, transactCount);
+ 	assertEquals( 936, transactCount,"Compressed block must have at least 936 transactions");
 	reader.close();  
 }
 
@@ -802,16 +793,16 @@ private static Reporter reporter = Reporter.NULL;
     BitcoinRawBlockFileInputFormat format = new BitcoinRawBlockFileInputFormat();
     format.configure(job);
     InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for compressed block", 1, inputSplits.length);
+    assertEquals( 1, inputSplits.length,"Only one split generated for compressed block");
     	RecordReader<BytesWritable, BytesWritable> reader = format.getRecordReader(inputSplits[0], job, reporter);
-	assertNotNull("Format returned  null RecordReader", reader);
+	assertNotNull( reader,"Format returned  null RecordReader");
 	BytesWritable key = new BytesWritable();	
 	BytesWritable block = new BytesWritable();
-	assertTrue("Input Split for block version contains at least one block", reader.next(key,block));
-	assertEquals("Compressed block must have a size of 998.039 bytes", 998039, block.getLength());
+	assertTrue( reader.next(key,block),"Input Split for block version contains at least one block");
+	assertEquals( 998039, block.getLength(),"Compressed block must have a size of 998.039 bytes");
 	BytesWritable emptyKey = new BytesWritable();
     	BytesWritable emptyBlock = new BytesWritable();
-    	assertFalse("No further blocks in compressed block", reader.next(emptyKey,emptyBlock));
+    	assertFalse( reader.next(emptyKey,emptyBlock),"No further blocks in compressed block");
 	reader.close();
   }
 
@@ -828,19 +819,19 @@ private static Reporter reporter = Reporter.NULL;
     BitcoinBlockFileInputFormat format = new BitcoinBlockFileInputFormat();
     format.configure(job);
     InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for compressed block", 1, inputSplits.length);
+    assertEquals( 1, inputSplits.length,"Only one split generated for compressed block");
     	RecordReader<BytesWritable, BitcoinBlock> reader = format.getRecordReader(inputSplits[0], job, reporter);
-	assertNotNull("Format returned  null RecordReader", reader);
+	assertNotNull( reader,"Format returned  null RecordReader");
 	BytesWritable key = new BytesWritable();	
 	BitcoinBlock block = new BitcoinBlock();
-	assertTrue("Input Split for block version contains at least one block", reader.next(key,block));
-	assertEquals("Compressed block must have at least 936 transactions", 936, block.getTransactions().size());
-	assertEquals("Compressed block must contain exactly 936 transactions of which the first has one input and script length 4", 4, block.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
-	assertEquals("Compressed block must contain exactly 936 transactions of which the first has two outputs", 2, block.getTransactions().get(0).getListOfOutputs().size());
-	assertEquals("Compressed block must contain exactly 936 transactions of which the first has two output and the first output script length 25", 25, block.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
+	assertTrue( reader.next(key,block),"Input Split for block version contains at least one block");
+	assertEquals( 936, block.getTransactions().size(),"Compressed block must have at least 936 transactions");
+	assertEquals( 4, block.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length,"Compressed block must contain exactly 936 transactions of which the first has one input and script length 4");
+	assertEquals( 2, block.getTransactions().get(0).getListOfOutputs().size(),"Compressed block must contain exactly 936 transactions of which the first has two outputs");
+	assertEquals( 25, block.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length,"Compressed block must contain exactly 936 transactions of which the first has two output and the first output script length 25");
 	BytesWritable emptyKey = new BytesWritable();
     	BitcoinBlock emptyBlock = new BitcoinBlock();
-    	assertFalse("No further blocks in compressed block", reader.next(emptyKey,emptyBlock));
+    	assertFalse( reader.next(emptyKey,emptyBlock),"No further blocks in compressed block");
 	reader.close();
   }
 
@@ -858,16 +849,16 @@ private static Reporter reporter = Reporter.NULL;
     BitcoinTransactionFileInputFormat format = new BitcoinTransactionFileInputFormat();
     format.configure(job);
     InputSplit[] inputSplits = format.getSplits(job,1);
-    assertEquals("Only one split generated for compressed block", 1, inputSplits.length);
+    assertEquals( 1, inputSplits.length,"Only one split generated for compressed block");
     	RecordReader<BytesWritable, BitcoinTransaction> reader = format.getRecordReader(inputSplits[0], job, reporter);
-	assertNotNull("Format returned  null RecordReader", reader);
+	assertNotNull( reader,"Format returned  null RecordReader");
 	BytesWritable key = new BytesWritable();	
 	BitcoinTransaction transaction = new BitcoinTransaction();
 	int transactCount=0;
 	while (reader.next(key,transaction)) {
 		transactCount++;
 	}
- 	assertEquals("Compressed block must have at least 936 transactions", 936, transactCount);
+ 	assertEquals( 936, transactCount,"Compressed block must have at least 936 transactions");
 	reader.close();
   }
 

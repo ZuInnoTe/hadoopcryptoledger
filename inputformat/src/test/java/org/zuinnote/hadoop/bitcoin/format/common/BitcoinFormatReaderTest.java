@@ -16,13 +16,12 @@
 
 package org.zuinnote.hadoop.bitcoin.format.common;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertNotNull;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -31,6 +30,7 @@ import java.io.IOException;
 
 import java.nio.ByteBuffer;
 
+import org.junit.jupiter.api.Test;
 import org.zuinnote.hadoop.bitcoin.format.common.BitcoinBlockReader;
 import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
 
@@ -47,10 +47,10 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 	ClassLoader classLoader = getClass().getClassLoader();
 	String fileName="genesis.blk";
 	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 	File file = new File(fileNameGenesis);
-	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+	assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
   }
 
 
@@ -59,10 +59,10 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 	ClassLoader classLoader = getClass().getClassLoader();
 	String fileName="version1.blk";
 	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 	File file = new File(fileNameGenesis);
-	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+	assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
   }
 
  @Test
@@ -70,10 +70,10 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 	ClassLoader classLoader = getClass().getClassLoader();
 	String fileName="version2.blk";
 	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 	File file = new File(fileNameGenesis);
-	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+	assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
   }
 
 
@@ -82,10 +82,10 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 	ClassLoader classLoader = getClass().getClassLoader();
 	String fileName="version3.blk";
 	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 	File file = new File(fileNameGenesis);
-	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+	assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
   }
 
  @Test
@@ -93,10 +93,10 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 	ClassLoader classLoader = getClass().getClassLoader();
 	String fileName="version4.blk";
 	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 	File file = new File(fileNameGenesis);
-	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+	assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
   }
 
  @Test
@@ -104,10 +104,10 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 	ClassLoader classLoader = getClass().getClassLoader();
 	String fileName="reqseekversion1.blk";
 	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 	File file = new File(fileNameGenesis);
-	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+	assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
   }
 
  @Test
@@ -115,10 +115,10 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 	ClassLoader classLoader = getClass().getClassLoader();
 	String fileName="testnet3genesis.blk";
 	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 	File file = new File(fileNameGenesis);
-	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+	assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
   }
 
 
@@ -127,10 +127,10 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 	ClassLoader classLoader = getClass().getClassLoader();
 	String fileName="testnet3version4.blk";
 	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 	File file = new File(fileNameGenesis);
-	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+	assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
   }
 
 
@@ -140,10 +140,10 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 	ClassLoader classLoader = getClass().getClassLoader();
 	String fileName="multinet.blk";
 	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 	File file = new File(fileNameGenesis);
-	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+	assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
   }
  
  @Test
@@ -151,10 +151,10 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 	ClassLoader classLoader = getClass().getClassLoader();
 	String fileName="scriptwitness.blk";
 	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 	File file = new File(fileNameGenesis);
-	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+	assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
  }
  
  @Test
@@ -162,10 +162,10 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 	ClassLoader classLoader = getClass().getClassLoader();
 	String fileName="scriptwitness2.blk";
 	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 	File file = new File(fileNameGenesis);
-	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+	assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
  }
 
 
@@ -182,8 +182,8 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		ByteBuffer genesisByteBuffer = bbr.readRawBlock();
-		assertFalse("Raw Genesis Block is HeapByteBuffer", genesisByteBuffer.isDirect());
-		assertEquals("Raw Genesis block has a size of 293 bytes", 293, genesisByteBuffer.limit());
+		assertFalse( genesisByteBuffer.isDirect(),"Raw Genesis Block is HeapByteBuffer");
+		assertEquals( 293, genesisByteBuffer.limit(),"Raw Genesis block has a size of 293 bytes");
 		
 	} finally {
 		if (bbr!=null) 
@@ -203,8 +203,8 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		ByteBuffer version1ByteBuffer = bbr.readRawBlock();
-		assertFalse("Random Version 1 Raw Block is HeapByteBuffer", version1ByteBuffer.isDirect());
-		assertEquals("Random Version 1 Raw Block has a size of 482 bytes", 482, version1ByteBuffer.limit());
+		assertFalse( version1ByteBuffer.isDirect(),"Random Version 1 Raw Block is HeapByteBuffer");
+		assertEquals( 482, version1ByteBuffer.limit(),"Random Version 1 Raw Block has a size of 482 bytes");
 		
 	} finally {
 		if (bbr!=null) 
@@ -224,8 +224,8 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		ByteBuffer version2ByteBuffer = bbr.readRawBlock();
-		assertFalse("Random Version 2 Raw Block is HeapByteBuffer", version2ByteBuffer.isDirect());
-		assertEquals("Random Version 2 Raw Block has a size of 191.198 bytes", 191198, version2ByteBuffer.limit());
+		assertFalse( version2ByteBuffer.isDirect(),"Random Version 2 Raw Block is HeapByteBuffer");
+		assertEquals( 191198, version2ByteBuffer.limit(),"Random Version 2 Raw Block has a size of 191.198 bytes");
 		
 	} finally {
 		if (bbr!=null) 
@@ -246,8 +246,8 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		ByteBuffer version3ByteBuffer = bbr.readRawBlock();
-		assertFalse("Random Version 3 Raw Block is HeapByteBuffer", version3ByteBuffer.isDirect());
-		assertEquals("Random Version 3 Raw Block has a size of 932.199 bytes", 932199, version3ByteBuffer.limit());
+		assertFalse( version3ByteBuffer.isDirect(),"Random Version 3 Raw Block is HeapByteBuffer");
+		assertEquals( 932199, version3ByteBuffer.limit(),"Random Version 3 Raw Block has a size of 932.199 bytes");
 		
 	} finally {
 		if (bbr!=null) 
@@ -267,8 +267,8 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		ByteBuffer version4ByteBuffer = bbr.readRawBlock();
-		assertFalse("Random Version 4 Raw Block is HeapByteBuffer", version4ByteBuffer.isDirect());
-		assertEquals("Random Version 4 Raw Block has a size of 998.039 bytes", 998039, version4ByteBuffer.limit());
+		assertFalse( version4ByteBuffer.isDirect(),"Random Version 4 Raw Block is HeapByteBuffer");
+		assertEquals( 998039, version4ByteBuffer.limit(),"Random Version 4 Raw Block has a size of 998.039 bytes");
 		
 	} finally {
 		if (bbr!=null) 
@@ -288,8 +288,8 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.TESTNET3_MAGIC,direct);
 		ByteBuffer genesisByteBuffer = bbr.readRawBlock();
-		assertFalse("Raw TestNet3 Genesis Block is HeapByteBuffer", genesisByteBuffer.isDirect());
-		assertEquals("Raw TestNet3 Genesis block has a size of 293 bytes", 293, genesisByteBuffer.limit());
+		assertFalse( genesisByteBuffer.isDirect(),"Raw TestNet3 Genesis Block is HeapByteBuffer");
+		assertEquals( 293, genesisByteBuffer.limit(),"Raw TestNet3 Genesis block has a size of 293 bytes");
 		
 	} finally {
 		if (bbr!=null) 
@@ -309,8 +309,8 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.TESTNET3_MAGIC,direct);
 		ByteBuffer version4ByteBuffer = bbr.readRawBlock();
-		assertFalse("Random TestNet3 Version 4 Raw Block is HeapByteBuffer", version4ByteBuffer.isDirect());
-		assertEquals("Random TestNet3 Version 4 Raw Block has a size of 749.041 bytes", 749041, version4ByteBuffer.limit());
+		assertFalse( version4ByteBuffer.isDirect(),"Random TestNet3 Version 4 Raw Block is HeapByteBuffer");
+		assertEquals( 749041, version4ByteBuffer.limit(),"Random TestNet3 Version 4 Raw Block has a size of 749.041 bytes");
 		
 	} finally {
 		if (bbr!=null) 
@@ -331,14 +331,14 @@ private static final byte[][] MULTINET_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.MULTINET_MAGIC,direct);
 		ByteBuffer firstMultinetByteBuffer = bbr.readRawBlock();
-		assertFalse("First MultiNetBlock is HeapByteBuffer", firstMultinetByteBuffer.isDirect());
-		assertEquals("First MultiNetBlock has a size of 293 bytes", 293, firstMultinetByteBuffer.limit());
+		assertFalse( firstMultinetByteBuffer.isDirect(),"First MultiNetBlock is HeapByteBuffer");
+		assertEquals( 293, firstMultinetByteBuffer.limit(),"First MultiNetBlock has a size of 293 bytes");
 		ByteBuffer secondMultinetByteBuffer = bbr.readRawBlock();
-		assertFalse("Second MultiNetBlock is HeapByteBuffer", secondMultinetByteBuffer.isDirect());
-		assertEquals("Second MultiNetBlock has a size of 191.198 bytes", 191198, secondMultinetByteBuffer.limit());
+		assertFalse( secondMultinetByteBuffer.isDirect(),"Second MultiNetBlock is HeapByteBuffer");
+		assertEquals( 191198, secondMultinetByteBuffer.limit(),"Second MultiNetBlock has a size of 191.198 bytes");
 		ByteBuffer thirdMultinetByteBuffer = bbr.readRawBlock();
-		assertFalse("Third MultiNetBlock is HeapByteBuffer", thirdMultinetByteBuffer.isDirect());
-		assertEquals("Third MultiNetBlock has a size of 749.041 bytes", 749041, thirdMultinetByteBuffer.limit());
+		assertFalse( thirdMultinetByteBuffer.isDirect(),"Third MultiNetBlock is HeapByteBuffer");
+		assertEquals( 749041, thirdMultinetByteBuffer.limit(),"Third MultiNetBlock has a size of 749.041 bytes");
 
 		
 	} finally {
@@ -359,8 +359,8 @@ public void parseScriptWitnessBlockAsBitcoinRawBlockHeap()  throws FileNotFoundE
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		ByteBuffer scriptwitnessByteBuffer = bbr.readRawBlock();
-		assertFalse("Random ScriptWitness Raw Block is HeapByteBuffer", scriptwitnessByteBuffer.isDirect());
-		assertEquals("Random ScriptWitness Raw Block has a size of 999283 bytes", 999283, scriptwitnessByteBuffer.limit());
+		assertFalse( scriptwitnessByteBuffer.isDirect(),"Random ScriptWitness Raw Block is HeapByteBuffer");
+		assertEquals( 999283, scriptwitnessByteBuffer.limit(),"Random ScriptWitness Raw Block has a size of 999283 bytes");
 		
 	} finally {
 		if (bbr!=null) 
@@ -381,11 +381,11 @@ public void parseScriptWitness2BlockAsBitcoinRawBlockHeap()  throws FileNotFound
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		ByteBuffer scriptwitnessByteBuffer = bbr.readRawBlock();
-		assertFalse("Random ScriptWitness Raw Block is HeapByteBuffer", scriptwitnessByteBuffer.isDirect());
-		assertEquals("Random ScriptWitness Raw Block has a size of 1000039 bytes", 1000039, scriptwitnessByteBuffer.limit());		
+		assertFalse( scriptwitnessByteBuffer.isDirect(),"Random ScriptWitness Raw Block is HeapByteBuffer");
+		assertEquals( 1000039, scriptwitnessByteBuffer.limit(),"Random ScriptWitness Raw Block has a size of 1000039 bytes");		
 		scriptwitnessByteBuffer = bbr.readRawBlock();
-		assertFalse("Random ScriptWitness Raw Block is HeapByteBuffer", scriptwitnessByteBuffer.isDirect());
-		assertEquals("Random ScriptWitness Raw Block has a size of 999312 bytes", 999312, scriptwitnessByteBuffer.limit());		
+		assertFalse( scriptwitnessByteBuffer.isDirect(),"Random ScriptWitness Raw Block is HeapByteBuffer");
+		assertEquals( 999312, scriptwitnessByteBuffer.limit(),"Random ScriptWitness Raw Block has a size of 999312 bytes");		
 		
 	} finally {
 		if (bbr!=null) 
@@ -406,8 +406,8 @@ public void parseScriptWitness2BlockAsBitcoinRawBlockHeap()  throws FileNotFound
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		ByteBuffer genesisByteBuffer = bbr.readRawBlock();
-		assertTrue("Raw Genesis Block is DirectByteBuffer", genesisByteBuffer.isDirect());
-		assertEquals("Raw Genesis Block has a size of 293 bytes", 293, genesisByteBuffer.limit());
+		assertTrue( genesisByteBuffer.isDirect(),"Raw Genesis Block is DirectByteBuffer");
+		assertEquals( 293, genesisByteBuffer.limit(),"Raw Genesis Block has a size of 293 bytes");
 		
 	} finally {
 		if (bbr!=null) 
@@ -427,8 +427,8 @@ public void parseScriptWitness2BlockAsBitcoinRawBlockHeap()  throws FileNotFound
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		ByteBuffer version1ByteBuffer = bbr.readRawBlock();
-		assertTrue("Random Version 1 Raw Block is DirectByteBuffer", version1ByteBuffer.isDirect());
-		assertEquals("Random Version 1 Raw Block has a size of 482 bytes", 482, version1ByteBuffer.limit());
+		assertTrue( version1ByteBuffer.isDirect(),"Random Version 1 Raw Block is DirectByteBuffer");
+		assertEquals( 482, version1ByteBuffer.limit(),"Random Version 1 Raw Block has a size of 482 bytes");
 		
 	} finally {
 		if (bbr!=null) 
@@ -448,8 +448,8 @@ public void parseScriptWitness2BlockAsBitcoinRawBlockHeap()  throws FileNotFound
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		ByteBuffer version2ByteBuffer = bbr.readRawBlock();
-		assertTrue("Random Version 2 Raw Block is DirectByteBuffer", version2ByteBuffer.isDirect());
-		assertEquals("Random Version 2 Raw Block has a size of 191.198 bytes", 191198, version2ByteBuffer.limit());
+		assertTrue( version2ByteBuffer.isDirect(),"Random Version 2 Raw Block is DirectByteBuffer");
+		assertEquals( 191198, version2ByteBuffer.limit(),"Random Version 2 Raw Block has a size of 191.198 bytes");
 		
 	} finally {
 		if (bbr!=null) 
@@ -469,8 +469,8 @@ public void parseScriptWitness2BlockAsBitcoinRawBlockHeap()  throws FileNotFound
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		ByteBuffer version3ByteBuffer = bbr.readRawBlock();
-		assertTrue("Random Version 3 Raw Block is DirectByteBuffer", version3ByteBuffer.isDirect());
-		assertEquals("Random Version 3 Raw Block has a size of 932.199 bytes", 932199, version3ByteBuffer.limit());
+		assertTrue( version3ByteBuffer.isDirect(),"Random Version 3 Raw Block is DirectByteBuffer");
+		assertEquals( 932199, version3ByteBuffer.limit(),"Random Version 3 Raw Block has a size of 932.199 bytes");
 		
 	} finally {
 		if (bbr!=null) 
@@ -490,8 +490,8 @@ public void parseScriptWitness2BlockAsBitcoinRawBlockHeap()  throws FileNotFound
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		ByteBuffer version4ByteBuffer = bbr.readRawBlock();
-		assertTrue("Random Version 4 Raw Block is DirectByteBuffer", version4ByteBuffer.isDirect());
-		assertEquals("Random Version 4 Raw Block has a size of 998.039 bytes", 998039, version4ByteBuffer.limit());
+		assertTrue( version4ByteBuffer.isDirect(),"Random Version 4 Raw Block is DirectByteBuffer");
+		assertEquals( 998039, version4ByteBuffer.limit(),"Random Version 4 Raw Block has a size of 998.039 bytes");
 		
 	} finally {
 		if (bbr!=null) 
@@ -511,8 +511,8 @@ public void parseScriptWitness2BlockAsBitcoinRawBlockHeap()  throws FileNotFound
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.TESTNET3_MAGIC,direct);
 		ByteBuffer genesisByteBuffer = bbr.readRawBlock();
-		assertTrue("Raw TestNet3 Genesis Block is DirectByteBuffer", genesisByteBuffer.isDirect());
-		assertEquals("Raw TestNet3 Genesis block has a size of 293 bytes", 293, genesisByteBuffer.limit());
+		assertTrue( genesisByteBuffer.isDirect(),"Raw TestNet3 Genesis Block is DirectByteBuffer");
+		assertEquals( 293, genesisByteBuffer.limit(),"Raw TestNet3 Genesis block has a size of 293 bytes");
 		
 	} finally {
 		if (bbr!=null) 
@@ -532,8 +532,8 @@ public void parseScriptWitness2BlockAsBitcoinRawBlockHeap()  throws FileNotFound
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.TESTNET3_MAGIC,direct);
 		ByteBuffer version4ByteBuffer = bbr.readRawBlock();
-		assertTrue("Random TestNet3 Version 4 Raw Block is DirectByteBuffer", version4ByteBuffer.isDirect());
-		assertEquals("Random TestNet3  Version 4 Raw Block has a size of 749.041 bytes", 749041, version4ByteBuffer.limit());
+		assertTrue( version4ByteBuffer.isDirect(),"Random TestNet3 Version 4 Raw Block is DirectByteBuffer");
+		assertEquals( 749041, version4ByteBuffer.limit(),"Random TestNet3  Version 4 Raw Block has a size of 749.041 bytes");
 		
 	} finally {
 		if (bbr!=null) 
@@ -553,14 +553,14 @@ public void parseScriptWitness2BlockAsBitcoinRawBlockHeap()  throws FileNotFound
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.MULTINET_MAGIC,direct);
 		ByteBuffer firstMultinetByteBuffer = bbr.readRawBlock();
-		assertTrue("First MultiNetBlock is DirectByteBuffer", firstMultinetByteBuffer.isDirect());
-		assertEquals("First MultiNetBlock has a size of 293 bytes", 293, firstMultinetByteBuffer.limit());
+		assertTrue( firstMultinetByteBuffer.isDirect(),"First MultiNetBlock is DirectByteBuffer");
+		assertEquals( 293, firstMultinetByteBuffer.limit(),"First MultiNetBlock has a size of 293 bytes");
 		ByteBuffer secondMultinetByteBuffer = bbr.readRawBlock();
-		assertTrue("Second MultiNetBlock is DirectByteBuffer", secondMultinetByteBuffer.isDirect());
-		assertEquals("Second MultiNetBlock has a size of 191.198 bytes", 191198, secondMultinetByteBuffer.limit());
+		assertTrue( secondMultinetByteBuffer.isDirect(),"Second MultiNetBlock is DirectByteBuffer");
+		assertEquals( 191198, secondMultinetByteBuffer.limit(),"Second MultiNetBlock has a size of 191.198 bytes");
 		ByteBuffer thirdMultinetByteBuffer = bbr.readRawBlock();
-		assertTrue("Third MultiNetBlock is DirectByteBuffer", thirdMultinetByteBuffer.isDirect());
-		assertEquals("Third MultiNetBlock has a size of 749.041 bytes", 749041, thirdMultinetByteBuffer.limit());
+		assertTrue( thirdMultinetByteBuffer.isDirect(),"Third MultiNetBlock is DirectByteBuffer");
+		assertEquals( 749041, thirdMultinetByteBuffer.limit(),"Third MultiNetBlock has a size of 749.041 bytes");
 
 		
 	} finally {
@@ -581,8 +581,8 @@ public void parseScriptWitnessBlockAsBitcoinRawBlockDirect()  throws FileNotFoun
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		ByteBuffer scriptwitnessByteBuffer = bbr.readRawBlock();
-		assertTrue("Random ScriptWitness Raw Block is DirectByteBuffer", scriptwitnessByteBuffer.isDirect());
-		assertEquals("Random ScriptWitness Raw Block has a size of 999283 bytes", 999283, scriptwitnessByteBuffer.limit());
+		assertTrue( scriptwitnessByteBuffer.isDirect(),"Random ScriptWitness Raw Block is DirectByteBuffer");
+		assertEquals( 999283, scriptwitnessByteBuffer.limit(),"Random ScriptWitness Raw Block has a size of 999283 bytes");
 		
 	} finally {
 		if (bbr!=null) 
@@ -602,11 +602,11 @@ public void parseScriptWitness2BlockAsBitcoinRawBlockDirect()  throws FileNotFou
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		ByteBuffer scriptwitnessByteBuffer = bbr.readRawBlock();
-		assertTrue("Random ScriptWitness Raw Block is DirectByteBuffer", scriptwitnessByteBuffer.isDirect());
-		assertEquals("Random ScriptWitness Raw Block has a size of 1000039 bytes", 1000039, scriptwitnessByteBuffer.limit());		
+		assertTrue( scriptwitnessByteBuffer.isDirect(),"Random ScriptWitness Raw Block is DirectByteBuffer");
+		assertEquals( 1000039, scriptwitnessByteBuffer.limit(),"Random ScriptWitness Raw Block has a size of 1000039 bytes");		
 		scriptwitnessByteBuffer = bbr.readRawBlock();
-		assertTrue("Random ScriptWitness Raw Block is DirectByteBuffer", scriptwitnessByteBuffer.isDirect());
-		assertEquals("Random ScriptWitness Raw Block has a size of 999312 bytes", 999312, scriptwitnessByteBuffer.limit());		
+		assertTrue( scriptwitnessByteBuffer.isDirect(),"Random ScriptWitness Raw Block is DirectByteBuffer");
+		assertEquals( 999312, scriptwitnessByteBuffer.limit(),"Random ScriptWitness Raw Block has a size of 999312 bytes");		
 		
 	} finally {
 		if (bbr!=null) 
@@ -628,11 +628,11 @@ public void parseScriptWitness2BlockAsBitcoinRawBlockDirect()  throws FileNotFou
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
-		assertEquals("Genesis Block must contain exactly one transaction", 1, theBitcoinBlock.getTransactions().size());
-		assertEquals("Genesis Block must contain exactly one transaction with one input", 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
-		assertEquals("Genesis Block must contain exactly one transaction with one input and script length 77", 77, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
-		assertEquals("Genesis Block must contain exactly one transaction with one output", 1, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
-		assertEquals("Genesis Block must contain exactly one transaction with one output and script length 67", 67, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
+		assertEquals( 1, theBitcoinBlock.getTransactions().size(),"Genesis Block must contain exactly one transaction");
+		assertEquals( 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size(),"Genesis Block must contain exactly one transaction with one input");
+		assertEquals( 77, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length,"Genesis Block must contain exactly one transaction with one input and script length 77");
+		assertEquals( 1, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size(),"Genesis Block must contain exactly one transaction with one output");
+		assertEquals( 67, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length,"Genesis Block must contain exactly one transaction with one output and script length 67");
 	} finally {
 		if (bbr!=null) 
 			bbr.close();
@@ -652,11 +652,11 @@ public void parseScriptWitness2BlockAsBitcoinRawBlockDirect()  throws FileNotFou
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.TESTNET3_MAGIC,direct);
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
-		assertEquals("TestNet3 Genesis Block must contain exactly one transaction", 1, theBitcoinBlock.getTransactions().size());
-		assertEquals("TestNet3 Genesis Block must contain exactly one transaction with one input", 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
-		assertEquals("TestNet3 Genesis Block must contain exactly one transaction with one input and script length 77", 77, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
-		assertEquals("TestNet3 Genesis Block must contain exactly one transaction with one output", 1, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
-		assertEquals("TestNet3 Genesis Block must contain exactly one transaction with one output and script length 67", 67, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
+		assertEquals( 1, theBitcoinBlock.getTransactions().size(),"TestNet3 Genesis Block must contain exactly one transaction");
+		assertEquals( 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size(),"TestNet3 Genesis Block must contain exactly one transaction with one input");
+		assertEquals( 77, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length,"TestNet3 Genesis Block must contain exactly one transaction with one input and script length 77");
+		assertEquals( 1, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size(),"TestNet3 Genesis Block must contain exactly one transaction with one output");
+		assertEquals( 67, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length,"TestNet3 Genesis Block must contain exactly one transaction with one output and script length 67");
 	} finally {
 		if (bbr!=null) 
 			bbr.close();
@@ -675,11 +675,11 @@ public void parseScriptWitness2BlockAsBitcoinRawBlockDirect()  throws FileNotFou
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
-		assertEquals("Random Version 1 Block must contain exactly two transactions", 2, theBitcoinBlock.getTransactions().size());
-		assertEquals("Random Version 1 Block must contain exactly two transactions of which the first has one input", 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
-		assertEquals("Random Version 1 Block must contain exactly two transactions of which the first has one input and script length 8", 8, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
-		assertEquals("Random Version 1 Block must contain exactly two transactions of which the first has one output", 1, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
-		assertEquals("Random Version 1 Block must contain exactly two transactions of which the first has one output and script length 67", 67, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
+		assertEquals( 2, theBitcoinBlock.getTransactions().size(),"Random Version 1 Block must contain exactly two transactions");
+		assertEquals( 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size(),"Random Version 1 Block must contain exactly two transactions of which the first has one input");
+		assertEquals( 8, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length,"Random Version 1 Block must contain exactly two transactions of which the first has one input and script length 8");
+		assertEquals( 1, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size(),"Random Version 1 Block must contain exactly two transactions of which the first has one output");
+		assertEquals( 67, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length,"Random Version 1 Block must contain exactly two transactions of which the first has one output and script length 67");
 	} finally {
 		if (bbr!=null) 
 			bbr.close();
@@ -698,11 +698,11 @@ public void parseScriptWitness2BlockAsBitcoinRawBlockDirect()  throws FileNotFou
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
-		assertEquals("Random Version 2 Block must contain exactly 343 transactions", 343, theBitcoinBlock.getTransactions().size());
-		assertEquals("Random Version 2 Block must contain exactly 343 transactions of which the first has one input", 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
-		assertEquals("Random Version 2 Block must contain exactly 343 transactions of which the first has one input and script length 40", 40, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
-		assertEquals("Random Version 2 Block must contain exactly 343 transactions of which the first has one output", 1, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
-		assertEquals("Random Version 2 Block must contain exactly 343 transactions of which the first has one output and script length 25", 25, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
+		assertEquals( 343, theBitcoinBlock.getTransactions().size(),"Random Version 2 Block must contain exactly 343 transactions");
+		assertEquals( 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size(),"Random Version 2 Block must contain exactly 343 transactions of which the first has one input");
+		assertEquals( 40, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length,"Random Version 2 Block must contain exactly 343 transactions of which the first has one input and script length 40");
+		assertEquals( 1, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size(),"Random Version 2 Block must contain exactly 343 transactions of which the first has one output");
+		assertEquals( 25, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length,"Random Version 2 Block must contain exactly 343 transactions of which the first has one output and script length 25");
 	} finally {
 		if (bbr!=null) 
 			bbr.close();
@@ -721,11 +721,11 @@ public void parseScriptWitness2BlockAsBitcoinRawBlockDirect()  throws FileNotFou
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
-		assertEquals("Random Version 3 Block must contain exactly 1645 transactions", 1645, theBitcoinBlock.getTransactions().size());
-		assertEquals("Random Version 3 Block must contain exactly 1645 transactions of which the first has one input", 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
-		assertEquals("Random Version 3 Block must contain exactly 1645 transactions of which the first has one input and script length 49", 49, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
-		assertEquals("Random Version 3 Block must contain exactly 1645 transactions of which the first has two outputs", 2, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
-		assertEquals("Random Version 3 Block must contain exactly 1645 transactions of which the first has two output and the first output script length 25", 25, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
+		assertEquals( 1645, theBitcoinBlock.getTransactions().size(),"Random Version 3 Block must contain exactly 1645 transactions");
+		assertEquals( 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size(),"Random Version 3 Block must contain exactly 1645 transactions of which the first has one input");
+		assertEquals( 49, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length,"Random Version 3 Block must contain exactly 1645 transactions of which the first has one input and script length 49");
+		assertEquals( 2, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size(),"Random Version 3 Block must contain exactly 1645 transactions of which the first has two outputs");
+		assertEquals( 25, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length,"Random Version 3 Block must contain exactly 1645 transactions of which the first has two output and the first output script length 25");
 	} finally {
 		if (bbr!=null) 
 			bbr.close();
@@ -744,11 +744,11 @@ public void parseScriptWitness2BlockAsBitcoinRawBlockDirect()  throws FileNotFou
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
-		assertEquals("Random Version 4 Block must contain exactly 936 transactions", 936, theBitcoinBlock.getTransactions().size());
-		assertEquals("Random Version 4 Block must contain exactly 936 transactions of which the first has one input", 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
-		assertEquals("Random Version 4 Block must contain exactly 936 transactions of which the first has one input and script length 4", 4, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
-		assertEquals("Random Version 4 Block must contain exactly 936 transactions of which the first has two outputs", 2, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
-		assertEquals("Random Version 4 Block must contain exactly 936 transactions of which the first has two output and the first output script length 25", 25, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
+		assertEquals( 936, theBitcoinBlock.getTransactions().size(),"Random Version 4 Block must contain exactly 936 transactions");
+		assertEquals( 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size(),"Random Version 4 Block must contain exactly 936 transactions of which the first has one input");
+		assertEquals( 4, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length,"Random Version 4 Block must contain exactly 936 transactions of which the first has one input and script length 4");
+		assertEquals( 2, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size(),"Random Version 4 Block must contain exactly 936 transactions of which the first has two outputs");
+		assertEquals( 25, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length,"Random Version 4 Block must contain exactly 936 transactions of which the first has two output and the first output script length 25");
 	} finally {
 		if (bbr!=null) 
 			bbr.close();
@@ -767,11 +767,11 @@ public void parseScriptWitness2BlockAsBitcoinRawBlockDirect()  throws FileNotFou
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.TESTNET3_MAGIC,direct);
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
-		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions", 3299, theBitcoinBlock.getTransactions().size());
-		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one input", 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
-		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one input and script length 35", 35, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
-		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one outputs", 1, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
-		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one output and the first output script length 25", 25, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
+		assertEquals( 3299, theBitcoinBlock.getTransactions().size(),"Random TestNet3 Version 4 Block must contain exactly 3299 transactions");
+		assertEquals( 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size(),"Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one input");
+		assertEquals( 35, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length,"Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one input and script length 35");
+		assertEquals( 1, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size(),"Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one outputs");
+		assertEquals( 25, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length,"Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one output and the first output script length 25");
 	} finally {
 		if (bbr!=null) 
 			bbr.close();
@@ -790,23 +790,23 @@ public void parseScriptWitness2BlockAsBitcoinRawBlockDirect()  throws FileNotFou
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.MULTINET_MAGIC,direct);
 		BitcoinBlock firstBitcoinBlock = bbr.readBlock();
-		assertEquals("First MultiNet Block must contain exactly one transaction", 1, firstBitcoinBlock.getTransactions().size());
-		assertEquals("First MultiNet Block must contain exactly one transaction with one input", 1, firstBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
-		assertEquals("First MultiNet Block must contain exactly one transaction with one input and script length 77", 77, firstBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
-		assertEquals("First MultiNet Block must contain exactly one transaction with one output", 1, firstBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
-		assertEquals("First MultiNet Block must contain exactly one transaction with one output and script length 67", 67, firstBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
+		assertEquals( 1, firstBitcoinBlock.getTransactions().size(),"First MultiNet Block must contain exactly one transaction");
+		assertEquals( 1, firstBitcoinBlock.getTransactions().get(0).getListOfInputs().size(),"First MultiNet Block must contain exactly one transaction with one input");
+		assertEquals( 77, firstBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length,"First MultiNet Block must contain exactly one transaction with one input and script length 77");
+		assertEquals( 1, firstBitcoinBlock.getTransactions().get(0).getListOfOutputs().size(),"First MultiNet Block must contain exactly one transaction with one output");
+		assertEquals( 67, firstBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length,"First MultiNet Block must contain exactly one transaction with one output and script length 67");
 		BitcoinBlock secondBitcoinBlock = bbr.readBlock();
-		assertEquals("Second MultiNet Block must contain exactly 343 transactions", 343, secondBitcoinBlock.getTransactions().size());
-		assertEquals("Second MultiNet Block must contain exactly 343 transactions of which the first has one input", 1, secondBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
-		assertEquals("Second MultiNet Block must contain exactly 343 transactions of which the first has one input and script length 40", 40, secondBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
-		assertEquals("Second MultiNet Block must contain exactly 343 transactions of which the first has one output", 1, secondBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
-		assertEquals("Second MultiNet Block must contain exactly 343 transactions of which the first has one output and script length 25", 25, secondBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
+		assertEquals( 343, secondBitcoinBlock.getTransactions().size(),"Second MultiNet Block must contain exactly 343 transactions");
+		assertEquals( 1, secondBitcoinBlock.getTransactions().get(0).getListOfInputs().size(),"Second MultiNet Block must contain exactly 343 transactions of which the first has one input");
+		assertEquals( 40, secondBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length,"Second MultiNet Block must contain exactly 343 transactions of which the first has one input and script length 40");
+		assertEquals( 1, secondBitcoinBlock.getTransactions().get(0).getListOfOutputs().size(),"Second MultiNet Block must contain exactly 343 transactions of which the first has one output");
+		assertEquals( 25, secondBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length,"Second MultiNet Block must contain exactly 343 transactions of which the first has one output and script length 25");
 		BitcoinBlock thirdBitcoinBlock = bbr.readBlock();
-		assertEquals("Third MultiNet Block must contain exactly 3299 transactions", 3299, thirdBitcoinBlock.getTransactions().size());
-		assertEquals("Third MultiNet Block must contain exactly 3299 transactions of which the first has one input", 1, thirdBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
-		assertEquals("Third MultiNet Block must contain exactly 3299 transactions of which the first has one input and script length 35", 35, thirdBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
-		assertEquals("Third MultiNet Block must contain exactly 3299 transactions of which the first has one outputs", 1, thirdBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
-		assertEquals("Third MultiNet Block must contain exactly 3299 transactions of which the first has one output and the first output script length 25", 25, thirdBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
+		assertEquals( 3299, thirdBitcoinBlock.getTransactions().size(),"Third MultiNet Block must contain exactly 3299 transactions");
+		assertEquals( 1, thirdBitcoinBlock.getTransactions().get(0).getListOfInputs().size(),"Third MultiNet Block must contain exactly 3299 transactions of which the first has one input");
+		assertEquals( 35, thirdBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length,"Third MultiNet Block must contain exactly 3299 transactions of which the first has one input and script length 35");
+		assertEquals( 1, thirdBitcoinBlock.getTransactions().get(0).getListOfOutputs().size(),"Third MultiNet Block must contain exactly 3299 transactions of which the first has one outputs");
+		assertEquals( 25, thirdBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length,"Third MultiNet Block must contain exactly 3299 transactions of which the first has one output and the first output script length 25");
 	} finally {
 		if (bbr!=null) 
 			bbr.close();
@@ -825,7 +825,7 @@ public void parseScriptWitnessBlockAsBitcoinBlockHeap() throws FileNotFoundExcep
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
-		assertEquals("Random ScriptWitness Block must contain exactly 470 transactions", 470, theBitcoinBlock.getTransactions().size());
+		assertEquals( 470, theBitcoinBlock.getTransactions().size(),"Random ScriptWitness Block must contain exactly 470 transactions");
 		
 	} finally {
 		if (bbr!=null) 
@@ -846,9 +846,9 @@ public void parseScriptWitness2BlockAsBitcoinBlockHeap() throws FileNotFoundExce
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
-		assertEquals("First random ScriptWitness Block must contain exactly 2191 transactions", 2191, theBitcoinBlock.getTransactions().size());
+		assertEquals( 2191, theBitcoinBlock.getTransactions().size(),"First random ScriptWitness Block must contain exactly 2191 transactions");
 		theBitcoinBlock = bbr.readBlock();
-		assertEquals("Second random ScriptWitness Block must contain exactly 2508 transactions", 2508, theBitcoinBlock.getTransactions().size());
+		assertEquals( 2508, theBitcoinBlock.getTransactions().size(),"Second random ScriptWitness Block must contain exactly 2508 transactions");
 		
 	} finally {
 		if (bbr!=null) 
@@ -868,11 +868,11 @@ public void parseScriptWitness2BlockAsBitcoinBlockHeap() throws FileNotFoundExce
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
-		assertEquals("Genesis Block must contain exactly one transaction", 1, theBitcoinBlock.getTransactions().size());
-		assertEquals("Genesis Block must contain exactly one transaction with one input", 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
-		assertEquals("Genesis Block must contain exactly one transaction with one input and script length 77", 77, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
-		assertEquals("Genesis Block must contain exactly one transaction with one output", 1, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
-		assertEquals("Genesis Block must contain exactly one transaction with one output and script length 67", 67, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
+		assertEquals( 1, theBitcoinBlock.getTransactions().size(),"Genesis Block must contain exactly one transaction");
+		assertEquals( 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size(),"Genesis Block must contain exactly one transaction with one input");
+		assertEquals( 77, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length,"Genesis Block must contain exactly one transaction with one input and script length 77");
+		assertEquals( 1, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size(),"Genesis Block must contain exactly one transaction with one output");
+		assertEquals( 67, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length,"Genesis Block must contain exactly one transaction with one output and script length 67");
 	} finally {
 		if (bbr!=null) 
 			bbr.close();
@@ -892,11 +892,11 @@ public void parseScriptWitness2BlockAsBitcoinBlockHeap() throws FileNotFoundExce
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.TESTNET3_MAGIC,direct);
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
-		assertEquals("TestNet3 Genesis Block must contain exactly one transaction", 1, theBitcoinBlock.getTransactions().size());
-		assertEquals("TestNet3 Genesis Block must contain exactly one transaction with one input", 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
-		assertEquals("TestNet3 Genesis Block must contain exactly one transaction with one input and script length 77", 77, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
-		assertEquals("TestNet3 Genesis Block must contain exactly one transaction with one output", 1, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
-		assertEquals("TestNet3 Genesis Block must contain exactly one transaction with one output and script length 67", 67, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
+		assertEquals( 1, theBitcoinBlock.getTransactions().size(),"TestNet3 Genesis Block must contain exactly one transaction");
+		assertEquals( 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size(),"TestNet3 Genesis Block must contain exactly one transaction with one input");
+		assertEquals( 77, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length,"TestNet3 Genesis Block must contain exactly one transaction with one input and script length 77");
+		assertEquals( 1, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size(),"TestNet3 Genesis Block must contain exactly one transaction with one output");
+		assertEquals( 67, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length,"TestNet3 Genesis Block must contain exactly one transaction with one output and script length 67");
 	} finally {
 		if (bbr!=null) 
 			bbr.close();
@@ -916,11 +916,11 @@ public void parseScriptWitness2BlockAsBitcoinBlockHeap() throws FileNotFoundExce
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
-		assertEquals("Random Version 1 Block must contain exactly two transactions", 2, theBitcoinBlock.getTransactions().size());
-		assertEquals("Random Version 1 Block must contain exactly two transactions of which the first has one input", 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
-		assertEquals("Random Version 1 Block must contain exactly two transactions of which the first has one input and script length 8", 8, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
-		assertEquals("Random Version 1 Block must contain exactly two transactions of which the first has one output", 1, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
-		assertEquals("Random Version 1 Block must contain exactly two transactions of which the first has one output and script length 67", 67, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
+		assertEquals( 2, theBitcoinBlock.getTransactions().size(),"Random Version 1 Block must contain exactly two transactions");
+		assertEquals( 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size(),"Random Version 1 Block must contain exactly two transactions of which the first has one input");
+		assertEquals( 8, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length,"Random Version 1 Block must contain exactly two transactions of which the first has one input and script length 8");
+		assertEquals( 1, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size(),"Random Version 1 Block must contain exactly two transactions of which the first has one output");
+		assertEquals( 67, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length,"Random Version 1 Block must contain exactly two transactions of which the first has one output and script length 67");
 	} finally {
 		if (bbr!=null) 
 			bbr.close();
@@ -939,11 +939,11 @@ public void parseScriptWitness2BlockAsBitcoinBlockHeap() throws FileNotFoundExce
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
-		assertEquals("Random Version 2 Block must contain exactly 343 transactions", 343, theBitcoinBlock.getTransactions().size());
-		assertEquals("Random Version 2 Block must contain exactly 343 transactions of which the first has one input", 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
-		assertEquals("Random Version 2 Block must contain exactly 343 transactions of which the first has one input and script length 40", 40, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
-		assertEquals("Random Version 2 Block must contain exactly 343 transactions of which the first has one output", 1, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
-		assertEquals("Random Version 2 Block must contain exactly 343 transactions of which the first has one output and script length 25", 25, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
+		assertEquals( 343, theBitcoinBlock.getTransactions().size(),"Random Version 2 Block must contain exactly 343 transactions");
+		assertEquals( 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size(),"Random Version 2 Block must contain exactly 343 transactions of which the first has one input");
+		assertEquals( 40, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length,"Random Version 2 Block must contain exactly 343 transactions of which the first has one input and script length 40");
+		assertEquals( 1, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size(),"Random Version 2 Block must contain exactly 343 transactions of which the first has one output");
+		assertEquals( 25, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length,"Random Version 2 Block must contain exactly 343 transactions of which the first has one output and script length 25");
 	} finally {
 		if (bbr!=null) 
 			bbr.close();
@@ -962,11 +962,11 @@ public void parseScriptWitness2BlockAsBitcoinBlockHeap() throws FileNotFoundExce
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
-		assertEquals("Random Version 3 Block must contain exactly 1645 transactions", 1645, theBitcoinBlock.getTransactions().size());
-		assertEquals("Random Version 3 Block must contain exactly 1645 transactions of which the first has one input", 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
-		assertEquals("Random Version 3 Block must contain exactly 1645 transactions of which the first has one input and script length 49", 49, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
-		assertEquals("Random Version 3 Block must contain exactly 1645 transactions of which the first has two outputs", 2, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
-		assertEquals("Random Version 3 Block must contain exactly 1645 transactions of which the first has two output and the first output script length 25", 25, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
+		assertEquals( 1645, theBitcoinBlock.getTransactions().size(),"Random Version 3 Block must contain exactly 1645 transactions");
+		assertEquals( 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size(),"Random Version 3 Block must contain exactly 1645 transactions of which the first has one input");
+		assertEquals( 49, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length,"Random Version 3 Block must contain exactly 1645 transactions of which the first has one input and script length 49");
+		assertEquals( 2, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size(),"Random Version 3 Block must contain exactly 1645 transactions of which the first has two outputs");
+		assertEquals( 25, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length,"Random Version 3 Block must contain exactly 1645 transactions of which the first has two output and the first output script length 25");
 	} finally {
 		if (bbr!=null) 
 			bbr.close();
@@ -985,11 +985,11 @@ public void parseScriptWitness2BlockAsBitcoinBlockHeap() throws FileNotFoundExce
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
-		assertEquals("Random Version 4 Block must contain exactly 936 transactions", 936, theBitcoinBlock.getTransactions().size());
-		assertEquals("Random Version 4 Block must contain exactly 936 transactions of which the first has one input", 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
-		assertEquals("Random Version 4 Block must contain exactly 936 transactions of which the first has one input and script length 4", 4, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
-		assertEquals("Random Version 4 Block must contain exactly 936 transactions of which the first has two outputs", 2, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
-		assertEquals("Random Version 4 Block must contain exactly 936 transactions of which the first has two output and the first output script length 25", 25, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
+		assertEquals( 936, theBitcoinBlock.getTransactions().size(),"Random Version 4 Block must contain exactly 936 transactions");
+		assertEquals( 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size(),"Random Version 4 Block must contain exactly 936 transactions of which the first has one input");
+		assertEquals( 4, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length,"Random Version 4 Block must contain exactly 936 transactions of which the first has one input and script length 4");
+		assertEquals( 2, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size(),"Random Version 4 Block must contain exactly 936 transactions of which the first has two outputs");
+		assertEquals( 25, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length,"Random Version 4 Block must contain exactly 936 transactions of which the first has two output and the first output script length 25");
 	} finally {
 		if (bbr!=null) 
 			bbr.close();
@@ -1009,11 +1009,11 @@ public void parseScriptWitness2BlockAsBitcoinBlockHeap() throws FileNotFoundExce
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.TESTNET3_MAGIC,direct);
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
-		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions", 3299, theBitcoinBlock.getTransactions().size());
-		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one input", 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
-		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one input and script length 35", 35, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
-		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one outputs", 1, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
-		assertEquals("Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one output and the first output script length 25", 25, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
+		assertEquals( 3299, theBitcoinBlock.getTransactions().size(),"Random TestNet3 Version 4 Block must contain exactly 3299 transactions");
+		assertEquals( 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size(),"Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one input");
+		assertEquals( 35, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length,"Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one input and script length 35");
+		assertEquals( 1, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size(),"Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one outputs");
+		assertEquals( 25, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length,"Random TestNet3 Version 4 Block must contain exactly 3299 transactions of which the first has one output and the first output script length 25");
 	} finally {
 		if (bbr!=null) 
 			bbr.close();
@@ -1032,23 +1032,23 @@ public void parseScriptWitness2BlockAsBitcoinBlockHeap() throws FileNotFoundExce
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.MULTINET_MAGIC,direct);
 		BitcoinBlock firstBitcoinBlock = bbr.readBlock();
-		assertEquals("First MultiNet Block must contain exactly one transaction", 1, firstBitcoinBlock.getTransactions().size());
-		assertEquals("First MultiNet Block must contain exactly one transaction with one input", 1, firstBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
-		assertEquals("First MultiNet Block must contain exactly one transaction with one input and script length 77", 77, firstBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
-		assertEquals("First MultiNet Block must contain exactly one transaction with one output", 1, firstBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
-		assertEquals("First MultiNet Block must contain exactly one transaction with one output and script length 67", 67, firstBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
+		assertEquals( 1, firstBitcoinBlock.getTransactions().size(),"First MultiNet Block must contain exactly one transaction");
+		assertEquals( 1, firstBitcoinBlock.getTransactions().get(0).getListOfInputs().size(),"First MultiNet Block must contain exactly one transaction with one input");
+		assertEquals( 77, firstBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length,"First MultiNet Block must contain exactly one transaction with one input and script length 77");
+		assertEquals( 1, firstBitcoinBlock.getTransactions().get(0).getListOfOutputs().size(),"First MultiNet Block must contain exactly one transaction with one output");
+		assertEquals( 67, firstBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length,"First MultiNet Block must contain exactly one transaction with one output and script length 67");
 		BitcoinBlock secondBitcoinBlock = bbr.readBlock();
-		assertEquals("Second MultiNet Block must contain exactly 343 transactions", 343, secondBitcoinBlock.getTransactions().size());
-		assertEquals("Second MultiNet Block must contain exactly 343 transactions of which the first has one input", 1, secondBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
-		assertEquals("Second MultiNet Block must contain exactly 343 transactions of which the first has one input and script length 40", 40, secondBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
-		assertEquals("Second MultiNet Block must contain exactly 343 transactions of which the first has one output", 1, secondBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
-		assertEquals("Second MultiNet Block must contain exactly 343 transactions of which the first has one output and script length 25", 25, secondBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
+		assertEquals( 343, secondBitcoinBlock.getTransactions().size(),"Second MultiNet Block must contain exactly 343 transactions");
+		assertEquals( 1, secondBitcoinBlock.getTransactions().get(0).getListOfInputs().size(),"Second MultiNet Block must contain exactly 343 transactions of which the first has one input");
+		assertEquals( 40, secondBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length,"Second MultiNet Block must contain exactly 343 transactions of which the first has one input and script length 40");
+		assertEquals( 1, secondBitcoinBlock.getTransactions().get(0).getListOfOutputs().size(),"Second MultiNet Block must contain exactly 343 transactions of which the first has one output");
+		assertEquals( 25, secondBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length,"Second MultiNet Block must contain exactly 343 transactions of which the first has one output and script length 25");
 		BitcoinBlock thirdBitcoinBlock = bbr.readBlock();
-		assertEquals("Third MultiNet Block must contain exactly 3299 transactions", 3299, thirdBitcoinBlock.getTransactions().size());
-		assertEquals("Third MultiNet Block must contain exactly 3299 transactions of which the first has one input", 1, thirdBitcoinBlock.getTransactions().get(0).getListOfInputs().size());
-		assertEquals("Third MultiNet Block must contain exactly 3299 transactions of which the first has one input and script length 35", 35, thirdBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
-		assertEquals("Third MultiNet Block must contain exactly 3299 transactions of which the first has one outputs", 1, thirdBitcoinBlock.getTransactions().get(0).getListOfOutputs().size());
-		assertEquals("Third MultiNet Block must contain exactly 3299 transactions of which the first has one output and the first output script length 25", 25, thirdBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
+		assertEquals( 3299, thirdBitcoinBlock.getTransactions().size(),"Third MultiNet Block must contain exactly 3299 transactions");
+		assertEquals( 1, thirdBitcoinBlock.getTransactions().get(0).getListOfInputs().size(),"Third MultiNet Block must contain exactly 3299 transactions of which the first has one input");
+		assertEquals( 35, thirdBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length,"Third MultiNet Block must contain exactly 3299 transactions of which the first has one input and script length 35");
+		assertEquals( 1, thirdBitcoinBlock.getTransactions().get(0).getListOfOutputs().size(),"Third MultiNet Block must contain exactly 3299 transactions of which the first has one outputs");
+		assertEquals( 25, thirdBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length,"Third MultiNet Block must contain exactly 3299 transactions of which the first has one output and the first output script length 25");
 	} finally {
 		if (bbr!=null) 
 			bbr.close();
@@ -1068,7 +1068,7 @@ public void parseScriptWitnessBlockAsBitcoinBlockDirect() throws FileNotFoundExc
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
-		assertEquals("Random ScriptWitness Block must contain exactly 470 transactions", 470, theBitcoinBlock.getTransactions().size());
+		assertEquals( 470, theBitcoinBlock.getTransactions().size(),"Random ScriptWitness Block must contain exactly 470 transactions");
 		
 	} finally {
 		if (bbr!=null) 
@@ -1088,9 +1088,9 @@ public void parseScriptWitness2BlockAsBitcoinBlockDirect() throws FileNotFoundEx
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
-		assertEquals("First random ScriptWitness Block must contain exactly 2191 transactions", 2191, theBitcoinBlock.getTransactions().size());
+		assertEquals( 2191, theBitcoinBlock.getTransactions().size(),"First random ScriptWitness Block must contain exactly 2191 transactions");
 		theBitcoinBlock = bbr.readBlock();
-		assertEquals("Second random ScriptWitness Block must contain exactly 2508 transactions", 2508, theBitcoinBlock.getTransactions().size());
+		assertEquals( 2508, theBitcoinBlock.getTransactions().size(),"Second random ScriptWitness Block must contain exactly 2508 transactions");
 		
 	} finally {
 		if (bbr!=null) 
@@ -1111,8 +1111,8 @@ public void parseScriptWitness2BlockAsBitcoinBlockDirect() throws FileNotFoundEx
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		bbr.seekBlockStart();
 		ByteBuffer version1ByteBuffer = bbr.readRawBlock();
-		assertFalse("Random Version 1 Raw Block (requiring seek) is HeapByteBuffer", version1ByteBuffer.isDirect());
-		assertEquals("Random Version 1 Raw Block (requiring seek) has a size of 482 bytes", 482, version1ByteBuffer.limit());
+		assertFalse( version1ByteBuffer.isDirect(),"Random Version 1 Raw Block (requiring seek) is HeapByteBuffer");
+		assertEquals( 482, version1ByteBuffer.limit(),"Random Version 1 Raw Block (requiring seek) has a size of 482 bytes");
 		
 	} finally {
 		if (bbr!=null) 
@@ -1133,8 +1133,8 @@ public void parseScriptWitness2BlockAsBitcoinBlockDirect() throws FileNotFoundEx
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		bbr.seekBlockStart();
 		ByteBuffer version1ByteBuffer = bbr.readRawBlock();
-		assertTrue("Random Version 1 Raw Block (requiring seek) is DirectByteBuffer", version1ByteBuffer.isDirect());
-		assertEquals("Random Version 1 Raw Block (requiring seek) has a size of 482 bytes", 482, version1ByteBuffer.limit());
+		assertTrue( version1ByteBuffer.isDirect(),"Random Version 1 Raw Block (requiring seek) is DirectByteBuffer");
+		assertEquals( 482, version1ByteBuffer.limit(),"Random Version 1 Raw Block (requiring seek) has a size of 482 bytes");
 		
 	} finally {
 		if (bbr!=null) 
@@ -1154,11 +1154,11 @@ ClassLoader classLoader = getClass().getClassLoader();
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		ByteBuffer genesisByteBuffer = bbr.readRawBlock();
-		assertFalse("Raw Genesis Block is HeapByteBuffer", genesisByteBuffer.isDirect());
+		assertFalse( genesisByteBuffer.isDirect(),"Raw Genesis Block is HeapByteBuffer");
 		byte[] key = bbr.getKeyFromRawBlock(genesisByteBuffer);
-		assertEquals("Raw Genesis Block Key should have a size of 64 bytes", 64, key.length);
+		assertEquals( 64, key.length,"Raw Genesis Block Key should have a size of 64 bytes");
 		byte[] comparatorKey = new byte[]{(byte)0x3B,(byte)0xA3,(byte)0xED,(byte)0xFD,(byte)0x7A,(byte)0x7B,(byte)0x12,(byte)0xB2,(byte)0x7A,(byte)0xC7,(byte)0x2C,(byte)0x3E,(byte)0x67,(byte)0x76,(byte)0x8F,(byte)0x61,(byte)0x7F,(byte)0xC8,(byte)0x1B,(byte)0xC3,(byte)0x88,(byte)0x8A,(byte)0x51,(byte)0x32,(byte)0x3A,(byte)0x9F,(byte)0xB8,(byte)0xAA,(byte)0x4B,(byte)0x1E,(byte)0x5E,(byte)0x4A,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00};
-		assertArrayEquals("Raw Genesis Block Key is equivalent to comparator key", comparatorKey, key);
+		assertArrayEquals( comparatorKey, key,"Raw Genesis Block Key is equivalent to comparator key");
 		
 	} finally {
 		if (bbr!=null) 
@@ -1178,11 +1178,11 @@ ClassLoader classLoader = getClass().getClassLoader();
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
 		ByteBuffer genesisByteBuffer = bbr.readRawBlock();
-		assertTrue("Raw Genesis Block is DirectByteBuffer", genesisByteBuffer.isDirect());
+		assertTrue( genesisByteBuffer.isDirect(),"Raw Genesis Block is DirectByteBuffer");
 		byte[] key = bbr.getKeyFromRawBlock(genesisByteBuffer);
-		assertEquals("Raw Genesis Block Key should have a size of 64 bytes", 64, key.length);
+		assertEquals( 64, key.length,"Raw Genesis Block Key should have a size of 64 bytes");
 		byte[] comparatorKey = new byte[]{(byte)0x3B,(byte)0xA3,(byte)0xED,(byte)0xFD,(byte)0x7A,(byte)0x7B,(byte)0x12,(byte)0xB2,(byte)0x7A,(byte)0xC7,(byte)0x2C,(byte)0x3E,(byte)0x67,(byte)0x76,(byte)0x8F,(byte)0x61,(byte)0x7F,(byte)0xC8,(byte)0x1B,(byte)0xC3,(byte)0x88,(byte)0x8A,(byte)0x51,(byte)0x32,(byte)0x3A,(byte)0x9F,(byte)0xB8,(byte)0xAA,(byte)0x4B,(byte)0x1E,(byte)0x5E,(byte)0x4A,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00};
-		assertArrayEquals("Raw Genesis Block Key is equivalent to comparator key", comparatorKey, key);
+		assertArrayEquals( comparatorKey, key,"Raw Genesis Block Key is equivalent to comparator key");
 		
 	} finally {
 		if (bbr!=null) 
