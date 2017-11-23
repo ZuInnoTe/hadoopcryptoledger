@@ -18,18 +18,12 @@
 package org.zuinnote.hadoop.bitcoin.example;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 
-import org.junit.Test;
-import org.junit.BeforeClass;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.After;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.lang.InterruptedException;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
@@ -59,10 +53,13 @@ import org.apache.hadoop.mapreduce.v2.MiniMRYarnCluster;
 import org.apache.hadoop.util.ToolRunner;
 import org.apache.hadoop.yarn.conf.YarnConfiguration;
 import org.apache.hadoop.yarn.server.resourcemanager.scheduler.fifo.FifoScheduler;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.apache.hadoop.yarn.server.resourcemanager.scheduler.ResourceScheduler;
 
-import org.zuinnote.hadoop.bitcoin.format.common.BitcoinBlock;
-import org.zuinnote.hadoop.bitcoin.format.common.BitcoinTransaction;
 
 import org.zuinnote.hadoop.bitcoin.example.driver.BitcoinBlockCounterDriver;
 
@@ -83,7 +80,7 @@ private static MiniMRYarnCluster miniCluster;
 
 private ArrayList<Decompressor> openDecompressors = new ArrayList<>();
 
-   @BeforeClass
+   @BeforeAll
     public static void oneTimeSetUp() throws IOException {
      	// Create temporary directory for HDFS base and shutdownhook 
 	// create temp directory
@@ -133,7 +130,7 @@ private ArrayList<Decompressor> openDecompressors = new ArrayList<>();
 	miniCluster.start();
     }
 
-    @AfterClass
+    @AfterAll
     public static void oneTimeTearDown() {
    	// destroy Yarn cluster
 	miniCluster.stop();
@@ -141,13 +138,13 @@ private ArrayList<Decompressor> openDecompressors = new ArrayList<>();
 	dfsCluster.shutdown();
       }
 
-    @Before
+    @BeforeEach
     public void setUp() throws IOException {
 	// create input directory
 	dfsCluster.getFileSystem().mkdirs(DFS_INPUT_DIR);
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws IOException {
 	// Remove input and output directory
 	dfsCluster.getFileSystem().delete(DFS_INPUT_DIR,true);
@@ -166,10 +163,10 @@ private ArrayList<Decompressor> openDecompressors = new ArrayList<>();
 	ClassLoader classLoader = getClass().getClassLoader();
 	String fileName="genesis.blk";
 	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 	File file = new File(fileNameGenesis);
-	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+	assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
      }
 
     @Test
@@ -187,12 +184,12 @@ private ArrayList<Decompressor> openDecompressors = new ArrayList<>();
          // Let ToolRunner handle generic command-line options
   	int res = ToolRunner.run(miniCluster.getConfig(), new BitcoinBlockCounterDriver(), new String[]{DFS_INPUT_DIR_NAME,DFS_OUTPUT_DIR_NAME}); 
     	// check if successfully executed
-	assertEquals("Successfully executed mapreduce application", 0, res);
+	assertEquals( 0, res,"Successfully executed mapreduce application");
     	// fetch results
 	List<String> resultLines = readDefaultResults(1);
     	// compare results
-	assertEquals("Number of result line is 1",1,resultLines.size());
-	assertEquals("Number of transactions is 1","Transaction Count:\t1",resultLines.get(0));
+	assertEquals(1,resultLines.size(),"Number of result line is 1");
+	assertEquals("Transaction Count:\t1",resultLines.get(0),"Number of transactions is 1");
     }
 
       /**
