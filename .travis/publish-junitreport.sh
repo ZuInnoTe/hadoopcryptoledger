@@ -5,13 +5,13 @@ echo -e "Publishing test results...\n"
 
 # copy to home
 mkdir -p $HOME/inputformat/tests-latest
-cp -R inputformat/build/reports/tests $HOME/inputformat/tests-latest
+cp -R inputformat/build/test-results/junit-platform $HOME/inputformat/tests-latest
 mkdir -p $HOME/hiveserde/tests-latest
-cp -R hiveserde/build/reports/tests $HOME/hiveserde/tests-latest
+cp -R hiveserde/build/test-results/junit-platform $HOME/hiveserde/tests-latest
 mkdir -p $HOME/hiveudf/tests-latest
-cp -R hiveudf/build/reports/tests $HOME/hiveudf/tests-latest
+cp -R hiveudf/build/test-results/junit-platforms $HOME/hiveudf/tests-latest
 mkdir -p $HOME/flinkdatasource/tests-latest
-cp -R flinkdatasource/build/reports/tests $HOME/flinkdatasource/tests-latest
+cp -R flinkdatasource/build/test-results/junit-platform $HOME/flinkdatasource/tests-latest
 
 # Get to the Travis build directory, configure git and clone the repo
 cd $HOME
