@@ -20,20 +20,13 @@
 package org.zuinnote.spark2.bitcoin.example;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 
 
-import org.junit.Test;
-import org.junit.BeforeClass;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.After;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
-import java.lang.InterruptedException;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
@@ -59,14 +52,14 @@ import org.apache.hadoop.io.compress.CompressionCodecFactory;
 import org.apache.hadoop.io.compress.Decompressor;
 import org.apache.hadoop.io.compress.SplittableCompressionCodec;
 import org.apache.hadoop.io.compress.SplitCompressionInputStream;
-import org.apache.hadoop.yarn.conf.YarnConfiguration;
-import org.apache.hadoop.yarn.server.resourcemanager.scheduler.fifo.FifoScheduler;
-import org.apache.hadoop.yarn.server.resourcemanager.scheduler.ResourceScheduler;
 
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaSparkContext;
-
-import org.zuinnote.hadoop.bitcoin.format.common.BitcoinBlock;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class Spark2BitcoinBlockCounterSparkMasterIntegrationTest  {
 private static String master = "local[2]"; 
@@ -86,7 +79,7 @@ private static Configuration conf;
 
 private ArrayList<Decompressor> openDecompressors = new ArrayList<>();
 
-   @BeforeClass
+   @BeforeAll
     public static void oneTimeSetUp() throws IOException {
      	// Create temporary directory for HDFS base and shutdownhook 
 	// create temp directory
@@ -133,7 +126,7 @@ private ArrayList<Decompressor> openDecompressors = new ArrayList<>();
       	sc = new JavaSparkContext(sparkConf); 
     }
 
-    @AfterClass
+    @AfterAll
     public static void oneTimeTearDown() throws IOException {
        // destroy Spark cluster
 	if (sc!=null) {
@@ -143,13 +136,13 @@ private ArrayList<Decompressor> openDecompressors = new ArrayList<>();
 	dfsCluster.shutdown();
       }
 
-    @Before
+    @BeforeEach
     public void setUp() throws IOException {
 	// create input directory
 	dfsCluster.getFileSystem().mkdirs(DFS_INPUT_DIR);
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws IOException {
 	// Remove input and output directory
 	dfsCluster.getFileSystem().delete(DFS_INPUT_DIR,true);
@@ -167,10 +160,10 @@ private ArrayList<Decompressor> openDecompressors = new ArrayList<>();
 	ClassLoader classLoader = getClass().getClassLoader();
 	String fileName="genesis.blk";
 	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 	File file = new File(fileNameGenesis);
-	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+	assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
      }
 
     @Test
@@ -189,8 +182,8 @@ private ArrayList<Decompressor> openDecompressors = new ArrayList<>();
 	// fetch results
 	List<String> resultLines = readDefaultResults(1);
     	// compare results
-	assertEquals("Number of result line is 1",1,resultLines.size());
-	assertEquals("Number of transactions is 1","(No of transactions: ,1)",resultLines.get(0));
+	assertEquals(1,resultLines.size(), "Number of result line is 1");
+	assertEquals("(No of transactions: ,1)",resultLines.get(0),"Number of transactions is 1");
     }
 
 

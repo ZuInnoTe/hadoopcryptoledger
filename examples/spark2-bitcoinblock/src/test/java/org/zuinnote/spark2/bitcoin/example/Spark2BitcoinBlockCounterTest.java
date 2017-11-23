@@ -18,41 +18,39 @@
 package org.zuinnote.spark2.bitcoin.example;
 
 
-import static org.junit.Assert.assertEquals;
 
-
-
-import org.junit.Test;
-import org.junit.BeforeClass;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.After;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 
 import scala.Tuple2;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.zuinnote.hadoop.bitcoin.format.common.BitcoinBlock;
 import org.zuinnote.hadoop.bitcoin.format.common.BitcoinTransaction;
 
 public class Spark2BitcoinBlockCounterTest  {
 
 
-   @BeforeClass
+   @BeforeAll
     public static void oneTimeSetUp() {
      
     }
 
-    @AfterClass
+    @AfterAll
     public static void oneTimeTearDown() {
         // one-time cleanup code
       }
 
-    @Before
+    @BeforeEach
     public void setUp() {
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
     }
 
@@ -65,7 +63,7 @@ public class Spark2BitcoinBlockCounterTest  {
 	  testTransactionList.add(testTransaction);
 	  testBlock.setTransactions(testTransactionList);
 	  Tuple2<String,Long> result = sparkTransformator.mapNoOfTransaction(testBlock);
-	  assertEquals("One transaction should have been mapped",(long)1,(long)result._2());
+	  assertEquals((long)1,(long)result._2(),"One transaction should have been mapped");
     }
 
     @Test
@@ -73,7 +71,7 @@ public class Spark2BitcoinBlockCounterTest  {
 	Spark2BitcoinBlockCounter sparkTransformator = new Spark2BitcoinBlockCounter();
 	Long transactionCountA = new Long(1);
 	Long transactionCountB = new Long(2);
-	assertEquals("Transaction count should sum up to 3",(long)3,(long)sparkTransformator.reduceSumUpTransactions(transactionCountA,transactionCountB));
+	assertEquals((long)3,(long)sparkTransformator.reduceSumUpTransactions(transactionCountA,transactionCountB),"Transaction count should sum up to 3");
     }
     
 
