@@ -16,11 +16,11 @@
 
 package org.zuinnote.flink.bitcoin;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,33 +29,33 @@ import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.core.fs.FileInputSplit;
 import org.apache.flink.core.fs.Path;
 import org.apache.hadoop.io.BytesWritable;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.zuinnote.hadoop.bitcoin.format.common.BitcoinBlock;
 import org.zuinnote.hadoop.bitcoin.format.common.BitcoinTransaction;
 import org.zuinnote.hadoop.bitcoin.format.exception.HadoopCryptoLedgerConfigurationException;
 
 public class FlinkBitcoinDataSourceTest {
 
-	   @BeforeClass
+	   @BeforeAll
 	    public static void oneTimeSetUp() throws IOException {
 	      // one-time initialization code   
 
 	    }
 
-	    @AfterClass
+	    @AfterAll
 	    public static void oneTimeTearDown() {
 	        // one-time cleanup code
 	      }
 
-	    @Before
+	    @BeforeEach
 	    public void setUp() {
 	    }
 
-	    @After
+	    @AfterEach
 	    public void tearDown() {
 	       
 	    }
@@ -65,10 +65,10 @@ public class FlinkBitcoinDataSourceTest {
 	  	ClassLoader classLoader = getClass().getClassLoader();
 	  	String fileName="genesis.blk";
 	  	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-	  	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	  	assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 	  	File file = new File(fileNameGenesis);
-	  	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-	  	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	  	assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+	  	assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
 	    }
 
 
@@ -77,10 +77,10 @@ public class FlinkBitcoinDataSourceTest {
 	  	ClassLoader classLoader = getClass().getClassLoader();
 	  	String fileName="version1.blk";
 	  	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-	  	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	  	assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 	  	File file = new File(fileNameGenesis);
-	  	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-	  	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	  	assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+	  	assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
 	    }
 
 	   @Test
@@ -88,10 +88,10 @@ public class FlinkBitcoinDataSourceTest {
 	  	ClassLoader classLoader = getClass().getClassLoader();
 	  	String fileName="version2.blk";
 	  	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-	  	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	  	assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 	  	File file = new File(fileNameGenesis);
-	  	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-	  	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	  	assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+	  	assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
 	    }
 
 
@@ -100,10 +100,10 @@ public class FlinkBitcoinDataSourceTest {
 	  	ClassLoader classLoader = getClass().getClassLoader();
 	  	String fileName="version3.blk";
 	  	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-	  	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	  	assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 	  	File file = new File(fileNameGenesis);
-	  	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-	  	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	  	assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+	  	assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
 	    }
 
 	   @Test
@@ -111,10 +111,10 @@ public class FlinkBitcoinDataSourceTest {
 	  	ClassLoader classLoader = getClass().getClassLoader();
 	  	String fileName="version4.blk";
 	  	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-	  	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	  	assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 	  	File file = new File(fileNameGenesis);
-	  	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-	  	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	  	assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+	  	assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
 	    }
 
 
@@ -123,10 +123,10 @@ public class FlinkBitcoinDataSourceTest {
 	  	ClassLoader classLoader = getClass().getClassLoader();
 	  	String fileName="multiblock.blk";
 	  	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-	  	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	  	assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 	  	File file = new File(fileNameGenesis);
-	  	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-	  	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	  	assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+	  	assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
 	    }
 	   
 	 @Test
@@ -139,28 +139,28 @@ public class FlinkBitcoinDataSourceTest {
 		    FileInputSplit blockInputSplit = new FileInputSplit(0,file,0, -1, null);
 		    BitcoinBlockFlinkInputFormat inputFormat = new BitcoinBlockFlinkInputFormat(1024*1024, "F9BEB4D9",false);
 		    inputFormat.open(blockInputSplit);
-		    assertFalse("End not reached",inputFormat.reachedEnd());
+		    assertFalse(inputFormat.reachedEnd(),"End not reached");
 		    BitcoinBlock reuse = new BitcoinBlock();
 		    BitcoinBlock nextBlock = inputFormat.nextRecord(reuse);
-		    assertNotNull("First Block returned",nextBlock);
-		    assertEquals("First block contains exactly one transction",1,nextBlock.getTransactions().size());
+		    assertNotNull(nextBlock,"First Block returned");
+		    assertEquals(1,nextBlock.getTransactions().size(),"First block contains exactly one transction");
 		    // save state
 		    Long state = inputFormat.getCurrentState();
-		    assertEquals("state 293",293,state.longValue());
+		    assertEquals(293,state.longValue(),"state 293");
 		    // read 2nd block
 		    nextBlock=inputFormat.nextRecord(reuse);
-		    assertEquals("Second block contains two transactions",2,nextBlock.getTransactions().size());
+		    assertEquals(2,nextBlock.getTransactions().size(),"Second block contains two transactions");
 		    // restore state
 		    inputFormat.reopen(blockInputSplit, state);
 		    // read 2nd block again
 		    nextBlock=inputFormat.nextRecord(reuse);
-		    assertEquals("Second block contains two transactions",2,nextBlock.getTransactions().size());
+		    assertEquals(2,nextBlock.getTransactions().size(),"Second block contains two transactions");
 		    // read 3rd block
 		    nextBlock=inputFormat.nextRecord(reuse);
-		    assertEquals("Third block contains 343 transactions",343,nextBlock.getTransactions().size());
+		    assertEquals(343,nextBlock.getTransactions().size(),"Third block contains 343 transactions");
 		    nextBlock=inputFormat.nextRecord(reuse);
-		    assertNull("No further block",nextBlock);
-		    assertTrue("End reached",inputFormat.reachedEnd());
+		    assertNull(nextBlock,"No further block");
+		    assertTrue(inputFormat.reachedEnd(),"End reached");
 	 }
 	 
 	 @Test
@@ -173,27 +173,27 @@ public class FlinkBitcoinDataSourceTest {
 		    FileInputSplit blockInputSplit = new FileInputSplit(0,file,0, -1, null);
 		    BitcoinRawBlockFlinkInputFormat inputFormat = new BitcoinRawBlockFlinkInputFormat(1024*1024, "F9BEB4D9",false);
 		    inputFormat.open(blockInputSplit);
-		    assertFalse("End not reached",inputFormat.reachedEnd());
+		    assertFalse(inputFormat.reachedEnd(),"End not reached");
 		    BytesWritable reuse = new BytesWritable();
 		    BytesWritable nextBlock = inputFormat.nextRecord(reuse);
-		    assertNotNull("First Block returned",nextBlock);
+		    assertNotNull(nextBlock,"First Block returned");
 		    // save state
 		    Long state = inputFormat.getCurrentState();
-		    assertEquals("state 293",293,state.longValue());
+		    assertEquals(293,state.longValue(),"state 293");
 		    // read 2nd block
 		    nextBlock=inputFormat.nextRecord(reuse);
-		    assertNotNull("Second block after state save exist",nextBlock);
+		    assertNotNull(nextBlock,"Second block after state save exist");
 		    // restore state
 		    inputFormat.reopen(blockInputSplit, state);
 		    // read 2nd block again
 		    nextBlock=inputFormat.nextRecord(reuse);
-		    assertNotNull("Second block after state restore exist",nextBlock);
+		    assertNotNull(nextBlock,"Second block after state restore exist");
 		    // read 3rd block
 		    nextBlock=inputFormat.nextRecord(reuse);
-		    assertNotNull("Third block after state restore exist",nextBlock);
+		    assertNotNull(nextBlock,"Third block after state restore exist");
 		    nextBlock=inputFormat.nextRecord(reuse);
-		    assertNull("No further block",nextBlock);
-		    assertTrue("End reached",inputFormat.reachedEnd());
+		    assertNull(nextBlock,"No further block");
+		    assertTrue(inputFormat.reachedEnd(),"End reached");
 	 }
 	 
 	 @Test
@@ -206,29 +206,29 @@ public class FlinkBitcoinDataSourceTest {
 		    FileInputSplit transactionInputSplit = new FileInputSplit(0,file,0, -1, null);
 		    BitcoinTransactionFlinkInputFormat inputFormat = new BitcoinTransactionFlinkInputFormat(1024*1024, "F9BEB4D9",false);
 		    inputFormat.open(transactionInputSplit);
-		    assertFalse("End not reached",inputFormat.reachedEnd());
+		    assertFalse(inputFormat.reachedEnd(),"End not reached");
 		    BitcoinTransaction reuse = new BitcoinTransaction();
 		    BitcoinTransaction nextTransaction = inputFormat.nextRecord(reuse);
-		    assertNotNull("First Transaction returned",nextTransaction);
+		    assertNotNull(nextTransaction,"First Transaction returned");
 		    nextTransaction = inputFormat.nextRecord(reuse);
-		    assertNotNull("Second Transaction returned",nextTransaction);
+		    assertNotNull(nextTransaction,"Second Transaction returned");
 		    // save state
 		    Tuple2<Long,Long> state = inputFormat.getCurrentState();
-		    assertEquals("state buffer position:  775",775,(long)state.f0);
-		    assertEquals("state transacton position: 1",1,(long)state.f1);
+		    assertEquals(775,(long)state.f0,"state buffer position:  775");
+		    assertEquals(1,(long)state.f1,"state transacton position: 1");
 		    nextTransaction = inputFormat.nextRecord(reuse);
-		    assertNotNull("Third Transaction returned after state save",nextTransaction);
+		    assertNotNull(nextTransaction,"Third Transaction returned after state save");
 		    // restore state
 		    inputFormat.reopen(transactionInputSplit, state);
 		    nextTransaction = inputFormat.nextRecord(reuse);
-		    assertNotNull("Third Transaction returned after state restore",nextTransaction);
+		    assertNotNull(nextTransaction,"Third Transaction returned after state restore");
 		    // further transactions
 		    int remainingTransactionCounter=0;
 		    while (inputFormat.nextRecord(reuse)!=null) {
 		    	remainingTransactionCounter++;
 		    }
-		    assertEquals("Reamining transactions after state restore from block 3: 343",343,remainingTransactionCounter);
-		    assertTrue("End reached",inputFormat.reachedEnd());
+		    assertEquals(343,remainingTransactionCounter,"Reamining transactions after state restore from block 3: 343");
+		    assertTrue(inputFormat.reachedEnd(),"End reached");
 	 }
 	 
 	 @Test
@@ -240,14 +240,14 @@ public class FlinkBitcoinDataSourceTest {
 		    FileInputSplit blockInputSplit = new FileInputSplit(0,file,0, -1, null);
 		    BitcoinBlockFlinkInputFormat inputFormat = new BitcoinBlockFlinkInputFormat(1024*1024, "F9BEB4D9",false);
 		    inputFormat.open(blockInputSplit);
-		    assertFalse("End not reached",inputFormat.reachedEnd());
+		    assertFalse(inputFormat.reachedEnd(),"End not reached");
 		    BitcoinBlock reuse = new BitcoinBlock();
 		    BitcoinBlock nextBlock = inputFormat.nextRecord(reuse);
-		    assertNotNull("First Block returned",nextBlock);
-		    assertEquals("First block contains exactly one transction",1,nextBlock.getTransactions().size());
+		    assertNotNull(nextBlock,"First Block returned");
+		    assertEquals(1,nextBlock.getTransactions().size(),"First block contains exactly one transction");
 		    nextBlock=inputFormat.nextRecord(reuse);
-		    assertNull("No further block",nextBlock);
-		    assertTrue("End reached",inputFormat.reachedEnd());
+		    assertNull(nextBlock,"No further block");
+		    assertTrue(inputFormat.reachedEnd(),"End reached");
 	 }
 	 
 	 @Test
@@ -259,14 +259,14 @@ public class FlinkBitcoinDataSourceTest {
 		    FileInputSplit blockInputSplit = new FileInputSplit(0,file,0, -1, null);
 		    BitcoinRawBlockFlinkInputFormat inputFormat = new BitcoinRawBlockFlinkInputFormat(1024*1024,"F9BEB4D9",false);
 		    inputFormat.open(blockInputSplit);
-		    assertFalse("End not reached",inputFormat.reachedEnd());
+		    assertFalse(inputFormat.reachedEnd(),"End not reached");
 		    BytesWritable reuse = new BytesWritable();
 		    BytesWritable nextBlock = inputFormat.nextRecord(reuse);
-		    assertNotNull("First Block returned",nextBlock);
-			assertEquals("First Block must have size of 293", 293, nextBlock.getLength());
+		    assertNotNull(nextBlock,"First Block returned");
+			assertEquals( 293, nextBlock.getLength(),"First Block must have size of 293");
 		    nextBlock=inputFormat.nextRecord(reuse);
-		    assertNull("No further block",nextBlock);
-		    assertTrue("End reached",inputFormat.reachedEnd());
+		    assertNull(nextBlock,"No further block");
+		    assertTrue(inputFormat.reachedEnd(),"End reached");
 	 }
 	 
 	 @Test
@@ -278,12 +278,12 @@ public class FlinkBitcoinDataSourceTest {
 		    FileInputSplit blockInputSplit = new FileInputSplit(0,file,0, -1, null);
 		    BitcoinTransactionFlinkInputFormat inputFormat = new BitcoinTransactionFlinkInputFormat(1024*1024, "F9BEB4D9",false);
 		    inputFormat.open(blockInputSplit);
-		    assertFalse("End not reached",inputFormat.reachedEnd());
+		    assertFalse(inputFormat.reachedEnd(),"End not reached");
 		    BitcoinTransaction reuse = new BitcoinTransaction();
 		    int transactCount=0;
 			while (!inputFormat.reachedEnd() && (inputFormat.nextRecord(reuse)!=null)) {
 				transactCount++;
 			}
-			assertEquals("Genesis Block  must contain exactly one transactions", 1, transactCount);
+			assertEquals( 1, transactCount,"Genesis Block  must contain exactly one transactions");
 	 }
 }
