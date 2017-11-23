@@ -12,7 +12,6 @@ script:
 - travis_wait ./gradlew build
 - ./gradlew test
 - ./gradlew integrationTest
-- ./gradlew pitest
 - sonar-scanner -Dsonar.login=$SONAR_HCL
 after_success:
 - .travis/publish-javadoc.sh
