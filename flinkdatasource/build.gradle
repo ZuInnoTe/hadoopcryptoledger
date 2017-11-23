@@ -95,7 +95,7 @@ dependencies {
     // flink api
    provided("org.apache.flink:flink-java:1.2.0")
    // log4j2
-   provided("org.apache.logging.log4j:log4j-api:2.4.1")
+   provided("org.apache.logging.log4j:log4j-api:2.9.1")
    // test
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.0.2'
 	testRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.0.2'
