@@ -183,7 +183,7 @@ private ArrayList<Decompressor> openDecompressors = new ArrayList<>();
 	List<String> resultLines = readDefaultResults(1);
     	// compare results
 	assertEquals(1,resultLines.size(),"Number of result line is 1");
-	assertEquals("(No of transactions: 1)",resultLines.get(0),"Number of transactions is 1");
+	assertEquals("(No of transactions: ,1)",resultLines.get(0),"Number of transactions is 1");
     }
 
 
