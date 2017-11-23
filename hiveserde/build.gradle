@@ -3,13 +3,14 @@ apply plugin: 'maven-publish'
 apply plugin: 'maven'
 apply plugin: 'signing'
 apply plugin: 'jacoco'
+apply plugin: 'org.junit.platform.gradle.plugin'
 
 sourceCompatibility = 1.7
 compileJava.options.encoding = 'UTF-8'
 
 group = "com.github.zuinnote"
 archivesBaseName = "hadoopcryptoledger-hiveserde"
-version = "1.1.0"
+version = "1.1.1"
 
 
 jar {
@@ -41,6 +42,24 @@ jacocoTestReport {
     }
 }
 
+
+// Integrate JaCoCo for jUnit5
+project.afterEvaluate {
+    def junitPlatformTestTask = project.tasks.getByName('junitPlatformTest')
+
+    // configure jacoco to analyze the junitPlatformTest task
+    jacoco {
+        applyTo junitPlatformTestTask
+    }
+
+    // create junit platform jacoco task
+    project.task(type: JacocoReport, "junitPlatformJacocoReport",
+            {
+                sourceDirectories = files("./src/main")
+                classDirectories = files("$buildDir/classes/main")
+                executionData junitPlatformTestTask
+            })
+}
 
 
 configurations {
@@ -74,13 +93,15 @@ dependencies {
    // hadoop lib for driver
      provided("org.apache.hadoop:hadoop-client:2.7.0")
        // hadoop crypto ledger library
-   provided("com.github.zuinnote:hadoopcryptoledger-fileformat:1.1.0")
+   provided("com.github.zuinnote:hadoopcryptoledger-fileformat:1.1.1")
     // hive serde API
    provided("org.apache.hive:hive-serde:1.2.0")
    provided("org.apache.hive:hive-exec:1.2.0")
    // log4j2
-   provided("org.apache.logging.log4j:log4j-api:2.4.1")
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+   provided("org.apache.logging.log4j:log4j-api:2.9.1")
+   // test
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.0.2'
+	testRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.0.2'
 }
 
 
@@ -89,7 +110,7 @@ publishing {
         maven(MavenPublication) {
             groupId 'com.github.zuinnote'
             artifactId 'hadoopcryptoledger-hiveserde'
-            version '1.1.0'
+            version '1.1.1'
 
             from components.java
         }

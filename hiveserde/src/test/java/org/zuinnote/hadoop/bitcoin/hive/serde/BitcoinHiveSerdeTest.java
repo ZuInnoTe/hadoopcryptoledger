@@ -16,13 +16,11 @@
 
 package org.zuinnote.hadoop.bitcoin.hive.serde;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertNotNull;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -32,7 +30,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 import org.apache.hadoop.conf.Configuration;
-
+import org.junit.jupiter.api.Test;
 import org.zuinnote.hadoop.bitcoin.format.common.BitcoinBlock;
 import org.zuinnote.hadoop.bitcoin.format.common.BitcoinBlockReader;
 import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
@@ -50,10 +48,10 @@ private static final byte[][] DEFAULT_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB4
 	ClassLoader classLoader = getClass().getClassLoader();
 	String fileName="genesis.blk";
 	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-	assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+	assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 	File file = new File(fileNameGenesis);
-	assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-	assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+	assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+	assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
   }
 
   @Test
@@ -68,11 +66,11 @@ private static final byte[][] DEFAULT_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB4
 	tblProperties.setProperty(BitcoinBlockSerde.CONF_ISSPLITABLE,"true");
 	tblProperties.setProperty(BitcoinBlockSerde.CONF_READAUXPOW,"true");
 	testSerde.initialize(conf,tblProperties);
-	assertEquals("MAXBLOCKSIZE set correctly", 1, conf.getInt(BitcoinBlockSerde.CONF_MAXBLOCKSIZE,2));	
-	assertEquals("FILTERMAGIC set correctly", "A0A0A0A0", conf.get(BitcoinBlockSerde.CONF_FILTERMAGIC,"B0B0B0B0"));
-	assertTrue("USEDIRECTBUFFER set correctly", conf.getBoolean(BitcoinBlockSerde.CONF_USEDIRECTBUFFER,false));	
-	assertTrue("ISSPLITABLE set correctly", conf.getBoolean(BitcoinBlockSerde.CONF_ISSPLITABLE,false));
-	assertTrue("ISSPLITABLE set correctly", conf.getBoolean(BitcoinBlockSerde.CONF_READAUXPOW,false));
+	assertEquals(1, conf.getInt(BitcoinBlockSerde.CONF_MAXBLOCKSIZE,2),"MAXBLOCKSIZE set correctly");	
+	assertEquals("A0A0A0A0", conf.get(BitcoinBlockSerde.CONF_FILTERMAGIC,"B0B0B0B0"),"FILTERMAGIC set correctly");
+	assertTrue(conf.getBoolean(BitcoinBlockSerde.CONF_USEDIRECTBUFFER,false),"USEDIRECTBUFFER set correctly");	
+	assertTrue(conf.getBoolean(BitcoinBlockSerde.CONF_ISSPLITABLE,false),"ISSPLITABLE set correctly");
+	assertTrue(conf.getBoolean(BitcoinBlockSerde.CONF_READAUXPOW,false),"ISSPLITABLE set correctly");
   }
 
  @Test
@@ -91,14 +89,14 @@ private static final byte[][] DEFAULT_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB4
 		BitcoinBlock theBitcoinBlock = bbr.readBlock();
 	// deserialize it
 		Object deserializedObject = testSerde.deserialize(theBitcoinBlock);
-		assertTrue("Deserialized Object is of type BitcoinBlock", deserializedObject instanceof BitcoinBlock);
+		assertTrue( deserializedObject instanceof BitcoinBlock,"Deserialized Object is of type BitcoinBlock");
 		BitcoinBlock deserializedBitcoinBlockStruct = (BitcoinBlock)deserializedObject;
 	// verify certain attributes
-		assertEquals("Genesis Block must contain exactly one transaction", 1, deserializedBitcoinBlockStruct.getTransactions().size());
-		assertEquals("Genesis Block must contain exactly one transaction with one input", 1, deserializedBitcoinBlockStruct.getTransactions().get(0).getListOfInputs().size());
-		assertEquals("Genesis Block must contain exactly one transaction with one input and script length 77", 77, deserializedBitcoinBlockStruct.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length);
-		assertEquals("Genesis Block must contain exactly one transaction with one output", 1, deserializedBitcoinBlockStruct.getTransactions().get(0).getListOfOutputs().size());
-		assertEquals("Genesis Block must contain exactly one transaction with one output and script length 67", 67, deserializedBitcoinBlockStruct.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length);
+		assertEquals( 1, deserializedBitcoinBlockStruct.getTransactions().size(),"Genesis Block must contain exactly one transaction");
+		assertEquals( 1, deserializedBitcoinBlockStruct.getTransactions().get(0).getListOfInputs().size(),"Genesis Block must contain exactly one transaction with one input");
+		assertEquals( 77, deserializedBitcoinBlockStruct.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length,"Genesis Block must contain exactly one transaction with one input and script length 77");
+		assertEquals( 1, deserializedBitcoinBlockStruct.getTransactions().get(0).getListOfOutputs().size(),"Genesis Block must contain exactly one transaction with one output");
+		assertEquals( 67, deserializedBitcoinBlockStruct.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length,"Genesis Block must contain exactly one transaction with one output and script length 67");
 	} finally {
 		if (bbr!=null) 
 			bbr.close();

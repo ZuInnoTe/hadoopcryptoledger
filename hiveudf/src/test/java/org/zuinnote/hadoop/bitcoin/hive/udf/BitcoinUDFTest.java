@@ -15,30 +15,19 @@
 **/
 package org.zuinnote.hadoop.bitcoin.hive.udf;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertNotNull;
-
-import org.junit.Test;
-import org.junit.Rule;
-import org.junit.rules.ExpectedException;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.apache.hadoop.io.BytesWritable; 
-import org.apache.hadoop.io.Text; 
-
+import org.apache.hadoop.io.Text;
+import org.junit.jupiter.api.Test;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
 
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.StringObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectInspectorFactory;
-import org.apache.hadoop.hive.serde2.objectinspector.StructObjectInspector;
+
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspectorFactory;
 import  org.apache.hadoop.hive.ql.udf.generic.*;
 
@@ -46,7 +35,6 @@ import org.apache.hadoop.hive.ql.metadata.HiveException;
 import org.apache.hadoop.hive.ql.exec.UDFArgumentException;
 import org.apache.hadoop.hive.ql.exec.UDFArgumentLengthException;
 
-import org.zuinnote.hadoop.bitcoin.hive.udf.*;
 import org.zuinnote.hadoop.bitcoin.format.common.*;
 
 import java.util.ArrayList;
@@ -55,8 +43,7 @@ import java.util.List;
 
 
 public class BitcoinUDFTest {
-  @Rule
-  public final ExpectedException exception = ExpectedException.none();
+
 
 @Test
   public void BitcoinScriptPaymentPatternAnalyzerUDFNotNull() {
@@ -65,7 +52,7 @@ public class BitcoinUDFTest {
        BytesWritable evalObj = new BytesWritable(txOutScriptGenesis);
 	String result = bsppaUDF.evaluate(evalObj).toString();
 	String comparatorText = "bitcoinpubkey_4104678AFDB0FE5548271967F1A67130B7105CD6A828E03909A67962E0EA1F61DEB649F6BC3F4CEF38C4F35504E51EC112DE5C384DF7BA0B8D578A4C702B6BF11D5F";
-	assertEquals("TxOutScript from Genesis should be payment to a pubkey address", comparatorText,result);
+	assertEquals(comparatorText,result,"TxOutScript from Genesis should be payment to a pubkey address");
   }
 
 @Test
@@ -74,28 +61,27 @@ public class BitcoinUDFTest {
 	byte[] txOutScriptTestNull= new byte[]{(byte)0x00};
        BytesWritable evalObj = new BytesWritable(txOutScriptTestNull);
 	Text result = bsppaUDF.evaluate(evalObj);
-	assertNull("Invalid payment script should be null for payment destination", result);
+	assertNull( result,"Invalid payment script should be null for payment destination");
   }
 
 
 @Test
   public void BitcoinScriptPaymentPatternAnalyzerUDFNull() {
 	BitcoinScriptPaymentPatternAnalyzerUDF bsppaUDF = new BitcoinScriptPaymentPatternAnalyzerUDF();
-	assertNull("Null argument to UDF returns null", bsppaUDF.evaluate(null));
+	assertNull( bsppaUDF.evaluate(null),"Null argument to UDF returns null");
   }
 
  
 @Test
   public void BitcoinTransactionHashUDFInvalidArguments() throws HiveException {
-	BitcoinTransactionHashUDF bthUDF = new BitcoinTransactionHashUDF();
-	exception.expect(UDFArgumentLengthException.class);
-	bthUDF.initialize(null);
-	exception.expect(UDFArgumentLengthException.class);	
-	bthUDF.initialize(new ObjectInspector[2]);
+	final BitcoinTransactionHashUDF bthUDF = new BitcoinTransactionHashUDF();
+	UDFArgumentLengthException exNull = assertThrows(UDFArgumentLengthException.class, ()->bthUDF.initialize(null), "Exception is thrown in case of null parameter");
+	UDFArgumentLengthException exLen = assertThrows(UDFArgumentLengthException.class, ()->bthUDF.initialize(new ObjectInspector[2]), "Exception is thrown in case of invalid length parameter");
+	
 	StringObjectInspector[] testStringOI = new StringObjectInspector[1];
 	testStringOI[0]=PrimitiveObjectInspectorFactory.javaStringObjectInspector;
-	exception.expect(UDFArgumentException.class);
-	bthUDF.initialize(testStringOI);
+	UDFArgumentException wrongType = assertThrows(UDFArgumentException.class, ()->bthUDF.initialize(testStringOI), "Exception is thrown in case of invalid type of parameter");
+	
   }
 
 @Test
@@ -104,7 +90,7 @@ public class BitcoinUDFTest {
 	ObjectInspector[] arguments = new ObjectInspector[1];
 	arguments[0] =  ObjectInspectorFactory.getReflectionObjectInspector(BitcoinBlock.class,ObjectInspectorFactory.ObjectInspectorOptions.JAVA);
 	bthUDF.initialize(arguments);	
-	assertNull("Null argument to UDF returns null",bthUDF.evaluate(null));
+	assertNull(bthUDF.evaluate(null),"Null argument to UDF returns null");
   }
 
 
@@ -138,7 +124,7 @@ public class BitcoinUDFTest {
 	doa[0]=new GenericUDF.DeferredJavaObject(genesisTransaction);
 	BytesWritable bw = (BytesWritable) bthUDF.evaluate(doa);
 	
-	assertArrayEquals("BitcoinTransaction object genesis transaction hash from UDF", expectedHash,bw.copyBytes());
+	assertArrayEquals( expectedHash,bw.copyBytes(),"BitcoinTransaction object genesis transaction hash from UDF");
   }
 
 
@@ -172,21 +158,20 @@ public class BitcoinUDFTest {
 	doa[0]=new GenericUDF.DeferredJavaObject(genesisTransaction);
 	BytesWritable bw = (BytesWritable) bthUDF.evaluate(doa);
 	
-	assertArrayEquals("BitcoinTransaction struct transaction hash from UDF", expectedHash,bw.copyBytes());
+	assertArrayEquals( expectedHash,bw.copyBytes(),"BitcoinTransaction struct transaction hash from UDF");
   }
 
 
 @Test
 public void BitcoinTransactionHashSegwitUDFInvalidArguments() throws HiveException {
 	BitcoinTransactionHashSegwitUDF bthUDF = new BitcoinTransactionHashSegwitUDF();
-	exception.expect(UDFArgumentLengthException.class);
-	bthUDF.initialize(null);
-	exception.expect(UDFArgumentLengthException.class);	
-	bthUDF.initialize(new ObjectInspector[2]);
+	UDFArgumentLengthException exNull = assertThrows(UDFArgumentLengthException.class, ()->bthUDF.initialize(null), "Exception is thrown in case of null parameter");
+	UDFArgumentLengthException exLen = assertThrows(UDFArgumentLengthException.class, ()->bthUDF.initialize(new ObjectInspector[2]), "Exception is thrown in case of invalid length parameter");
+	
 	StringObjectInspector[] testStringOI = new StringObjectInspector[1];
 	testStringOI[0]=PrimitiveObjectInspectorFactory.javaStringObjectInspector;
-	exception.expect(UDFArgumentException.class);
-	bthUDF.initialize(testStringOI);
+	UDFArgumentException wrongType = assertThrows(UDFArgumentException.class, ()->bthUDF.initialize(testStringOI), "Exception is thrown in case of invalid type of parameter");
+
 }
 
 @Test
@@ -195,7 +180,7 @@ public void BitcoinTransactionHashSegwitUDFNull() throws HiveException {
 	ObjectInspector[] arguments = new ObjectInspector[1];
 	arguments[0] =  ObjectInspectorFactory.getReflectionObjectInspector(BitcoinBlock.class,ObjectInspectorFactory.ObjectInspectorOptions.JAVA);
 	bthUDF.initialize(arguments);	
-	assertNull("Null argument to UDF returns null",bthUDF.evaluate(null));
+	assertNull(bthUDF.evaluate(null),"Null argument to UDF returns null");
 	
 	
 }
@@ -254,7 +239,7 @@ public void BitcoinTransactionHashSegwitUDFWriteable()  throws HiveException  {
 	doa[0]=new GenericUDF.DeferredJavaObject(randomScriptWitnessTransaction);
 	BytesWritable bw = (BytesWritable) bthUDF.evaluate(doa);
 	
-	assertArrayEquals("BitcoinTransaction object random scriptwitness transaction hash segwit from UDF", expectedHashSegwit,bw.copyBytes());
+	assertArrayEquals( expectedHashSegwit,bw.copyBytes(),"BitcoinTransaction object random scriptwitness transaction hash segwit from UDF");
 
 
 }
@@ -311,6 +296,6 @@ public void BitcoinTransactionHashSegwitUDFObjectInspector() throws HiveExceptio
 		doa[0]=new GenericUDF.DeferredJavaObject(randomScriptWitnessTransaction);
 	 BytesWritable bw = (BytesWritable) bthUDF.evaluate(doa);
 		
-		assertArrayEquals("BitcoinTransaction struct transaction hash segwit from UDF", expectedHashSegwit,bw.copyBytes());
+		assertArrayEquals( expectedHashSegwit,bw.copyBytes(),"BitcoinTransaction struct transaction hash segwit from UDF");
 }
 } 

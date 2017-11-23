@@ -15,22 +15,20 @@
 **/
 package org.zuinnote.hadoop.ethereum.hive.serde;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hive.serde2.SerDeException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.zuinnote.hadoop.ethereum.format.common.EthereumBlock;
 import org.zuinnote.hadoop.ethereum.format.common.EthereumBlockReader;
 import org.zuinnote.hadoop.ethereum.format.exception.EthereumBlockReadException;
@@ -45,10 +43,10 @@ public class EthereumHiveSerdeTest {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="eth1346406.bin";
 		String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
-		assertNotNull("Test Data File \""+fileName+"\" is not null in resource path",fileNameGenesis);
+		assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 		File file = new File(fileNameGenesis);
-		assertTrue("Test Data File \""+fileName+"\" exists", file.exists());
-		assertFalse("Test Data File \""+fileName+"\" is not a directory", file.isDirectory());
+		assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+		assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
 	  }
 	 
 	 @Test
@@ -60,8 +58,8 @@ public class EthereumHiveSerdeTest {
 		tblProperties.setProperty(EthereumBlockSerde.CONF_MAXBLOCKSIZE, String.valueOf(1));
 		tblProperties.setProperty(EthereumBlockSerde.CONF_USEDIRECTBUFFER,"true");
 		testSerde.initialize(conf,tblProperties);
-		assertEquals("MAXBLOCKSIZE set correctly", 1, conf.getInt(EthereumBlockSerde.CONF_MAXBLOCKSIZE,2));	
-		assertTrue("USEDIRECTBUFFER set correctly", conf.getBoolean(EthereumBlockSerde.CONF_USEDIRECTBUFFER,false));	
+		assertEquals(1,conf.getInt(EthereumBlockSerde.CONF_MAXBLOCKSIZE,2),"MAXBLOCKSIZE set correctly");	
+		assertTrue(conf.getBoolean(EthereumBlockSerde.CONF_USEDIRECTBUFFER,false),"USEDIRECTBUFFER set correctly");	
 	  }
 	 
 	 @Test
@@ -77,13 +75,13 @@ public class EthereumHiveSerdeTest {
 		EthereumBlockReader ebr = new EthereumBlockReader(fin,EthereumHiveSerdeTest.DEFAULT_MAXSIZE_ETHEREUMBLOCK,EthereumHiveSerdeTest.DEFAULT_BUFFERSIZE,direct );
 		EthereumBlock block = ebr.readBlock();
 		Object deserializedObject = testSerde.deserialize(block);
-		assertTrue("Deserialized Object is of type EthereumBlock", deserializedObject instanceof EthereumBlock);
+		assertTrue( deserializedObject instanceof EthereumBlock,"Deserialized Object is of type EthereumBlock");
 		EthereumBlock deserializedBitcoinBlockStruct = (EthereumBlock)deserializedObject;
 
-		assertEquals("Block contains 6 transactions", 6, deserializedBitcoinBlockStruct.getEthereumTransactions().size());
-		assertEquals("Block contains 0 uncleHeaders",0, deserializedBitcoinBlockStruct.getUncleHeaders().size());
+		assertEquals( 6, deserializedBitcoinBlockStruct.getEthereumTransactions().size(),"Block contains 6 transactions");
+		assertEquals(0, deserializedBitcoinBlockStruct.getUncleHeaders().size(),"Block contains 0 uncleHeaders");
 		byte[] expectedParentHash = new byte[] {(byte)0xBA,(byte)0x6D,(byte)0xD2,(byte)0x60,(byte)0x12,(byte)0xB3,(byte)0x71,(byte)0x90,(byte)0x48,(byte)0xF3,(byte)0x16,(byte)0xC6,(byte)0xED,(byte)0xB3,(byte)0x34,(byte)0x9B,(byte)0xDF,(byte)0xBD,(byte)0x61,(byte)0x31,(byte)0x9F,(byte)0xA9,(byte)0x7C,(byte)0x61,(byte)0x6A,(byte)0x61,(byte)0x31,(byte)0x18,(byte)0xA1,(byte)0xAF,(byte)0x30,(byte)0x67};
 		
-		assertArrayEquals("Block contains a correct 32 byte parent hash", expectedParentHash, deserializedBitcoinBlockStruct.getEthereumBlockHeader().getParentHash());
+		assertArrayEquals( expectedParentHash, deserializedBitcoinBlockStruct.getEthereumBlockHeader().getParentHash(),"Block contains a correct 32 byte parent hash");
 	 }
 }
