@@ -2,6 +2,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'jacoco'
 apply plugin: 'application'
+apply plugin: 'org.junit.platform.gradle.plugin'
 
 compileJava.options.encoding = 'UTF-8'
 sourceCompatibility = 1.7
@@ -32,18 +33,41 @@ jacocoTestReport {
     }
 }
 
+
+
+// Integrate JaCoCo for jUnit5
+project.afterEvaluate {
+    def junitPlatformTestTask = project.tasks.getByName('junitPlatformTest')
+
+    // configure jacoco to analyze the junitPlatformTest task
+    jacoco {
+        applyTo junitPlatformTestTask
+    }
+
+    // create junit platform jacoco task
+    project.task(type: JacocoReport, "junitPlatformJacocoReport",
+            {
+                sourceDirectories = files("./src/main")
+                classDirectories = files("$buildDir/classes/main")
+                executionData junitPlatformTestTask
+            })
+}
+
+
 configurations {
 	provided
-	integrationTestCompile.extendsFrom testCompile
-    	integrationTestRuntime.extendsFrom testRuntime
+	testProvided
+	testIntegrationCompile.extendsFrom testCompile
+	testIntegrationRuntime.extendsFrom testRuntime
 }
 
 eclipse {
 
   classpath {
     plusConfigurations += [ configurations.provided ]
-    plusConfigurations += [ configurations.integrationTestCompile ]
-    plusConfigurations += [ configurations.integrationTestRuntime ]
+    plusConfigurations += [ configurations.testProvided ]
+    plusConfigurations += [ configurations.testIntegrationCompile ]
+	plusConfigurations += [ configurations.testIntegrationRuntime ]
   }
 }
 
@@ -51,14 +75,14 @@ sourceSets {
     main.compileClasspath += configurations.provided
     test.compileClasspath += configurations.provided
     test.runtimeClasspath += configurations.provided
-    integrationTest {
+    testIntegration {
         java {
             compileClasspath += main.output + test.output + configurations.provided
             runtimeClasspath += main.output + test.output + configurations.provided
             srcDir file('src/integration-test/java')
         }
         resources.srcDir file('src/integration-test/resources')
-    }
+	}
 }
 
 dependencies {
@@ -66,21 +90,51 @@ dependencies {
      provided("org.apache.hadoop:hadoop-client:2.7.0")
     // hadoop crypto ledger library
    compile("com.github.zuinnote:hadoopcryptoledger-fileformat:1.1.0")
-   testCompile group: 'org.jmockit', name: 'jmockit', version: '1.30'
-   testCompile group: 'junit', name: 'junit', version: '4.+'
-   integrationTestCompile group: 'org.apache.hadoop', name: 'hadoop-minicluster', version: '2.7.0'
+  // testing
+    testCompile group: 'org.jmockit', name: 'jmockit', version: '1.36.3'
+     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.0.2'
+     testRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.0.2'
+    testIntegrationRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.0.2'
+	testIntegrationRuntime group: 'org.junit.platform', name: 'junit-platform-console', version: '1.0.2'
+   testIntegrationCompile group: 'org.apache.hadoop', name: 'hadoop-minicluster', version: '2.7.0'
 }
 
-task integrationTest(type: Test) {
-    testClassesDirs = sourceSets.integrationTest.output.classesDirs
-    classpath = sourceSets.integrationTest.runtimeClasspath
-    outputs.upToDateWhen { false }
+task testUnit(type: JavaExec, dependsOn: jar) {
+    group 'Verification'
+    description 'Runs the unit tests.'
+
+    classpath = sourceSets.test.runtimeClasspath
+    systemProperties['jar.path'] = jar.archivePath
+
+    main 'org.junit.platform.console.ConsoleLauncher'
+    args = ['--scan-classpath', sourceSets.testIntegration.output.classesDirs.asPath,
+            '--reports-dir', "${buildDir}/test-results/testIntegration"
+    ]
+}
+
+task testIntegration(type: JavaExec, dependsOn: jar) {
+    group 'Verification'
+    description 'Runs the integration tests.'
+ 
+    classpath = sourceSets.testIntegration.runtimeClasspath
+    systemProperties['jar.path'] = jar.archivePath
+
+    main 'org.junit.platform.console.ConsoleLauncher'
+    args = ['--scan-classpath', sourceSets.testIntegration.output.classesDirs.asPath,
+            '--reports-dir', "${buildDir}/test-results/integration-test"
+    ]
 }
 
 
-check.dependsOn integrationTest
-integrationTest.mustRunAfter test
+check.dependsOn testIntegration
+testIntegration.mustRunAfter testUnit
 
+afterEvaluate {
+    jacoco {
+        applyTo testUnit
+        applyTo testIntegration
+}
+}
 uploadArchives {
     repositories {
        flatDir {

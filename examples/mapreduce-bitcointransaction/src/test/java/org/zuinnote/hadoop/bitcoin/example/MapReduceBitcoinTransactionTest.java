@@ -18,16 +18,6 @@
 package org.zuinnote.hadoop.bitcoin.example;
 
 
-import static org.junit.Assert.assertEquals;
-
-
-
-import org.junit.Test;
-import org.junit.BeforeClass;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.After;
-
 import mockit.*;
 
 import java.lang.InterruptedException;
@@ -43,7 +33,11 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
-
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.zuinnote.hadoop.bitcoin.format.common.BitcoinTransaction;
 import org.zuinnote.hadoop.bitcoin.format.common.BitcoinTransactionInput;
 import org.zuinnote.hadoop.bitcoin.format.common.BitcoinTransactionOutput;
@@ -54,21 +48,21 @@ import org.zuinnote.hadoop.bitcoin.example.tasks.BitcoinTransactionReducer;
 public final class MapReduceBitcoinTransactionTest {
 
 
-   @BeforeClass
+   @BeforeAll
     public static void oneTimeSetUp() {
      
     }
 
-    @AfterClass
+    @AfterAll
     public static void oneTimeTearDown() {
         // one-time cleanup code
       }
 
-    @Before
+    @BeforeEach
     public void setUp() {
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
     }
 
