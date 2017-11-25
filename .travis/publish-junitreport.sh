@@ -9,7 +9,7 @@ cp -R inputformat/build/test-results/junit-platform $HOME/inputformat/tests-late
 mkdir -p $HOME/hiveserde/tests-latest
 cp -R hiveserde/build/test-results/junit-platform $HOME/hiveserde/tests-latest
 mkdir -p $HOME/hiveudf/tests-latest
-cp -R hiveudf/build/test-results/junit-platforms $HOME/hiveudf/tests-latest
+cp -R hiveudf/build/test-results/junit-platform $HOME/hiveudf/tests-latest
 mkdir -p $HOME/flinkdatasource/tests-latest
 cp -R flinkdatasource/build/test-results/junit-platform $HOME/flinkdatasource/tests-latest
 
