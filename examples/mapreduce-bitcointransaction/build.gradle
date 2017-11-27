@@ -89,7 +89,7 @@ dependencies {
    // hadoop lib for driver
      provided("org.apache.hadoop:hadoop-client:2.7.0")
     // hadoop crypto ledger library
-   compile("com.github.zuinnote:hadoopcryptoledger-fileformat:1.1.1")
+   compile("com.github.zuinnote:hadoopcryptoledger-fileformat:1.1.2")
   // testing
     testCompile group: 'org.jmockit', name: 'jmockit', version: '1.36.3'
      testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.0.2'
