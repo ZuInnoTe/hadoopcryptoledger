@@ -176,9 +176,6 @@ public class EthereumBlockReader {
 	}
 
 
-
-
-
 	/*
 	 * Reads a raw Ethereum block into a ByteBuffer. This method is recommended if you are only interested in a small part of the block and do not need the deserialization of the full block, ie in case you generally skip a lot of blocks
 	 * 
@@ -190,13 +187,20 @@ public class EthereumBlockReader {
 		// get size of list
 		this.in.mark(10);
 		byte[] listHeader = new byte[10];
+		int totalRead = 0;
 		int bRead=this.in.read(listHeader);
-		if (bRead==-1) {
+		if (bRead == -1) {
 			// no further block to read
 			return result;
-		} else
-		if (bRead!=10) {
-			throw new EthereumBlockReadException("Error: Not enough block data available: "+String.valueOf(bRead));
+		} else {
+			totalRead += bRead;
+			while (totalRead < 10) {
+				bRead=this.in.read(listHeader, totalRead, 10 - totalRead);
+				if (bRead == -1) {
+					throw new EthereumBlockReadException("Error: Not enough block data available: " + String.valueOf(bRead));
+				}
+				totalRead += bRead;
+			}
 		}
 		ByteBuffer sizeByteBuffer=ByteBuffer.wrap(listHeader);
 		long blockSize = EthereumUtil.getRLPListSize(sizeByteBuffer); // gets block size including indicator
