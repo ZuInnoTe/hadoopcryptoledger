@@ -599,10 +599,19 @@ private void checkFullBlock() throws BitcoinBlockReadException {
 		// blocksize
 		byte[] blockSizeArray = new byte[4];
 		try {
-			int readSize=this.bin.read(blockSizeArray,0,4);
-			if (readSize!=4) {
-				throw new BitcoinBlockReadException("Error: Cannot seek to a block start, because no valid block found. Cannot read size of block");
+			
+			int maxByteRead=4;
+			int totalByteRead=0;
+			int readByte;
+			while ((readByte=this.bin.read(blockSizeArray,totalByteRead,maxByteRead-totalByteRead))>-1) {
+					totalByteRead+=readByte;
+					if (totalByteRead>=maxByteRead) {
+						break;
+					}
 			}
+			if (totalByteRead!=maxByteRead) {
+				throw new BitcoinBlockReadException("Error: Cannot seek to a block start, because no valid block found. Cannot read size of block");
+			} 
 		}
 		catch (IOException e) {
 			LOG.error(e);
@@ -654,17 +663,33 @@ private byte[] skipBlocksNotInFilter() throws IOException {
 		// mark bytestream so we can peak into it
 		this.bin.mark(8);
 		// read magic
-		
-		int magicNoReadSize=this.bin.read(magicNo,0,4);
-		if (magicNoReadSize!=4) {
-			return new byte[0]; // no more magics to read
+		int maxByteRead=4;
+		int totalByteRead=0;
+		int readByte;
+		while ((readByte=this.bin.read(magicNo,totalByteRead,maxByteRead-totalByteRead))>-1) {
+				totalByteRead+=readByte;
+				if (totalByteRead>=maxByteRead) {
+					break;
+				}
 		}
+		if (totalByteRead!=maxByteRead) {
+			return new byte[0];
+		} 
+		
 		// read blocksize
 	
-		int blockSizeReadSize=this.bin.read(blockSizeByte,0,4);
-		if (blockSizeReadSize!=4) {
-			return new byte[0]; // no more size to read
+		maxByteRead=4;
+		totalByteRead=0;
+		while ((readByte=this.bin.read(blockSizeByte,totalByteRead,maxByteRead-totalByteRead))>-1) {
+				totalByteRead+=readByte;
+				if (totalByteRead>=maxByteRead) {
+					break;
+				}
 		}
+		if (totalByteRead!=maxByteRead) {
+			return new byte[0];
+		} 
+		
 		long blockSize=BitcoinUtil.getSize(blockSizeByte)+8;
 		// read the full block
 		this.bin.reset();
@@ -709,7 +734,18 @@ private boolean checkForMagicBytes(int firstByte) throws IOException {
 				if (fullMagic==null) { // read full magic
 					fullMagic=new byte[4];
 					fullMagic[0]=this.specificMagicByteArray[i][0];
-					this.bin.read(fullMagic,1,3);
+					int maxByteRead=4;
+					int totalByteRead=1;
+					int readByte;
+					while ((readByte=this.bin.read(fullMagic,totalByteRead,maxByteRead-totalByteRead))>-1) {
+							totalByteRead+=readByte;
+							if (totalByteRead>=maxByteRead) {
+								break;
+							}
+					}
+					if (totalByteRead!=maxByteRead) {
+						return false;
+					} 
 				}
 				// compare full magics
 				if (BitcoinUtil.compareMagics(fullMagic,this.specificMagicByteArray[i])) {
