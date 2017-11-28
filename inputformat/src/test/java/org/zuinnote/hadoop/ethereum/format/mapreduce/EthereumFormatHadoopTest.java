@@ -175,6 +175,27 @@ public class EthereumFormatHadoopTest {
 		assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
 		assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
 	}
+	
+	@Test
+	public void checkTestDataBlock403419() {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="block403419.bin";
+		String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();
+		assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
+		File file = new File(fileNameGenesis);
+		assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+		assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
+	}
+	@Test
+	public void checkTestDataBlock447533() {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="block447533.bin";
+		String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();
+		assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
+		File file = new File(fileNameGenesis);
+		assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+		assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
+	}
 
 	@Test
 	public void readEthereumBlockInputFormatGenesisBlock() throws IOException, EthereumBlockReadException, ParseException, InterruptedException {

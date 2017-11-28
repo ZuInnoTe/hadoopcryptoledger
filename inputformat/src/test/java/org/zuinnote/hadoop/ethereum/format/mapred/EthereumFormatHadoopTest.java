@@ -24,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.List;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -40,6 +41,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.zuinnote.hadoop.ethereum.format.common.EthereumBlock;
+import org.zuinnote.hadoop.ethereum.format.common.EthereumBlockHeader;
 import org.zuinnote.hadoop.ethereum.format.exception.EthereumBlockReadException;
 
 /**
@@ -50,7 +52,17 @@ public class EthereumFormatHadoopTest {
 	private static Configuration defaultConf = new Configuration();
 	private static FileSystem localFs = null; 
 	private static Reporter reporter = Reporter.NULL;
-	
+
+	private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
+	private static String bytesToHex(byte[] bytes) {
+		char[] hexChars = new char[bytes.length * 2];
+		for ( int j = 0; j < bytes.length; j++ ) {
+			int v = bytes[j] & 0xFF;
+			hexChars[j * 2] = hexArray[v >>> 4];
+			hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+		}
+		return new String(hexChars);
+	}
 	   @BeforeAll
 	    public static void oneTimeSetUp() throws IOException {
 	      // one-time initialization code   
@@ -160,6 +172,27 @@ public class EthereumFormatHadoopTest {
 			assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
 		  }
 		 
+			@Test
+			public void checkTestDataBlock403419() {
+				ClassLoader classLoader = getClass().getClassLoader();
+				String fileName="block403419.bin";
+				String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();
+				assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
+				File file = new File(fileNameGenesis);
+				assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+				assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
+			}
+			@Test
+			public void checkTestDataBlock447533() {
+				ClassLoader classLoader = getClass().getClassLoader();
+				String fileName="block447533.bin";
+				String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();
+				assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
+				File file = new File(fileNameGenesis);
+				assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+				assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
+			}
+		 
 		 @Test
 		  public void readEthereumBlockInputFormatGenesisBlock() throws IOException, EthereumBlockReadException, ParseException, InterruptedException {
 			JobConf job = new JobConf(defaultConf);
@@ -182,6 +215,80 @@ public class EthereumFormatHadoopTest {
 		    	assertFalse( reader.next(key,block),"No further blocks in genesis Block");
 		    	reader.close();
 			}
+		 
+
+			@Test
+			public void readEthereumBlockInputFormatBlock403419() throws IOException, EthereumBlockReadException, ParseException, InterruptedException {
+				JobConf job = new JobConf(defaultConf);
+				ClassLoader classLoader = getClass().getClassLoader();
+				String fileName="block403419.bin";
+				String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+				Path file = new Path(fileNameBlock);
+			    FileInputFormat.setInputPaths(job, file);
+			    EthereumBlockFileInputFormat format = new EthereumBlockFileInputFormat();
+			    format.configure(job);
+			    InputSplit[] inputSplits = format.getSplits(job,1);
+			  
+			    assertEquals( 1, inputSplits.length,"Only one split generated for block 403419");
+			    	RecordReader<BytesWritable, EthereumBlock> reader = format.getRecordReader(inputSplits[0], job, reporter);
+				assertNotNull( reader,"Format returned  null RecordReader");
+				BytesWritable key = new BytesWritable();	
+				EthereumBlock block = new EthereumBlock();
+				assertTrue( reader.next(key,block),"Input Split for block 403419 contains at least one block");
+				assertEquals( 2, block.getEthereumTransactions().size(),"Block 403419 must have 2 transactions");
+				EthereumBlockHeader ethereumBlockHeader = block.getEthereumBlockHeader();
+				assertEquals(
+						"f8b483dba2c3b7176a3da549ad41a48bb3121069",
+						bytesToHex(ethereumBlockHeader.getCoinBase()).toLowerCase(),
+						"Block 403419 was mined by f8b483dba2c3b7176a3da549ad41a48bb3121069"
+				);
+				assertEquals(
+						"08741fa532c05804d9c1086a311e47cc024bbc43980f561041ad1fbb3c223322",
+						bytesToHex(ethereumBlockHeader.getParentHash()).toLowerCase(),
+						"The parent of block 403419 has hash 08741fa532c05804d9c1086a311e47cc024bbc43980f561041ad1fbb3c223322"
+				);
+			    	assertFalse( reader.next(key,block),"No further lock 403419  in genesis Block");
+			    	
+			    	reader.close();
+				
+			}
+
+			@Test
+			public void readEthereumBlockInputFormatBlock447533() throws IOException, EthereumBlockReadException, ParseException, InterruptedException {
+				JobConf job = new JobConf(defaultConf);
+				ClassLoader classLoader = getClass().getClassLoader();
+				String fileName="block447533.bin";
+				String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+				Path file = new Path(fileNameBlock);
+			    FileInputFormat.setInputPaths(job, file);
+			    EthereumBlockFileInputFormat format = new EthereumBlockFileInputFormat();
+			    format.configure(job);
+			    InputSplit[] inputSplits = format.getSplits(job,1);
+			  
+			    assertEquals( 1, inputSplits.length,"Only one split generated for block 447533");
+			    	RecordReader<BytesWritable, EthereumBlock> reader = format.getRecordReader(inputSplits[0], job, reporter);
+				assertNotNull( reader,"Format returned  null RecordReader");
+				BytesWritable key = new BytesWritable();	
+				EthereumBlock block = new EthereumBlock();
+				assertTrue( reader.next(key,block),"Input Split for block 447533 contains at least one block");
+				assertEquals( 2, block.getEthereumTransactions().size(),"Block 447533 must have 2 transactions");
+				EthereumBlockHeader ethereumBlockHeader = block.getEthereumBlockHeader();
+				assertEquals(
+						"a027231f42c80ca4125b5cb962a21cd4f812e88f",
+						bytesToHex(ethereumBlockHeader.getCoinBase()).toLowerCase(),
+						"Block 447533 was mined by a027231f42c80ca4125b5cb962a21cd4f812e88f"
+				);
+				assertEquals(
+						"043559b70c54f0eea6a90b384286d7ab312129603e750075d09fd35e66f8068a",
+						bytesToHex(ethereumBlockHeader.getParentHash()).toLowerCase(),
+						"The parent of block 447533 has hash 043559b70c54f0eea6a90b384286d7ab312129603e750075d09fd35e66f8068a"
+				);
+			    	assertFalse( reader.next(key,block),"No further block  in  block 447533");
+			    	
+			    	reader.close();
+				
+			}
+
 		 
 		 @Test
 		  public void readEthereumBlockInputFormatBlock1() throws IOException, EthereumBlockReadException, ParseException, InterruptedException {
