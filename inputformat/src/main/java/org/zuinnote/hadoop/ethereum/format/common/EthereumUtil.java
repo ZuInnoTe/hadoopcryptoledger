@@ -25,6 +25,7 @@ import java.util.List;
 
 import javax.xml.bind.DatatypeConverter;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.bouncycastle.asn1.sec.SECNamedCurves;
@@ -123,17 +124,11 @@ public static int detectRLPObjectType(ByteBuffer bb) {
 }
 
 private static long convertIndicatorToRLPSize(byte[] indicator) {
-	byte[] rawDataNumber=Arrays.copyOfRange(indicator, 1, indicator.length);
-	ByteBuffer byteBuffer = ByteBuffer.wrap(rawDataNumber);
+	byte[] rawDataNumber= Arrays.copyOfRange(indicator, 1, indicator.length);
+	ArrayUtils.reverse(rawDataNumber);
 	long RLPSize = 0;
-	if (indicator.length<3) { // byte
-		RLPSize=byteBuffer.get() & 0xFF;
-	} else if (indicator.length<4) { // short
-		RLPSize=byteBuffer.getShort() & 0xFFFF;
-	} else if (indicator.length<6) { // int
-		RLPSize=byteBuffer.getInt();
-	} else if (indicator.length<10) { // long
-		RLPSize=byteBuffer.getLong();
+	for (int i=0;i<rawDataNumber.length;i++) {
+		RLPSize += (rawDataNumber[i] & 0xFF) * Math.pow(256, i);
 	}
 	return RLPSize;
 }

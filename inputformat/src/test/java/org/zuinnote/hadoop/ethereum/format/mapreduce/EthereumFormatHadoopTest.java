@@ -242,6 +242,44 @@ public class EthereumFormatHadoopTest {
 	}
 
 	@Test
+	public void readEthereumBlockInputFormatBlock447533() throws IOException, EthereumBlockReadException, ParseException, InterruptedException {
+		Configuration conf = new Configuration(defaultConf);
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="block447533.bin";
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
+		Path file = new Path(fileNameBlock);
+		Job job = Job.getInstance(conf);
+		FileInputFormat.setInputPaths(job, file);
+		EthereumBlockFileInputFormat format = new EthereumBlockFileInputFormat();
+
+		List<InputSplit> splits = format.getSplits(job);
+		TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
+		assertEquals( 1, splits.size(),"Only one split generated for block 447533");
+		RecordReader<BytesWritable, EthereumBlock> reader = format.createRecordReader(splits.get(0), context);
+		assertNotNull( reader,"Format returned  null RecordReader");
+		reader.initialize(splits.get(0),context);
+		BytesWritable key = new BytesWritable();
+		EthereumBlock block = new EthereumBlock();
+		assertTrue( reader.nextKeyValue(),"Input Split for block 403419 contains at least one block");
+		key=reader.getCurrentKey();
+		block=reader.getCurrentValue();
+		assertEquals( 2, block.getEthereumTransactions().size(),"Block 447533 must have 2 transactions");
+		EthereumBlockHeader ethereumBlockHeader = block.getEthereumBlockHeader();
+		assertEquals(
+				"a027231f42c80ca4125b5cb962a21cd4f812e88f",
+				bytesToHex(ethereumBlockHeader.getCoinBase()).toLowerCase(),
+				"Block 447533 was mined by a027231f42c80ca4125b5cb962a21cd4f812e88f"
+		);
+		assertEquals(
+				"043559b70c54f0eea6a90b384286d7ab312129603e750075d09fd35e66f8068a",
+				bytesToHex(ethereumBlockHeader.getParentHash()).toLowerCase(),
+				"The parent of block 447533 has hash 043559b70c54f0eea6a90b384286d7ab312129603e750075d09fd35e66f8068a"
+		);
+		assertFalse( reader.nextKeyValue(),"No further blocks in block 447533");
+		reader.close();
+	}
+
+	@Test
 	public void readEthereumBlockInputFormatBlock1() throws IOException, EthereumBlockReadException, ParseException, InterruptedException {
 		Configuration conf = new Configuration(defaultConf);
 		ClassLoader classLoader = getClass().getClassLoader();
@@ -267,7 +305,6 @@ public class EthereumFormatHadoopTest {
 		assertFalse( reader.nextKeyValue(),"No further blocks in block 1");
 		reader.close();
 	}
-
 
 	@Test
 	public void readEthereumBlockInputFormatBlock1346406() throws IOException, EthereumBlockReadException, ParseException, InterruptedException {
@@ -322,7 +359,6 @@ public class EthereumFormatHadoopTest {
 		assertFalse( reader.nextKeyValue(),"No further blocks in block 3346406");
 		reader.close();
 	}
-
 
 	@Test
 	public void readEthereumBlockInputFormatBlock0to10() throws IOException, EthereumBlockReadException, ParseException, InterruptedException {
