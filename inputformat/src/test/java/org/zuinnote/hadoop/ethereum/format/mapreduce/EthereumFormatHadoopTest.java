@@ -45,6 +45,7 @@ import org.junit.jupiter.api.Test;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 
 import org.zuinnote.hadoop.ethereum.format.common.EthereumBlock;
+import org.zuinnote.hadoop.ethereum.format.common.EthereumBlockHeader;
 import org.zuinnote.hadoop.ethereum.format.exception.EthereumBlockReadException;
 
 /**
@@ -53,7 +54,18 @@ import org.zuinnote.hadoop.ethereum.format.exception.EthereumBlockReadException;
  */
 public class EthereumFormatHadoopTest {
 	private static Configuration defaultConf = new Configuration();
-	private static FileSystem localFs = null; 
+	private static FileSystem localFs = null;
+
+	private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
+	private static String bytesToHex(byte[] bytes) {
+		char[] hexChars = new char[bytes.length * 2];
+		for ( int j = 0; j < bytes.length; j++ ) {
+			int v = bytes[j] & 0xFF;
+			hexChars[j * 2] = hexArray[v >>> 4];
+			hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+		}
+		return new String(hexChars);
+	}
 
 	   @BeforeAll
 	    public static void oneTimeSetUp() throws IOException {
@@ -190,6 +202,44 @@ public class EthereumFormatHadoopTest {
 		    	assertFalse( reader.nextKeyValue(),"No further blocks in genesis Block");
 		    	reader.close();
 			}
+
+	@Test
+	public void readEthereumBlockInputFormatBlock403419() throws IOException, EthereumBlockReadException, ParseException, InterruptedException {
+		Configuration conf = new Configuration(defaultConf);
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="block403419.bin";
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
+		Path file = new Path(fileNameBlock);
+		Job job = Job.getInstance(conf);
+		FileInputFormat.setInputPaths(job, file);
+		EthereumBlockFileInputFormat format = new EthereumBlockFileInputFormat();
+
+		List<InputSplit> splits = format.getSplits(job);
+		TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
+		assertEquals( 1, splits.size(),"Only one split generated for block 403419");
+		RecordReader<BytesWritable, EthereumBlock> reader = format.createRecordReader(splits.get(0), context);
+		assertNotNull( reader,"Format returned  null RecordReader");
+		reader.initialize(splits.get(0),context);
+		BytesWritable key = new BytesWritable();
+		EthereumBlock block = new EthereumBlock();
+		assertTrue( reader.nextKeyValue(),"Input Split for block 403419 contains at least one block");
+		key=reader.getCurrentKey();
+		block=reader.getCurrentValue();
+		assertEquals( 2, block.getEthereumTransactions().size(),"Block 403419 must have 2 transactions");
+		EthereumBlockHeader ethereumBlockHeader = block.getEthereumBlockHeader();
+		assertEquals(
+				"f8b483dba2c3b7176a3da549ad41a48bb3121069",
+				bytesToHex(ethereumBlockHeader.getCoinBase()).toLowerCase(),
+				"Block 403419 was mined by f8b483dba2c3b7176a3da549ad41a48bb3121069"
+		);
+		assertEquals(
+				"08741fa532c05804d9c1086a311e47cc024bbc43980f561041ad1fbb3c223322",
+				bytesToHex(ethereumBlockHeader.getParentHash()).toLowerCase(),
+				"The parent of block 403419 has hash 08741fa532c05804d9c1086a311e47cc024bbc43980f561041ad1fbb3c223322"
+		);
+		assertFalse( reader.nextKeyValue(),"No further blocks in block 403419");
+		reader.close();
+	}
 		 
 		 @Test
 		  public void readEthereumBlockInputFormatBlock1() throws IOException, EthereumBlockReadException, ParseException, InterruptedException {

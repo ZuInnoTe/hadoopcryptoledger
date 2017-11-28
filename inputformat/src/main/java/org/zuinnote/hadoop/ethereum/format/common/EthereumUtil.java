@@ -122,6 +122,22 @@ public static int detectRLPObjectType(ByteBuffer bb) {
 	return result;
 }
 
+private static long convertIndicatorToRLPSize(byte[] indicator) {
+	byte[] rawDataNumber=Arrays.copyOfRange(indicator, 1, indicator.length);
+	ByteBuffer byteBuffer = ByteBuffer.wrap(rawDataNumber);
+	long RLPSize = 0;
+	if (indicator.length<3) { // byte
+		RLPSize=byteBuffer.get() & 0xFF;
+	} else if (indicator.length<4) { // short
+		RLPSize=byteBuffer.getShort() & 0xFFFF;
+	} else if (indicator.length<6) { // int
+		RLPSize=byteBuffer.getInt();
+	} else if (indicator.length<10) { // long
+		RLPSize=byteBuffer.getLong();
+	}
+	return RLPSize;
+}
+
 /*
  * Decodes an RLPElement from the given ByteBuffer
  * 
@@ -153,19 +169,7 @@ private static RLPElement decodeRLPElement(ByteBuffer bb) {
 		byte[] indicator = new byte[NoOfBytesSize+1];
 		indicator[0]=firstByte;
 		bb.get(indicator, 1, NoOfBytesSize);
-		// read the size of the data
-		byte[] rawDataNumber=Arrays.copyOfRange(indicator, 1, indicator.length);
-		ByteBuffer byteBuffer = ByteBuffer.wrap(rawDataNumber);
-		long noOfBytes = 0;
-		if (indicator.length<3) { // byte
-			noOfBytes=byteBuffer.get() & 0xFF;
-		} else if (indicator.length<4) { // short
-			noOfBytes=byteBuffer.getShort();
-		} else if (indicator.length<6) { // int
-			noOfBytes=byteBuffer.getInt();
-		} else if (indicator.length<10) { // long
-			noOfBytes=byteBuffer.getLong();
-		}
+		long noOfBytes = convertIndicatorToRLPSize(indicator);
 
 		// read the data
 		byte[] rawData=new byte[(int) noOfBytes];
@@ -284,20 +288,7 @@ public static long getRLPListSize(ByteBuffer bb) {
 			byte[] indicator = new byte[noOfBytesSize+1];
 			indicator[0]=detector;
 			bb.get(indicator, 1, noOfBytesSize);
-			result=indicator.length;
-			// read the size of the data
-			byte[] rawDataNumber=Arrays.copyOfRange(indicator, 1, indicator.length);
-			ByteBuffer byteBuffer = ByteBuffer.wrap(rawDataNumber);
-			if (indicator.length<3) { // byte
-				result+=byteBuffer.get() & 0xFF;
-			} else if (indicator.length<4) { // short
-				result+=byteBuffer.getShort();
-			} else if (indicator.length<6) { // int
-				result+=byteBuffer.getInt();
-			} else if (indicator.length<10) { // long
-				result+=byteBuffer.getLong();
-			}
-			
+			result=indicator.length + convertIndicatorToRLPSize(indicator);
 		}
 	bb.reset();
 	return result;	
@@ -329,19 +320,7 @@ private static RLPList decodeRLPList(ByteBuffer bb) {
 		indicator[0]=firstByte;
 		bb.get(indicator, 1, noOfBytesSize);
 		// read the size of the data
-		byte[] rawDataNumber=Arrays.copyOfRange(indicator, 1, indicator.length);
-		ByteBuffer byteBuffer = ByteBuffer.wrap(rawDataNumber);
-		if (indicator.length<3) { // byte
-			payloadSize=byteBuffer.get() & 0xFF;
-		} else if (indicator.length<4) { // short
-			payloadSize=byteBuffer.getShort();
-		} else if (indicator.length<6) { // int
-			payloadSize=byteBuffer.getInt();
-		} else if (indicator.length<10) { // long
-			payloadSize=byteBuffer.getLong();
-		} else {
-			LOG.error("Invalid indicator");
-		}
+		payloadSize = convertIndicatorToRLPSize(indicator);
 	} else {
 		LOG.error("Invalid RLP encoded list detected");
 	}
