@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="JUnit Jupiter" tests="19" skipped="0" failures="0" errors="0" time="0.42" hostname="travis-job-zuinnote-hadoopcryptole-309132466.travisci.net" timestamp="2017-11-29T19:07:37">
+<testsuite name="JUnit Jupiter" tests="19" skipped="0" failures="0" errors="0" time="0.501" hostname="travis-job-zuinnote-hadoopcryptole-330056086.travisci.net" timestamp="2018-01-17T20:35:42">
 <properties>
 <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
 <property name="file.encoding" value="UTF-8"/>
@@ -15,26 +15,26 @@
 <property name="java.io.tmpdir" value="/tmp"/>
 <property name="java.library.path" value="/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib"/>
 <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
-<property name="java.runtime.version" value="1.8.0_144-b01"/>
+<property name="java.runtime.version" value="1.8.0_151-b12"/>
 <property name="java.specification.name" value="Java Platform API Specification"/>
 <property name="java.specification.vendor" value="Oracle Corporation"/>
 <property name="java.specification.version" value="1.8"/>
 <property name="java.vendor" value="Oracle Corporation"/>
 <property name="java.vendor.url" value="http://java.oracle.com/"/>
 <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
-<property name="java.version" value="1.8.0_144"/>
+<property name="java.version" value="1.8.0_151"/>
 <property name="java.vm.info" value="mixed mode"/>
 <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
 <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
 <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
 <property name="java.vm.specification.version" value="1.8"/>
 <property name="java.vm.vendor" value="Oracle Corporation"/>
-<property name="java.vm.version" value="25.144-b01"/>
+<property name="java.vm.version" value="25.151-b12"/>
 <property name="line.separator" value="
 "/>
 <property name="os.arch" value="amd64"/>
 <property name="os.name" value="Linux"/>
-<property name="os.version" value="4.9.6-040906-generic"/>
+<property name="os.version" value="4.14.12-041412-generic"/>
 <property name="path.separator" value=":"/>
 <property name="sun.arch.data.model" value="64"/>
 <property name="sun.boot.class.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/resources.jar:/usr/lib/jvm/java-8-oracle/jre/lib/rt.jar:/usr/lib/jvm/java-8-oracle/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jsse.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jce.jar:/usr/lib/jvm/java-8-oracle/jre/lib/charsets.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jfr.jar:/usr/lib/jvm/java-8-oracle/jre/classes"/>
@@ -55,31 +55,31 @@
 <property name="user.timezone" value="UTC"/>
 <property name="user.variant" value=""/>
 </properties>
-<testcase name="checkTestDataVersion3BlockAvailable()" classname="org.zuinnote.flink.bitcoin.FlinkBitcoinDataSourceTest" time="0.019">
+<testcase name="checkTestDataVersion3BlockAvailable()" classname="org.zuinnote.flink.bitcoin.FlinkBitcoinDataSourceTest" time="0.025">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.flink.bitcoin.FlinkBitcoinDataSourceTest]/[method:checkTestDataVersion3BlockAvailable()]
 display-name: checkTestDataVersion3BlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="restoreStateBitcoinBlock()" classname="org.zuinnote.flink.bitcoin.FlinkBitcoinDataSourceTest" time="0.193">
+<testcase name="restoreStateBitcoinBlock()" classname="org.zuinnote.flink.bitcoin.FlinkBitcoinDataSourceTest" time="0.189">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.flink.bitcoin.FlinkBitcoinDataSourceTest]/[method:restoreStateBitcoinBlock()]
 display-name: restoreStateBitcoinBlock()
 ]]></system-out>
 </testcase>
-<testcase name="restoreStateBitcoinRawBlock()" classname="org.zuinnote.flink.bitcoin.FlinkBitcoinDataSourceTest" time="0.043">
+<testcase name="restoreStateBitcoinRawBlock()" classname="org.zuinnote.flink.bitcoin.FlinkBitcoinDataSourceTest" time="0.054">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.flink.bitcoin.FlinkBitcoinDataSourceTest]/[method:restoreStateBitcoinRawBlock()]
 display-name: restoreStateBitcoinRawBlock()
 ]]></system-out>
 </testcase>
-<testcase name="parseBitcoinBlockGenesis()" classname="org.zuinnote.flink.bitcoin.FlinkBitcoinDataSourceTest" time="0.001">
+<testcase name="parseBitcoinBlockGenesis()" classname="org.zuinnote.flink.bitcoin.FlinkBitcoinDataSourceTest" time="0.002">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.flink.bitcoin.FlinkBitcoinDataSourceTest]/[method:parseBitcoinBlockGenesis()]
 display-name: parseBitcoinBlockGenesis()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataVersion1BlockAvailable()" classname="org.zuinnote.flink.bitcoin.FlinkBitcoinDataSourceTest" time="0.001">
+<testcase name="checkTestDataVersion1BlockAvailable()" classname="org.zuinnote.flink.bitcoin.FlinkBitcoinDataSourceTest" time="0">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.flink.bitcoin.FlinkBitcoinDataSourceTest]/[method:checkTestDataVersion1BlockAvailable()]
 display-name: checkTestDataVersion1BlockAvailable()
@@ -91,7 +91,7 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.flink.bitcoin.FlinkBitcoin
 display-name: checkTestDataVersion4BlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="parseBitcoinTransaction()" classname="org.zuinnote.flink.bitcoin.FlinkBitcoinDataSourceTest" time="0.004">
+<testcase name="parseBitcoinTransaction()" classname="org.zuinnote.flink.bitcoin.FlinkBitcoinDataSourceTest" time="0.015">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.flink.bitcoin.FlinkBitcoinDataSourceTest]/[method:parseBitcoinTransaction()]
 display-name: parseBitcoinTransaction()
@@ -115,25 +115,25 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.flink.bitcoin.FlinkBitcoin
 display-name: checkTestDataGenesisBlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="restoreStateBitcoinTransaction()" classname="org.zuinnote.flink.bitcoin.FlinkBitcoinDataSourceTest" time="0.047">
+<testcase name="restoreStateBitcoinTransaction()" classname="org.zuinnote.flink.bitcoin.FlinkBitcoinDataSourceTest" time="0.07">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.flink.bitcoin.FlinkBitcoinDataSourceTest]/[method:restoreStateBitcoinTransaction()]
 display-name: restoreStateBitcoinTransaction()
 ]]></system-out>
 </testcase>
-<testcase name="parseBitcoinRawBlock()" classname="org.zuinnote.flink.bitcoin.FlinkBitcoinDataSourceTest" time="0.003">
+<testcase name="parseBitcoinRawBlock()" classname="org.zuinnote.flink.bitcoin.FlinkBitcoinDataSourceTest" time="0.004">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.flink.bitcoin.FlinkBitcoinDataSourceTest]/[method:parseBitcoinRawBlock()]
 display-name: parseBitcoinRawBlock()
 ]]></system-out>
 </testcase>
-<testcase name="restoreStateBitcoinRawBlock()" classname="org.zuinnote.flink.ethereum.FlinkEthereumDataSourceTest" time="0.019">
+<testcase name="restoreStateBitcoinRawBlock()" classname="org.zuinnote.flink.ethereum.FlinkEthereumDataSourceTest" time="0.028">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.flink.ethereum.FlinkEthereumDataSourceTest]/[method:restoreStateBitcoinRawBlock()]
 display-name: restoreStateBitcoinRawBlock()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataBlock1346406Available()" classname="org.zuinnote.flink.ethereum.FlinkEthereumDataSourceTest" time="0">
+<testcase name="checkTestDataBlock1346406Available()" classname="org.zuinnote.flink.ethereum.FlinkEthereumDataSourceTest" time="0.001">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.flink.ethereum.FlinkEthereumDataSourceTest]/[method:checkTestDataBlock1346406Available()]
 display-name: checkTestDataBlock1346406Available()
@@ -145,7 +145,7 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.flink.ethereum.FlinkEthere
 display-name: parseEthereumBlock1346406()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataBlock0to10Available()" classname="org.zuinnote.flink.ethereum.FlinkEthereumDataSourceTest" time="0">
+<testcase name="checkTestDataBlock0to10Available()" classname="org.zuinnote.flink.ethereum.FlinkEthereumDataSourceTest" time="0.001">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.flink.ethereum.FlinkEthereumDataSourceTest]/[method:checkTestDataBlock0to10Available()]
 display-name: checkTestDataBlock0to10Available()
@@ -157,13 +157,13 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.flink.ethereum.FlinkEthere
 display-name: checkTestDataBlock3346406Available()
 ]]></system-out>
 </testcase>
-<testcase name="parseEthereumRawBlock()" classname="org.zuinnote.flink.ethereum.FlinkEthereumDataSourceTest" time="0.005">
+<testcase name="parseEthereumRawBlock()" classname="org.zuinnote.flink.ethereum.FlinkEthereumDataSourceTest" time="0.002">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.flink.ethereum.FlinkEthereumDataSourceTest]/[method:parseEthereumRawBlock()]
 display-name: parseEthereumRawBlock()
 ]]></system-out>
 </testcase>
-<testcase name="restoreStateEthereumBlock()" classname="org.zuinnote.flink.ethereum.FlinkEthereumDataSourceTest" time="0.017">
+<testcase name="restoreStateEthereumBlock()" classname="org.zuinnote.flink.ethereum.FlinkEthereumDataSourceTest" time="0.031">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.flink.ethereum.FlinkEthereumDataSourceTest]/[method:restoreStateEthereumBlock()]
 display-name: restoreStateEthereumBlock()

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="JUnit Jupiter" tests="6" skipped="0" failures="0" errors="0" time="0.897" hostname="travis-job-zuinnote-hadoopcryptole-309132466.travisci.net" timestamp="2017-11-29T19:07:41">
+<testsuite name="JUnit Jupiter" tests="6" skipped="0" failures="0" errors="0" time="1.238" hostname="travis-job-zuinnote-hadoopcryptole-330056086.travisci.net" timestamp="2018-01-17T20:35:47">
 <properties>
 <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
 <property name="file.encoding" value="UTF-8"/>
@@ -15,26 +15,26 @@
 <property name="java.io.tmpdir" value="/tmp"/>
 <property name="java.library.path" value="/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib"/>
 <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
-<property name="java.runtime.version" value="1.8.0_144-b01"/>
+<property name="java.runtime.version" value="1.8.0_151-b12"/>
 <property name="java.specification.name" value="Java Platform API Specification"/>
 <property name="java.specification.vendor" value="Oracle Corporation"/>
 <property name="java.specification.version" value="1.8"/>
 <property name="java.vendor" value="Oracle Corporation"/>
 <property name="java.vendor.url" value="http://java.oracle.com/"/>
 <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
-<property name="java.version" value="1.8.0_144"/>
+<property name="java.version" value="1.8.0_151"/>
 <property name="java.vm.info" value="mixed mode"/>
 <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
 <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
 <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
 <property name="java.vm.specification.version" value="1.8"/>
 <property name="java.vm.vendor" value="Oracle Corporation"/>
-<property name="java.vm.version" value="25.144-b01"/>
+<property name="java.vm.version" value="25.151-b12"/>
 <property name="line.separator" value="
 "/>
 <property name="os.arch" value="amd64"/>
 <property name="os.name" value="Linux"/>
-<property name="os.version" value="4.9.6-040906-generic"/>
+<property name="os.version" value="4.14.12-041412-generic"/>
 <property name="path.separator" value=":"/>
 <property name="sun.arch.data.model" value="64"/>
 <property name="sun.boot.class.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/resources.jar:/usr/lib/jvm/java-8-oracle/jre/lib/rt.jar:/usr/lib/jvm/java-8-oracle/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jsse.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jce.jar:/usr/lib/jvm/java-8-oracle/jre/lib/charsets.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jfr.jar:/usr/lib/jvm/java-8-oracle/jre/classes"/>
@@ -55,37 +55,37 @@
 <property name="user.timezone" value="UTC"/>
 <property name="user.variant" value=""/>
 </properties>
-<testcase name="initializePositive()" classname="org.zuinnote.hadoop.bitcoin.hive.serde.BitcoinHiveSerdeTest" time="0.713">
+<testcase name="initializePositive()" classname="org.zuinnote.hadoop.bitcoin.hive.serde.BitcoinHiveSerdeTest" time="1.059">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.hive.serde.BitcoinHiveSerdeTest]/[method:initializePositive()]
 display-name: initializePositive()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataGenesisBlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.hive.serde.BitcoinHiveSerdeTest" time="0.005">
+<testcase name="checkTestDataGenesisBlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.hive.serde.BitcoinHiveSerdeTest" time="0.003">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.hive.serde.BitcoinHiveSerdeTest]/[method:checkTestDataGenesisBlockAvailable()]
 display-name: checkTestDataGenesisBlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="deserialize()" classname="org.zuinnote.hadoop.bitcoin.hive.serde.BitcoinHiveSerdeTest" time="0.012">
+<testcase name="deserialize()" classname="org.zuinnote.hadoop.bitcoin.hive.serde.BitcoinHiveSerdeTest" time="0.008">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.hive.serde.BitcoinHiveSerdeTest]/[method:deserialize()]
 display-name: deserialize()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataBlock1346406Available()" classname="org.zuinnote.hadoop.ethereum.hive.serde.EthereumHiveSerdeTest" time="0.002">
+<testcase name="checkTestDataBlock1346406Available()" classname="org.zuinnote.hadoop.ethereum.hive.serde.EthereumHiveSerdeTest" time="0.003">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.hive.serde.EthereumHiveSerdeTest]/[method:checkTestDataBlock1346406Available()]
 display-name: checkTestDataBlock1346406Available()
 ]]></system-out>
 </testcase>
-<testcase name="initializePositive()" classname="org.zuinnote.hadoop.ethereum.hive.serde.EthereumHiveSerdeTest" time="0.064">
+<testcase name="initializePositive()" classname="org.zuinnote.hadoop.ethereum.hive.serde.EthereumHiveSerdeTest" time="0.073">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.hive.serde.EthereumHiveSerdeTest]/[method:initializePositive()]
 display-name: initializePositive()
 ]]></system-out>
 </testcase>
-<testcase name="deserialize()" classname="org.zuinnote.hadoop.ethereum.hive.serde.EthereumHiveSerdeTest" time="0.024">
+<testcase name="deserialize()" classname="org.zuinnote.hadoop.ethereum.hive.serde.EthereumHiveSerdeTest" time="0.025">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.hive.serde.EthereumHiveSerdeTest]/[method:deserialize()]
 display-name: deserialize()
