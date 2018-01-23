@@ -93,9 +93,9 @@ dependencies {
   // testing
     testCompile group: 'org.jmockit', name: 'jmockit', version: '1.36.3'
      testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.0.2'
-     testRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.0.2'
-    testIntegrationRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.0.2'
-	testIntegrationRuntime group: 'org.junit.platform', name: 'junit-platform-console', version: '1.0.2'
+     testRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.0.3'
+    testIntegrationRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.0.3'
+	testIntegrationRuntime group: 'org.junit.platform', name: 'junit-platform-console', version: '1.0.3'
    testIntegrationCompile group: 'org.apache.hadoop', name: 'hadoop-minicluster', version: '2.7.0'
 }
 
