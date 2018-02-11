@@ -54,6 +54,7 @@ public abstract class AbstractBitcoinFlinkInputFormat<E> extends FileInputFormat
 	}
 	
 	public AbstractBitcoinFlinkInputFormat(int maxSizeBitcoinBlock, String specificMagicStr, boolean useDirectBuffer, boolean readAuxPOW) throws HadoopCryptoLedgerConfigurationException {
+		this.unsplittable=true;
 		this.maxSizeBitcoinBlock=maxSizeBitcoinBlock;
 		this.useDirectBuffer=useDirectBuffer;
 		if ((specificMagicStr!=null) && (specificMagicStr.length()>0)) {

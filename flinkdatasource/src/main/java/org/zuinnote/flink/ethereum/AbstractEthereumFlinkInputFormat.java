@@ -41,6 +41,7 @@ public abstract class AbstractEthereumFlinkInputFormat<E> extends FileInputForma
 	
 	
 	public AbstractEthereumFlinkInputFormat(int maxSizeEthereumBlock, boolean useDirectBuffer) {
+		this.unsplittable=true;
 		this.maxSizeEthereumBlock=maxSizeEthereumBlock;
 		this.useDirectBuffer=useDirectBuffer;
 	}
