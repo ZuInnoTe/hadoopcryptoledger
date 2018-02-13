@@ -29,7 +29,7 @@ itJacoco.settings
 
 assemblyJarName in assembly := "example-hcl-spark-scala-graphx-bitcointransaction.jar"
 
-libraryDependencies += "com.github.zuinnote" % "hadoopcryptoledger-fileformat" % "1.1.2" % "compile"
+libraryDependencies += "com.github.zuinnote" % "hadoopcryptoledger-fileformat" % "1.1.3" % "compile"
 
 libraryDependencies += "org.apache.spark" %% "spark-core" % "1.5.0" % "provided"
 
