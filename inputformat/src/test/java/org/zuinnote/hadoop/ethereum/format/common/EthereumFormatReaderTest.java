@@ -1655,9 +1655,9 @@ public class EthereumFormatReaderTest {
 			int i =0;
 			for (EthereumTransaction currentTransaction: eTransactions) {
 	
-				assertTrue(currentTransaction.getGasLimit()>=0, "Gas limit "+currentTransaction.getGasLimit()+ " is positive "+EthereumUtil.convertByteArrayToHexString(EthereumUtil.getTransactionHash(currentTransaction)));
+				assertTrue(currentTransaction.getGasLimit()>=0, "Gas limit is positive");
 
-				assertTrue(currentTransaction.getGasPrice()>=0, "Gas price is positive "+currentTransaction.getGasPrice());
+				assertTrue(currentTransaction.getGasPrice()>=0, "Gas price is positive");
 				i++;
 			}
 		}finally {
