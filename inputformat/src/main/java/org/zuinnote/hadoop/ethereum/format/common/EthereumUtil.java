@@ -504,13 +504,13 @@ public static Long convertVarNumberToLong(RLPElement rpe) {
  * Converts a byte in a RLPElement to byte
  * 
  * @param rpe RLP element containing a raw byte
- * @return byte or null if not byte
+ * @return short (=unsigned byte)
  */
 
-public static Byte convertToByte(RLPElement rpe) {
-	Byte result=0;
+public static Short convertToByte(RLPElement rpe) {
+	Short result=0;
 	if ((rpe.getRawData()!=null) || (rpe.getRawData().length==1)) {
-			result=rpe.getRawData()[0];
+			result=(short) ( rpe.getRawData()[0] & 0xFF);
 	} 
 	return result;
 }
@@ -519,11 +519,11 @@ public static Byte convertToByte(RLPElement rpe) {
  * Converts a short in a RLPElement to short
  * 
  * @param rpe RLP element containing a raw short
- * @return short or null if not short
+ * @return Integer (unsigned short) or null if not short
  */
 
-public static Short convertToShort(RLPElement rpe) {
-	Short result=0;
+public static Integer convertToShort(RLPElement rpe) {
+	Integer result=0;
 	byte[] rawBytes=rpe.getRawData();
 
 	if ((rawBytes!=null)) {
@@ -533,10 +533,10 @@ public static Short convertToShort(RLPElement rpe) {
 				int dtDiff=EthereumUtil.WORD_SIZE-rawBytes.length;
 				for (int i=0;i<rawBytes.length;i++) {
 					fullBytes[dtDiff+i]=rawBytes[i];
-					result=ByteBuffer.wrap(fullBytes).getShort();
+					result=(int) ByteBuffer.wrap(fullBytes).getShort() & 0xFFFF;
 				}
 			} else {
-				result=ByteBuffer.wrap(rawBytes).getShort();
+				result=(int) ByteBuffer.wrap(rawBytes).getShort()  & 0xFFFF;
 			}
 	}
 	return result;
@@ -546,11 +546,11 @@ public static Short convertToShort(RLPElement rpe) {
  * Converts a int in a RLPElement to int
  * 
  * @param rpe RLP element containing a raw int
- * @return int or null if not int
+ * @return long (unsigned int) or null if not int
  */
 
-public static Integer convertToInt(RLPElement rpe) {
-	Integer result=0;
+public static Long convertToInt(RLPElement rpe) {
+	Long result=0L;
 	byte[] rawBytes=rpe.getRawData();
 	if ((rawBytes!=null)) {
 			// fill leading zeros
@@ -559,10 +559,10 @@ public static Integer convertToInt(RLPElement rpe) {
 				int dtDiff=EthereumUtil.INT_SIZE-rawBytes.length;
 				for (int i=0;i<rawBytes.length;i++) {
 					fullBytes[dtDiff+i]=rawBytes[i];
-					result=ByteBuffer.wrap(fullBytes).getInt();
+					result=(long) ByteBuffer.wrap(fullBytes).getInt() & 0x00000000ffffffffL;
 				}
 			} else {
-				result=ByteBuffer.wrap(rawBytes).getInt();
+				result=(long) ByteBuffer.wrap(rawBytes).getInt() & 0x00000000ffffffffL;
 			}
 	}
 	return result;
@@ -601,6 +601,8 @@ public static Long convertToLong(RLPElement rpe) {
  * @return byte array containing variable number (without leading zeros)
  */
 public static byte[] convertLongToVarInt(long value) {
+	// check the actual size of the long and convert it to signed one
+
 	// to make it threadsafe - could be optimized at a later stage
 	ByteBuffer longBB = ByteBuffer.allocate(EthereumUtil.LONG_SIZE);
 	

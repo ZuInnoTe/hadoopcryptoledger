@@ -109,6 +109,18 @@ public class EthereumFormatReaderTest {
 		assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
 	  }
 	 
+	 
+	 @Test
+	  public void checkTestDataBlock4800251Available() {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="eth4800251.bin";
+		String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
+		assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
+		File file = new File(fileNameGenesis);
+		assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+		assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
+	  }
+	 
 	 @Test
 	  public void parseGenesisBlockAsEthereumRawBlockHeap() throws IOException, EthereumBlockReadException {
 		ClassLoader classLoader = getClass().getClassLoader();
@@ -1624,5 +1636,35 @@ public class EthereumFormatReaderTest {
 			}
 		}
 	  }
+	 
+	 @Test
+	  public void issue46ParseBlock4800251AsEthereumBlockHeap() throws IOException, EthereumBlockReadException, ParseException {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="eth4800251.bin";
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		File file = new File(fileNameBlock);
+		boolean direct=false;
+		FileInputStream fin = new FileInputStream(file);
+		EthereumBlockReader ebr = null;
+		try {
+			ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUMBLOCK, this.DEFAULT_BUFFERSIZE,direct);
+			EthereumBlock eblock = ebr.readBlock();
+			EthereumBlockHeader eblockHeader = eblock.getEthereumBlockHeader();
+			List<EthereumTransaction> eTransactions = eblock.getEthereumTransactions();
+			List<EthereumBlockHeader> eUncles = eblock.getUncleHeaders();
+			int i =0;
+			for (EthereumTransaction currentTransaction: eTransactions) {
+	
+				assertTrue(currentTransaction.getGasLimit()>=0, "Gas limit "+currentTransaction.getGasLimit()+ " is positive "+EthereumUtil.convertByteArrayToHexString(EthereumUtil.getTransactionHash(currentTransaction)));
+
+				assertTrue(currentTransaction.getGasPrice()>=0, "Gas price is positive "+currentTransaction.getGasPrice());
+				i++;
+			}
+		}finally {
+			if (ebr!=null) {
+				ebr.close();
+			}
+	 	}
+	 }
 
 }
