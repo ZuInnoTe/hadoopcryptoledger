@@ -39,9 +39,9 @@ assemblyMergeStrategy in assembly := {
 
 libraryDependencies += "com.github.zuinnote" %% "spark-hadoopcryptoledger-ds" % "1.1.3" % "compile"
 
-libraryDependencies += "org.apache.spark" %% "spark-core" % "1.5.0" % "provided"
+libraryDependencies += "org.apache.spark" %% "spark-core" % "2.0.1" % "provided"
 
-libraryDependencies += "org.apache.spark" %% "spark-sql" % "1.5.0" % "provided"
+libraryDependencies += "org.apache.spark" %% "spark-sql" % "2.0.1" % "provided"
 
 libraryDependencies += "org.apache.hadoop" % "hadoop-client" % "2.7.0" % "provided"
 
