@@ -32,6 +32,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.jupiter.api.Test;
 import org.zuinnote.hadoop.ethereum.format.exception.EthereumBlockReadException;
 
@@ -42,6 +44,8 @@ import org.zuinnote.hadoop.ethereum.format.exception.EthereumBlockReadException;
 public class EthereumFormatReaderTest {
 	static final int DEFAULT_BUFFERSIZE=64*1024;
 	static final int DEFAULT_MAXSIZE_ETHEREUMBLOCK=1 * 1024 * 1024;
+	private static final Log LOG = LogFactory.getLog(EthereumFormatReaderTest.class.getName());
+	public static int CHAIN_ID=1;
 	
 	 @Test
 	  public void checkTestDataGenesisBlockAvailable() {
@@ -1654,9 +1658,8 @@ public class EthereumFormatReaderTest {
 			List<EthereumBlockHeader> eUncles = eblock.getUncleHeaders();
 			int i =0;
 			for (EthereumTransaction currentTransaction: eTransactions) {
-	
 				assertTrue(currentTransaction.getGasLimit()>=0, "Gas limit is positive");
-
+	
 				assertTrue(currentTransaction.getGasPrice()>=0, "Gas price is positive");
 				i++;
 			}

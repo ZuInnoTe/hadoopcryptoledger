@@ -56,6 +56,7 @@ public class EthereumUtil {
 	public static final int LONG_SIZE=8; // Size of a long in Ethereum
 	public static final int INT_SIZE=4; // Size of an integer in Ethereum
 	public static final int WORD_SIZE=2; // Size of a word in Ethereum
+
 	
 	private static final Log LOG = LogFactory.getLog(EthereumUtil.class.getName());
 
@@ -176,14 +177,14 @@ private static RLPElement decodeRLPElement(ByteBuffer bb) {
 	return result;
 }
 
-private static byte[] encodeRLPElement(byte[] rawData) {
+public static byte[] encodeRLPElement(byte[] rawData) {
 	byte[] result=null;
 	if ((rawData==null) || (rawData.length==0)) {
 		return new byte[] {(byte) 0x80};
 	} else
 	if (rawData.length<=55) {
-			if ((rawData.length==1) && (rawData[0]<=(byte)0x7F)) {
-				return new byte[] {rawData[0]};
+			if ((rawData.length==1) && (((int)rawData[0]&0xFF)<=0x7F)) {
+				return new byte[] {(byte) (rawData[0])};
 			}
 			 result=new byte[rawData.length+1];
 			result[0]=(byte) (0x80+rawData.length);
@@ -205,8 +206,12 @@ private static byte[] encodeRLPElement(byte[] rawData) {
 		}
 		 result = new byte[1+intSize+rawData.length];
 		result[0]=(byte) (0xb7+intSize);
-		for (int i=0;i<intSize;i++) {
-			result[i+1]=intArray[i];
+		byte[] rawDataNumber= Arrays.copyOfRange(intArray, 0, intSize);
+		ArrayUtils.reverse(rawDataNumber);
+	
+		for (int i=0;i<rawDataNumber.length;i++) {
+		
+			result[1+i]=rawDataNumber[i];
 		}
 		for (int i=0;i<rawData.length;i++) {
 			result[1+intSize+i]=rawData[i];
@@ -236,17 +241,22 @@ private static byte[] encodeRLPList(List<byte[]> rawElementList) {
 		byte[] intArray = bb.array();
 		int intSize=0;
 		for (int i=0;i<intArray.length;i++) {
-			if (intArray[i]==0x00) {
+			if (intArray[i]==0) {
 				break;
 			} else {
 				intSize++;
 			}
 		}
 		 result = new byte[1+intSize+totalSize];
-		 result[0]=(byte) (0xf7+intSize & 0xFF);
-		 for (int i=0;i<intSize;i++) {
-			 result[i+1]=intArray[i];
-		 }
+		 result[0]=(byte) (0xf7+intSize);
+		 byte[] rawDataNumber= Arrays.copyOfRange(intArray, 0, intSize);
+			ArrayUtils.reverse(rawDataNumber);
+		
+			for (int i=0;i<rawDataNumber.length;i++) {
+			
+				result[1+i]=rawDataNumber[i];
+			}
+	
 		 currentPosition=1+intSize;
 	}
 	// copy list items
@@ -403,36 +413,70 @@ public static byte[] getTransactionHashWithoutSignature(EthereumTransaction eTra
 	return digest.digest();
 }
 
+/***
+ * Calculates the hash of a transaction with dummy signature based on EIP-155 (https://github.com/ethereum/EIPs/blob/master/EIPS/eip-155.md). Note this requires that you have Bouncy castle as a dependency in your project
+ * 
+ * @param eTrans transaction
+ * 
+ * @return transaction hash as KECCAK-256
+ */
+public static byte[] getTransactionHashWithDummySignatureEIP155(EthereumTransaction eTrans) {
+	ArrayList<byte[]> rlpTransaction = new ArrayList<>();
+	rlpTransaction.add(EthereumUtil.encodeRLPElement(eTrans.getNonce()));
+	rlpTransaction.add(EthereumUtil.encodeRLPElement(EthereumUtil.convertLongToVarInt(eTrans.getGasPrice())));
+	rlpTransaction.add(EthereumUtil.encodeRLPElement(EthereumUtil.convertLongToVarInt(eTrans.getGasLimit())));
+	rlpTransaction.add(EthereumUtil.encodeRLPElement(eTrans.getReceiveAddress()));
+	rlpTransaction.add(EthereumUtil.encodeRLPElement(EthereumUtil.convertLongToVarInt(eTrans.getValue())));
+	rlpTransaction.add(EthereumUtil.encodeRLPElement(eTrans.getData()));
+	rlpTransaction.add(EthereumUtil.encodeRLPElement(new byte[] {(byte) ((eTrans.getSig_v()[0]-EthereumUtil.CHAIN_ID_INC)/2)}));
+	rlpTransaction.add(EthereumUtil.encodeRLPElement(new byte[0]));
+	rlpTransaction.add(EthereumUtil.encodeRLPElement(new byte[0]));
+	byte[] transEnc = EthereumUtil.encodeRLPList(rlpTransaction);
+	Keccak.Digest256 digest = new Keccak.Digest256();
+	digest.update(transEnc,0,transEnc.length);
+	return digest.digest();
+}
+
 /**
  * Calculates the sent address of an EthereumTransaction. Note this can be a costly operation to calculate. . This requires that you have Bouncy castle as a dependency in your project
  *
  *
  * @param eTrans transaction
+ * @param chainId chain identifier (e.g. 1 main net)
  * @return sent address as byte array
  */
-public static byte[] getSendAddress(EthereumTransaction eTrans) {
+public static byte[] getSendAddress(EthereumTransaction eTrans, int chainId) {
 	// init, maybe we move this out to save time
 	X9ECParameters params = SECNamedCurves.getByName("secp256k1");
 	ECDomainParameters CURVE=new ECDomainParameters(params.getCurve(), params.getG(), params.getN(), params.getH());	 // needed for getSentAddress
 
-  // transaction hash without signature data
-	byte[] transactionHash = EthereumUtil.getTransactionHashWithoutSignature(eTrans);
+ 
+    byte[] transactionHash;
+
+    if ((eTrans.getSig_v()[0]==chainId*2+EthereumUtil.CHAIN_ID_INC) || (eTrans.getSig_v()[0]==chainId*2+EthereumUtil.CHAIN_ID_INC+1)) {  // transaction hash with dummy signature data
+    	 transactionHash = EthereumUtil.getTransactionHashWithDummySignatureEIP155(eTrans);
+    } else {  // transaction hash without signature data
+	 transactionHash = EthereumUtil.getTransactionHashWithoutSignature(eTrans);
+    }
   // signature to address
 	BigInteger bR = new BigInteger(1,eTrans.getSig_r());
 	BigInteger bS = new BigInteger(1,eTrans.getSig_s());
   // calculate v for signature
 	byte v =(byte) (eTrans.getSig_v()[0]);
 	if (!((v == EthereumUtil.LOWER_REAL_V) || (v== (LOWER_REAL_V+1)))) {
-		v = EthereumUtil.LOWER_REAL_V;
+		byte vReal = EthereumUtil.LOWER_REAL_V;
 		if (((int)v%2 == 0)) {
-			v = (byte) (v+0x01);
+			v = (byte) (vReal+0x01);
+		} else {
+			v = vReal;
 		}
 	}
-	
+
 	boolean compressedKey= false;
 	// the following lines are inspired from ECKey.java of EthereumJ, but adapted to the hadoopcryptoledger context
 	if (v < 27 || v > 34) {
-		throw new RuntimeException("Header out of range");
+		LOG.error("Header out of Range:  "+v);
+		throw new RuntimeException("Header out of range "+v);
 	}
 	if (v>=31) {
 		compressedKey = true;
@@ -559,7 +603,7 @@ public static Long convertToInt(RLPElement rpe) {
 				int dtDiff=EthereumUtil.INT_SIZE-rawBytes.length;
 				for (int i=0;i<rawBytes.length;i++) {
 					fullBytes[dtDiff+i]=rawBytes[i];
-					result=(long) ByteBuffer.wrap(fullBytes).getInt() & 0x00000000ffffffffL;
+					result=(long) ByteBuffer.wrap(fullBytes).getInt()& 0x00000000ffffffffL;
 				}
 			} else {
 				result=(long) ByteBuffer.wrap(rawBytes).getInt() & 0x00000000ffffffffL;
@@ -601,8 +645,7 @@ public static Long convertToLong(RLPElement rpe) {
  * @return byte array containing variable number (without leading zeros)
  */
 public static byte[] convertLongToVarInt(long value) {
-	// check the actual size of the long and convert it to signed one
-
+	
 	// to make it threadsafe - could be optimized at a later stage
 	ByteBuffer longBB = ByteBuffer.allocate(EthereumUtil.LONG_SIZE);
 	
