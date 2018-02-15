@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="JUnit Jupiter" tests="253" skipped="0" failures="0" errors="0" time="5.288" hostname="travis-job-zuinnote-hadoopcryptole-341106249.travisci.net" timestamp="2018-02-13T19:47:54">
+<testsuite name="JUnit Jupiter" tests="255" skipped="0" failures="0" errors="0" time="14.951" hostname="travis-job-zuinnote-hadoopcryptole-341681888.travisci.net" timestamp="2018-02-14T23:59:01">
 <properties>
 <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
 <property name="file.encoding" value="UTF-8"/>
@@ -55,13 +55,13 @@
 <property name="user.timezone" value="UTC"/>
 <property name="user.variant" value=""/>
 </properties>
-<testcase name="checkTestDataVersion3BlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.023">
+<testcase name="checkTestDataVersion3BlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.097">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:checkTestDataVersion3BlockAvailable()]
 display-name: checkTestDataVersion3BlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="seekBlockStartHeap()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.081">
+<testcase name="seekBlockStartHeap()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.239">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:seekBlockStartHeap()]
 display-name: seekBlockStartHeap()
@@ -73,7 +73,7 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.comm
 display-name: parseVersion1BlockAsBitcoinRawBlockHeap()
 ]]></system-out>
 </testcase>
-<testcase name="parseMultiNetBlockAsBitcoinBlockHeap()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.022">
+<testcase name="parseMultiNetBlockAsBitcoinBlockHeap()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.053">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:parseMultiNetBlockAsBitcoinBlockHeap()]
 display-name: parseMultiNetBlockAsBitcoinBlockHeap()
@@ -91,31 +91,31 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.comm
 display-name: checkTestDataTestnet3GenesisBlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="parseVersion4BlockAsBitcoinRawBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.007">
+<testcase name="parseVersion4BlockAsBitcoinRawBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.034">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:parseVersion4BlockAsBitcoinRawBlockDirect()]
 display-name: parseVersion4BlockAsBitcoinRawBlockDirect()
 ]]></system-out>
 </testcase>
-<testcase name="parseVersion2BlockAsBitcoinRawBlockHeap()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.001">
+<testcase name="parseVersion2BlockAsBitcoinRawBlockHeap()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.002">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:parseVersion2BlockAsBitcoinRawBlockHeap()]
 display-name: parseVersion2BlockAsBitcoinRawBlockHeap()
 ]]></system-out>
 </testcase>
-<testcase name="seekBlockStartDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.005">
+<testcase name="seekBlockStartDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.006">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:seekBlockStartDirect()]
 display-name: seekBlockStartDirect()
 ]]></system-out>
 </testcase>
-<testcase name="parseTestNet3Version4BlockAsBitcoinRawBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.006">
+<testcase name="parseTestNet3Version4BlockAsBitcoinRawBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.018">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:parseTestNet3Version4BlockAsBitcoinRawBlockDirect()]
 display-name: parseTestNet3Version4BlockAsBitcoinRawBlockDirect()
 ]]></system-out>
 </testcase>
-<testcase name="parseScriptWitnessBlockAsBitcoinBlockHeap()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.007">
+<testcase name="parseScriptWitnessBlockAsBitcoinBlockHeap()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.028">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:parseScriptWitnessBlockAsBitcoinBlockHeap()]
 display-name: parseScriptWitnessBlockAsBitcoinBlockHeap()
@@ -127,13 +127,13 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.comm
 display-name: checkTestDataVersion1BlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="parseScriptWitness2BlockAsBitcoinRawBlockHeap()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.003">
+<testcase name="parseScriptWitness2BlockAsBitcoinRawBlockHeap()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.004">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:parseScriptWitness2BlockAsBitcoinRawBlockHeap()]
 display-name: parseScriptWitness2BlockAsBitcoinRawBlockHeap()
 ]]></system-out>
 </testcase>
-<testcase name="parseScriptWitnessBlockAsBitcoinRawBlockHeap()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.002">
+<testcase name="parseScriptWitnessBlockAsBitcoinRawBlockHeap()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.001">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:parseScriptWitnessBlockAsBitcoinRawBlockHeap()]
 display-name: parseScriptWitnessBlockAsBitcoinRawBlockHeap()
@@ -145,7 +145,7 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.comm
 display-name: checkTestDataVersion4BlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="parseScriptWitnessBlockAsBitcoinBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.014">
+<testcase name="parseScriptWitnessBlockAsBitcoinBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.043">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:parseScriptWitnessBlockAsBitcoinBlockDirect()]
 display-name: parseScriptWitnessBlockAsBitcoinBlockDirect()
@@ -163,7 +163,7 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.comm
 display-name: parseGenesisBlockAsBitcoinBlockDirect()
 ]]></system-out>
 </testcase>
-<testcase name="parseTestNet3GenesisBlockAsBitcoinRawBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.007">
+<testcase name="parseTestNet3GenesisBlockAsBitcoinRawBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.008">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:parseTestNet3GenesisBlockAsBitcoinRawBlockDirect()]
 display-name: parseTestNet3GenesisBlockAsBitcoinRawBlockDirect()
@@ -187,25 +187,25 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.comm
 display-name: parseGenesisBlockAsBitcoinRawBlockDirect()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataVersion1SeekBlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.001">
+<testcase name="checkTestDataVersion1SeekBlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.017">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:checkTestDataVersion1SeekBlockAvailable()]
 display-name: checkTestDataVersion1SeekBlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="parseVersion4BlockAsBitcoinBlockHeap()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.008">
+<testcase name="parseVersion4BlockAsBitcoinBlockHeap()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.011">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:parseVersion4BlockAsBitcoinBlockHeap()]
 display-name: parseVersion4BlockAsBitcoinBlockHeap()
 ]]></system-out>
 </testcase>
-<testcase name="parseScriptWitness2BlockAsBitcoinRawBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.009">
+<testcase name="parseScriptWitness2BlockAsBitcoinRawBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.01">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:parseScriptWitness2BlockAsBitcoinRawBlockDirect()]
 display-name: parseScriptWitness2BlockAsBitcoinRawBlockDirect()
 ]]></system-out>
 </testcase>
-<testcase name="parseTestNet3GenesisBlockAsBitcoinBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.006">
+<testcase name="parseTestNet3GenesisBlockAsBitcoinBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.039">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:parseTestNet3GenesisBlockAsBitcoinBlockDirect()]
 display-name: parseTestNet3GenesisBlockAsBitcoinBlockDirect()
@@ -217,7 +217,7 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.comm
 display-name: checkTestDataTestnet3Version4BlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="parseVersion3BlockAsBitcoinBlockHeap()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.006">
+<testcase name="parseVersion3BlockAsBitcoinBlockHeap()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.016">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:parseVersion3BlockAsBitcoinBlockHeap()]
 display-name: parseVersion3BlockAsBitcoinBlockHeap()
@@ -229,19 +229,19 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.comm
 display-name: checkTestDataVersion2BlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="parseVersion1BlockAsBitcoinRawBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.005">
+<testcase name="parseVersion1BlockAsBitcoinRawBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.02">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:parseVersion1BlockAsBitcoinRawBlockDirect()]
 display-name: parseVersion1BlockAsBitcoinRawBlockDirect()
 ]]></system-out>
 </testcase>
-<testcase name="parseVersion2BlockAsBitcoinBlockHeap()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.003">
+<testcase name="parseVersion2BlockAsBitcoinBlockHeap()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.005">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:parseVersion2BlockAsBitcoinBlockHeap()]
 display-name: parseVersion2BlockAsBitcoinBlockHeap()
 ]]></system-out>
 </testcase>
-<testcase name="parseVersion1BlockAsBitcoinBlockHeap()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.001">
+<testcase name="parseVersion1BlockAsBitcoinBlockHeap()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.003">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:parseVersion1BlockAsBitcoinBlockHeap()]
 display-name: parseVersion1BlockAsBitcoinBlockHeap()
@@ -253,67 +253,67 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.comm
 display-name: parseVersion4BlockAsBitcoinRawBlockHeap()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataScriptWitness2NetAvailable()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0">
+<testcase name="checkTestDataScriptWitness2NetAvailable()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.001">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:checkTestDataScriptWitness2NetAvailable()]
 display-name: checkTestDataScriptWitness2NetAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="parseScriptWitness2BlockAsBitcoinBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.05">
+<testcase name="parseScriptWitness2BlockAsBitcoinBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.141">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:parseScriptWitness2BlockAsBitcoinBlockDirect()]
 display-name: parseScriptWitness2BlockAsBitcoinBlockDirect()
 ]]></system-out>
 </testcase>
-<testcase name="parseScriptWitnessBlockAsBitcoinRawBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.006">
+<testcase name="parseScriptWitnessBlockAsBitcoinRawBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.019">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:parseScriptWitnessBlockAsBitcoinRawBlockDirect()]
 display-name: parseScriptWitnessBlockAsBitcoinRawBlockDirect()
 ]]></system-out>
 </testcase>
-<testcase name="parseTestNet3GenesisBlockAsBitcoinRawBlockHeap()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0">
+<testcase name="parseTestNet3GenesisBlockAsBitcoinRawBlockHeap()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.001">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:parseTestNet3GenesisBlockAsBitcoinRawBlockHeap()]
 display-name: parseTestNet3GenesisBlockAsBitcoinRawBlockHeap()
 ]]></system-out>
 </testcase>
-<testcase name="parseScriptWitness2BlockAsBitcoinBlockHeap()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.012">
+<testcase name="parseScriptWitness2BlockAsBitcoinBlockHeap()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.032">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:parseScriptWitness2BlockAsBitcoinBlockHeap()]
 display-name: parseScriptWitness2BlockAsBitcoinBlockHeap()
 ]]></system-out>
 </testcase>
-<testcase name="parseTestNet3Version4BlockAsBitcoinBlockHeap()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.007">
+<testcase name="parseTestNet3Version4BlockAsBitcoinBlockHeap()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.04">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:parseTestNet3Version4BlockAsBitcoinBlockHeap()]
 display-name: parseTestNet3Version4BlockAsBitcoinBlockHeap()
 ]]></system-out>
 </testcase>
-<testcase name="getKeyFromRawBlockHeap()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.008">
+<testcase name="getKeyFromRawBlockHeap()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.007">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:getKeyFromRawBlockHeap()]
 display-name: getKeyFromRawBlockHeap()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataGenesisBlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.009">
+<testcase name="checkTestDataGenesisBlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.029">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:checkTestDataGenesisBlockAvailable()]
 display-name: checkTestDataGenesisBlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="parseTestNet3Version4BlockAsBitcoinBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.017">
+<testcase name="parseTestNet3Version4BlockAsBitcoinBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.044">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:parseTestNet3Version4BlockAsBitcoinBlockDirect()]
 display-name: parseTestNet3Version4BlockAsBitcoinBlockDirect()
 ]]></system-out>
 </testcase>
-<testcase name="parseTestNet3GenesisBlockAsBitcoinBlockHeap()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0">
+<testcase name="parseTestNet3GenesisBlockAsBitcoinBlockHeap()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.002">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:parseTestNet3GenesisBlockAsBitcoinBlockHeap()]
 display-name: parseTestNet3GenesisBlockAsBitcoinBlockHeap()
 ]]></system-out>
 </testcase>
-<testcase name="parseVersion2BlockAsBitcoinRawBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.005">
+<testcase name="parseVersion2BlockAsBitcoinRawBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.026">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:parseVersion2BlockAsBitcoinRawBlockDirect()]
 display-name: parseVersion2BlockAsBitcoinRawBlockDirect()
@@ -331,67 +331,67 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.comm
 display-name: checkTestDataMultiNetAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="parseGenesisBlockAsBitcoinRawBlockHeap()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0">
+<testcase name="parseGenesisBlockAsBitcoinRawBlockHeap()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.001">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:parseGenesisBlockAsBitcoinRawBlockHeap()]
 display-name: parseGenesisBlockAsBitcoinRawBlockHeap()
 ]]></system-out>
 </testcase>
-<testcase name="parseVersion1BlockAsBitcoinBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.004">
+<testcase name="parseVersion1BlockAsBitcoinBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.006">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:parseVersion1BlockAsBitcoinBlockDirect()]
 display-name: parseVersion1BlockAsBitcoinBlockDirect()
 ]]></system-out>
 </testcase>
-<testcase name="parseVersion2BlockAsBitcoinBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.006">
+<testcase name="parseVersion2BlockAsBitcoinBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.027">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:parseVersion2BlockAsBitcoinBlockDirect()]
 display-name: parseVersion2BlockAsBitcoinBlockDirect()
 ]]></system-out>
 </testcase>
-<testcase name="parseVersion3BlockAsBitcoinBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.011">
+<testcase name="parseVersion3BlockAsBitcoinBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.034">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:parseVersion3BlockAsBitcoinBlockDirect()]
 display-name: parseVersion3BlockAsBitcoinBlockDirect()
 ]]></system-out>
 </testcase>
-<testcase name="parseVersion4BlockAsBitcoinBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.011">
+<testcase name="parseVersion4BlockAsBitcoinBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.034">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:parseVersion4BlockAsBitcoinBlockDirect()]
 display-name: parseVersion4BlockAsBitcoinBlockDirect()
 ]]></system-out>
 </testcase>
-<testcase name="getKeyFromRawBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.005">
+<testcase name="getKeyFromRawBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.006">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:getKeyFromRawBlockDirect()]
 display-name: getKeyFromRawBlockDirect()
 ]]></system-out>
 </testcase>
-<testcase name="parseMultiNetBlockAsBitcoinBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.013">
+<testcase name="parseMultiNetBlockAsBitcoinBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.051">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:parseMultiNetBlockAsBitcoinBlockDirect()]
 display-name: parseMultiNetBlockAsBitcoinBlockDirect()
 ]]></system-out>
 </testcase>
-<testcase name="parseVersion3BlockAsBitcoinRawBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.006">
+<testcase name="parseVersion3BlockAsBitcoinRawBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.027">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:parseVersion3BlockAsBitcoinRawBlockDirect()]
 display-name: parseVersion3BlockAsBitcoinRawBlockDirect()
 ]]></system-out>
 </testcase>
-<testcase name="parseMultiNetAsBitcoinRawBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.005">
+<testcase name="parseMultiNetAsBitcoinRawBlockDirect()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest" time="0.007">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinFormatReaderTest]/[method:parseMultiNetAsBitcoinRawBlockDirect()]
 display-name: parseMultiNetAsBitcoinRawBlockDirect()
 ]]></system-out>
 </testcase>
-<testcase name="testPaymentAnyone()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest" time="0.005">
+<testcase name="testPaymentAnyone()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest" time="0.023">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest]/[method:testPaymentAnyone()]
 display-name: testPaymentAnyone()
 ]]></system-out>
 </testcase>
-<testcase name="testPaymentPubKeyGenesis()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest" time="0.002">
+<testcase name="testPaymentPubKeyGenesis()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest" time="0.004">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest]/[method:testPaymentPubKeyGenesis()]
 display-name: testPaymentPubKeyGenesis()
@@ -403,13 +403,13 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.comm
 display-name: testPaymentP2Hash()
 ]]></system-out>
 </testcase>
-<testcase name="testPaymentPuzzle()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest" time="0">
+<testcase name="testPaymentPuzzle()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest" time="0.013">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest]/[method:testPaymentPuzzle()]
 display-name: testPaymentPuzzle()
 ]]></system-out>
 </testcase>
-<testcase name="testPaymentInvalid()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest" time="0.001">
+<testcase name="testPaymentInvalid()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest" time="0.002">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptPatternParserTest]/[method:testPaymentInvalid()]
 display-name: testPaymentInvalid()
@@ -445,7 +445,7 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.comm
 display-name: testPaymentNull()
 ]]></system-out>
 </testcase>
-<testcase name="getVarIntSizeDWord()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtilTest" time="0.001">
+<testcase name="getVarIntSizeDWord()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtilTest" time="0.02">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtilTest]/[method:getVarIntSizeDWord()]
 display-name: getVarIntSizeDWord()
@@ -475,13 +475,13 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.comm
 display-name: getVarIntSizeWord()
 ]]></system-out>
 </testcase>
-<testcase name="convertIntToDate()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtilTest" time="0.021">
+<testcase name="convertIntToDate()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtilTest" time="0.064">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtilTest]/[method:convertIntToDate()]
 display-name: convertIntToDate()
 ]]></system-out>
 </testcase>
-<testcase name="convertSignedIntToUnsigned()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtilTest" time="0.001">
+<testcase name="convertSignedIntToUnsigned()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtilTest" time="0.004">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtilTest]/[method:convertSignedIntToUnsigned()]
 display-name: convertSignedIntToUnsigned()
@@ -493,7 +493,7 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.comm
 display-name: reverseByteArray()
 ]]></system-out>
 </testcase>
-<testcase name="getVarIntByte()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtilTest" time="0">
+<testcase name="getVarIntByte()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtilTest" time="0.011">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtilTest]/[method:getVarIntByte()]
 display-name: getVarIntByte()
@@ -505,7 +505,7 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.comm
 display-name: getVarIntWord()
 ]]></system-out>
 </testcase>
-<testcase name="getTransactionHashSegWit()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtilTest" time="0.024">
+<testcase name="getTransactionHashSegWit()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtilTest" time="0.05">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtilTest]/[method:getTransactionHashSegWit()]
 display-name: getTransactionHashSegWit()
@@ -517,7 +517,7 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.comm
 display-name: getSize()
 ]]></system-out>
 </testcase>
-<testcase name="convertVarIntByteBufferToByteArray()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtilTest" time="0.001">
+<testcase name="convertVarIntByteBufferToByteArray()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtilTest" time="0">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtilTest]/[method:convertVarIntByteBufferToByteArray()]
 display-name: convertVarIntByteBufferToByteArray()
@@ -541,7 +541,7 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.comm
 display-name: getVarIntQWord()
 ]]></system-out>
 </testcase>
-<testcase name="compareMagicsNeg()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtilTest" time="0.001">
+<testcase name="compareMagicsNeg()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtilTest" time="0">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtilTest]/[method:compareMagicsNeg()]
 display-name: compareMagicsNeg()
@@ -565,7 +565,7 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.comm
 display-name: convertByteArrayToHexString()
 ]]></system-out>
 </testcase>
-<testcase name="convertIntToByteArray()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtilTest" time="0.002">
+<testcase name="convertIntToByteArray()" classname="org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtilTest" time="0.003">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.common.BitcoinUtilTest]/[method:convertIntToByteArray()]
 display-name: convertIntToByteArray()
@@ -577,139 +577,139 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.comm
 display-name: convertLongToByteArray()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataVersion3BlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.003">
+<testcase name="checkTestDataVersion3BlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.002">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest]/[method:checkTestDataVersion3BlockAvailable()]
 display-name: checkTestDataVersion3BlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinBlockInputFormatBlockVersion1()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.106">
+<testcase name="readBitcoinBlockInputFormatBlockVersion1()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.366">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest]/[method:readBitcoinBlockInputFormatBlockVersion1()]
 display-name: readBitcoinBlockInputFormatBlockVersion1()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinBlockInputFormatBlockVersion2()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.011">
+<testcase name="readBitcoinBlockInputFormatBlockVersion2()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.023">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest]/[method:readBitcoinBlockInputFormatBlockVersion2()]
 display-name: readBitcoinBlockInputFormatBlockVersion2()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinBlockInputFormatBlockVersion3()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.014">
+<testcase name="readBitcoinBlockInputFormatBlockVersion3()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.052">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest]/[method:readBitcoinBlockInputFormatBlockVersion3()]
 display-name: readBitcoinBlockInputFormatBlockVersion3()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinBlockInputFormatBlockVersion4()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.012">
+<testcase name="readBitcoinBlockInputFormatBlockVersion4()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.043">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest]/[method:readBitcoinBlockInputFormatBlockVersion4()]
 display-name: readBitcoinBlockInputFormatBlockVersion4()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinTransactionInputFormatBzip2Compressed()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.461">
+<testcase name="readBitcoinTransactionInputFormatBzip2Compressed()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="1.675">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest]/[method:readBitcoinTransactionInputFormatBzip2Compressed()]
 display-name: readBitcoinTransactionInputFormatBzip2Compressed()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinBlockInputFormatMultiBlock()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.019">
+<testcase name="readBitcoinBlockInputFormatMultiBlock()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.035">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest]/[method:readBitcoinBlockInputFormatMultiBlock()]
 display-name: readBitcoinBlockInputFormatMultiBlock()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinRawBlockInputFormatReqSeekBlockVersion1()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.005">
+<testcase name="readBitcoinRawBlockInputFormatReqSeekBlockVersion1()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.035">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest]/[method:readBitcoinRawBlockInputFormatReqSeekBlockVersion1()]
 display-name: readBitcoinRawBlockInputFormatReqSeekBlockVersion1()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinRawBlockInputFormatBzip2Compressed()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.182">
+<testcase name="readBitcoinRawBlockInputFormatBzip2Compressed()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.897">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest]/[method:readBitcoinRawBlockInputFormatBzip2Compressed()]
 display-name: readBitcoinRawBlockInputFormatBzip2Compressed()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinBlockInputFormatGzipCompressed()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.045">
+<testcase name="readBitcoinBlockInputFormatGzipCompressed()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.13">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest]/[method:readBitcoinBlockInputFormatGzipCompressed()]
 display-name: readBitcoinBlockInputFormatGzipCompressed()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinBlockInputFormatGenesisBlock()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.004">
+<testcase name="readBitcoinBlockInputFormatGenesisBlock()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.006">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest]/[method:readBitcoinBlockInputFormatGenesisBlock()]
 display-name: readBitcoinBlockInputFormatGenesisBlock()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataVersion1BlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0">
+<testcase name="checkTestDataVersion1BlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.001">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest]/[method:checkTestDataVersion1BlockAvailable()]
 display-name: checkTestDataVersion1BlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinBlockInputFormatReqSeekBlockVersion1()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.008">
+<testcase name="readBitcoinBlockInputFormatReqSeekBlockVersion1()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.035">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest]/[method:readBitcoinBlockInputFormatReqSeekBlockVersion1()]
 display-name: readBitcoinBlockInputFormatReqSeekBlockVersion1()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinTransactionInputFormatGenesisBlock()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.004">
+<testcase name="readBitcoinTransactionInputFormatGenesisBlock()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.01">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest]/[method:readBitcoinTransactionInputFormatGenesisBlock()]
 display-name: readBitcoinTransactionInputFormatGenesisBlock()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataVersion4BlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.001">
+<testcase name="checkTestDataVersion4BlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest]/[method:checkTestDataVersion4BlockAvailable()]
 display-name: checkTestDataVersion4BlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinTransactionInputFormatMultiBlock()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.028">
+<testcase name="readBitcoinTransactionInputFormatMultiBlock()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.087">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest]/[method:readBitcoinTransactionInputFormatMultiBlock()]
 display-name: readBitcoinTransactionInputFormatMultiBlock()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataVersion4GzipCompressedBlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0">
+<testcase name="checkTestDataVersion4GzipCompressedBlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.001">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest]/[method:checkTestDataVersion4GzipCompressedBlockAvailable()]
 display-name: checkTestDataVersion4GzipCompressedBlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinRawBlockInputFormatBlockVersion1()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.007">
+<testcase name="readBitcoinRawBlockInputFormatBlockVersion1()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.017">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest]/[method:readBitcoinRawBlockInputFormatBlockVersion1()]
 display-name: readBitcoinRawBlockInputFormatBlockVersion1()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinRawBlockInputFormatBlockVersion2()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.005">
+<testcase name="readBitcoinRawBlockInputFormatBlockVersion2()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.014">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest]/[method:readBitcoinRawBlockInputFormatBlockVersion2()]
 display-name: readBitcoinRawBlockInputFormatBlockVersion2()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinRawBlockInputFormatBlockVersion3()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.009">
+<testcase name="readBitcoinRawBlockInputFormatBlockVersion3()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.036">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest]/[method:readBitcoinRawBlockInputFormatBlockVersion3()]
 display-name: readBitcoinRawBlockInputFormatBlockVersion3()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinRawBlockInputFormatBlockVersion4()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.008">
+<testcase name="readBitcoinRawBlockInputFormatBlockVersion4()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.014">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest]/[method:readBitcoinRawBlockInputFormatBlockVersion4()]
 display-name: readBitcoinRawBlockInputFormatBlockVersion4()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinRawBlockInputFormatMultiBlock()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.004">
+<testcase name="readBitcoinRawBlockInputFormatMultiBlock()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.015">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest]/[method:readBitcoinRawBlockInputFormatMultiBlock()]
 display-name: readBitcoinRawBlockInputFormatMultiBlock()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinBlockInputFormatBzip2Compressed()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.199">
+<testcase name="readBitcoinBlockInputFormatBzip2Compressed()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.89">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest]/[method:readBitcoinBlockInputFormatBzip2Compressed()]
 display-name: readBitcoinBlockInputFormatBzip2Compressed()
@@ -721,25 +721,25 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapr
 display-name: checkTestDataVersion1SeekBlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinTransactionInputFormatGzipCompressed()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.154">
+<testcase name="readBitcoinTransactionInputFormatGzipCompressed()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.354">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest]/[method:readBitcoinTransactionInputFormatGzipCompressed()]
 display-name: readBitcoinTransactionInputFormatGzipCompressed()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataVersion2BlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.001">
+<testcase name="checkTestDataVersion2BlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest]/[method:checkTestDataVersion2BlockAvailable()]
 display-name: checkTestDataVersion2BlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinRawBlockInputFormatGzipCompressed()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.016">
+<testcase name="readBitcoinRawBlockInputFormatGzipCompressed()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.03">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest]/[method:readBitcoinRawBlockInputFormatGzipCompressed()]
 display-name: readBitcoinRawBlockInputFormatGzipCompressed()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataMultiBlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.001">
+<testcase name="checkTestDataMultiBlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest]/[method:checkTestDataMultiBlockAvailable()]
 display-name: checkTestDataMultiBlockAvailable()
@@ -751,25 +751,25 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapr
 display-name: checkTestDataGenesisBlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinRawBlockInputFormatGenesisBlock()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.014">
+<testcase name="readBitcoinRawBlockInputFormatGenesisBlock()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.018">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest]/[method:readBitcoinRawBlockInputFormatGenesisBlock()]
 display-name: readBitcoinRawBlockInputFormatGenesisBlock()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinTransactionInputFormatBlockVersion1ReqSeek()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.003">
+<testcase name="readBitcoinTransactionInputFormatBlockVersion1ReqSeek()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.024">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest]/[method:readBitcoinTransactionInputFormatBlockVersion1ReqSeek()]
 display-name: readBitcoinTransactionInputFormatBlockVersion1ReqSeek()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataVersion4Bzip2CompressedBlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0">
+<testcase name="checkTestDataVersion4Bzip2CompressedBlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.001">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest]/[method:checkTestDataVersion4Bzip2CompressedBlockAvailable()]
 display-name: checkTestDataVersion4Bzip2CompressedBlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinTransactionInputFormatBlockVersion1()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.011">
+<testcase name="readBitcoinTransactionInputFormatBlockVersion1()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.01">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest]/[method:readBitcoinTransactionInputFormatBlockVersion1()]
 display-name: readBitcoinTransactionInputFormatBlockVersion1()
@@ -781,13 +781,13 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapr
 display-name: readBitcoinTransactionInputFormatBlockVersion2()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinTransactionInputFormatBlockVersion3()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.137">
+<testcase name="readBitcoinTransactionInputFormatBlockVersion3()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.134">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest]/[method:readBitcoinTransactionInputFormatBlockVersion3()]
 display-name: readBitcoinTransactionInputFormatBlockVersion3()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinTransactionInputFormatBlockVersion4()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.12">
+<testcase name="readBitcoinTransactionInputFormatBlockVersion4()" classname="org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest" time="0.118">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinFormatHadoopTest]/[method:readBitcoinTransactionInputFormatBlockVersion4()]
 display-name: readBitcoinTransactionInputFormatBlockVersion4()
@@ -799,55 +799,55 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapr
 display-name: checkTestDataVersion3BlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinBlockInputFormatBlockVersion1()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.058">
+<testcase name="readBitcoinBlockInputFormatBlockVersion1()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.146">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest]/[method:readBitcoinBlockInputFormatBlockVersion1()]
 display-name: readBitcoinBlockInputFormatBlockVersion1()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinBlockInputFormatBlockVersion2()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.008">
+<testcase name="readBitcoinBlockInputFormatBlockVersion2()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.009">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest]/[method:readBitcoinBlockInputFormatBlockVersion2()]
 display-name: readBitcoinBlockInputFormatBlockVersion2()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinBlockInputFormatBlockVersion3()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.013">
+<testcase name="readBitcoinBlockInputFormatBlockVersion3()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.023">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest]/[method:readBitcoinBlockInputFormatBlockVersion3()]
 display-name: readBitcoinBlockInputFormatBlockVersion3()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinBlockInputFormatBlockVersion4()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.01">
+<testcase name="readBitcoinBlockInputFormatBlockVersion4()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.054">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest]/[method:readBitcoinBlockInputFormatBlockVersion4()]
 display-name: readBitcoinBlockInputFormatBlockVersion4()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinTransactionInputFormatBzip2Compressed()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.315">
+<testcase name="readBitcoinTransactionInputFormatBzip2Compressed()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.796">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest]/[method:readBitcoinTransactionInputFormatBzip2Compressed()]
 display-name: readBitcoinTransactionInputFormatBzip2Compressed()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinBlockInputFormatMultiBlock()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.007">
+<testcase name="readBitcoinBlockInputFormatMultiBlock()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.008">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest]/[method:readBitcoinBlockInputFormatMultiBlock()]
 display-name: readBitcoinBlockInputFormatMultiBlock()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinRawBlockInputFormatReqSeekBlockVersion1()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.015">
+<testcase name="readBitcoinRawBlockInputFormatReqSeekBlockVersion1()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.019">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest]/[method:readBitcoinRawBlockInputFormatReqSeekBlockVersion1()]
 display-name: readBitcoinRawBlockInputFormatReqSeekBlockVersion1()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinRawBlockInputFormatBzip2Compressed()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.243">
+<testcase name="readBitcoinRawBlockInputFormatBzip2Compressed()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.681">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest]/[method:readBitcoinRawBlockInputFormatBzip2Compressed()]
 display-name: readBitcoinRawBlockInputFormatBzip2Compressed()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinBlockInputFormatGzipCompressed()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.019">
+<testcase name="readBitcoinBlockInputFormatGzipCompressed()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.05">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest]/[method:readBitcoinBlockInputFormatGzipCompressed()]
 display-name: readBitcoinBlockInputFormatGzipCompressed()
@@ -865,13 +865,13 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapr
 display-name: checkTestDataVersion1BlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinBlockInputFormatReqSeekBlockVersion1()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.006">
+<testcase name="readBitcoinBlockInputFormatReqSeekBlockVersion1()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.023">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest]/[method:readBitcoinBlockInputFormatReqSeekBlockVersion1()]
 display-name: readBitcoinBlockInputFormatReqSeekBlockVersion1()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinTransactionInputFormatGenesisBlock()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.004">
+<testcase name="readBitcoinTransactionInputFormatGenesisBlock()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.009">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest]/[method:readBitcoinTransactionInputFormatGenesisBlock()]
 display-name: readBitcoinTransactionInputFormatGenesisBlock()
@@ -883,7 +883,7 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapr
 display-name: checkTestDataVersion4BlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinTransactionInputFormatMultiBlock()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.022">
+<testcase name="readBitcoinTransactionInputFormatMultiBlock()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.049">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest]/[method:readBitcoinTransactionInputFormatMultiBlock()]
 display-name: readBitcoinTransactionInputFormatMultiBlock()
@@ -895,7 +895,7 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapr
 display-name: checkTestDataVersion4GzipCompressedBlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinRawBlockInputFormatBlockVersion1()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.006">
+<testcase name="readBitcoinRawBlockInputFormatBlockVersion1()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.015">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest]/[method:readBitcoinRawBlockInputFormatBlockVersion1()]
 display-name: readBitcoinRawBlockInputFormatBlockVersion1()
@@ -907,79 +907,79 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapr
 display-name: readBitcoinRawBlockInputFormatBlockVersion2()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinRawBlockInputFormatBlockVersion3()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.008">
+<testcase name="readBitcoinRawBlockInputFormatBlockVersion3()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.01">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest]/[method:readBitcoinRawBlockInputFormatBlockVersion3()]
 display-name: readBitcoinRawBlockInputFormatBlockVersion3()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinRawBlockInputFormatBlockVersion4()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.008">
+<testcase name="readBitcoinRawBlockInputFormatBlockVersion4()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.022">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest]/[method:readBitcoinRawBlockInputFormatBlockVersion4()]
 display-name: readBitcoinRawBlockInputFormatBlockVersion4()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinRawBlockInputFormatMultiBlock()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.006">
+<testcase name="readBitcoinRawBlockInputFormatMultiBlock()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.016">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest]/[method:readBitcoinRawBlockInputFormatMultiBlock()]
 display-name: readBitcoinRawBlockInputFormatMultiBlock()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinBlockInputFormatBzip2Compressed()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.246">
+<testcase name="readBitcoinBlockInputFormatBzip2Compressed()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.621">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest]/[method:readBitcoinBlockInputFormatBzip2Compressed()]
 display-name: readBitcoinBlockInputFormatBzip2Compressed()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataVersion1SeekBlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.001">
+<testcase name="checkTestDataVersion1SeekBlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest]/[method:checkTestDataVersion1SeekBlockAvailable()]
 display-name: checkTestDataVersion1SeekBlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinTransactionInputFormatGzipCompressed()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.056">
+<testcase name="readBitcoinTransactionInputFormatGzipCompressed()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.114">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest]/[method:readBitcoinTransactionInputFormatGzipCompressed()]
 display-name: readBitcoinTransactionInputFormatGzipCompressed()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataVersion2BlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.001">
+<testcase name="checkTestDataVersion2BlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest]/[method:checkTestDataVersion2BlockAvailable()]
 display-name: checkTestDataVersion2BlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinRawBlockInputFormatGzipCompressed()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.013">
+<testcase name="readBitcoinRawBlockInputFormatGzipCompressed()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.038">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest]/[method:readBitcoinRawBlockInputFormatGzipCompressed()]
 display-name: readBitcoinRawBlockInputFormatGzipCompressed()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataMultiBlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.001">
+<testcase name="checkTestDataMultiBlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest]/[method:checkTestDataMultiBlockAvailable()]
 display-name: checkTestDataMultiBlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataGenesisBlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0">
+<testcase name="checkTestDataGenesisBlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.002">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest]/[method:checkTestDataGenesisBlockAvailable()]
 display-name: checkTestDataGenesisBlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinRawBlockInputFormatGenesisBlock()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.004">
+<testcase name="readBitcoinRawBlockInputFormatGenesisBlock()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.005">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest]/[method:readBitcoinRawBlockInputFormatGenesisBlock()]
 display-name: readBitcoinRawBlockInputFormatGenesisBlock()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinTransactionInputFormatBlockVersion1ReqSeek()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.003">
+<testcase name="readBitcoinTransactionInputFormatBlockVersion1ReqSeek()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.022">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest]/[method:readBitcoinTransactionInputFormatBlockVersion1ReqSeek()]
 display-name: readBitcoinTransactionInputFormatBlockVersion1ReqSeek()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataVersion4Bzip2CompressedBlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0">
+<testcase name="checkTestDataVersion4Bzip2CompressedBlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.001">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest]/[method:checkTestDataVersion4Bzip2CompressedBlockAvailable()]
 display-name: checkTestDataVersion4Bzip2CompressedBlockAvailable()
@@ -991,43 +991,43 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapr
 display-name: readBitcoinTransactionInputFormatBlockVersion1()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinTransactionInputFormatBlockVersion2()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.016">
+<testcase name="readBitcoinTransactionInputFormatBlockVersion2()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.037">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest]/[method:readBitcoinTransactionInputFormatBlockVersion2()]
 display-name: readBitcoinTransactionInputFormatBlockVersion2()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinTransactionInputFormatBlockVersion3()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.068">
+<testcase name="readBitcoinTransactionInputFormatBlockVersion3()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.129">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest]/[method:readBitcoinTransactionInputFormatBlockVersion3()]
 display-name: readBitcoinTransactionInputFormatBlockVersion3()
 ]]></system-out>
 </testcase>
-<testcase name="readBitcoinTransactionInputFormatBlockVersion4()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.054">
+<testcase name="readBitcoinTransactionInputFormatBlockVersion4()" classname="org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest" time="0.105">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.format.mapreduce.BitcoinFormatHadoopTest]/[method:readBitcoinTransactionInputFormatBlockVersion4()]
 display-name: readBitcoinTransactionInputFormatBlockVersion4()
 ]]></system-out>
 </testcase>
-<testcase name="parseBlock0to10AsEthereumRawBlockDirect()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0.027">
+<testcase name="parseBlock0to10AsEthereumRawBlockDirect()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0.062">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest]/[method:parseBlock0to10AsEthereumRawBlockDirect()]
 display-name: parseBlock0to10AsEthereumRawBlockDirect()
 ]]></system-out>
 </testcase>
-<testcase name="parseBlock3346406AsEthereumRawBlockHeap()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0.001">
+<testcase name="parseBlock3346406AsEthereumRawBlockHeap()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest]/[method:parseBlock3346406AsEthereumRawBlockHeap()]
 display-name: parseBlock3346406AsEthereumRawBlockHeap()
 ]]></system-out>
 </testcase>
-<testcase name="parseBlock3510000to3510010AsEthereumBlockHeap()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0.026">
+<testcase name="parseBlock3510000to3510010AsEthereumBlockHeap()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0.046">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest]/[method:parseBlock3510000to3510010AsEthereumBlockHeap()]
 display-name: parseBlock3510000to3510010AsEthereumBlockHeap()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataBlock1346406Available()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0">
+<testcase name="checkTestDataBlock1346406Available()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0.001">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest]/[method:checkTestDataBlock1346406Available()]
 display-name: checkTestDataBlock1346406Available()
@@ -1045,13 +1045,13 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.com
 display-name: parseBlockOneAsEthereumRawBlockHeap()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataBlock1Available()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0.001">
+<testcase name="checkTestDataBlock1Available()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest]/[method:checkTestDataBlock1Available()]
 display-name: checkTestDataBlock1Available()
 ]]></system-out>
 </testcase>
-<testcase name="parseBlock0to10AsEthereumBlockHeap()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0.001">
+<testcase name="parseBlock0to10AsEthereumBlockHeap()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0.016">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest]/[method:parseBlock0to10AsEthereumBlockHeap()]
 display-name: parseBlock0to10AsEthereumBlockHeap()
@@ -1063,13 +1063,13 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.com
 display-name: parseGenesisBlockAsEthereumBlockDirect()
 ]]></system-out>
 </testcase>
-<testcase name="parseBlockOneAsEthereumBlockDirect()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0.012">
+<testcase name="parseBlockOneAsEthereumBlockDirect()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0.021">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest]/[method:parseBlockOneAsEthereumBlockDirect()]
 display-name: parseBlockOneAsEthereumBlockDirect()
 ]]></system-out>
 </testcase>
-<testcase name="parseBlock35100to351010AsEthereumRawBlockHeap()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0.001">
+<testcase name="parseBlock35100to351010AsEthereumRawBlockHeap()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0.002">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest]/[method:parseBlock35100to351010AsEthereumRawBlockHeap()]
 display-name: parseBlock35100to351010AsEthereumRawBlockHeap()
@@ -1093,7 +1093,7 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.com
 display-name: parseBlockOneAsEthereumRawBlockDirect()
 ]]></system-out>
 </testcase>
-<testcase name="parseBlockOneAsEthereumBlockHeap()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0.001">
+<testcase name="parseBlockOneAsEthereumBlockHeap()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest]/[method:parseBlockOneAsEthereumBlockHeap()]
 display-name: parseBlockOneAsEthereumBlockHeap()
@@ -1105,7 +1105,7 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.com
 display-name: parseBlock1346406AsEthereumBlockHeap()
 ]]></system-out>
 </testcase>
-<testcase name="parseBlock3346406AsEthereumBlockHeap()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0.003">
+<testcase name="parseBlock3346406AsEthereumBlockHeap()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0.017">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest]/[method:parseBlock3346406AsEthereumBlockHeap()]
 display-name: parseBlock3346406AsEthereumBlockHeap()
@@ -1129,19 +1129,19 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.com
 display-name: parseBlock1346406AsEthereumRawBlockDirect()
 ]]></system-out>
 </testcase>
-<testcase name="parseBlock1346406AsEthereumRawBlockHeap()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0">
+<testcase name="parseBlock1346406AsEthereumRawBlockHeap()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0.001">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest]/[method:parseBlock1346406AsEthereumRawBlockHeap()]
 display-name: parseBlock1346406AsEthereumRawBlockHeap()
 ]]></system-out>
 </testcase>
-<testcase name="parseBlock1346406AsEthereumBlockDirect()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0.002">
+<testcase name="parseBlock1346406AsEthereumBlockDirect()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0.001">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest]/[method:parseBlock1346406AsEthereumBlockDirect()]
 display-name: parseBlock1346406AsEthereumBlockDirect()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataGenesisBlockAvailable()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0">
+<testcase name="checkTestDataGenesisBlockAvailable()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0.001">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest]/[method:checkTestDataGenesisBlockAvailable()]
 display-name: checkTestDataGenesisBlockAvailable()
@@ -1159,7 +1159,7 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.com
 display-name: parseBlock3346406AsEthereumRawBlockDirect()
 ]]></system-out>
 </testcase>
-<testcase name="parseBlock0to10AsEthereumRawBlockHeap()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0">
+<testcase name="parseBlock0to10AsEthereumRawBlockHeap()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0.001">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest]/[method:parseBlock0to10AsEthereumRawBlockHeap()]
 display-name: parseBlock0to10AsEthereumRawBlockHeap()
@@ -1171,19 +1171,19 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.com
 display-name: parseGenesisBlockAsEthereumBlockHeap()
 ]]></system-out>
 </testcase>
-<testcase name="parseGenesisBlockAsEthereumRawBlockDirect()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0.001">
+<testcase name="parseGenesisBlockAsEthereumRawBlockDirect()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest]/[method:parseGenesisBlockAsEthereumRawBlockDirect()]
 display-name: parseGenesisBlockAsEthereumRawBlockDirect()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataBlock0to10Available()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0.001">
+<testcase name="checkTestDataBlock0to10Available()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0.004">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest]/[method:checkTestDataBlock0to10Available()]
 display-name: checkTestDataBlock0to10Available()
 ]]></system-out>
 </testcase>
-<testcase name="parseGenesisBlockAsEthereumRawBlockHeap()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0.001">
+<testcase name="parseGenesisBlockAsEthereumRawBlockHeap()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0.003">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest]/[method:parseGenesisBlockAsEthereumRawBlockHeap()]
 display-name: parseGenesisBlockAsEthereumRawBlockHeap()
@@ -1195,13 +1195,13 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.com
 display-name: checkTestDataBlock3346406Available()
 ]]></system-out>
 </testcase>
-<testcase name="parseBlock3510000to3510010AsEthereumBlockDirect()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0.007">
+<testcase name="parseBlock3510000to3510010AsEthereumBlockDirect()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest" time="0.009">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.common.EthereumFormatReaderTest]/[method:parseBlock3510000to3510010AsEthereumBlockDirect()]
 display-name: parseBlock3510000to3510010AsEthereumBlockDirect()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataBlock1346406Available()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumUtilTest" time="0">
+<testcase name="checkTestDataBlock1346406Available()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumUtilTest" time="0.001">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.common.EthereumUtilTest]/[method:checkTestDataBlock1346406Available()]
 display-name: checkTestDataBlock1346406Available()
@@ -1219,13 +1219,13 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.com
 display-name: decodeRLPListString()
 ]]></system-out>
 </testcase>
-<testcase name="decodeRLPElementLargeString()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumUtilTest" time="0.001">
+<testcase name="decodeRLPElementLargeString()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumUtilTest" time="0">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.common.EthereumUtilTest]/[method:decodeRLPElementLargeString()]
 display-name: decodeRLPElementLargeString()
 ]]></system-out>
 </testcase>
-<testcase name="getTransActionHashBlock1346406()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumUtilTest" time="0.417">
+<testcase name="getTransActionHashBlock1346406()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumUtilTest" time="0.866">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.common.EthereumUtilTest]/[method:getTransActionHashBlock1346406()]
 display-name: getTransActionHashBlock1346406()
@@ -1237,13 +1237,25 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.com
 display-name: decodeRLPElementInt1024()
 ]]></system-out>
 </testcase>
-<testcase name="calculateChainIdBlock1346406()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumUtilTest" time="0">
+<testcase name="encodeRLPElementLargeByteArray2()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumUtilTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.common.EthereumUtilTest]/[method:encodeRLPElementLargeByteArray2()]
+display-name: encodeRLPElementLargeByteArray2()
+]]></system-out>
+</testcase>
+<testcase name="calculateChainIdBlock1346406()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumUtilTest" time="0.001">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.common.EthereumUtilTest]/[method:calculateChainIdBlock1346406()]
 display-name: calculateChainIdBlock1346406()
 ]]></system-out>
 </testcase>
-<testcase name="decodeRLPListSet3()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumUtilTest" time="0">
+<testcase name="encodeRLPElementLargeByteArray()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumUtilTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.common.EthereumUtilTest]/[method:encodeRLPElementLargeByteArray()]
+display-name: encodeRLPElementLargeByteArray()
+]]></system-out>
+</testcase>
+<testcase name="decodeRLPListSet3()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumUtilTest" time="0.001">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.common.EthereumUtilTest]/[method:decodeRLPListSet3()]
 display-name: decodeRLPListSet3()
@@ -1255,13 +1267,13 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.com
 display-name: decodeRLPEmptyList()
 ]]></system-out>
 </testcase>
-<testcase name="getTransActionSendAddressBlock1346406()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumUtilTest" time="0.252">
+<testcase name="getTransActionSendAddressBlock1346406()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumUtilTest" time="0.56">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.common.EthereumUtilTest]/[method:getTransActionSendAddressBlock1346406()]
 display-name: getTransActionSendAddressBlock1346406()
 ]]></system-out>
 </testcase>
-<testcase name="decodeRLPElementString()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumUtilTest" time="0.001">
+<testcase name="decodeRLPElementString()" classname="org.zuinnote.hadoop.ethereum.format.common.EthereumUtilTest" time="0">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.common.EthereumUtilTest]/[method:decodeRLPElementString()]
 display-name: decodeRLPElementString()
@@ -1279,7 +1291,7 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.map
 display-name: checkTestDataBlock1346406Available()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataBlock403419()" classname="org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest" time="0">
+<testcase name="checkTestDataBlock403419()" classname="org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest" time="0.001">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest]/[method:checkTestDataBlock403419()]
 display-name: checkTestDataBlock403419()
@@ -1291,43 +1303,43 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.map
 display-name: checkTestDataBlock447533()
 ]]></system-out>
 </testcase>
-<testcase name="readEthereumBlockInputFormatBlock1()" classname="org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest" time="0.006">
+<testcase name="readEthereumBlockInputFormatBlock1()" classname="org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest" time="0.03">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest]/[method:readEthereumBlockInputFormatBlock1()]
 display-name: readEthereumBlockInputFormatBlock1()
 ]]></system-out>
 </testcase>
-<testcase name="readEthereumBlockInputFormatBlock403419()" classname="org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest" time="0.003">
+<testcase name="readEthereumBlockInputFormatBlock403419()" classname="org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest" time="0.004">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest]/[method:readEthereumBlockInputFormatBlock403419()]
 display-name: readEthereumBlockInputFormatBlock403419()
 ]]></system-out>
 </testcase>
-<testcase name="readEthereumBlockInputFormatBlock447533()" classname="org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest" time="0.004">
+<testcase name="readEthereumBlockInputFormatBlock447533()" classname="org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest" time="0.006">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest]/[method:readEthereumBlockInputFormatBlock447533()]
 display-name: readEthereumBlockInputFormatBlock447533()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataBlock1Available()" classname="org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest" time="0">
+<testcase name="checkTestDataBlock1Available()" classname="org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest" time="0.001">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest]/[method:checkTestDataBlock1Available()]
 display-name: checkTestDataBlock1Available()
 ]]></system-out>
 </testcase>
-<testcase name="readEthereumBlockInputFormatBlock1346406()" classname="org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest" time="0.002">
+<testcase name="readEthereumBlockInputFormatBlock1346406()" classname="org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest" time="0.01">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest]/[method:readEthereumBlockInputFormatBlock1346406()]
 display-name: readEthereumBlockInputFormatBlock1346406()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataBlock351000to3510010Available()" classname="org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest" time="0.001">
+<testcase name="checkTestDataBlock351000to3510010Available()" classname="org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest" time="0">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest]/[method:checkTestDataBlock351000to3510010Available()]
 display-name: checkTestDataBlock351000to3510010Available()
 ]]></system-out>
 </testcase>
-<testcase name="readEthereumBlockInputFormatBlock1346406Bzip2Compressed()" classname="org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest" time="0.004">
+<testcase name="readEthereumBlockInputFormatBlock1346406Bzip2Compressed()" classname="org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest" time="0.029">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest]/[method:readEthereumBlockInputFormatBlock1346406Bzip2Compressed()]
 display-name: readEthereumBlockInputFormatBlock1346406Bzip2Compressed()
@@ -1339,37 +1351,37 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.map
 display-name: readEthereumBlockInputFormatBlock0to10()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataGenesisBlockAvailable()" classname="org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest" time="0">
+<testcase name="checkTestDataGenesisBlockAvailable()" classname="org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest" time="0.001">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest]/[method:checkTestDataGenesisBlockAvailable()]
 display-name: checkTestDataGenesisBlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="readEthereumBlockInputFormatBlock3510000to3510010()" classname="org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest" time="0.003">
+<testcase name="readEthereumBlockInputFormatBlock3510000to3510010()" classname="org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest" time="0.015">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest]/[method:readEthereumBlockInputFormatBlock3510000to3510010()]
 display-name: readEthereumBlockInputFormatBlock3510000to3510010()
 ]]></system-out>
 </testcase>
-<testcase name="readEthereumBlockInputFormatBlock1346406GzipCompressed()" classname="org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest" time="0.002">
+<testcase name="readEthereumBlockInputFormatBlock1346406GzipCompressed()" classname="org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest" time="0.003">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest]/[method:readEthereumBlockInputFormatBlock1346406GzipCompressed()]
 display-name: readEthereumBlockInputFormatBlock1346406GzipCompressed()
 ]]></system-out>
 </testcase>
-<testcase name="readEthereumBlockInputFormatBlock3346406()" classname="org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest" time="0.004">
+<testcase name="readEthereumBlockInputFormatBlock3346406()" classname="org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest" time="0.015">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest]/[method:readEthereumBlockInputFormatBlock3346406()]
 display-name: readEthereumBlockInputFormatBlock3346406()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataBlock1346406AGzipCompressedvailable()" classname="org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest" time="0.003">
+<testcase name="checkTestDataBlock1346406AGzipCompressedvailable()" classname="org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest" time="0.004">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest]/[method:checkTestDataBlock1346406AGzipCompressedvailable()]
 display-name: checkTestDataBlock1346406AGzipCompressedvailable()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataBlock0to10Available()" classname="org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest" time="0.001">
+<testcase name="checkTestDataBlock0to10Available()" classname="org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest" time="0.003">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest]/[method:checkTestDataBlock0to10Available()]
 display-name: checkTestDataBlock0to10Available()
@@ -1381,7 +1393,7 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.map
 display-name: checkTestDataBlock3346406Available()
 ]]></system-out>
 </testcase>
-<testcase name="readEthereumBlockInputFormatGenesisBlock()" classname="org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest" time="0.004">
+<testcase name="readEthereumBlockInputFormatGenesisBlock()" classname="org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest" time="0.023">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.mapred.EthereumFormatHadoopTest]/[method:readEthereumBlockInputFormatGenesisBlock()]
 display-name: readEthereumBlockInputFormatGenesisBlock()
@@ -1399,7 +1411,7 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.map
 display-name: checkTestDataBlock1346406Available()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataBlock403419()" classname="org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest" time="0">
+<testcase name="checkTestDataBlock403419()" classname="org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest" time="0.001">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest]/[method:checkTestDataBlock403419()]
 display-name: checkTestDataBlock403419()
@@ -1411,19 +1423,19 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.map
 display-name: checkTestDataBlock447533()
 ]]></system-out>
 </testcase>
-<testcase name="readEthereumBlockInputFormatBlock1()" classname="org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest" time="0.007">
+<testcase name="readEthereumBlockInputFormatBlock1()" classname="org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest" time="0.025">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest]/[method:readEthereumBlockInputFormatBlock1()]
 display-name: readEthereumBlockInputFormatBlock1()
 ]]></system-out>
 </testcase>
-<testcase name="readEthereumBlockInputFormatBlock403419()" classname="org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest" time="0.004">
+<testcase name="readEthereumBlockInputFormatBlock403419()" classname="org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest" time="0.006">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest]/[method:readEthereumBlockInputFormatBlock403419()]
 display-name: readEthereumBlockInputFormatBlock403419()
 ]]></system-out>
 </testcase>
-<testcase name="readEthereumBlockInputFormatBlock447533()" classname="org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest" time="0.003">
+<testcase name="readEthereumBlockInputFormatBlock447533()" classname="org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest" time="0.019">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest]/[method:readEthereumBlockInputFormatBlock447533()]
 display-name: readEthereumBlockInputFormatBlock447533()
@@ -1435,7 +1447,7 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.map
 display-name: checkTestDataBlock1Available()
 ]]></system-out>
 </testcase>
-<testcase name="readEthereumBlockInputFormatBlock1346406()" classname="org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest" time="0.002">
+<testcase name="readEthereumBlockInputFormatBlock1346406()" classname="org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest" time="0.003">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest]/[method:readEthereumBlockInputFormatBlock1346406()]
 display-name: readEthereumBlockInputFormatBlock1346406()
@@ -1447,13 +1459,13 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.map
 display-name: checkTestDataBlock351000to3510010Available()
 ]]></system-out>
 </testcase>
-<testcase name="readEthereumBlockInputFormatBlock1346406Bzip2Compressed()" classname="org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest" time="0.003">
+<testcase name="readEthereumBlockInputFormatBlock1346406Bzip2Compressed()" classname="org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest" time="0.016">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest]/[method:readEthereumBlockInputFormatBlock1346406Bzip2Compressed()]
 display-name: readEthereumBlockInputFormatBlock1346406Bzip2Compressed()
 ]]></system-out>
 </testcase>
-<testcase name="readEthereumBlockInputFormatBlock0to10()" classname="org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest" time="0.002">
+<testcase name="readEthereumBlockInputFormatBlock0to10()" classname="org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest" time="0.004">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest]/[method:readEthereumBlockInputFormatBlock0to10()]
 display-name: readEthereumBlockInputFormatBlock0to10()
@@ -1465,19 +1477,19 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.map
 display-name: checkTestDataGenesisBlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="readEthereumBlockInputFormatBlock3510000to3510010()" classname="org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest" time="0.003">
+<testcase name="readEthereumBlockInputFormatBlock3510000to3510010()" classname="org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest" time="0.005">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest]/[method:readEthereumBlockInputFormatBlock3510000to3510010()]
 display-name: readEthereumBlockInputFormatBlock3510000to3510010()
 ]]></system-out>
 </testcase>
-<testcase name="readEthereumBlockInputFormatBlock1346406GzipCompressed()" classname="org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest" time="0.003">
+<testcase name="readEthereumBlockInputFormatBlock1346406GzipCompressed()" classname="org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest" time="0.021">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest]/[method:readEthereumBlockInputFormatBlock1346406GzipCompressed()]
 display-name: readEthereumBlockInputFormatBlock1346406GzipCompressed()
 ]]></system-out>
 </testcase>
-<testcase name="readEthereumBlockInputFormatBlock3346406()" classname="org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest" time="0.002">
+<testcase name="readEthereumBlockInputFormatBlock3346406()" classname="org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest" time="0.006">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest]/[method:readEthereumBlockInputFormatBlock3346406()]
 display-name: readEthereumBlockInputFormatBlock3346406()
@@ -1495,55 +1507,55 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.map
 display-name: checkTestDataBlock0to10Available()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataBlock3346406Available()" classname="org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest" time="0">
+<testcase name="checkTestDataBlock3346406Available()" classname="org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest" time="0.001">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest]/[method:checkTestDataBlock3346406Available()]
 display-name: checkTestDataBlock3346406Available()
 ]]></system-out>
 </testcase>
-<testcase name="readEthereumBlockInputFormatGenesisBlock()" classname="org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest" time="0.004">
+<testcase name="readEthereumBlockInputFormatGenesisBlock()" classname="org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest" time="0.003">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest]/[method:readEthereumBlockInputFormatGenesisBlock()]
 display-name: readEthereumBlockInputFormatGenesisBlock()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataBlock1346406Bzip2CompressedAvailable()" classname="org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest" time="0">
+<testcase name="checkTestDataBlock1346406Bzip2CompressedAvailable()" classname="org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest" time="0.014">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumFormatHadoopTest]/[method:checkTestDataBlock1346406Bzip2CompressedAvailable()]
 display-name: checkTestDataBlock1346406Bzip2CompressedAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="readNoAuxPowNamecoinGenesisBlock()" classname="org.zuinnote.hadoop.namecoin.format.common.NamecoinAuxPOWTest" time="0.001">
+<testcase name="readNoAuxPowNamecoinGenesisBlock()" classname="org.zuinnote.hadoop.namecoin.format.common.NamecoinAuxPOWTest" time="0">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.namecoin.format.common.NamecoinAuxPOWTest]/[method:readNoAuxPowNamecoinGenesisBlock()]
 display-name: readNoAuxPowNamecoinGenesisBlock()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataNamecoinRandomBlockAvailable()" classname="org.zuinnote.hadoop.namecoin.format.common.NamecoinAuxPOWTest" time="0.002">
+<testcase name="checkTestDataNamecoinRandomBlockAvailable()" classname="org.zuinnote.hadoop.namecoin.format.common.NamecoinAuxPOWTest" time="0">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.namecoin.format.common.NamecoinAuxPOWTest]/[method:checkTestDataNamecoinRandomBlockAvailable()]
 display-name: checkTestDataNamecoinRandomBlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataNamecoinThreeDifferentOpinOneBlockAvailable()" classname="org.zuinnote.hadoop.namecoin.format.common.NamecoinAuxPOWTest" time="0.001">
+<testcase name="checkTestDataNamecoinThreeDifferentOpinOneBlockAvailable()" classname="org.zuinnote.hadoop.namecoin.format.common.NamecoinAuxPOWTest" time="0">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.namecoin.format.common.NamecoinAuxPOWTest]/[method:checkTestDataNamecoinThreeDifferentOpinOneBlockAvailable()]
 display-name: checkTestDataNamecoinThreeDifferentOpinOneBlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="readAuxPowNamecoinThreeDifferentOpinOneBlock()" classname="org.zuinnote.hadoop.namecoin.format.common.NamecoinAuxPOWTest" time="0.001">
+<testcase name="readAuxPowNamecoinThreeDifferentOpinOneBlock()" classname="org.zuinnote.hadoop.namecoin.format.common.NamecoinAuxPOWTest" time="0.007">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.namecoin.format.common.NamecoinAuxPOWTest]/[method:readAuxPowNamecoinThreeDifferentOpinOneBlock()]
 display-name: readAuxPowNamecoinThreeDifferentOpinOneBlock()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataNamecoinGenesisBlockAvailable()" classname="org.zuinnote.hadoop.namecoin.format.common.NamecoinAuxPOWTest" time="0">
+<testcase name="checkTestDataNamecoinGenesisBlockAvailable()" classname="org.zuinnote.hadoop.namecoin.format.common.NamecoinAuxPOWTest" time="0.001">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.namecoin.format.common.NamecoinAuxPOWTest]/[method:checkTestDataNamecoinGenesisBlockAvailable()]
 display-name: checkTestDataNamecoinGenesisBlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="extractNamecoinFieldUpdate()" classname="org.zuinnote.hadoop.namecoin.format.common.NamecoinUtilTest" time="0.001">
+<testcase name="extractNamecoinFieldUpdate()" classname="org.zuinnote.hadoop.namecoin.format.common.NamecoinUtilTest" time="0.002">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.namecoin.format.common.NamecoinUtilTest]/[method:extractNamecoinFieldUpdate()]
 display-name: extractNamecoinFieldUpdate()
@@ -1567,7 +1579,7 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.namecoin.format.com
 display-name: extractNamecoinFieldInvalid()
 ]]></system-out>
 </testcase>
-<testcase name="extractNamecoinFieldFirstUpdate()" classname="org.zuinnote.hadoop.namecoin.format.common.NamecoinUtilTest" time="0">
+<testcase name="extractNamecoinFieldFirstUpdate()" classname="org.zuinnote.hadoop.namecoin.format.common.NamecoinUtilTest" time="0.006">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.namecoin.format.common.NamecoinUtilTest]/[method:extractNamecoinFieldFirstUpdate()]
 display-name: extractNamecoinFieldFirstUpdate()
