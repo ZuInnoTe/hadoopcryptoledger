@@ -10,7 +10,7 @@ compileJava.options.encoding = 'UTF-8'
 
 group = "com.github.zuinnote"
 archivesBaseName = "hadoopcryptoledger-hiveudf"
-version = "1.1.3"
+version = "1.1.4"
 
 
 
@@ -91,8 +91,8 @@ dependencies {
    // hadoop lib for driver
      provided("org.apache.hadoop:hadoop-client:2.7.0")
        // hadoop crypto ledger library
-   provided("com.github.zuinnote:hadoopcryptoledger-fileformat:1.1.3")
-   provided("com.github.zuinnote:hadoopcryptoledger-hiveserde:1.1.3")
+   provided("com.github.zuinnote:hadoopcryptoledger-fileformat:1.1.4")
+   provided("com.github.zuinnote:hadoopcryptoledger-hiveserde:1.1.4")
    // we need to mandatory add the BC library
      provided("org.bouncycastle:bcprov-ext-jdk15on:1.58")
     // hive serde API
