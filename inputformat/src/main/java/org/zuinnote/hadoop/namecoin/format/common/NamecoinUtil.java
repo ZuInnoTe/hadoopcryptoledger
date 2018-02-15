@@ -15,16 +15,9 @@
 **/
 package org.zuinnote.hadoop.namecoin.format.common;
 
-import java.io.StringReader;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 
-
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
-import javax.json.JsonReader;
-import javax.json.stream.JsonParsingException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
