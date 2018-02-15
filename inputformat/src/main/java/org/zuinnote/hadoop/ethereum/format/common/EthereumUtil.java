@@ -56,6 +56,7 @@ public class EthereumUtil {
 	public static final int LONG_SIZE=8; // Size of a long in Ethereum
 	public static final int INT_SIZE=4; // Size of an integer in Ethereum
 	public static final int WORD_SIZE=2; // Size of a word in Ethereum
+	public static byte[] EMPTY_BYTE_ARRAY= new byte[0];
 
 	
 	private static final Log LOG = LogFactory.getLog(EthereumUtil.class.getName());
@@ -429,8 +430,8 @@ public static byte[] getTransactionHashWithDummySignatureEIP155(EthereumTransact
 	rlpTransaction.add(EthereumUtil.encodeRLPElement(EthereumUtil.convertLongToVarInt(eTrans.getValue())));
 	rlpTransaction.add(EthereumUtil.encodeRLPElement(eTrans.getData()));
 	rlpTransaction.add(EthereumUtil.encodeRLPElement(new byte[] {(byte) ((eTrans.getSig_v()[0]-EthereumUtil.CHAIN_ID_INC)/2)}));
-	rlpTransaction.add(EthereumUtil.encodeRLPElement(new byte[0]));
-	rlpTransaction.add(EthereumUtil.encodeRLPElement(new byte[0]));
+	rlpTransaction.add(EthereumUtil.encodeRLPElement(EthereumUtil.EMPTY_BYTE_ARRAY));
+	rlpTransaction.add(EthereumUtil.encodeRLPElement(EthereumUtil.EMPTY_BYTE_ARRAY));
 	byte[] transEnc = EthereumUtil.encodeRLPList(rlpTransaction);
 	Keccak.Digest256 digest = new Keccak.Digest256();
 	digest.update(transEnc,0,transEnc.length);

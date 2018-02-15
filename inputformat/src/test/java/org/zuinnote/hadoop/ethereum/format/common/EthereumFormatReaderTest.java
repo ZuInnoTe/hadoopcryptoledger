@@ -1656,13 +1656,64 @@ public class EthereumFormatReaderTest {
 			EthereumBlockHeader eblockHeader = eblock.getEthereumBlockHeader();
 			List<EthereumTransaction> eTransactions = eblock.getEthereumTransactions();
 			List<EthereumBlockHeader> eUncles = eblock.getUncleHeaders();
-			int i =0;
+	
 			for (EthereumTransaction currentTransaction: eTransactions) {
 				assertTrue(currentTransaction.getGasLimit()>=0, "Gas limit is positive");
 	
 				assertTrue(currentTransaction.getGasPrice()>=0, "Gas price is positive");
-				i++;
+	
 			}
+		}finally {
+			if (ebr!=null) {
+				ebr.close();
+			}
+	 	}
+	 }
+	 
+	 
+	 @Test
+	  public void issue47ParseBlock4800251AsEthereumBlockHeap() throws IOException, EthereumBlockReadException, ParseException {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="eth4800251.bin";
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		File file = new File(fileNameBlock);
+		boolean direct=false;
+		FileInputStream fin = new FileInputStream(file);
+		EthereumBlockReader ebr = null;
+		try {
+			ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUMBLOCK, this.DEFAULT_BUFFERSIZE,direct);
+			EthereumBlock eblock = ebr.readBlock();
+			EthereumBlockHeader eblockHeader = eblock.getEthereumBlockHeader();
+			List<EthereumTransaction> eTransactions = eblock.getEthereumTransactions();
+			List<EthereumBlockHeader> eUncles = eblock.getUncleHeaders();
+			EthereumTransaction trans3 = eTransactions.get(2);
+			assertEquals("B271DFFD8A06F0D2D4DB04DFDB3708C7CFA4F8797E57FC35B18507FA617EA4DE",EthereumUtil.convertByteArrayToHexString(EthereumUtil.getTransactionHash(trans3)),"Transaction 3 has correct hash");
+			
+		}finally {
+			if (ebr!=null) {
+				ebr.close();
+			}
+	 	}
+	 }
+	 
+	 @Test
+	  public void issue48ParseBlock4800251AsEthereumBlockHeap() throws IOException, EthereumBlockReadException, ParseException {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="eth4800251.bin";
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		File file = new File(fileNameBlock);
+		boolean direct=false;
+		FileInputStream fin = new FileInputStream(file);
+		EthereumBlockReader ebr = null;
+		try {
+			ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUMBLOCK, this.DEFAULT_BUFFERSIZE,direct);
+			EthereumBlock eblock = ebr.readBlock();
+			EthereumBlockHeader eblockHeader = eblock.getEthereumBlockHeader();
+			List<EthereumTransaction> eTransactions = eblock.getEthereumTransactions();
+			List<EthereumBlockHeader> eUncles = eblock.getUncleHeaders();
+			EthereumTransaction trans1 = eTransactions.get(0); // this one has a v of 0x25 (37) which indicates EIP-155
+			assertEquals("6EB53062EF576DF1C4EB5CA326B866590571BCBD",EthereumUtil.convertByteArrayToHexString(EthereumUtil.getSendAddress(trans1,EthereumFormatReaderTest.CHAIN_ID)),"Transaction 1 has correct sendAddress");
+			
 		}finally {
 			if (ebr!=null) {
 				ebr.close();
