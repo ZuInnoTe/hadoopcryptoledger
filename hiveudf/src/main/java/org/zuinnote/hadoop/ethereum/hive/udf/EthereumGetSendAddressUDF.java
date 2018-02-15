@@ -24,6 +24,7 @@ import org.apache.hadoop.hive.ql.metadata.HiveException;
 import org.apache.hadoop.hive.ql.udf.generic.GenericUDF;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.StructObjectInspector;
+import org.apache.hadoop.hive.serde2.objectinspector.primitive.IntObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectInspectorFactory;
 import org.apache.hadoop.io.BytesWritable;
 import org.zuinnote.hadoop.ethereum.format.common.EthereumTransaction;
@@ -31,9 +32,9 @@ import org.zuinnote.hadoop.ethereum.format.common.EthereumUtil;
 
 @Description(
 		name = "hclEthereumGetSendAddress",
-		value = "_FUNC_(Struct<EthereumTransaction>) - calculates the sendAddress (from) of a EthereumTransaction and returns a byte array",
+		value = "_FUNC_(Struct<EthereumTransaction>, INT chainid) - calculates the sendAddress (from) of a EthereumTransaction and returns a byte array",
 		extended = "Example:\n" +
-		"  > SELECT hclEthereumGetSendAddress(ethereumTransactions[0]) FROM EthereumBlockChain LIMIT 1;\n")
+		"  > SELECT hclEthereumGetSendAddress(ethereumTransactions[0], 1) FROM EthereumBlockChain LIMIT 1;\n")
 public class EthereumGetSendAddressUDF extends GenericUDF {
 	
 	private static final Log LOG = LogFactory.getLog(EthereumGetSendAddressUDF.class.getName());
@@ -43,13 +44,16 @@ public class EthereumGetSendAddressUDF extends GenericUDF {
 	@Override
 	public ObjectInspector initialize(ObjectInspector[] arguments) throws UDFArgumentException {
 		if (arguments==null) {
-      		throw new UDFArgumentLengthException("ethereumGetSendAddress only takes one argument: Struct<EthereumTransction> ");
+      		throw new UDFArgumentLengthException("ethereumGetSendAddress only takes two arguments: Struct<EthereumTransction>, INT chainId ");
 		}
-		if (arguments.length != 1) {
-      		throw new UDFArgumentLengthException("ethereumGetSendAddress only takes one argument: Struct<EthereumTransction> ");
+		if (arguments.length != 2) {
+      		throw new UDFArgumentLengthException("ethereumGetSendAddress only takes two arguments: Struct<EthereumTransction>, INT chainId ");
 		}
 		if (!(arguments[0] instanceof StructObjectInspector)) { 
 		throw new UDFArgumentException("first argument must be a Struct containing a EthereumTransction");
+		}
+		if (!(arguments[1] instanceof IntObjectInspector)) {
+			throw new UDFArgumentException("second argument must be an int with the chainId");
 		}
 		this.ethereumUDFUtil=new EthereumUDFUtil((StructObjectInspector) arguments[0]);
 		return PrimitiveObjectInspectorFactory.writableBinaryObjectInspector;
@@ -57,11 +61,11 @@ public class EthereumGetSendAddressUDF extends GenericUDF {
 
 	@Override
 	public Object evaluate(DeferredObject[] arguments) throws HiveException {
-		if ((arguments==null) || (arguments.length!=1)) { 
+		if ((arguments==null) || (arguments.length!=2)) { 
 			return null;
 		}
 		EthereumTransaction eTrans = this.ethereumUDFUtil.getEthereumTransactionFromObject(arguments[0].get());
-		byte[] sendAddress=EthereumUtil.getSendAddress(eTrans);
+		byte[] sendAddress=EthereumUtil.getSendAddress(eTrans,(int) arguments[1].get());
 		if (sendAddress==null) {
 			return null;
 		}
