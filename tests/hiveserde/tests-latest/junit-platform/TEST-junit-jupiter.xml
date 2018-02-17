@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="JUnit Jupiter" tests="6" skipped="0" failures="0" errors="0" time="1.039" hostname="travis-job-zuinnote-hadoopcryptole-342079336.travisci.net" timestamp="2018-02-16T18:34:32">
+<testsuite name="JUnit Jupiter" tests="6" skipped="0" failures="0" errors="0" time="1.073" hostname="travis-job-zuinnote-hadoopcryptole-342698756.travisci.net" timestamp="2018-02-17T10:17:25">
 <properties>
 <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
 <property name="file.encoding" value="UTF-8"/>
@@ -55,37 +55,37 @@
 <property name="user.timezone" value="UTC"/>
 <property name="user.variant" value=""/>
 </properties>
-<testcase name="initializePositive()" classname="org.zuinnote.hadoop.bitcoin.hive.serde.BitcoinHiveSerdeTest" time="0.844">
+<testcase name="initializePositive()" classname="org.zuinnote.hadoop.bitcoin.hive.serde.BitcoinHiveSerdeTest" time="0.838">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.hive.serde.BitcoinHiveSerdeTest]/[method:initializePositive()]
 display-name: initializePositive()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataGenesisBlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.hive.serde.BitcoinHiveSerdeTest" time="0.007">
+<testcase name="checkTestDataGenesisBlockAvailable()" classname="org.zuinnote.hadoop.bitcoin.hive.serde.BitcoinHiveSerdeTest" time="0.017">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.hive.serde.BitcoinHiveSerdeTest]/[method:checkTestDataGenesisBlockAvailable()]
 display-name: checkTestDataGenesisBlockAvailable()
 ]]></system-out>
 </testcase>
-<testcase name="deserialize()" classname="org.zuinnote.hadoop.bitcoin.hive.serde.BitcoinHiveSerdeTest" time="0.011">
+<testcase name="deserialize()" classname="org.zuinnote.hadoop.bitcoin.hive.serde.BitcoinHiveSerdeTest" time="0.007">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.hive.serde.BitcoinHiveSerdeTest]/[method:deserialize()]
 display-name: deserialize()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataBlock1346406Available()" classname="org.zuinnote.hadoop.ethereum.hive.serde.EthereumHiveSerdeTest" time="0.003">
+<testcase name="checkTestDataBlock1346406Available()" classname="org.zuinnote.hadoop.ethereum.hive.serde.EthereumHiveSerdeTest" time="0.002">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.hive.serde.EthereumHiveSerdeTest]/[method:checkTestDataBlock1346406Available()]
 display-name: checkTestDataBlock1346406Available()
 ]]></system-out>
 </testcase>
-<testcase name="initializePositive()" classname="org.zuinnote.hadoop.ethereum.hive.serde.EthereumHiveSerdeTest" time="0.074">
+<testcase name="initializePositive()" classname="org.zuinnote.hadoop.ethereum.hive.serde.EthereumHiveSerdeTest" time="0.09">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.hive.serde.EthereumHiveSerdeTest]/[method:initializePositive()]
 display-name: initializePositive()
 ]]></system-out>
 </testcase>
-<testcase name="deserialize()" classname="org.zuinnote.hadoop.ethereum.hive.serde.EthereumHiveSerdeTest" time="0.027">
+<testcase name="deserialize()" classname="org.zuinnote.hadoop.ethereum.hive.serde.EthereumHiveSerdeTest" time="0.038">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.hive.serde.EthereumHiveSerdeTest]/[method:deserialize()]
 display-name: deserialize()
