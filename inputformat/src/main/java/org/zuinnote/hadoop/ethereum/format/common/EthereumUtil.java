@@ -31,7 +31,6 @@ import org.apache.commons.logging.LogFactory;
 import org.bouncycastle.asn1.sec.SECNamedCurves;
 import org.bouncycastle.asn1.x9.X9ECParameters;
 import org.bouncycastle.asn1.x9.X9IntegerConverter;
-import org.bouncycastle.crypto.digests.SHA3Digest;
 import org.bouncycastle.crypto.params.ECDomainParameters;
 import org.bouncycastle.jcajce.provider.digest.Keccak;
 import org.bouncycastle.math.ec.ECAlgorithms;
@@ -56,7 +55,7 @@ public class EthereumUtil {
 	public static final int LONG_SIZE=8; // Size of a long in Ethereum
 	public static final int INT_SIZE=4; // Size of an integer in Ethereum
 	public static final int WORD_SIZE=2; // Size of a word in Ethereum
-	public static byte[] EMPTY_BYTE_ARRAY= new byte[0];
+	public static final byte[] EMPTY_BYTE_ARRAY= new byte[0];
 
 	
 	private static final Log LOG = LogFactory.getLog(EthereumUtil.class.getName());
@@ -473,14 +472,14 @@ public static byte[] getSendAddress(EthereumTransaction eTrans, int chainId) {
 		}
 	}
 
-	boolean compressedKey= false;
+
 	// the following lines are inspired from ECKey.java of EthereumJ, but adapted to the hadoopcryptoledger context
 	if (v < 27 || v > 34) {
 		LOG.error("Header out of Range:  "+v);
 		throw new RuntimeException("Header out of range "+v);
 	}
 	if (v>=31) {
-		compressedKey = true;
+
 		v -=4;
 	}
 	int receiverId = v - 27;
@@ -508,7 +507,7 @@ public static byte[] getSendAddress(EthereumTransaction eTrans, int chainId) {
     BigInteger eInvrInv = rInv.multiply(eInv).mod(n);
     ECPoint.Fp q = (ECPoint.Fp) ECAlgorithms.sumOfTwoMultiplies(CURVE.getG(), eInvrInv, R, srInv);
     byte[] pubKey=q.getEncoded(false);
-    // now we need to convert the public key into an ethereum sent address which is the last 20 bytes of 32 byte KECCAK-256 Hash of the key.
+    // now we need to convert the public key into an ethereum send address which is the last 20 bytes of 32 byte KECCAK-256 Hash of the key.
 	Keccak.Digest256 digest256 = new Keccak.Digest256();
 	digest256.update(pubKey,1,pubKey.length-1);
 	byte[] kcck = digest256.digest();
