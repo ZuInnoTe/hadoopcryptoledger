@@ -11,8 +11,7 @@ lazy val root = (project in file("."))
 )
  .configs( IntegrationTest )
   .settings( Defaults.itSettings : _*)
-
- 
+ .enablePlugins(JacocoItPlugin)
 
 crossScalaVersions := Seq("2.10.5", "2.11.7")
 
@@ -24,9 +23,7 @@ assemblyJarName in assembly := "example-hcl-spark-scala-bitcoinblock.jar"
 
 fork  := true
 
-jacoco.settings
 
-itJacoco.settings
 
 
 libraryDependencies += "com.github.zuinnote" % "hadoopcryptoledger-fileformat" % "1.1.4" % "compile"

@@ -12,7 +12,7 @@ lazy val root = (project in file("."))
 )
  .configs( IntegrationTest )
   .settings( Defaults.itSettings : _*)
-
+.enablePlugins(JacocoItPlugin)
  
 
 
@@ -24,10 +24,6 @@ resolvers += Resolver.mavenLocal
 
 
 fork  := true
-
-jacoco.settings
-
-itJacoco.settings
 
 
 assemblyJarName in assembly := "example-hcl-spark-scala-ds-bitcoinblock.jar"

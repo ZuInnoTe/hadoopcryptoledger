@@ -11,7 +11,7 @@ lazy val root = (project in file("."))
 )
  .configs( IntegrationTest )
   .settings( Defaults.itSettings : _*)
-
+.enablePlugins(JacocoItPlugin)
  
 
 scalacOptions += "-target:jvm-1.7"
@@ -22,9 +22,6 @@ resolvers += Resolver.mavenLocal
 
 fork  := true
 
-jacoco.settings
-
-itJacoco.settings
 
 
 assemblyJarName in assembly := "example-hcl-spark-scala-graphx-bitcointransaction.jar"
