@@ -19,8 +19,7 @@ jar {
     }
 
     baseName = 'hadoopcryptoledger-flinkdatasource'
-   // note this builds one fat jar and it is not recommended for production use - just for illustration purpose
-   from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+
 }
 
 
@@ -91,7 +90,7 @@ dependencies {
    // hadoop lib for driver
      provided("org.apache.hadoop:hadoop-client:2.7.0")
        // hadoop crypto ledger library
-   provided("com.github.zuinnote:hadoopcryptoledger-fileformat:1.1.4")
+   compile("com.github.zuinnote:hadoopcryptoledger-fileformat:1.1.4")
     // flink api
    provided("org.apache.flink:flink-java:1.2.0")
    // log4j2
