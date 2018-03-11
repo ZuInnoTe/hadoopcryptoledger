@@ -22,7 +22,7 @@ import java.nio.ByteOrder;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -82,6 +82,35 @@ public static byte[] convertLongToByteArray(long longToConvert) {
 }
 
 
+/**
+*
+* Converts a Big Integer to a byte array
+*
+* @param bigIntegerToConvert BigInteger that should be converted into a byte array
+* @param exactArraySize exact size of array
+* @return byte array corresponding to BigInteger
+*
+**/
+public static byte[] convertBigIntegerToByteArray(BigInteger bigIntegerToConvert,int exactArraySize) {
+	if ((bigIntegerToConvert==null) || (bigIntegerToConvert.signum()==-1))  {// negative
+		return null;
+	}
+	 byte[] tempResult = bigIntegerToConvert.toByteArray();
+	 byte [] result = new byte[exactArraySize];
+	 int removeSign=0;
+	 if ((tempResult.length>1) && (tempResult[0]==0)) { // remove sign
+		removeSign=1;
+	 } 
+	 byte[] reverseTempResult = BitcoinUtil.reverseByteArray(tempResult);
+	 for (int i=0;i<result.length;i++) {
+		 if (i<reverseTempResult.length-removeSign) {
+			 result[i]=reverseTempResult[i];
+		 }
+	 }
+	 return result;
+}
+
+
 
 
 /**
@@ -119,6 +148,37 @@ public static long convertVarIntByteBufferToLong(ByteBuffer byteBuffer) {
 	
 }
 
+/**
+* Converts a variable length integer (https://en.bitcoin.it/wiki/Protocol_documentation#Variable_length_integer) to BigInteger
+*
+* @param varInt byte array containing variable length integer
+* 
+* @return BigInteger corresponding to variable length integer
+*
+*/
+
+public static BigInteger getVarIntBI(byte[] varInt) {
+	BigInteger result=BigInteger.ZERO;
+	if (varInt.length==0) {
+		 return result;
+	}
+	int unsignedByte=varInt[0] & 0xFF;
+	if (unsignedByte<0xFD) {
+		return new BigInteger(new byte[] {(byte) unsignedByte});
+	}
+	int intSize=0;
+	if (unsignedByte==0xFD) { 
+		intSize=3;
+	}
+	else if (unsignedByte==0xFE) {
+		intSize=5;
+	}
+	else if (unsignedByte==0XFF) {
+		intSize=9;
+	}
+	byte[] rawDataInt=reverseByteArray(Arrays.copyOfRange(varInt, 1, intSize));
+	return new BigInteger(rawDataInt);
+}
 
 /**
 * Converts a variable length integer (https://en.bitcoin.it/wiki/Protocol_documentation#Variable_length_integer) to long
@@ -318,7 +378,7 @@ public static byte[] getTransactionHash(BitcoinTransaction transaction) throws I
 	byte[] outCounter = transaction.getOutCounter();
 	transactionBAOS.write(outCounter);
 	for (int j=0;j<transaction.getListOfOutputs().size();j++) {
-		transactionBAOS.write(reverseByteArray(convertLongToByteArray(transaction.getListOfOutputs().get(j).getValue())));		
+		transactionBAOS.write(convertBigIntegerToByteArray(transaction.getListOfOutputs().get(j).getValue(),8));		
 		transactionBAOS.write(transaction.getListOfOutputs().get(j).getTxOutScriptLength());
 		transactionBAOS.write(transaction.getListOfOutputs().get(j).getTxOutScript());
 	}	
@@ -395,7 +455,7 @@ public static byte[] getTransactionHashSegwit(BitcoinTransaction transaction) th
 	byte[] outCounter = transaction.getOutCounter();
 	transactionBAOS.write(outCounter);
 	for (int j=0;j<transaction.getListOfOutputs().size();j++) {
-		transactionBAOS.write(reverseByteArray(convertLongToByteArray(transaction.getListOfOutputs().get(j).getValue())));		
+		transactionBAOS.write(convertBigIntegerToByteArray(transaction.getListOfOutputs().get(j).getValue(),8));		
 		transactionBAOS.write(transaction.getListOfOutputs().get(j).getTxOutScriptLength());
 		transactionBAOS.write(transaction.getListOfOutputs().get(j).getTxOutScript());
 	}

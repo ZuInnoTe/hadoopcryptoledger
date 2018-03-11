@@ -18,7 +18,9 @@ package org.zuinnote.hadoop.bitcoin.hive.udf;
 
 
 import java.io.Serializable;
+import java.math.BigInteger;
 
+import org.apache.hadoop.hive.common.type.HiveDecimal;
 import org.apache.hadoop.io.*;
 
 public class TestBitcoinTransactionOutput implements Serializable {
@@ -28,17 +30,17 @@ public class TestBitcoinTransactionOutput implements Serializable {
 	 */
 	private static final long serialVersionUID = 2854570631540937753L;
 	
-private LongWritable value;
+private HiveDecimal value;
 private BytesWritable txOutScriptLength;
 private BytesWritable txOutScript;
 
-public TestBitcoinTransactionOutput(long value, byte[] txOutScriptLength, byte[] txOutScript) {
-	this.value=new LongWritable(value);
+public TestBitcoinTransactionOutput(HiveDecimal value, byte[] txOutScriptLength, byte[] txOutScript) {
+	this.value= value;
 	this.txOutScriptLength=new BytesWritable(txOutScriptLength);
 	this.txOutScript=new BytesWritable(txOutScript);
 }
 
-public LongWritable getValue() {
+public HiveDecimal getValue() {
 	return this.value;
 }
 

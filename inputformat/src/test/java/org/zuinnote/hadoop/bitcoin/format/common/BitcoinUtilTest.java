@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.nio.ByteBuffer;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.security.NoSuchAlgorithmException;
@@ -220,7 +221,7 @@ public class BitcoinUtilTest {
 	List<BitcoinTransactionInput> genesisInput = new ArrayList<BitcoinTransactionInput>(1);
 	genesisInput.add(new BitcoinTransactionInput(previousTransactionHash,previousTxOutIndex,txInScriptLength,txInScript,seqNo));
 	List<BitcoinTransactionOutput> genesisOutput = new ArrayList<BitcoinTransactionOutput>(1);
-	genesisOutput.add(new BitcoinTransactionOutput(value,txOutScriptLength,txOutScript));
+	genesisOutput.add(new BitcoinTransactionOutput(BigInteger.valueOf(value),txOutScriptLength,txOutScript));
 	 BitcoinTransaction genesisTransaction = new BitcoinTransaction(version,inCounter,genesisInput,outCounter,genesisOutput,lockTime);
 	byte[] genesisTransactionHash=BitcoinUtil.getTransactionHash(genesisTransaction);
 	 byte[] expectedHash = BitcoinUtil.reverseByteArray(new byte[]{(byte)0x4A,(byte)0x5E,(byte)0x1E,(byte)0x4B,(byte)0xAA,(byte)0xB8,(byte)0x9F,(byte)0x3A,(byte)0x32,(byte)0x51,(byte)0x8A,(byte)0x88,(byte)0xC3,(byte)0x1B,(byte)0xC8,(byte)0x7F,(byte)0x61,(byte)0x8F,(byte)0x76,(byte)0x67,(byte)0x3E,(byte)0x2C,(byte)0xC7,(byte)0x7A,(byte)0xB2,(byte)0x12,(byte)0x7B,(byte)0x7A,(byte)0xFD,(byte)0xED,(byte)0xA3,(byte)0x3B});
@@ -259,8 +260,9 @@ public class BitcoinUtilTest {
 	List<BitcoinTransactionInput> randomScriptWitnessInput = new ArrayList<BitcoinTransactionInput>(1);
 	randomScriptWitnessInput.add(new BitcoinTransactionInput(previousTransactionHash,previousTxOutIndex,txInScriptLength,txInScript,seqNo));
 	List<BitcoinTransactionOutput> randomScriptWitnessOutput = new ArrayList<BitcoinTransactionOutput>(2);
-	randomScriptWitnessOutput.add(new BitcoinTransactionOutput(value_1,txOutScriptLength_1,txOutScript_1));
-	randomScriptWitnessOutput.add(new BitcoinTransactionOutput(value_2,txOutScriptLength_2,txOutScript_2));
+	
+	randomScriptWitnessOutput.add(new BitcoinTransactionOutput(BigInteger.valueOf(value_1),txOutScriptLength_1,txOutScript_1));
+	randomScriptWitnessOutput.add(new BitcoinTransactionOutput(BigInteger.valueOf(value_2),txOutScriptLength_2,txOutScript_2));
 	List<BitcoinScriptWitnessItem> randomScriptWitnessSWI = new ArrayList<BitcoinScriptWitnessItem>(1);
 	List<BitcoinScriptWitness> randomScriptWitnessSW = new ArrayList<BitcoinScriptWitness>(2);
 	randomScriptWitnessSW.add(new BitcoinScriptWitness(segwitnessLength_1,segwitnessScript_1));
@@ -269,6 +271,7 @@ public class BitcoinUtilTest {
 	 BitcoinTransaction randomScriptWitnessTransaction = new BitcoinTransaction(marker,flag,version,inCounter,randomScriptWitnessInput,outCounter,randomScriptWitnessOutput,randomScriptWitnessSWI,lockTime);
 	byte[] randomScriptWitnessTransactionHash=BitcoinUtil.getTransactionHash(randomScriptWitnessTransaction);
 	 byte[] expectedHash = BitcoinUtil.reverseByteArray(new byte[]{(byte)0x47,(byte)0x52,(byte)0x1C,(byte)0x2A,(byte)0x13,(byte)0x45,(byte)0x5E,(byte)0x92,(byte)0xD3,(byte)0xBD,(byte)0x56,(byte)0x3F,(byte)0xAD,(byte)0xA5,(byte)0x78,(byte)0x6E,(byte)0x85,(byte)0xB4,(byte)0x5E,(byte)0x96,(byte)0x85,(byte)0xA8,(byte)0xC9,(byte)0xA3,(byte)0xFE,(byte)0xB8,(byte)0x9A,(byte)0x4F,(byte)0xB5,(byte)0x0D,(byte)0xAF,(byte)0xF5});
+	
 	 assertArrayEquals( expectedHash, randomScriptWitnessTransactionHash,"Hash for Random ScriptWitness Transaction correctly calculated (txId)");
 	 byte[] randomScriptWitnessTransactionHashSegWit=BitcoinUtil.getTransactionHashSegwit(randomScriptWitnessTransaction);
 	 

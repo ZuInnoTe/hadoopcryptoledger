@@ -26,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -496,11 +497,11 @@ public class EthereumFormatReaderTest {
 			assertArrayEquals( expectedDifficulty, eblockHeader.getDifficulty(),"Genesis block contains a correct 5 byte difficulty");
 			assertEquals(0L, eblockHeader.getTimestamp(),"Genesis block contains a timestamp of 0");
 			long expectedNumber = 0L;
-			assertEquals( expectedNumber, eblockHeader.getNumber(),"Genesis block contains a number 0");
+			assertEquals( BigInteger.valueOf(expectedNumber), eblockHeader.getNumber(),"Genesis block contains a number 0");
 			byte[] expectedGasLimit = new byte[] {0x13,(byte) 0x88};
-			assertArrayEquals( expectedGasLimit, EthereumUtil.convertLongToVarInt(eblockHeader.getGasLimit()),"Genesis block contains a correct 2 byte gas limit");
+			assertArrayEquals( expectedGasLimit, eblockHeader.getGasLimitRaw(),"Genesis block contains a correct 2 byte gas limit");
 			long expectedGasUsed = 0L;
-			assertEquals( expectedGasUsed, eblockHeader.getGasUsed(),"Genesis block contains a gas used of  0");
+			assertEquals( BigInteger.valueOf(expectedGasUsed), eblockHeader.getGasUsed(),"Genesis block contains a gas used of  0");
 			byte[] expectedMixHash= new byte[] {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
 			assertArrayEquals( expectedMixHash, eblockHeader.getMixHash(),"Genesis block contains a correct 32 byte mix hash consisting only of 0x00");
 			byte[] expectedExtraData= new byte[] {0x11,(byte) 0xBB,(byte) 0xE8,(byte) 0xDB,0x4E,0x34,0x7B,0x4E,(byte) 0x8C,(byte) 0x93,0x7C,0x1C,(byte) 0x83,0x70,(byte) 0xE4,(byte) 0xB5,(byte) 0xED,0x33,(byte) 0xAD,(byte) 0xB3,(byte) 0xDB,0x69,(byte) 0xCB,(byte) 0xDB,0x7A,0x38,(byte) 0xE1,(byte) 0xE5,0x0B,0x1B,(byte) 0x82,(byte) 0xFA};
@@ -554,11 +555,11 @@ public class EthereumFormatReaderTest {
 			assertArrayEquals( expectedDifficulty, eblockHeader.getDifficulty(),"Genesis block contains a correct 5 byte difficulty");
 			assertEquals(0L, eblockHeader.getTimestamp(),"Genesis block contains a timestamp of 0");
 			long expectedNumber = 0L;
-			assertEquals( expectedNumber, eblockHeader.getNumber(),"Genesis block contains a number 0");
+			assertEquals( BigInteger.valueOf(expectedNumber), eblockHeader.getNumber(),"Genesis block contains a number 0");
 			byte[] expectedGasLimit = new byte[] {0x13,(byte) 0x88};
-			assertArrayEquals( expectedGasLimit, EthereumUtil.convertLongToVarInt(eblockHeader.getGasLimit()),"Genesis block contains a correct 2 byte gas limit");
+			assertArrayEquals( expectedGasLimit, eblockHeader.getGasLimitRaw(),"Genesis block contains a correct 2 byte gas limit");
 			long expectedGasUsed = 0L;
-			assertEquals( expectedGasUsed, eblockHeader.getGasUsed(),"Genesis block contains a gas used of  0");
+			assertEquals( BigInteger.valueOf(expectedGasUsed), eblockHeader.getGasUsed(),"Genesis block contains a gas used of  0");
 			byte[] expectedMixHash= new byte[] {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
 			assertArrayEquals( expectedMixHash, eblockHeader.getMixHash(),"Genesis block contains a correct 32 byte mix hash consisting only of 0x00");
 			byte[] expectedExtraData= new byte[] {0x11,(byte) 0xBB,(byte) 0xE8,(byte) 0xDB,0x4E,0x34,0x7B,0x4E,(byte) 0x8C,(byte) 0x93,0x7C,0x1C,(byte) 0x83,0x70,(byte) 0xE4,(byte) 0xB5,(byte) 0xED,0x33,(byte) 0xAD,(byte) 0xB3,(byte) 0xDB,0x69,(byte) 0xCB,(byte) 0xDB,0x7A,0x38,(byte) 0xE1,(byte) 0xE5,0x0B,0x1B,(byte) 0x82,(byte) 0xFA};
@@ -615,11 +616,11 @@ public class EthereumFormatReaderTest {
 			//1438269988
 			assertEquals(expectedTimestamp, eblockHeader.getTimestamp(),"Block contains a timestamp of "+expectedDTStr);
 			long expectedNumber = 1L;
-			assertEquals( expectedNumber, eblockHeader.getNumber(),"Block contains a number 1");
+			assertEquals( BigInteger.valueOf(expectedNumber), eblockHeader.getNumber(),"Block contains a number 1");
 			byte[] expectedGasLimit = new byte[] {0x13,(byte) 0x88};
-			assertArrayEquals( expectedGasLimit, EthereumUtil.convertLongToVarInt(eblockHeader.getGasLimit()),"Block contains a correct 2 byte gas limit");
+			assertArrayEquals( expectedGasLimit, eblockHeader.getGasLimitRaw(),"Block contains a correct 2 byte gas limit");
 			long expectedGasUsed = 0L;
-			assertEquals( expectedGasUsed, eblockHeader.getGasUsed(),"Block contains a gas used of  0");
+			assertEquals( BigInteger.valueOf(expectedGasUsed), eblockHeader.getGasUsed(),"Block contains a gas used of  0");
 			byte[] expectedMixHash= new byte[] {(byte)0x96,(byte)0x9B,(byte)0x90,(byte)0x0D,(byte)0xE2,(byte)0x7B,(byte)0x6A,(byte)0xC6,(byte)0xA6,(byte)0x77,(byte)0x42,(byte)0x36,(byte)0x5D,(byte)0xD6,(byte)0x5F,(byte)0x55,(byte)0xA0,(byte)0x52,(byte)0x6C,(byte)0x41,(byte)0xFD,(byte)0x18,(byte)0xE1,(byte)0xB1,(byte)0x6F,(byte)0x1A,(byte)0x12,(byte)0x15,(byte)0xC2,(byte)0xE6,(byte)0x6F,(byte)0x59};
 			assertArrayEquals( expectedMixHash, eblockHeader.getMixHash(),"Block contains a correct 32 byte mix hash");
 			byte[] expectedExtraData= new byte[] {(byte)0x47,(byte)0x65,(byte)0x74,(byte)0x68,(byte)0x2F,(byte)0x76,(byte)0x31,(byte)0x2E,(byte)0x30,(byte)0x2E,(byte)0x30,(byte)0x2F,(byte)0x6C,(byte)0x69,(byte)0x6E,(byte)0x75,(byte)0x78,(byte)0x2F,(byte)0x67,(byte)0x6F,(byte)0x31,(byte)0x2E,(byte)0x34,(byte)0x2E,(byte)0x32};
@@ -677,11 +678,11 @@ public class EthereumFormatReaderTest {
 				//1438269988
 				assertEquals(expectedTimestamp, eblockHeader.getTimestamp(),"Block contains a timestamp of "+expectedDTStr);
 				long expectedNumber = 1L;
-				assertEquals( expectedNumber, eblockHeader.getNumber(),"Block contains a number 1");
+				assertEquals( BigInteger.valueOf(expectedNumber), eblockHeader.getNumber(),"Block contains a number 1");
 				byte[] expectedGasLimit = new byte[] {0x13,(byte) 0x88};
-				assertArrayEquals( expectedGasLimit, EthereumUtil.convertLongToVarInt(eblockHeader.getGasLimit()),"Block contains a correct 2 byte gas limit");
+				assertArrayEquals( expectedGasLimit, eblockHeader.getGasLimitRaw(),"Block contains a correct 2 byte gas limit");
 				long expectedGasUsed = 0L;
-				assertEquals( expectedGasUsed, eblockHeader.getGasUsed(),"Block contains a gas used of  0");
+				assertEquals( BigInteger.valueOf(expectedGasUsed), eblockHeader.getGasUsed(),"Block contains a gas used of  0");
 				byte[] expectedMixHash= new byte[] {(byte)0x96,(byte)0x9B,(byte)0x90,(byte)0x0D,(byte)0xE2,(byte)0x7B,(byte)0x6A,(byte)0xC6,(byte)0xA6,(byte)0x77,(byte)0x42,(byte)0x36,(byte)0x5D,(byte)0xD6,(byte)0x5F,(byte)0x55,(byte)0xA0,(byte)0x52,(byte)0x6C,(byte)0x41,(byte)0xFD,(byte)0x18,(byte)0xE1,(byte)0xB1,(byte)0x6F,(byte)0x1A,(byte)0x12,(byte)0x15,(byte)0xC2,(byte)0xE6,(byte)0x6F,(byte)0x59};
 				assertArrayEquals( expectedMixHash, eblockHeader.getMixHash(),"Block contains a correct 32 byte mix hash");
 				byte[] expectedExtraData= new byte[] {(byte)0x47,(byte)0x65,(byte)0x74,(byte)0x68,(byte)0x2F,(byte)0x76,(byte)0x31,(byte)0x2E,(byte)0x30,(byte)0x2E,(byte)0x30,(byte)0x2F,(byte)0x6C,(byte)0x69,(byte)0x6E,(byte)0x75,(byte)0x78,(byte)0x2F,(byte)0x67,(byte)0x6F,(byte)0x31,(byte)0x2E,(byte)0x34,(byte)0x2E,(byte)0x32};
@@ -741,11 +742,11 @@ public class EthereumFormatReaderTest {
 			//1438269988
 			assertEquals(expectedTimestamp, eblockHeader.getTimestamp(),"Block contains a timestamp of "+expectedDTStr);
 			long expectedNumber = 1346406L;
-			assertEquals( expectedNumber, eblockHeader.getNumber(),"Block contains a number 1346406");
+			assertEquals( BigInteger.valueOf(expectedNumber), eblockHeader.getNumber(),"Block contains a number 1346406");
 			byte[] expectedGasLimit = new byte[] {0x47,(byte) 0xE7,(byte) 0xC4}; 
-			assertArrayEquals( expectedGasLimit, EthereumUtil.convertLongToVarInt(eblockHeader.getGasLimit()),"Block contains a correct 3 byte gas limit");
+			assertArrayEquals( expectedGasLimit, eblockHeader.getGasLimitRaw(),"Block contains a correct 3 byte gas limit");
 			long expectedGasUsed = 126000L;
-			assertEquals( expectedGasUsed, eblockHeader.getGasUsed(),"Block contains a gas used of  126000");
+			assertEquals( BigInteger.valueOf(expectedGasUsed), eblockHeader.getGasUsed(),"Block contains a gas used of  126000");
 			byte[] expectedMixHash= new byte[] {(byte)0x4F,(byte)0x57,(byte)0x71,(byte)0xB7,(byte)0x9A,(byte)0x8E,(byte)0x6E,(byte)0x21,(byte)0x99,(byte)0x35,(byte)0x53,(byte)0x9C,(byte)0x47,(byte)0x3E,(byte)0x23,(byte)0xBA,(byte)0xFD,(byte)0x2C,(byte)0xA3,(byte)0x5C,(byte)0xC1,(byte)0x86,(byte)0x20,(byte)0x66,(byte)0x31,(byte)0xC3,(byte)0xB0,(byte)0x9E,(byte)0xD5,(byte)0x76,(byte)0x19,(byte)0x4A};
 			assertArrayEquals( expectedMixHash, eblockHeader.getMixHash(),"Block contains a correct 32 byte mix hash");
 			byte[] expectedExtraData= new byte[] {(byte)0xD7,(byte)0x83,(byte)0x01,(byte)0x03,(byte)0x05,(byte)0x84,(byte)0x47,(byte)0x65,(byte)0x74,(byte)0x68,(byte)0x87,(byte)0x67,(byte)0x6F,(byte)0x31,(byte)0x2E,(byte)0x35,(byte)0x2E,(byte)0x31,(byte)0x85,(byte)0x6C,(byte)0x69,(byte)0x6E,(byte)0x75,(byte)0x78};
@@ -759,13 +760,13 @@ public class EthereumFormatReaderTest {
 			byte[] expected1stNonce = new byte[] {0x0c};
 			assertArrayEquals(expected1stNonce, eblock.getEthereumTransactions().get(transactNum).getNonce(),"Transaction 1 has a correct nonce");
 			byte[] expected1stGasPrice = new byte[] {0x04,(byte) 0xA8,0x17,(byte) 0xC8,0x00};
-			assertArrayEquals(expected1stGasPrice, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getGasPrice()),"Transaction 1 has a correct gas price");
+			assertArrayEquals(expected1stGasPrice, eblock.getEthereumTransactions().get(transactNum).getGasPriceRaw(),"Transaction 1 has a correct gas price");
 			byte[] expected1stGasLimit = new byte[] {(byte) 0x52,0x08};
-			assertArrayEquals(expected1stGasLimit, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getGasLimit()),"Transaction 1 has a correct gas limit");
+			assertArrayEquals(expected1stGasLimit, eblock.getEthereumTransactions().get(transactNum).getGasLimitRaw(),"Transaction 1 has a correct gas limit");
 			byte[] expected1stReceiveAddress = new byte[] {(byte)0x1E,(byte)0x75,(byte)0xF0,(byte)0x2A,(byte)0x6E,(byte)0x9F,(byte)0xF4,(byte)0xFF,(byte)0x16,(byte)0x33,(byte)0x38,(byte)0x25,(byte)0xD9,(byte)0x09,(byte)0xBB,(byte)0x03,(byte)0x33,(byte)0x06,(byte)0xB7,(byte)0x8B};
 			assertArrayEquals(expected1stReceiveAddress, eblock.getEthereumTransactions().get(transactNum).getReceiveAddress(),"Transaction 1 has a correct receive address");
 			byte[] expected1stValue = new byte[] {0x0E,(byte) 0xD5,(byte) 0xDA,(byte) 0xBC,(byte) 0x91,0x7D,(byte) 0xAC,0x00};
-			assertArrayEquals(expected1stValue, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getValue()),"Transaction 1 has a correct value");	
+			assertArrayEquals(expected1stValue, eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 1 has a correct value");	
 			byte[] expected1stData = new byte[] {};
 			assertArrayEquals(expected1stData, eblock.getEthereumTransactions().get(transactNum).getData(),"Transaction 1 has a correct data");
 			byte[] expected1stsigv = new byte[] {0x1B};
@@ -779,14 +780,14 @@ public class EthereumFormatReaderTest {
 			byte[] expected2ndNonce = new byte[] {(byte) 0xff,(byte) 0xD7};
 			assertArrayEquals(expected2ndNonce, eblock.getEthereumTransactions().get(transactNum).getNonce(),"Transaction 2 has a correct nonce");
 			byte[] expected2ndGasPrice = new byte[] {0x04,(byte) 0xA8,0x17,(byte) 0xC8,0x00};
-			assertArrayEquals(expected2ndGasPrice, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getGasPrice()),"Transaction 2 has a correct gas price");
+			assertArrayEquals(expected2ndGasPrice,eblock.getEthereumTransactions().get(transactNum).getGasPriceRaw(),"Transaction 2 has a correct gas price");
 			byte[] expected2ndGasLimit = new byte[] {(byte) 0x01,0x5F,(byte) 0x90};
-			assertArrayEquals(expected2ndGasLimit, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getGasLimit()),"Transaction 2 has a correct gas limit");
+			assertArrayEquals(expected2ndGasLimit, eblock.getEthereumTransactions().get(transactNum).getGasLimitRaw(),"Transaction 2 has a correct gas limit");
 			byte[] expected2ndReceiveAddress = new byte[] {(byte)0x54,(byte)0x67,(byte)0xFA,(byte)0xBD,(byte)0x30,(byte)0xEB,(byte)0x61,(byte)0xA1,(byte)0x84,(byte)0x61,(byte)0xD1,(byte)0x53,(byte)0xD8,(byte)0xC6,(byte)0xFF,(byte)0xB1,(byte)0x9D,(byte)0xD4,(byte)0x7A,(byte)0x25};
 			assertArrayEquals(expected2ndReceiveAddress, eblock.getEthereumTransactions().get(transactNum).getReceiveAddress(),"Transaction 2 has a correct receive address");
 			byte[] expected2ndValue = new byte[] {0x46,(byte) 0xEC,(byte) 0x2C,(byte) 0x96,(byte) 0x05,0x0B,(byte) 0x18,0x00};
 	
-			assertArrayEquals(expected2ndValue, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getValue()),"Transaction 2 has a correct value");	
+			assertArrayEquals(expected2ndValue, eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 2 has a correct value");	
 			byte[] expected2ndData = new byte[] {};
 			assertArrayEquals(expected2ndData, eblock.getEthereumTransactions().get(transactNum).getData(),"Transaction 2 has a correct data");
 			byte[] expected2ndsigv = new byte[] {0x1B};
@@ -801,13 +802,13 @@ public class EthereumFormatReaderTest {
 			byte[] expected3rdNonce = new byte[] {0x02,(byte) 0xD7,(byte) 0xDD};
 			assertArrayEquals(expected3rdNonce, eblock.getEthereumTransactions().get(transactNum).getNonce(),"Transaction 3 has a correct nonce");
 			byte[] expected3rdGasPrice = new byte[] {0x04,(byte) 0xA8,0x17,(byte) 0xC8,0x00};
-			assertArrayEquals(expected3rdGasPrice, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getGasPrice()),"Transaction 3 has a correct gas price");
+			assertArrayEquals(expected3rdGasPrice, eblock.getEthereumTransactions().get(transactNum).getGasPriceRaw(),"Transaction 3 has a correct gas price");
 			byte[] expected3rdGasLimit = new byte[] {(byte) 0x01,0x5F,(byte) 0x90};
-			assertArrayEquals(expected3rdGasLimit, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getGasLimit()),"Transaction 3 has a correct gas limit");
+			assertArrayEquals(expected3rdGasLimit,eblock.getEthereumTransactions().get(transactNum).getGasLimitRaw(),"Transaction 3 has a correct gas limit");
 			byte[] expected3rdReceiveAddress = new byte[] {(byte)0xB4,(byte)0xD0,(byte)0xCA,(byte)0x2B,(byte)0x7E,(byte)0x4C,(byte)0xB1,(byte)0xE0,(byte)0x61,(byte)0x0D,(byte)0x02,(byte)0x15,(byte)0x4A,(byte)0x10,(byte)0x16,(byte)0x3A,(byte)0xB0,(byte)0xF4,(byte)0x2E,(byte)0x65};
 			assertArrayEquals(expected3rdReceiveAddress, eblock.getEthereumTransactions().get(transactNum).getReceiveAddress(),"Transaction 3 has a correct receive address");
 			byte[] expected3rdValue = new byte[] {(byte) 0x29,(byte) 0x73,(byte) 0xCD,(byte) 0x62,0x4F,(byte) 0x70,0x00};
-			assertArrayEquals(expected3rdValue, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getValue()),"Transaction 3 has a correct value");	
+			assertArrayEquals(expected3rdValue, eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 3 has a correct value");	
 			byte[] expected3rdData = new byte[] {};
 			assertArrayEquals(expected3rdData, eblock.getEthereumTransactions().get(transactNum).getData(),"Transaction 3 has a correct data");
 			byte[] expected3rdsigv = new byte[] {0x1C};
@@ -822,13 +823,13 @@ public class EthereumFormatReaderTest {
 			byte[] expected4thNonce = new byte[] {0x02,(byte) 0xD7,(byte) 0xDE};
 			assertArrayEquals(expected4thNonce, eblock.getEthereumTransactions().get(transactNum).getNonce(),"Transaction 4 has a correct nonce");
 			byte[] expected4thGasPrice = new byte[] {0x04,(byte) 0xA8,0x17,(byte) 0xC8,0x00};
-			assertArrayEquals(expected4thGasPrice, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getGasPrice()),"Transaction 4 has a correct gas price");
+			assertArrayEquals(expected4thGasPrice, eblock.getEthereumTransactions().get(transactNum).getGasPriceRaw(),"Transaction 4 has a correct gas price");
 			byte[] expected4thGasLimit = new byte[] {(byte) 0x01,0x5F,(byte) 0x90};
-			assertArrayEquals(expected4thGasLimit, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getGasLimit()),"Transaction 4 has a correct gas limit");
+			assertArrayEquals(expected4thGasLimit, eblock.getEthereumTransactions().get(transactNum).getGasLimitRaw(),"Transaction 4 has a correct gas limit");
 			byte[] expected4thReceiveAddress = new byte[] {(byte)0x1F,(byte)0x57,(byte)0xF8,(byte)0x26,(byte)0xCA,(byte)0xF5,(byte)0x94,(byte)0xF7,(byte)0xA8,(byte)0x37,(byte)0xD9,(byte)0xFC,(byte)0x09,(byte)0x24,(byte)0x56,(byte)0x87,(byte)0x0A,(byte)0x28,(byte)0x93,(byte)0x65};
 			assertArrayEquals(expected4thReceiveAddress, eblock.getEthereumTransactions().get(transactNum).getReceiveAddress(),"Transaction 4 has a correct receive address");
 			byte[] expected4thValue = new byte[] {0x01,(byte) 0xD1,(byte) 0x4C,(byte) 0xAC,(byte) 0xFB,0x05,(byte) 0xC4,0x00};
-			assertArrayEquals(expected4thValue, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getValue()),"Transaction 4 has a correct value");	
+			assertArrayEquals(expected4thValue, eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 4 has a correct value");	
 			byte[] expected4thData = new byte[] {};
 			assertArrayEquals(expected4thData, eblock.getEthereumTransactions().get(transactNum).getData(),"Transaction 4 has a correct data");
 			byte[] expected4thsigv = new byte[] {0x1B};
@@ -843,13 +844,13 @@ public class EthereumFormatReaderTest {
 			byte[] expected5thNonce = new byte[] {0x02,(byte) 0xD7,(byte) 0xDF};
 			assertArrayEquals(expected5thNonce, eblock.getEthereumTransactions().get(transactNum).getNonce(),"Transaction 5 has a correct nonce");
 			byte[] expected5thGasPrice = new byte[] {0x04,(byte) 0xA8,0x17,(byte) 0xC8,0x00};
-			assertArrayEquals(expected5thGasPrice, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getGasPrice()),"Transaction 5 has a correct gas price");
+			assertArrayEquals(expected5thGasPrice, eblock.getEthereumTransactions().get(transactNum).getGasPriceRaw(),"Transaction 5 has a correct gas price");
 			byte[] expected5thGasLimit = new byte[] {(byte) 0x01,0x5F,(byte) 0x90};
-			assertArrayEquals(expected5thGasLimit, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getGasLimit()),"Transaction 5 has a correct gas limit");
+			assertArrayEquals(expected5thGasLimit, eblock.getEthereumTransactions().get(transactNum).getGasLimitRaw(),"Transaction 5 has a correct gas limit");
 			byte[] expected5thReceiveAddress = new byte[] {(byte)0x1F,(byte)0x57,(byte)0xF8,(byte)0x26,(byte)0xCA,(byte)0xF5,(byte)0x94,(byte)0xF7,(byte)0xA8,(byte)0x37,(byte)0xD9,(byte)0xFC,(byte)0x09,(byte)0x24,(byte)0x56,(byte)0x87,(byte)0x0A,(byte)0x28,(byte)0x93,(byte)0x65};
 			assertArrayEquals(expected5thReceiveAddress, eblock.getEthereumTransactions().get(transactNum).getReceiveAddress(),"Transaction 5 has a correct receive address");
 			byte[] expected5thValue = new byte[] {0x02,(byte) 0x02,(byte) 0x05,(byte) 0x26,(byte) 0x47,(byte) 0xC0,(byte) 0xF0,0x00};
-			assertArrayEquals(expected5thValue, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getValue()),"Transaction 5 has a correct value");	
+			assertArrayEquals(expected5thValue, eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 5 has a correct value");	
 			byte[] expected5thData = new byte[] {};
 			assertArrayEquals(expected5thData, eblock.getEthereumTransactions().get(transactNum).getData(),"Transaction 5 has a correct data");
 			byte[] expected5thsigv = new byte[] {0x1C};
@@ -864,13 +865,13 @@ public class EthereumFormatReaderTest {
 			byte[] expected6thNonce = new byte[] {0x02,(byte) 0xD7,(byte) 0xE0};
 			assertArrayEquals(expected6thNonce, eblock.getEthereumTransactions().get(transactNum).getNonce(),"Transaction 6 has a correct nonce");
 			byte[] expected6thGasPrice = new byte[] {0x04,(byte) 0xA8,0x17,(byte) 0xC8,0x00};
-			assertArrayEquals(expected6thGasPrice, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getGasPrice()),"Transaction 6 has a correct gas price");
+			assertArrayEquals(expected6thGasPrice, eblock.getEthereumTransactions().get(transactNum).getGasPriceRaw(),"Transaction 6 has a correct gas price");
 			byte[] expected6thGasLimit = new byte[] {(byte) 0x01,0x5F,(byte) 0x90};
-			assertArrayEquals(expected6thGasLimit, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getGasLimit()),"Transaction 6 has a correct gas limit");
+			assertArrayEquals(expected6thGasLimit, eblock.getEthereumTransactions().get(transactNum).getGasLimitRaw(),"Transaction 6 has a correct gas limit");
 			byte[] expected6thReceiveAddress = new byte[] {(byte)0x1F,(byte)0x57,(byte)0xF8,(byte)0x26,(byte)0xCA,(byte)0xF5,(byte)0x94,(byte)0xF7,(byte)0xA8,(byte)0x37,(byte)0xD9,(byte)0xFC,(byte)0x09,(byte)0x24,(byte)0x56,(byte)0x87,(byte)0x0A,(byte)0x28,(byte)0x93,(byte)0x65};
 			assertArrayEquals(expected6thReceiveAddress, eblock.getEthereumTransactions().get(transactNum).getReceiveAddress(),"Transaction 6 has a correct receive address");
 			byte[] expected6thValue = new byte[] {0x01,(byte) 0xFE,(byte) 0x81,(byte) 0xC4,(byte) 0xB6,(byte) 0xA0,(byte) 0xD0,0x00};
-			assertArrayEquals(expected6thValue, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getValue()),"Transaction 6 has a correct value");	
+			assertArrayEquals(expected6thValue, eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 6 has a correct value");	
 			byte[] expected6thData = new byte[] {};
 			assertArrayEquals(expected6thData, eblock.getEthereumTransactions().get(transactNum).getData(),"Transaction 6 has a correct data");
 			byte[] expected6thsigv = new byte[] {0x1C};
@@ -932,11 +933,11 @@ public class EthereumFormatReaderTest {
 			//1438269988
 			assertEquals(expectedTimestamp, eblockHeader.getTimestamp(),"Block contains a timestamp of "+expectedDTStr);
 			long expectedNumber = 1346406L;
-			assertEquals( expectedNumber, eblockHeader.getNumber(),"Block contains a number 1346406");
+			assertEquals( BigInteger.valueOf(expectedNumber), eblockHeader.getNumber(),"Block contains a number 1346406");
 			byte[] expectedGasLimit = new byte[] {0x47,(byte) 0xE7,(byte) 0xC4}; 
-			assertArrayEquals( expectedGasLimit, EthereumUtil.convertLongToVarInt(eblockHeader.getGasLimit()),"Block contains a correct 3 byte gas limit");
+			assertArrayEquals( expectedGasLimit, eblockHeader.getGasLimitRaw(),"Block contains a correct 3 byte gas limit");
 			long expectedGasUsed = 126000L;
-			assertEquals( expectedGasUsed, eblockHeader.getGasUsed(),"Block contains a gas used of  126000");
+			assertEquals( BigInteger.valueOf(expectedGasUsed), eblockHeader.getGasUsed(),"Block contains a gas used of  126000");
 			byte[] expectedMixHash= new byte[] {(byte)0x4F,(byte)0x57,(byte)0x71,(byte)0xB7,(byte)0x9A,(byte)0x8E,(byte)0x6E,(byte)0x21,(byte)0x99,(byte)0x35,(byte)0x53,(byte)0x9C,(byte)0x47,(byte)0x3E,(byte)0x23,(byte)0xBA,(byte)0xFD,(byte)0x2C,(byte)0xA3,(byte)0x5C,(byte)0xC1,(byte)0x86,(byte)0x20,(byte)0x66,(byte)0x31,(byte)0xC3,(byte)0xB0,(byte)0x9E,(byte)0xD5,(byte)0x76,(byte)0x19,(byte)0x4A};
 			assertArrayEquals( expectedMixHash, eblockHeader.getMixHash(),"Block contains a correct 32 byte mix hash");
 			byte[] expectedExtraData= new byte[] {(byte)0xD7,(byte)0x83,(byte)0x01,(byte)0x03,(byte)0x05,(byte)0x84,(byte)0x47,(byte)0x65,(byte)0x74,(byte)0x68,(byte)0x87,(byte)0x67,(byte)0x6F,(byte)0x31,(byte)0x2E,(byte)0x35,(byte)0x2E,(byte)0x31,(byte)0x85,(byte)0x6C,(byte)0x69,(byte)0x6E,(byte)0x75,(byte)0x78};
@@ -950,13 +951,13 @@ public class EthereumFormatReaderTest {
 			byte[] expected1stNonce = new byte[] {0x0c};
 			assertArrayEquals(expected1stNonce, eblock.getEthereumTransactions().get(transactNum).getNonce(),"Transaction 1 has a correct nonce");
 			byte[] expected1stGasPrice = new byte[] {0x04,(byte) 0xA8,0x17,(byte) 0xC8,0x00};
-			assertArrayEquals(expected1stGasPrice, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getGasPrice()),"Transaction 1 has a correct gas price");
+			assertArrayEquals(expected1stGasPrice, eblock.getEthereumTransactions().get(transactNum).getGasPriceRaw(),"Transaction 1 has a correct gas price");
 			byte[] expected1stGasLimit = new byte[] {(byte) 0x52,0x08};
-			assertArrayEquals(expected1stGasLimit, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getGasLimit()),"Transaction 1 has a correct gas limit");
+			assertArrayEquals(expected1stGasLimit, eblock.getEthereumTransactions().get(transactNum).getGasLimitRaw(),"Transaction 1 has a correct gas limit");
 			byte[] expected1stReceiveAddress = new byte[] {(byte)0x1E,(byte)0x75,(byte)0xF0,(byte)0x2A,(byte)0x6E,(byte)0x9F,(byte)0xF4,(byte)0xFF,(byte)0x16,(byte)0x33,(byte)0x38,(byte)0x25,(byte)0xD9,(byte)0x09,(byte)0xBB,(byte)0x03,(byte)0x33,(byte)0x06,(byte)0xB7,(byte)0x8B};
 			assertArrayEquals(expected1stReceiveAddress, eblock.getEthereumTransactions().get(transactNum).getReceiveAddress(),"Transaction 1 has a correct receive address");
 			byte[] expected1stValue = new byte[] {0x0E,(byte) 0xD5,(byte) 0xDA,(byte) 0xBC,(byte) 0x91,0x7D,(byte) 0xAC,0x00};
-			assertArrayEquals(expected1stValue, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getValue()),"Transaction 1 has a correct value");	
+			assertArrayEquals(expected1stValue,eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 1 has a correct value");	
 			byte[] expected1stData = new byte[] {};
 			assertArrayEquals(expected1stData, eblock.getEthereumTransactions().get(transactNum).getData(),"Transaction 1 has a correct data");
 			byte[] expected1stsigv = new byte[] {0x1B};
@@ -970,14 +971,14 @@ public class EthereumFormatReaderTest {
 			byte[] expected2ndNonce = new byte[] {(byte) 0xff,(byte) 0xD7};
 			assertArrayEquals(expected2ndNonce, eblock.getEthereumTransactions().get(transactNum).getNonce(),"Transaction 2 has a correct nonce");
 			byte[] expected2ndGasPrice = new byte[] {0x04,(byte) 0xA8,0x17,(byte) 0xC8,0x00};
-			assertArrayEquals(expected2ndGasPrice, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getGasPrice()),"Transaction 2 has a correct gas price");
+			assertArrayEquals(expected2ndGasPrice, eblock.getEthereumTransactions().get(transactNum).getGasPriceRaw(),"Transaction 2 has a correct gas price");
 			byte[] expected2ndGasLimit = new byte[] {(byte) 0x01,0x5F,(byte) 0x90};
-			assertArrayEquals(expected2ndGasLimit, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getGasLimit()),"Transaction 2 has a correct gas limit");
+			assertArrayEquals(expected2ndGasLimit, eblock.getEthereumTransactions().get(transactNum).getGasLimitRaw(),"Transaction 2 has a correct gas limit");
 			byte[] expected2ndReceiveAddress = new byte[] {(byte)0x54,(byte)0x67,(byte)0xFA,(byte)0xBD,(byte)0x30,(byte)0xEB,(byte)0x61,(byte)0xA1,(byte)0x84,(byte)0x61,(byte)0xD1,(byte)0x53,(byte)0xD8,(byte)0xC6,(byte)0xFF,(byte)0xB1,(byte)0x9D,(byte)0xD4,(byte)0x7A,(byte)0x25};
 			assertArrayEquals(expected2ndReceiveAddress, eblock.getEthereumTransactions().get(transactNum).getReceiveAddress(),"Transaction 2 has a correct receive address");
 			byte[] expected2ndValue = new byte[] {0x46,(byte) 0xEC,(byte) 0x2C,(byte) 0x96,(byte) 0x05,0x0B,(byte) 0x18,0x00};
 	
-			assertArrayEquals(expected2ndValue, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getValue()),"Transaction 2 has a correct value");	
+			assertArrayEquals(expected2ndValue, eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 2 has a correct value");	
 			byte[] expected2ndData = new byte[] {};
 			assertArrayEquals(expected2ndData, eblock.getEthereumTransactions().get(transactNum).getData(),"Transaction 2 has a correct data");
 			byte[] expected2ndsigv = new byte[] {0x1B};
@@ -992,13 +993,13 @@ public class EthereumFormatReaderTest {
 			byte[] expected3rdNonce = new byte[] {0x02,(byte) 0xD7,(byte) 0xDD};
 			assertArrayEquals(expected3rdNonce, eblock.getEthereumTransactions().get(transactNum).getNonce(),"Transaction 3 has a correct nonce");
 			byte[] expected3rdGasPrice = new byte[] {0x04,(byte) 0xA8,0x17,(byte) 0xC8,0x00};
-			assertArrayEquals(expected3rdGasPrice, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getGasPrice()),"Transaction 3 has a correct gas price");
+			assertArrayEquals(expected3rdGasPrice, eblock.getEthereumTransactions().get(transactNum).getGasPriceRaw(),"Transaction 3 has a correct gas price");
 			byte[] expected3rdGasLimit = new byte[] {(byte) 0x01,0x5F,(byte) 0x90};
-			assertArrayEquals(expected3rdGasLimit, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getGasLimit()),"Transaction 3 has a correct gas limit");
+			assertArrayEquals(expected3rdGasLimit, eblock.getEthereumTransactions().get(transactNum).getGasLimitRaw(),"Transaction 3 has a correct gas limit");
 			byte[] expected3rdReceiveAddress = new byte[] {(byte)0xB4,(byte)0xD0,(byte)0xCA,(byte)0x2B,(byte)0x7E,(byte)0x4C,(byte)0xB1,(byte)0xE0,(byte)0x61,(byte)0x0D,(byte)0x02,(byte)0x15,(byte)0x4A,(byte)0x10,(byte)0x16,(byte)0x3A,(byte)0xB0,(byte)0xF4,(byte)0x2E,(byte)0x65};
 			assertArrayEquals(expected3rdReceiveAddress, eblock.getEthereumTransactions().get(transactNum).getReceiveAddress(),"Transaction 3 has a correct receive address");
 			byte[] expected3rdValue = new byte[] {(byte) 0x29,(byte) 0x73,(byte) 0xCD,(byte) 0x62,0x4F,(byte) 0x70,0x00};
-			assertArrayEquals(expected3rdValue, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getValue()),"Transaction 3 has a correct value");	
+			assertArrayEquals(expected3rdValue, eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 3 has a correct value");	
 			byte[] expected3rdData = new byte[] {};
 			assertArrayEquals(expected3rdData, eblock.getEthereumTransactions().get(transactNum).getData(),"Transaction 3 has a correct data");
 			byte[] expected3rdsigv = new byte[] {0x1C};
@@ -1013,13 +1014,13 @@ public class EthereumFormatReaderTest {
 			byte[] expected4thNonce = new byte[] {0x02,(byte) 0xD7,(byte) 0xDE};
 			assertArrayEquals(expected4thNonce, eblock.getEthereumTransactions().get(transactNum).getNonce(),"Transaction 4 has a correct nonce");
 			byte[] expected4thGasPrice = new byte[] {0x04,(byte) 0xA8,0x17,(byte) 0xC8,0x00};
-			assertArrayEquals(expected4thGasPrice, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getGasPrice()),"Transaction 4 has a correct gas price");
+			assertArrayEquals(expected4thGasPrice, eblock.getEthereumTransactions().get(transactNum).getGasPriceRaw(),"Transaction 4 has a correct gas price");
 			byte[] expected4thGasLimit = new byte[] {(byte) 0x01,0x5F,(byte) 0x90};
-			assertArrayEquals(expected4thGasLimit, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getGasLimit()),"Transaction 4 has a correct gas limit");
+			assertArrayEquals(expected4thGasLimit, eblock.getEthereumTransactions().get(transactNum).getGasLimitRaw(),"Transaction 4 has a correct gas limit");
 			byte[] expected4thReceiveAddress = new byte[] {(byte)0x1F,(byte)0x57,(byte)0xF8,(byte)0x26,(byte)0xCA,(byte)0xF5,(byte)0x94,(byte)0xF7,(byte)0xA8,(byte)0x37,(byte)0xD9,(byte)0xFC,(byte)0x09,(byte)0x24,(byte)0x56,(byte)0x87,(byte)0x0A,(byte)0x28,(byte)0x93,(byte)0x65};
 			assertArrayEquals(expected4thReceiveAddress, eblock.getEthereumTransactions().get(transactNum).getReceiveAddress(),"Transaction 4 has a correct receive address");
 			byte[] expected4thValue = new byte[] {0x01,(byte) 0xD1,(byte) 0x4C,(byte) 0xAC,(byte) 0xFB,0x05,(byte) 0xC4,0x00};
-			assertArrayEquals(expected4thValue, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getValue()),"Transaction 4 has a correct value");	
+			assertArrayEquals(expected4thValue, eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 4 has a correct value");	
 			byte[] expected4thData = new byte[] {};
 			assertArrayEquals(expected4thData, eblock.getEthereumTransactions().get(transactNum).getData(),"Transaction 4 has a correct data");
 			byte[] expected4thsigv = new byte[] {0x1B};
@@ -1034,13 +1035,13 @@ public class EthereumFormatReaderTest {
 			byte[] expected5thNonce = new byte[] {0x02,(byte) 0xD7,(byte) 0xDF};
 			assertArrayEquals(expected5thNonce, eblock.getEthereumTransactions().get(transactNum).getNonce(),"Transaction 5 has a correct nonce");
 			byte[] expected5thGasPrice = new byte[] {0x04,(byte) 0xA8,0x17,(byte) 0xC8,0x00};
-			assertArrayEquals(expected5thGasPrice, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getGasPrice()),"Transaction 5 has a correct gas price");
+			assertArrayEquals(expected5thGasPrice, eblock.getEthereumTransactions().get(transactNum).getGasPriceRaw(),"Transaction 5 has a correct gas price");
 			byte[] expected5thGasLimit = new byte[] {(byte) 0x01,0x5F,(byte) 0x90};
-			assertArrayEquals(expected5thGasLimit, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getGasLimit()),"Transaction 5 has a correct gas limit");
+			assertArrayEquals(expected5thGasLimit, eblock.getEthereumTransactions().get(transactNum).getGasLimitRaw(),"Transaction 5 has a correct gas limit");
 			byte[] expected5thReceiveAddress = new byte[] {(byte)0x1F,(byte)0x57,(byte)0xF8,(byte)0x26,(byte)0xCA,(byte)0xF5,(byte)0x94,(byte)0xF7,(byte)0xA8,(byte)0x37,(byte)0xD9,(byte)0xFC,(byte)0x09,(byte)0x24,(byte)0x56,(byte)0x87,(byte)0x0A,(byte)0x28,(byte)0x93,(byte)0x65};
 			assertArrayEquals(expected5thReceiveAddress, eblock.getEthereumTransactions().get(transactNum).getReceiveAddress(),"Transaction 5 has a correct receive address");
 			byte[] expected5thValue = new byte[] {0x02,(byte) 0x02,(byte) 0x05,(byte) 0x26,(byte) 0x47,(byte) 0xC0,(byte) 0xF0,0x00};
-			assertArrayEquals(expected5thValue, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getValue()),"Transaction 5 has a correct value");	
+			assertArrayEquals(expected5thValue, eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 5 has a correct value");	
 			byte[] expected5thData = new byte[] {};
 			assertArrayEquals(expected5thData, eblock.getEthereumTransactions().get(transactNum).getData(),"Transaction 5 has a correct data");
 			byte[] expected5thsigv = new byte[] {0x1C};
@@ -1055,13 +1056,13 @@ public class EthereumFormatReaderTest {
 			byte[] expected6thNonce = new byte[] {0x02,(byte) 0xD7,(byte) 0xE0};
 			assertArrayEquals(expected6thNonce, eblock.getEthereumTransactions().get(transactNum).getNonce(),"Transaction 6 has a correct nonce");
 			byte[] expected6thGasPrice = new byte[] {0x04,(byte) 0xA8,0x17,(byte) 0xC8,0x00};
-			assertArrayEquals(expected6thGasPrice, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getGasPrice()),"Transaction 6 has a correct gas price");
+			assertArrayEquals(expected6thGasPrice,eblock.getEthereumTransactions().get(transactNum).getGasPriceRaw(),"Transaction 6 has a correct gas price");
 			byte[] expected6thGasLimit = new byte[] {(byte) 0x01,0x5F,(byte) 0x90};
-			assertArrayEquals(expected6thGasLimit, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getGasLimit()),"Transaction 6 has a correct gas limit");
+			assertArrayEquals(expected6thGasLimit, eblock.getEthereumTransactions().get(transactNum).getGasLimitRaw(),"Transaction 6 has a correct gas limit");
 			byte[] expected6thReceiveAddress = new byte[] {(byte)0x1F,(byte)0x57,(byte)0xF8,(byte)0x26,(byte)0xCA,(byte)0xF5,(byte)0x94,(byte)0xF7,(byte)0xA8,(byte)0x37,(byte)0xD9,(byte)0xFC,(byte)0x09,(byte)0x24,(byte)0x56,(byte)0x87,(byte)0x0A,(byte)0x28,(byte)0x93,(byte)0x65};
 			assertArrayEquals(expected6thReceiveAddress, eblock.getEthereumTransactions().get(transactNum).getReceiveAddress(),"Transaction 6 has a correct receive address");
 			byte[] expected6thValue = new byte[] {0x01,(byte) 0xFE,(byte) 0x81,(byte) 0xC4,(byte) 0xB6,(byte) 0xA0,(byte) 0xD0,0x00};
-			assertArrayEquals(expected6thValue, EthereumUtil.convertLongToVarInt(eblock.getEthereumTransactions().get(transactNum).getValue()),"Transaction 6 has a correct value");	
+			assertArrayEquals(expected6thValue, eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 6 has a correct value");	
 			byte[] expected6thData = new byte[] {};
 			assertArrayEquals(expected6thData, eblock.getEthereumTransactions().get(transactNum).getData(),"Transaction 6 has a correct data");
 			byte[] expected6thsigv = new byte[] {0x1C};
@@ -1124,11 +1125,11 @@ public class EthereumFormatReaderTest {
 			//1438269988
 			assertEquals(expectedTimestamp, eblockHeader.getTimestamp(),"Block contains a timestamp of "+expectedDTStr);
 			long expectedNumber = 3346406;
-			assertEquals( expectedNumber, eblockHeader.getNumber(),"Block contains a number 3346406");
+			assertEquals( BigInteger.valueOf(expectedNumber), eblockHeader.getNumber(),"Block contains a number 3346406");
 			byte[] expectedGasLimit = new byte[] {0x3D,(byte) 0x4C,(byte) 0xEA};
-			assertArrayEquals( expectedGasLimit, EthereumUtil.convertLongToVarInt(eblockHeader.getGasLimit()),"Block contains a correct 3 byte gas limit");
+			assertArrayEquals( expectedGasLimit, eblockHeader.getGasLimitRaw(),"Block contains a correct 3 byte gas limit");
 			long expectedGasUsed = 1068696L;
-			assertEquals( expectedGasUsed, eblockHeader.getGasUsed(),"Block contains a gas used of  1068696");
+			assertEquals( BigInteger.valueOf(expectedGasUsed), eblockHeader.getGasUsed(),"Block contains a gas used of  1068696");
 			byte[] expectedMixHash= new byte[] {(byte)0xFE,(byte)0x8C,(byte)0x06,(byte)0x5B,(byte)0x81,(byte)0x17,(byte)0x1F,(byte)0x61,(byte)0x02,(byte)0xE5,(byte)0x66,(byte)0xA0,(byte)0x07,(byte)0x13,(byte)0x3B,(byte)0xF4,(byte)0x0F,(byte)0xF8,(byte)0x08,(byte)0xF9,(byte)0x04,(byte)0x5E,(byte)0x6B,(byte)0x27,(byte)0x52,(byte)0x75,(byte)0xC8,(byte)0xC7,(byte)0x75,(byte)0x07,(byte)0xBE,(byte)0x78};
 			assertArrayEquals( expectedMixHash, eblockHeader.getMixHash(),"Block contains a correct 32 byte mix hash");
 			byte[] expectedExtraData= new byte[] {(byte)0x65,(byte)0x74,(byte)0x68,(byte)0x65,(byte)0x72,(byte)0x6D,(byte)0x69,(byte)0x6E,(byte)0x65,(byte)0x20,(byte)0x2D,(byte)0x20,(byte)0x41,(byte)0x53,(byte)0x49,(byte)0x41,(byte)0x31};
@@ -1189,11 +1190,11 @@ public class EthereumFormatReaderTest {
 			//1438269988
 			assertEquals(expectedTimestamp, eblockHeader.getTimestamp(),"Block contains a timestamp of "+expectedDTStr);
 			long expectedNumber = 3346406;
-			assertEquals( expectedNumber, eblockHeader.getNumber(),"Block contains a number 3346406");
+			assertEquals( BigInteger.valueOf(expectedNumber), eblockHeader.getNumber(),"Block contains a number 3346406");
 			byte[] expectedGasLimit = new byte[] {0x3D,(byte) 0x4C,(byte) 0xEA};
-			assertArrayEquals( expectedGasLimit, EthereumUtil.convertLongToVarInt(eblockHeader.getGasLimit()),"Block contains a correct 3 byte gas limit");
+			assertArrayEquals( expectedGasLimit, eblockHeader.getGasLimitRaw(),"Block contains a correct 3 byte gas limit");
 			long expectedGasUsed = 1068696L;
-			assertEquals( expectedGasUsed, eblockHeader.getGasUsed(),"Block contains a gas used of  1068696");
+			assertEquals( BigInteger.valueOf(expectedGasUsed), eblockHeader.getGasUsed(),"Block contains a gas used of  1068696");
 			byte[] expectedMixHash= new byte[] {(byte)0xFE,(byte)0x8C,(byte)0x06,(byte)0x5B,(byte)0x81,(byte)0x17,(byte)0x1F,(byte)0x61,(byte)0x02,(byte)0xE5,(byte)0x66,(byte)0xA0,(byte)0x07,(byte)0x13,(byte)0x3B,(byte)0xF4,(byte)0x0F,(byte)0xF8,(byte)0x08,(byte)0xF9,(byte)0x04,(byte)0x5E,(byte)0x6B,(byte)0x27,(byte)0x52,(byte)0x75,(byte)0xC8,(byte)0xC7,(byte)0x75,(byte)0x07,(byte)0xBE,(byte)0x78};
 			assertArrayEquals( expectedMixHash, eblockHeader.getMixHash(),"Block contains a correct 32 byte mix hash");
 			byte[] expectedExtraData= new byte[] {(byte)0x65,(byte)0x74,(byte)0x68,(byte)0x65,(byte)0x72,(byte)0x6D,(byte)0x69,(byte)0x6E,(byte)0x65,(byte)0x20,(byte)0x2D,(byte)0x20,(byte)0x41,(byte)0x53,(byte)0x49,(byte)0x41,(byte)0x31};
@@ -1658,9 +1659,9 @@ public class EthereumFormatReaderTest {
 			List<EthereumBlockHeader> eUncles = eblock.getUncleHeaders();
 	
 			for (EthereumTransaction currentTransaction: eTransactions) {
-				assertTrue(currentTransaction.getGasLimit()>=0, "Gas limit is positive");
+				assertTrue(currentTransaction.getGasLimit().compareTo(BigInteger.ZERO)>=0, "Gas limit is positive");
 	
-				assertTrue(currentTransaction.getGasPrice()>=0, "Gas price is positive");
+				assertTrue(currentTransaction.getGasPrice().compareTo(BigInteger.ZERO)>=0, "Gas price is positive");
 	
 			}
 		}finally {

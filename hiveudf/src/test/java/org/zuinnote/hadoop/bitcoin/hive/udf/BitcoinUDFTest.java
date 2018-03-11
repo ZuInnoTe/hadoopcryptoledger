@@ -32,11 +32,13 @@ import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspectorFactory;
 import  org.apache.hadoop.hive.ql.udf.generic.*;
 
 import org.apache.hadoop.hive.ql.metadata.HiveException;
+import org.apache.hadoop.hive.common.type.HiveDecimal;
 import org.apache.hadoop.hive.ql.exec.UDFArgumentException;
 import org.apache.hadoop.hive.ql.exec.UDFArgumentLengthException;
 
 import org.zuinnote.hadoop.bitcoin.format.common.*;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,7 +119,7 @@ public class BitcoinUDFTest {
 	List<BitcoinTransactionInput> genesisInput = new ArrayList<BitcoinTransactionInput>(1);
 	genesisInput.add(new BitcoinTransactionInput(previousTransactionHash,previousTxOutIndex,txInScriptLength,txInScript,seqNo));
 	List<BitcoinTransactionOutput> genesisOutput = new ArrayList<BitcoinTransactionOutput>(1);
-	genesisOutput.add(new BitcoinTransactionOutput(value,txOutScriptLength,txOutScript));
+	genesisOutput.add(new BitcoinTransactionOutput(BigInteger.valueOf(value),txOutScriptLength,txOutScript));
 	 BitcoinTransaction genesisTransaction = new BitcoinTransaction(version,inCounter,genesisInput,outCounter,genesisOutput,lockTime);
 	 byte[] expectedHash = BitcoinUtil.reverseByteArray(new byte[]{(byte)0x4A,(byte)0x5E,(byte)0x1E,(byte)0x4B,(byte)0xAA,(byte)0xB8,(byte)0x9F,(byte)0x3A,(byte)0x32,(byte)0x51,(byte)0x8A,(byte)0x88,(byte)0xC3,(byte)0x1B,(byte)0xC8,(byte)0x7F,(byte)0x61,(byte)0x8F,(byte)0x76,(byte)0x67,(byte)0x3E,(byte)0x2C,(byte)0xC7,(byte)0x7A,(byte)0xB2,(byte)0x12,(byte)0x7B,(byte)0x7A,(byte)0xFD,(byte)0xED,(byte)0xA3,(byte)0x3B});
 	GenericUDF.DeferredObject[] doa = new GenericUDF.DeferredObject[1];
@@ -151,7 +153,7 @@ public class BitcoinUDFTest {
 	List<TestBitcoinTransactionInput> genesisInput = new ArrayList<TestBitcoinTransactionInput>(1);
 	genesisInput.add(new TestBitcoinTransactionInput(previousTransactionHash,previousTxOutIndex,txInScriptLength,txInScript,seqNo));
 	List<TestBitcoinTransactionOutput> genesisOutput = new ArrayList<TestBitcoinTransactionOutput>(1);
-	genesisOutput.add(new TestBitcoinTransactionOutput(value,txOutScriptLength,txOutScript));
+	genesisOutput.add(new TestBitcoinTransactionOutput(HiveDecimal.create(BigInteger.valueOf(value)),txOutScriptLength,txOutScript));
 	 TestBitcoinTransaction genesisTransaction = new TestBitcoinTransaction(version,inCounter,genesisInput,outCounter,genesisOutput,lockTime);
 	 byte[] expectedHash = BitcoinUtil.reverseByteArray(new byte[]{(byte)0x4A,(byte)0x5E,(byte)0x1E,(byte)0x4B,(byte)0xAA,(byte)0xB8,(byte)0x9F,(byte)0x3A,(byte)0x32,(byte)0x51,(byte)0x8A,(byte)0x88,(byte)0xC3,(byte)0x1B,(byte)0xC8,(byte)0x7F,(byte)0x61,(byte)0x8F,(byte)0x76,(byte)0x67,(byte)0x3E,(byte)0x2C,(byte)0xC7,(byte)0x7A,(byte)0xB2,(byte)0x12,(byte)0x7B,(byte)0x7A,(byte)0xFD,(byte)0xED,(byte)0xA3,(byte)0x3B});
 	GenericUDF.DeferredObject[] doa = new GenericUDF.DeferredObject[1];
@@ -222,8 +224,8 @@ public void BitcoinTransactionHashSegwitUDFWriteable()  throws HiveException  {
 	List<BitcoinTransactionInput> randomScriptWitnessInput = new ArrayList<BitcoinTransactionInput>(1);
 	randomScriptWitnessInput.add(new BitcoinTransactionInput(previousTransactionHash,previousTxOutIndex,txInScriptLength,txInScript,seqNo));
 	List<BitcoinTransactionOutput> randomScriptWitnessOutput = new ArrayList<BitcoinTransactionOutput>(2);
-	randomScriptWitnessOutput.add(new BitcoinTransactionOutput(value_1,txOutScriptLength_1,txOutScript_1));
-	randomScriptWitnessOutput.add(new BitcoinTransactionOutput(value_2,txOutScriptLength_2,txOutScript_2));
+	randomScriptWitnessOutput.add(new BitcoinTransactionOutput(BigInteger.valueOf(value_1),txOutScriptLength_1,txOutScript_1));
+	randomScriptWitnessOutput.add(new BitcoinTransactionOutput(BigInteger.valueOf(value_2),txOutScriptLength_2,txOutScript_2));
 	List<BitcoinScriptWitnessItem> randomScriptWitnessSWI = new ArrayList<BitcoinScriptWitnessItem>(1);
 	List<BitcoinScriptWitness> randomScriptWitnessSW = new ArrayList<BitcoinScriptWitness>(2);
 	randomScriptWitnessSW.add(new BitcoinScriptWitness(segwitnessLength_1,segwitnessScript_1));
@@ -281,8 +283,8 @@ public void BitcoinTransactionHashSegwitUDFObjectInspector() throws HiveExceptio
 	List<TestBitcoinTransactionInput> randomScriptWitnessInput = new ArrayList<TestBitcoinTransactionInput>(1);
 	randomScriptWitnessInput.add(new TestBitcoinTransactionInput(previousTransactionHash,previousTxOutIndex,txInScriptLength,txInScript,seqNo));
 	List<TestBitcoinTransactionOutput> randomScriptWitnessOutput = new ArrayList<TestBitcoinTransactionOutput>(2);
-	randomScriptWitnessOutput.add(new TestBitcoinTransactionOutput(value_1,txOutScriptLength_1,txOutScript_1));
-	randomScriptWitnessOutput.add(new TestBitcoinTransactionOutput(value_2,txOutScriptLength_2,txOutScript_2));
+	randomScriptWitnessOutput.add(new TestBitcoinTransactionOutput(HiveDecimal.create(BigInteger.valueOf(value_1)),txOutScriptLength_1,txOutScript_1));
+	randomScriptWitnessOutput.add(new TestBitcoinTransactionOutput(HiveDecimal.create(BigInteger.valueOf(value_2)),txOutScriptLength_2,txOutScript_2));
 	List<TestBitcoinScriptWitnessItem> randomScriptWitnessSWI = new ArrayList<TestBitcoinScriptWitnessItem>(1);
 	List<TestBitcoinScriptWitness> randomScriptWitnessSW = new ArrayList<TestBitcoinScriptWitness>(2);
 	randomScriptWitnessSW.add(new TestBitcoinScriptWitness(segwitnessLength_1,segwitnessScript_1));

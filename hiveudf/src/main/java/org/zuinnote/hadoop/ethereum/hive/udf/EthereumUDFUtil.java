@@ -55,10 +55,10 @@ public class EthereumUDFUtil {
 			result=(EthereumTransaction) row;
 		} else { // this is the case if you have imported the EthereumTransaction in any other Hive supported format, such as ORC or Parquet
 			StructField nonceSF=soi.getStructFieldRef("nonce");
-			StructField valueSF=soi.getStructFieldRef("value");
+			StructField valueSF=soi.getStructFieldRef("valueRaw");
 			StructField receiveAddressSF=soi.getStructFieldRef("receiveAddress");
-			StructField gasPriceSF=soi.getStructFieldRef("gasPrice");
-			StructField gasLimitSF=soi.getStructFieldRef("gasLimit");
+			StructField gasPriceSF=soi.getStructFieldRef("gasPriceRaw");
+			StructField gasLimitSF=soi.getStructFieldRef("gasLimitRaw");
 			StructField dataSF=soi.getStructFieldRef("data");
 			StructField sigVSF=soi.getStructFieldRef("sig_v");
 			StructField sigRSF=soi.getStructFieldRef("sig_r");
@@ -67,24 +67,24 @@ public class EthereumUDFUtil {
 			boolean gasDataNull = (gasPriceSF==null) || (gasLimitSF==null)|| (dataSF==null);
 			boolean sigNull = (sigVSF==null) || (sigRSF==null)|| (sigSSF==null);
 			if (baseNull || gasDataNull || sigNull) {
-				LOG.warn("Structure does not correspond to EthereumTransaction");
+				LOG.error("Structure does not correspond to EthereumTransaction. You need the fields nonce, valueRaw, reciveAddress, gasPriceRaw, gasLimitRaw, data, sig_v, sig_r, sig_s");
 				return null;
 			}
 			byte[] nonce = (byte[]) soi.getStructFieldData(row,nonceSF);
-			long value = (long) soi.getStructFieldData(row,valueSF);
+			byte[] valueRaw = (byte[]) soi.getStructFieldData(row,valueSF);
 			byte[] receiveAddress = (byte[]) soi.getStructFieldData(row,receiveAddressSF);
-			long gasPrice =(long) soi.getStructFieldData(row,gasPriceSF);
-			long gasLimit = (long) soi.getStructFieldData(row,gasLimitSF);
+			byte[] gasPriceRaw =(byte[]) soi.getStructFieldData(row,gasPriceSF);
+			byte[] gasLimitRaw = (byte[]) soi.getStructFieldData(row,gasLimitSF);
 			byte[] data = (byte[]) soi.getStructFieldData(row,dataSF);
 			byte[] sig_v = (byte[]) soi.getStructFieldData(row,sigVSF);
 			byte[] sig_r = (byte[]) soi.getStructFieldData(row,sigRSF);
 			byte[] sig_s = (byte[]) soi.getStructFieldData(row,sigSSF);
 			result=new EthereumTransaction();
 			result.setNonce(nonce);
-			result.setValue(value);
+			result.setValueRaw(valueRaw);
 			result.setReceiveAddress(receiveAddress);
-			result.setGasPrice(gasPrice);
-			result.setGasLimit(gasLimit);
+			result.setGasPriceRaw(gasPriceRaw);
+			result.setGasLimitRaw(gasLimitRaw);
 			result.setData(data);
 			result.setSig_v(sig_v);
 			result.setSig_r(sig_r);

@@ -124,9 +124,9 @@ public class EthereumBlockReader {
 		result.setReceiptTrieRoot(((RLPElement) rlpHeader.getRlpList().get(5)).getRawData());
 		result.setLogsBloom(((RLPElement) rlpHeader.getRlpList().get(6)).getRawData());
 		result.setDifficulty(((RLPElement) rlpHeader.getRlpList().get(7)).getRawData());
-		result.setNumber(EthereumUtil.convertVarNumberToLong(((RLPElement) rlpHeader.getRlpList().get(8))));
-		result.setGasLimit(EthereumUtil.convertVarNumberToLong(((RLPElement) rlpHeader.getRlpList().get(9))));
-		result.setGasUsed(EthereumUtil.convertVarNumberToLong(((RLPElement) rlpHeader.getRlpList().get(10))));
+		result.setNumberRaw(((RLPElement) rlpHeader.getRlpList().get(8)).getRawData());
+		result.setGasLimitRaw(((RLPElement) rlpHeader.getRlpList().get(9)).getRawData());
+		result.setGasUsedRaw(((RLPElement) rlpHeader.getRlpList().get(10)).getRawData());
 		result.setTimestamp(EthereumUtil.convertVarNumberToLong(((RLPElement) rlpHeader.getRlpList().get(11))));
 		result.setExtraData(((RLPElement) rlpHeader.getRlpList().get(12)).getRawData());
 		result.setMixHash(((RLPElement) rlpHeader.getRlpList().get(13)).getRawData());
@@ -148,10 +148,10 @@ public class EthereumBlockReader {
 		
 			EthereumTransaction currentTransaction = new EthereumTransaction();
 			currentTransaction.setNonce(((RLPElement)currenTransactionRLP.getRlpList().get(0)).getRawData());
-			currentTransaction.setGasPrice(EthereumUtil.convertVarNumberToLong(((RLPElement)currenTransactionRLP.getRlpList().get(1))));
-			currentTransaction.setGasLimit(EthereumUtil.convertVarNumberToLong((RLPElement)currenTransactionRLP.getRlpList().get(2)));
+			currentTransaction.setGasPriceRaw(((RLPElement)currenTransactionRLP.getRlpList().get(1)).getRawData());
+			currentTransaction.setGasLimitRaw(((RLPElement)currenTransactionRLP.getRlpList().get(2)).getRawData());
 			currentTransaction.setReceiveAddress(((RLPElement)currenTransactionRLP.getRlpList().get(3)).getRawData());
-			currentTransaction.setValue(EthereumUtil.convertVarNumberToLong(((RLPElement)currenTransactionRLP.getRlpList().get(4))));
+			currentTransaction.setValueRaw(((RLPElement)currenTransactionRLP.getRlpList().get(4)).getRawData());
 
 			currentTransaction.setData(((RLPElement)currenTransactionRLP.getRlpList().get(5)).getRawData());
 			if (((RLPElement)currenTransactionRLP.getRlpList().get(6)).getRawData().length>0) {

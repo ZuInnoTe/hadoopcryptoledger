@@ -18,6 +18,7 @@ package org.zuinnote.hadoop.ethereum.hive.udf;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.math.BigInteger;
 
 import org.apache.hadoop.io.Writable;
 import org.zuinnote.hadoop.ethereum.format.common.EthereumTransaction;
@@ -29,10 +30,13 @@ import org.zuinnote.hadoop.ethereum.format.common.EthereumTransaction;
 public class TestEthereumTransaction implements Writable {
 
 private byte[] nonce;
-private long value;
+private BigInteger value;
+private byte[] valueRaw;
 private byte[] receiveAddress;
-private long gasPrice;
-private long gasLimit;
+private BigInteger gasPrice;
+private byte[] gasPriceRaw;
+private BigInteger gasLimit;
+private byte[] gasLimitRaw;
 
 private byte[] data;
 private byte[] sig_v;
@@ -61,11 +65,11 @@ public void setNonce(byte[] nonce) {
 	this.nonce = nonce;
 }
 
-public long getValue() {
+public BigInteger getValue() {
 	return value;
 }
 
-public void setValue(long value) {
+public void setValue(BigInteger value) {
 	this.value = value;
 }
 
@@ -78,19 +82,19 @@ public void setReceiveAddress(byte[] receiveAddress) {
 }
 
 
-public long getGasPrice() {
+public BigInteger getGasPrice() {
 	return gasPrice;
 }
 
-public void setGasPrice(long gasPrice) {
+public void setGasPrice(BigInteger gasPrice) {
 	this.gasPrice = gasPrice;
 }
 
-public long getGasLimit() {
+public BigInteger getGasLimit() {
 	return gasLimit;
 }
 
-public void setGasLimit(long gasLimit) {
+public void setGasLimit(BigInteger gasLimit) {
 	this.gasLimit = gasLimit;
 }
 
@@ -107,9 +111,12 @@ public void setData(byte[] data) {
 public void set(EthereumTransaction newTransaction) {
 	this.nonce=newTransaction.getNonce();
 	this.value=newTransaction.getValue();
+	this.valueRaw=newTransaction.getValueRaw();
 	this.receiveAddress=newTransaction.getReceiveAddress();
 	this.gasPrice=newTransaction.getGasPrice();
+	this.gasPriceRaw=newTransaction.getGasPriceRaw();
 	this.gasLimit=newTransaction.getGasLimit();
+	this.gasLimitRaw=newTransaction.getGasLimitRaw();
 	this.data=newTransaction.getData();
 	this.sig_v=newTransaction.getSig_v();
 	this.sig_r=newTransaction.getSig_r();
@@ -138,6 +145,32 @@ public byte[] getSig_s() {
 
 public void setSig_s(byte[] sig_s) {
 	this.sig_s = sig_s;
+}
+
+public byte[] getValueRaw() {
+	return valueRaw;
+}
+
+public void setValueRaw(byte[] valueRaw) {
+	this.valueRaw = valueRaw;
+}
+
+
+
+public byte[] getGasLimitRaw() {
+	return gasLimitRaw;
+}
+
+public void setGasLimitRaw(byte[] gasLimitRaw) {
+	this.gasLimitRaw = gasLimitRaw;
+}
+
+public byte[] getGasPriceRaw() {
+	return gasPriceRaw;
+}
+
+public void setGasPriceRaw(byte[] gasPriceRaw) {
+	this.gasPriceRaw = gasPriceRaw;
 }
 
 

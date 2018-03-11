@@ -25,8 +25,8 @@ assemblyJarName in assembly := "example-hcl-flink-scala-bitcoinblock.jar"
 fork  := true
 
 
-libraryDependencies += "com.github.zuinnote" % "hadoopcryptoledger-flinkdatasource" % "1.1.4" % "compile"
-libraryDependencies += "com.github.zuinnote" % "hadoopcryptoledger-fileformat" % "1.1.4" % "compile"
+libraryDependencies += "com.github.zuinnote" % "hadoopcryptoledger-flinkdatasource" % "1.2.0" % "compile"
+libraryDependencies += "com.github.zuinnote" % "hadoopcryptoledger-fileformat" % "1.2.0" % "compile"
 libraryDependencies += "org.apache.flink" %% "flink-scala" % "1.2.0" % "provided" 
 
 libraryDependencies += "org.apache.flink" % "flink-shaded-hadoop2" % "1.2.0" % "provided"  

@@ -77,7 +77,7 @@ public BitcoinTransaction(int version, byte[] inCounter, List<BitcoinTransaction
 
 
 /**
- * Creates a Bitcoin Transaction with Sigwitness
+ * Creates a Bitcoin Transaction with Segwitness
  * 
  * @param marker
  * @param flag

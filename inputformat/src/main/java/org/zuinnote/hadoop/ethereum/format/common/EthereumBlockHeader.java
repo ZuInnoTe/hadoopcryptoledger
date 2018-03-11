@@ -16,6 +16,7 @@
 package org.zuinnote.hadoop.ethereum.format.common;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 
 /**
  *
@@ -35,9 +36,12 @@ public class EthereumBlockHeader implements Serializable {
 	private byte[] logsBloom;
 	private byte[] difficulty;
 	private long timestamp;
-	private long number;
-	private long gasLimit;
-	private long gasUsed;
+	private BigInteger number;
+	private byte[] numberRaw;
+	private BigInteger gasLimit;
+	private byte[] gasLimitRaw;
+	private BigInteger gasUsed;
+	private byte[] gasUsedRaw;
 	private byte[] mixHash;
 	private byte[] extraData;
 	private byte[] nonce;
@@ -158,37 +162,46 @@ public class EthereumBlockHeader implements Serializable {
 
 
 
-	public long getNumber() {
+	public BigInteger getNumber() {
+		if (number==null) {
+			this.number=EthereumUtil.convertVarNumberToBigInteger(this.numberRaw);
+		}
 		return number;
 	}
 
 
 
-	public void setNumber(long number) {
+	public void setNumber(BigInteger number) {
 		this.number = number;
 	}
 
 
 
-	public long getGasLimit() {
+	public BigInteger getGasLimit() {
+		if (gasLimit==null) {
+			this.gasLimit=EthereumUtil.convertVarNumberToBigInteger(this.gasLimitRaw);
+		}
 		return gasLimit;
 	}
 
 
 
-	public void setGasLimit(long gasLimit) {
+	public void setGasLimit(BigInteger gasLimit) {
 		this.gasLimit = gasLimit;
 	}
 
 
 
-	public long getGasUsed() {
+	public BigInteger getGasUsed() {
+		if (gasUsed==null) {
+			this.gasUsed=EthereumUtil.convertVarNumberToBigInteger(this.gasUsedRaw);
+		}
 		return gasUsed;
 	}
 
 
 
-	public void setGasUsed(long gasUsed) {
+	public void setGasUsed(BigInteger gasUsed) {
 		this.gasUsed = gasUsed;
 	}
 
@@ -243,11 +256,50 @@ public class EthereumBlockHeader implements Serializable {
 		this.difficulty=newEthereumBlockHeader.getDifficulty();
 		this.timestamp=newEthereumBlockHeader.getTimestamp();
 		this.number=newEthereumBlockHeader.getNumber();
+		this.numberRaw=newEthereumBlockHeader.getNumberRaw();
 		this.gasLimit=newEthereumBlockHeader.getGasLimit();
+		this.gasLimitRaw=newEthereumBlockHeader.getGasLimitRaw();
 		this.gasUsed=newEthereumBlockHeader.getGasUsed();
+		this.gasUsedRaw=newEthereumBlockHeader.getGasUsedRaw();
 		this.mixHash=newEthereumBlockHeader.getMixHash();
 		this.extraData=newEthereumBlockHeader.getExtraData();
 		this.nonce=newEthereumBlockHeader.getNonce();
+	}
+
+
+
+	public byte[] getNumberRaw() {
+		return numberRaw;
+	}
+
+
+
+	public void setNumberRaw(byte[] numberRaw) {
+		this.numberRaw = numberRaw;
+	}
+
+
+
+	public byte[] getGasLimitRaw() {
+		return gasLimitRaw;
+	}
+
+
+
+	public void setGasLimitRaw(byte[] gasLimitRaw) {
+		this.gasLimitRaw = gasLimitRaw;
+	}
+
+
+
+	public byte[] getGasUsedRaw() {
+		return gasUsedRaw;
+	}
+
+
+
+	public void setGasUsedRaw(byte[] gasUsedRaw) {
+		this.gasUsedRaw = gasUsedRaw;
 	}
 
 	

@@ -20,6 +20,7 @@ import org.apache.hadoop.io.BytesWritable;
 
 
 import org.apache.hadoop.hive.ql.udf.generic.GenericUDF;
+import org.apache.hadoop.hive.common.type.HiveDecimal;
 import org.apache.hadoop.hive.ql.exec.Description;
 import org.apache.hadoop.hive.ql.metadata.HiveException;
 import org.apache.hadoop.hive.ql.exec.UDFArgumentException;
@@ -27,6 +28,7 @@ import org.apache.hadoop.hive.ql.exec.UDFArgumentLengthException;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
 
 import org.apache.hadoop.hive.serde2.objectinspector.ListObjectInspector;
+import org.apache.hadoop.hive.serde2.objectinspector.primitive.HiveDecimalObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectInspectorFactory;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.WritableBinaryObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.WritableIntObjectInspector;
@@ -64,6 +66,7 @@ private WritableBinaryObjectInspector wboi;
 private WritableIntObjectInspector wioi;
 private WritableLongObjectInspector wloi;
 
+private HiveDecimalObjectInspector hdoi;
 
 /**
 * Returns the display representation of the function
@@ -106,6 +109,7 @@ public ObjectInspector initialize(ObjectInspector[] arguments) throws UDFArgumen
 	this.wboi = PrimitiveObjectInspectorFactory.writableBinaryObjectInspector;
 	this.wioi = PrimitiveObjectInspectorFactory.writableIntObjectInspector;
 	this.wloi = PrimitiveObjectInspectorFactory.writableLongObjectInspector;
+	this.hdoi = PrimitiveObjectInspectorFactory.javaHiveDecimalObjectInspector;
 	// the UDF returns the hash value of a BitcoinTransaction as byte array
 	return PrimitiveObjectInspectorFactory.writableBinaryObjectInspector;
 }
@@ -230,10 +234,10 @@ StructObjectInspector listOfOutputsElementObjectInspector = (StructObjectInspect
 			LOG.warn("Invalid BitcoinTransactionOutput detected at position "+i);
 			return new ArrayList<>();
 		}
-		long currentValue=wloi.get(listOfOutputsElementObjectInspector.getStructFieldData(currentListOfOutputsObject,valueSF));	
+		HiveDecimal currentValue=hdoi.getPrimitiveJavaObject(listOfOutputsElementObjectInspector.getStructFieldData(currentListOfOutputsObject,valueSF));	
 		byte[] currentTxOutScriptLength=wboi.getPrimitiveJavaObject(listOfOutputsElementObjectInspector.getStructFieldData(currentListOfOutputsObject,txoutscriptlengthSF));
 		byte[] currentTxOutScript=wboi.getPrimitiveJavaObject(listOfOutputsElementObjectInspector.getStructFieldData(currentListOfOutputsObject,txoutscriptSF));
-		BitcoinTransactionOutput currentBitcoinTransactionOutput = new BitcoinTransactionOutput(currentValue,currentTxOutScriptLength,currentTxOutScript);
+		BitcoinTransactionOutput currentBitcoinTransactionOutput = new BitcoinTransactionOutput(currentValue.bigDecimalValue().toBigIntegerExact(),currentTxOutScriptLength,currentTxOutScript);
 		result.add(currentBitcoinTransactionOutput);
 	}
 return result;
