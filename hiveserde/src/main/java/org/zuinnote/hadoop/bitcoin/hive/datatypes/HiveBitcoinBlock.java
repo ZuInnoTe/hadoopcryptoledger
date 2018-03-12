@@ -21,7 +21,6 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 import org.apache.hadoop.io.Writable;
-import org.zuinnote.hadoop.bitcoin.format.common.BitcoinAuxPOW;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -43,7 +42,7 @@ private long transactionCounter;
 private byte[] hashPrevBlock;
 private byte[] hashMerkleRoot;
 private List<HiveBitcoinTransaction> transactions;
-private BitcoinAuxPOW auxPOW;
+private HiveBitcoinAuxPOW auxPOW;
 
 public HiveBitcoinBlock() {
 	this.magicNo=new byte[0];
@@ -52,7 +51,7 @@ public HiveBitcoinBlock() {
 	this.hashPrevBlock=new byte[0];
 	this.hashMerkleRoot=new byte[0];
 	this.transactions=new ArrayList<>();
-	this.auxPOW=new BitcoinAuxPOW();
+	this.auxPOW=new HiveBitcoinAuxPOW();
 }
 
 
@@ -138,12 +137,12 @@ public void setTransactions(List<HiveBitcoinTransaction> transactions) {
 	this.transactions=transactions;
 }
 
-public BitcoinAuxPOW getAuxPOW() {
+public HiveBitcoinAuxPOW getAuxPOW() {
 	return this.auxPOW;
 }
 
 
-public void setAuxPOW(BitcoinAuxPOW auxPOW) {
+public void setAuxPOW(HiveBitcoinAuxPOW auxPOW) {
 	this.auxPOW = auxPOW;
 }
 

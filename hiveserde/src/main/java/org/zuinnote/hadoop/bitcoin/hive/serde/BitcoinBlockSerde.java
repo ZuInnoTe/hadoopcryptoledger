@@ -35,10 +35,13 @@ import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspectorFactory;
 import org.apache.hadoop.hive.ql.exec.vector.VectorizedSerde;
 import org.apache.hadoop.hive.common.type.HiveDecimal;
 import org.apache.hadoop.hive.ql.exec.vector.VectorizedRowBatch;
+import org.zuinnote.hadoop.bitcoin.format.common.BitcoinAuxPOWBlockHeader;
+import org.zuinnote.hadoop.bitcoin.format.common.BitcoinAuxPOWBranch;
 import org.zuinnote.hadoop.bitcoin.format.common.BitcoinBlock;
 import org.zuinnote.hadoop.bitcoin.format.common.BitcoinTransaction;
 import org.zuinnote.hadoop.bitcoin.format.common.BitcoinTransactionOutput;
 import org.zuinnote.hadoop.bitcoin.format.mapred.AbstractBitcoinRecordReader;
+import org.zuinnote.hadoop.bitcoin.hive.datatypes.HiveBitcoinAuxPOW;
 import org.zuinnote.hadoop.bitcoin.hive.datatypes.HiveBitcoinBlock;
 import org.zuinnote.hadoop.bitcoin.hive.datatypes.HiveBitcoinTransaction;
 import org.zuinnote.hadoop.bitcoin.hive.datatypes.HiveBitcoinTransactionOutput;
@@ -97,7 +100,7 @@ public SerDeStats getSerDeStats() {
 }
 
 public Class<? extends Writable> getSerializedClass() {
-	return BitcoinBlock.class;
+	return HiveBitcoinBlock.class;
 }
 
 @Override
@@ -152,7 +155,7 @@ public Writable serializeVector(VectorizedRowBatch vrg, ObjectInspector objInspe
 
 private HiveBitcoinBlock convertToHiveBitcoinBlock(BitcoinBlock block) {
 	// convert to HiveBitcoinBlock
-	 	// read transactions
+	 	// convert transactions
 	List<HiveBitcoinTransaction> newTransactions = new ArrayList<>();
 	for (int i=0;i<block.getTransactions().size();i++) {
 		BitcoinTransaction currentTransaction = block.getTransactions().get(i);
@@ -166,6 +169,18 @@ private HiveBitcoinBlock convertToHiveBitcoinBlock(BitcoinBlock block) {
 		
 		newTransactions.add(newTransaction);
 	}
+	// convertAuxPow
+	 // convert Transaction
+	BitcoinTransaction currentCoinbaseTransaction = block.getAuxPOW().getCoinbaseTransaction();
+	List<HiveBitcoinTransactionOutput> newCoinbaseTransactionOutputList = new ArrayList<>();
+	for (int i=0;i<currentCoinbaseTransaction.getListOfOutputs().size();i++) {
+		BitcoinTransactionOutput currentOutput = currentCoinbaseTransaction.getListOfOutputs().get(i);
+		HiveDecimal newValue = HiveDecimal.create(currentOutput.getValue());
+		newCoinbaseTransactionOutputList.add(new HiveBitcoinTransactionOutput(newValue, currentOutput.getTxOutScriptLength(), currentOutput.getTxOutScript()));
+	}
+	HiveBitcoinTransaction newCoinbaseTransaction = new HiveBitcoinTransaction(currentCoinbaseTransaction.getMarker(),currentCoinbaseTransaction.getFlag(),currentCoinbaseTransaction.getVersion(),currentCoinbaseTransaction.getInCounter(),currentCoinbaseTransaction.getListOfInputs(),currentCoinbaseTransaction.getInCounter(),newCoinbaseTransactionOutputList,currentCoinbaseTransaction.getBitcoinScriptWitness(),currentCoinbaseTransaction.getLockTime());
+	HiveBitcoinAuxPOW newHiveBitcoinAuxPOW = new HiveBitcoinAuxPOW(block.getAuxPOW().getVersion(),newCoinbaseTransaction, block.getAuxPOW().getParentBlockHeaderHash(),block.getAuxPOW().getCoinbaseBranch(),block.getAuxPOW().getAuxBlockChainBranch(),block.getAuxPOW().getParentBlockHeader());
+
 	// final result
 	HiveBitcoinBlock result = new HiveBitcoinBlock();
 	result.setBlockSize(block.getBlockSize());
@@ -178,7 +193,7 @@ private HiveBitcoinBlock convertToHiveBitcoinBlock(BitcoinBlock block) {
 	result.setHashPrevBlock(block.getHashPrevBlock());
 	result.setHashMerkleRoot(block.getHashMerkleRoot());
 	result.setTransactions(newTransactions);
-	result.setAuxPOW(block.getAuxPOW());
+	result.setAuxPOW(newHiveBitcoinAuxPOW);
 	return result;
 }
 
