@@ -17,6 +17,7 @@
 package org.zuinnote.hadoop.bitcoin.format.common;
 
 import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
+import org.zuinnote.hadoop.ethereum.format.common.EthereumUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -406,12 +407,10 @@ public List<BitcoinTransactionOutput> parseTransactionOutputs(ByteBuffer rawByte
 	ArrayList<BitcoinTransactionOutput> currentTransactionOutput = new ArrayList<>((int)(noOfTransactionOutputs));
 	for (int i=0;i<noOfTransactionOutputs;i++) {
 		// read value
-		ByteOrder originalOrder = rawByteBuffer.order();
-		rawByteBuffer.order(ByteOrder.BIG_ENDIAN);	
+	
 		byte[] currentTransactionOutputValueArray = new byte[8];
 		rawByteBuffer.get(currentTransactionOutputValueArray);
-		rawByteBuffer.order(originalOrder);
-		BigInteger currentTransactionOutputValue = new BigInteger(1,currentTransactionOutputValueArray);
+		BigInteger currentTransactionOutputValue = new BigInteger(1,EthereumUtil.reverseByteArray(currentTransactionOutputValueArray));
 		// read outScript length (Potential Internal Exceed Java Type)
 		byte[] currentTransactionTxOutScriptLengthVarInt=BitcoinUtil.convertVarIntByteBufferToByteArray(rawByteBuffer);
 		long currentTransactionTxOutScriptSize=BitcoinUtil.getVarInt(currentTransactionTxOutScriptLengthVarInt);

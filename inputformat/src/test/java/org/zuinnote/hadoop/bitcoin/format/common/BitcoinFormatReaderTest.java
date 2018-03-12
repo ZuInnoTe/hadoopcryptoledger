@@ -27,7 +27,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
+import java.math.BigInteger;
 import java.nio.ByteBuffer;
 
 import org.junit.jupiter.api.Test;
@@ -632,6 +632,7 @@ public void parseScriptWitness2BlockAsBitcoinRawBlockDirect()  throws FileNotFou
 		assertEquals( 1, theBitcoinBlock.getTransactions().get(0).getListOfInputs().size(),"Genesis Block must contain exactly one transaction with one input");
 		assertEquals( 77, theBitcoinBlock.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length,"Genesis Block must contain exactly one transaction with one input and script length 77");
 		assertEquals( 1, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().size(),"Genesis Block must contain exactly one transaction with one output");
+		assertEquals( BigInteger.valueOf(5000000000L),theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getValue(), "Value must be BigInteger corresponding to 5000000000L");
 		assertEquals( 67, theBitcoinBlock.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length,"Genesis Block must contain exactly one transaction with one output and script length 67");
 	} finally {
 		if (bbr!=null) 
