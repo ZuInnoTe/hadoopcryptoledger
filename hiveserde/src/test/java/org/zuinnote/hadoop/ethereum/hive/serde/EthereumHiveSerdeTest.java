@@ -33,6 +33,7 @@ import org.zuinnote.hadoop.ethereum.format.common.EthereumBlock;
 import org.zuinnote.hadoop.ethereum.format.common.EthereumBlockReader;
 import org.zuinnote.hadoop.ethereum.format.exception.EthereumBlockReadException;
 import org.zuinnote.hadoop.ethereum.format.mapred.AbstractEthereumRecordReader;
+import org.zuinnote.hadoop.ethereum.hive.datatypes.HiveEthereumBlock;
 
 public class EthereumHiveSerdeTest {
 	static final int DEFAULT_BUFFERSIZE=AbstractEthereumRecordReader.DEFAULT_BUFFERSIZE;
@@ -75,8 +76,8 @@ public class EthereumHiveSerdeTest {
 		EthereumBlockReader ebr = new EthereumBlockReader(fin,EthereumHiveSerdeTest.DEFAULT_MAXSIZE_ETHEREUMBLOCK,EthereumHiveSerdeTest.DEFAULT_BUFFERSIZE,direct );
 		EthereumBlock block = ebr.readBlock();
 		Object deserializedObject = testSerde.deserialize(block);
-		assertTrue( deserializedObject instanceof EthereumBlock,"Deserialized Object is of type EthereumBlock");
-		EthereumBlock deserializedBitcoinBlockStruct = (EthereumBlock)deserializedObject;
+		assertTrue( deserializedObject instanceof HiveEthereumBlock,"Deserialized Object is of type HiveEthereumBlock");
+		HiveEthereumBlock deserializedBitcoinBlockStruct = (HiveEthereumBlock)deserializedObject;
 
 		assertEquals( 6, deserializedBitcoinBlockStruct.getEthereumTransactions().size(),"Block contains 6 transactions");
 		assertEquals(0, deserializedBitcoinBlockStruct.getUncleHeaders().size(),"Block contains 0 uncleHeaders");
