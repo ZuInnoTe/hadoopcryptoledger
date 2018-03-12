@@ -19,6 +19,8 @@
  */
 package org.zuinnote.hadoop.bitcoin.hive.serde;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 
@@ -31,12 +33,18 @@ import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
 
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspectorFactory;
 import org.apache.hadoop.hive.ql.exec.vector.VectorizedSerde;
+import org.apache.hadoop.hive.common.type.HiveDecimal;
 import org.apache.hadoop.hive.ql.exec.vector.VectorizedRowBatch;
-
-   
+import org.zuinnote.hadoop.bitcoin.format.common.BitcoinAuxPOW;
 import org.zuinnote.hadoop.bitcoin.format.common.BitcoinBlock;
+import org.zuinnote.hadoop.bitcoin.format.common.BitcoinScriptWitnessItem;
+import org.zuinnote.hadoop.bitcoin.format.common.BitcoinTransaction;
+import org.zuinnote.hadoop.bitcoin.format.common.BitcoinTransactionInput;
+import org.zuinnote.hadoop.bitcoin.format.common.BitcoinTransactionOutput;
 import org.zuinnote.hadoop.bitcoin.format.mapred.AbstractBitcoinRecordReader;
-
+import org.zuinnote.hadoop.bitcoin.hive.datatypes.HiveBitcoinBlock;
+import org.zuinnote.hadoop.bitcoin.hive.datatypes.HiveBitcoinTransaction;
+import org.zuinnote.hadoop.bitcoin.hive.datatypes.HiveBitcoinTransactionOutput;
 import org.zuinnote.hadoop.bitcoin.format.mapred.AbstractBitcoinFileInputFormat;
 
 import org.apache.commons.logging.LogFactory;
@@ -72,7 +80,12 @@ private ObjectInspector bitcoinBlockObjectInspector;
 /** Deserializer **/
 @Override
 public Object deserialize(Writable blob) {
-		return blob;
+		HiveBitcoinBlock result=null;
+	 	if (blob instanceof BitcoinBlock) {
+	 		result=convertToHiveBitcoinBlock((BitcoinBlock) blob);
+	 		
+	 	}
+		return result;
 }
 
 @Override
@@ -95,7 +108,7 @@ public void initialize(Configuration conf, Properties tbl) {
 	LOG.debug("Initializing");
    // get objectinspector with introspection for class BitcoinBlockStruct to reuse functionality
     bitcoinBlockObjectInspector = ObjectInspectorFactory
-        .getReflectionObjectInspector(BitcoinBlock.class,
+        .getReflectionObjectInspector(HiveBitcoinBlock.class,
         ObjectInspectorFactory.ObjectInspectorOptions.JAVA);
    // pass tbl properties to Configuration
 	String maxBlockSizeStr=tbl.getProperty(BitcoinBlockSerde.CONF_MAXBLOCKSIZE);
@@ -140,6 +153,36 @@ public Writable serializeVector(VectorizedRowBatch vrg, ObjectInspector objInspe
  throw new UnsupportedOperationException("serializeVector not supported");
 }
 
-
+private HiveBitcoinBlock convertToHiveBitcoinBlock(BitcoinBlock block) {
+	// convert to HiveBitcoinBlock
+	 	// read transactions
+	List<HiveBitcoinTransaction> newTransactions = new ArrayList<>();
+	for (int i=0;i<block.getTransactions().size();i++) {
+		BitcoinTransaction currentTransaction = block.getTransactions().get(i);
+		List<HiveBitcoinTransactionOutput> newTransactionsOutputList = new ArrayList<>();
+		for (int j=0;j<currentTransaction.getListOfOutputs().size();j++) {
+			BitcoinTransactionOutput currentOutput = currentTransaction.getListOfOutputs().get(j);
+			HiveDecimal newValue = HiveDecimal.create(currentOutput.getValue());
+			newTransactionsOutputList.add(new HiveBitcoinTransactionOutput(newValue, currentOutput.getTxOutScriptLength(), currentOutput.getTxOutScript()));
+		}			
+		HiveBitcoinTransaction newTransaction = new HiveBitcoinTransaction(currentTransaction.getMarker(),currentTransaction.getFlag(),currentTransaction.getVersion(),currentTransaction.getInCounter(),currentTransaction.getListOfInputs(),currentTransaction.getOutCounter(),newTransactionsOutputList,currentTransaction.getBitcoinScriptWitness(),currentTransaction.getLockTime());
+		
+		newTransactions.add(newTransaction);
+	}
+	// final result
+	HiveBitcoinBlock result = new HiveBitcoinBlock();
+	result.setBlockSize(block.getBlockSize());
+	result.setMagicNo(block.getMagicNo());
+	result.setVersion(block.getVersion());
+	result.setTime(block.getTime());
+	result.setBits(block.getBits());
+	result.setNonce(block.getNonce());
+	result.setTransactionCounter(block.getTransactionCounter());
+	result.setHashPrevBlock(block.getHashPrevBlock());
+	result.setHashMerkleRoot(block.getHashMerkleRoot());
+	result.setTransactions(newTransactions);
+	result.setAuxPOW(block.getAuxPOW());
+	return result;
+}
 
 }
