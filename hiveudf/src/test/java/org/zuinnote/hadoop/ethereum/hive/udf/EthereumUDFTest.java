@@ -26,6 +26,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.hadoop.hive.common.type.HiveDecimal;
 import org.apache.hadoop.hive.ql.metadata.HiveException;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspectorFactory;
@@ -38,6 +39,7 @@ import org.zuinnote.hadoop.ethereum.format.common.EthereumBlock;
 import org.zuinnote.hadoop.ethereum.format.common.EthereumBlockReader;
 import org.zuinnote.hadoop.ethereum.format.common.EthereumTransaction;
 import org.zuinnote.hadoop.ethereum.format.exception.EthereumBlockReadException;
+import org.zuinnote.hadoop.ethereum.hive.datatypes.HiveEthereumTransaction;
 
 /**
  *
@@ -92,7 +94,7 @@ public class EthereumUDFTest {
 		  // initialize object inspector
 			EthereumGetChainIdUDF egcidUDF = new EthereumGetChainIdUDF();
 			ObjectInspector[] arguments = new ObjectInspector[1];
-			arguments[0] =  ObjectInspectorFactory.getReflectionObjectInspector(EthereumTransaction.class,ObjectInspectorFactory.ObjectInspectorOptions.JAVA);
+			arguments[0] =  ObjectInspectorFactory.getReflectionObjectInspector(HiveEthereumTransaction.class,ObjectInspectorFactory.ObjectInspectorOptions.JAVA);
 			egcidUDF.initialize(arguments);	
 			// load test data
 		  ClassLoader classLoader = getClass().getClassLoader();
@@ -107,18 +109,18 @@ public class EthereumUDFTest {
 				EthereumBlock eblock = ebr.readBlock();
 				List<EthereumTransaction> eTrans = eblock.getEthereumTransactions();
 				// validate UDFs
-				EthereumTransaction trans0 = eTrans.get(0);
-
+				HiveEthereumTransaction trans0 = EthereumUDFTest.convertToHiveEthereumTransaction(eTrans.get(0));
+				
 				assertNull(egcidUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans0)}),"Block 1346406 Transaction 1 is Ethereum MainNet");
-				EthereumTransaction trans1 = eTrans.get(1);
+				HiveEthereumTransaction trans1 = EthereumUDFTest.convertToHiveEthereumTransaction(eTrans.get(1));
 				assertNull(egcidUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans1)}),"Block 1346406 Transaction 2 is Ethereum MainNet");
-				EthereumTransaction trans2 = eTrans.get(2);
+				HiveEthereumTransaction trans2 = EthereumUDFTest.convertToHiveEthereumTransaction(eTrans.get(2));
 				assertNull(egcidUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans2)}),"Block 1346406 Transaction 3 is Ethereum MainNet");
-				EthereumTransaction trans3 = eTrans.get(3);
+				HiveEthereumTransaction trans3 = EthereumUDFTest.convertToHiveEthereumTransaction(eTrans.get(3));
 				assertNull(egcidUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans3)}),"Block 1346406 Transaction 4 is Ethereum MainNet");
-				EthereumTransaction trans4 = eTrans.get(4);
+				HiveEthereumTransaction trans4 = EthereumUDFTest.convertToHiveEthereumTransaction(eTrans.get(4));
 				assertNull(egcidUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans4)}),"Block 1346406 Transaction 5 is Ethereum MainNet");
-				EthereumTransaction trans5 = eTrans.get(5);
+				HiveEthereumTransaction trans5 = EthereumUDFTest.convertToHiveEthereumTransaction(eTrans.get(5));
 				assertNull(egcidUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans5)}),"Block 1346406 Transaction 6 is Ethereum MainNet");
 			}
 			 finally {
@@ -187,7 +189,7 @@ public class EthereumUDFTest {
 		  // initialize object inspector
 		  EthereumGetSendAddressUDF egsaUDF = new EthereumGetSendAddressUDF();
 			ObjectInspector[] arguments = new ObjectInspector[2];
-			arguments[0] =  ObjectInspectorFactory.getReflectionObjectInspector(EthereumTransaction.class,ObjectInspectorFactory.ObjectInspectorOptions.JAVA);
+			arguments[0] =  ObjectInspectorFactory.getReflectionObjectInspector(HiveEthereumTransaction.class,ObjectInspectorFactory.ObjectInspectorOptions.JAVA);
 			arguments[1] = PrimitiveObjectInspectorFactory.javaIntObjectInspector;
 			egsaUDF.initialize(arguments);	
 			// load test data
@@ -204,22 +206,22 @@ public class EthereumUDFTest {
 				List<EthereumTransaction> eTrans = eblock.getEthereumTransactions();
 				// validate UDFs
 				
-				 EthereumTransaction trans0 = eTrans.get(0);
+				  HiveEthereumTransaction trans0 = EthereumUDFTest.convertToHiveEthereumTransaction(eTrans.get(0));
 			      byte[] expectedSentAddress = new byte[] {(byte)0x39,(byte)0x42,(byte)0x4b,(byte)0xd2,(byte)0x8a,(byte)0x22,(byte)0x23,(byte)0xda,(byte)0x3e,(byte)0x14,(byte)0xbf,(byte)0x79,(byte)0x3c,(byte)0xf7,(byte)0xf8,(byte)0x20,(byte)0x8e,(byte)0xe9,(byte)0x98,(byte)0x0a};
 			      assertArrayEquals(expectedSentAddress,((BytesWritable)egsaUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans0),new GenericUDF.DeferredJavaObject(1)})).copyBytes(),"Block 1346406 Transaction 1 send address is correctly calculated");
-			      EthereumTransaction trans1 = eTrans.get(1);
+			      HiveEthereumTransaction trans1 = EthereumUDFTest.convertToHiveEthereumTransaction(eTrans.get(1));
 			      expectedSentAddress = new byte[] {(byte)0x4b,(byte)0xb9,(byte)0x60,(byte)0x91,(byte)0xee,(byte)0x9d,(byte)0x80,(byte)0x2e,(byte)0xd0,(byte)0x39,(byte)0xc4,(byte)0xd1,(byte)0xa5,(byte)0xf6,(byte)0x21,(byte)0x6f,(byte)0x90,(byte)0xf8,(byte)0x1b,(byte)0x01};
 			      assertArrayEquals(expectedSentAddress,((BytesWritable)egsaUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans1),new GenericUDF.DeferredJavaObject(1)})).copyBytes(),"Block 1346406 Transaction 2 send address is correctly calculated");
-			      EthereumTransaction trans2 = eTrans.get(2);
+			      HiveEthereumTransaction trans2 = EthereumUDFTest.convertToHiveEthereumTransaction(eTrans.get(2));
 			      expectedSentAddress = new byte[] {(byte)0x63,(byte)0xa9,(byte)0x97,(byte)0x5b,(byte)0xa3,(byte)0x1b,(byte)0x0b,(byte)0x96,(byte)0x26,(byte)0xb3,(byte)0x43,(byte)0x00,(byte)0xf7,(byte)0xf6,(byte)0x27,(byte)0x14,(byte)0x7d,(byte)0xf1,(byte)0xf5,(byte)0x26};
 			      assertArrayEquals(expectedSentAddress,((BytesWritable)egsaUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans2),new GenericUDF.DeferredJavaObject(1)})).copyBytes(),"Block 1346406 Transaction 3 send address is correctly calculated");
-			      EthereumTransaction trans3 = eTrans.get(3);
+			      HiveEthereumTransaction trans3 = EthereumUDFTest.convertToHiveEthereumTransaction(eTrans.get(3));
 			      expectedSentAddress = new byte[] {(byte)0x63,(byte)0xa9,(byte)0x97,(byte)0x5b,(byte)0xa3,(byte)0x1b,(byte)0x0b,(byte)0x96,(byte)0x26,(byte)0xb3,(byte)0x43,(byte)0x00,(byte)0xf7,(byte)0xf6,(byte)0x27,(byte)0x14,(byte)0x7d,(byte)0xf1,(byte)0xf5,(byte)0x26};
 			     assertArrayEquals(expectedSentAddress,((BytesWritable)egsaUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans3),new GenericUDF.DeferredJavaObject(1)})).copyBytes(),"Block 1346406 Transaction 4 send address is correctly calculated");
-			      EthereumTransaction trans4 = eTrans.get(4);
+			      HiveEthereumTransaction trans4 = EthereumUDFTest.convertToHiveEthereumTransaction(eTrans.get(4));
 			      expectedSentAddress = new byte[] {(byte)0x63,(byte)0xa9,(byte)0x97,(byte)0x5b,(byte)0xa3,(byte)0x1b,(byte)0x0b,(byte)0x96,(byte)0x26,(byte)0xb3,(byte)0x43,(byte)0x00,(byte)0xf7,(byte)0xf6,(byte)0x27,(byte)0x14,(byte)0x7d,(byte)0xf1,(byte)0xf5,(byte)0x26};
 			      assertArrayEquals(expectedSentAddress,((BytesWritable)egsaUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans4),new GenericUDF.DeferredJavaObject(1)})).copyBytes(),"Block 1346406 Transaction 5 send address is correctly calculated");
-			      EthereumTransaction trans5 = eTrans.get(5);
+			      HiveEthereumTransaction trans5 = EthereumUDFTest.convertToHiveEthereumTransaction(eTrans.get(5));
 			      expectedSentAddress = new byte[] {(byte)0x63,(byte)0xa9,(byte)0x97,(byte)0x5b,(byte)0xa3,(byte)0x1b,(byte)0x0b,(byte)0x96,(byte)0x26,(byte)0xb3,(byte)0x43,(byte)0x00,(byte)0xf7,(byte)0xf6,(byte)0x27,(byte)0x14,(byte)0x7d,(byte)0xf1,(byte)0xf5,(byte)0x26};
 			      assertArrayEquals(expectedSentAddress,((BytesWritable)egsaUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans5),new GenericUDF.DeferredJavaObject(1)})).copyBytes(),"Block 1346406 Transaction 6 send address is correctly calculated");
 			      
@@ -298,7 +300,7 @@ public class EthereumUDFTest {
 		  // initialize object inspector
 		  EthereumGetTransactionHashUDF egthUDF = new EthereumGetTransactionHashUDF();
 			ObjectInspector[] arguments = new ObjectInspector[1];
-			arguments[0] =  ObjectInspectorFactory.getReflectionObjectInspector(EthereumTransaction.class,ObjectInspectorFactory.ObjectInspectorOptions.JAVA);
+			arguments[0] =  ObjectInspectorFactory.getReflectionObjectInspector(HiveEthereumTransaction.class,ObjectInspectorFactory.ObjectInspectorOptions.JAVA);
 			egthUDF.initialize(arguments);	
 			// load test data
 		  ClassLoader classLoader = getClass().getClassLoader();
@@ -313,22 +315,22 @@ public class EthereumUDFTest {
 				EthereumBlock eblock = ebr.readBlock();
 				List<EthereumTransaction> eTrans = eblock.getEthereumTransactions();
 				// validate UDFs
-				EthereumTransaction trans0 = eTrans.get(0);
+				HiveEthereumTransaction trans0 = EthereumUDFTest.convertToHiveEthereumTransaction(eTrans.get(0));
 				byte[] expectedHash = new byte[] {(byte)0xe2,(byte)0x7e,(byte)0x92,(byte)0x88,(byte)0xe2,(byte)0x9c,(byte)0xc8,(byte)0xeb,(byte)0x78,(byte)0xf9,(byte)0xf7,(byte)0x68,(byte)0xd8,(byte)0x9b,(byte)0xf1,(byte)0xcd,(byte)0x4b,(byte)0x68,(byte)0xb7,(byte)0x15,(byte)0xa3,(byte)0x8b,(byte)0x95,(byte)0xd4,(byte)0x6d,(byte)0x77,(byte)0x86,(byte)0x18,(byte)0xcb,(byte)0x10,(byte)0x4d,(byte)0x58};
 				assertArrayEquals(expectedHash,((BytesWritable)egthUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans0)})).copyBytes(),"Block 1346406 Transaction 1 hash is correctly calculated");
-				EthereumTransaction trans1 = eTrans.get(1);
+				HiveEthereumTransaction trans1 = EthereumUDFTest.convertToHiveEthereumTransaction(eTrans.get(1));
 				expectedHash = new byte[] {(byte)0x7a,(byte)0x23,(byte)0x2a,(byte)0xa2,(byte)0xae,(byte)0x6a,(byte)0x5e,(byte)0x1f,(byte)0x32,(byte)0xca,(byte)0x3a,(byte)0xc9,(byte)0x3f,(byte)0x4f,(byte)0xdb,(byte)0x77,(byte)0x98,(byte)0x3e,(byte)0x93,(byte)0x2b,(byte)0x38,(byte)0x09,(byte)0x93,(byte)0x56,(byte)0x44,(byte)0x42,(byte)0x08,(byte)0xc6,(byte)0x9d,(byte)0x40,(byte)0x86,(byte)0x81};
 				assertArrayEquals(expectedHash,((BytesWritable)egthUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans1)})).copyBytes(),"Block 1346406 Transaction 2 hash is correctly calculated");
-				EthereumTransaction trans2 = eTrans.get(2);
+				HiveEthereumTransaction trans2 = EthereumUDFTest.convertToHiveEthereumTransaction(eTrans.get(2));
 				expectedHash = new byte[] {(byte)0x14,(byte)0x33,(byte)0xe3,(byte)0xcb,(byte)0x66,(byte)0x2f,(byte)0x66,(byte)0x8d,(byte)0x87,(byte)0xb8,(byte)0x35,(byte)0x55,(byte)0x34,(byte)0x5a,(byte)0x20,(byte)0xcc,(byte)0xf8,(byte)0x70,(byte)0x6f,(byte)0x25,(byte)0x21,(byte)0x49,(byte)0x18,(byte)0xe2,(byte)0xf8,(byte)0x1f,(byte)0xe3,(byte)0xd2,(byte)0x1c,(byte)0x9d,(byte)0x5b,(byte)0x23};
 				assertArrayEquals(expectedHash,((BytesWritable)egthUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans2)})).copyBytes(),"Block 1346406 Transaction 3 hash is correctly calculated");
-				EthereumTransaction trans3 = eTrans.get(3);
+				HiveEthereumTransaction trans3 = EthereumUDFTest.convertToHiveEthereumTransaction(eTrans.get(3));
 				expectedHash = new byte[] {(byte)0x39,(byte)0x22,(byte)0xf7,(byte)0xf6,(byte)0x0a,(byte)0x33,(byte)0xa1,(byte)0x2d,(byte)0x13,(byte)0x9d,(byte)0x67,(byte)0xfa,(byte)0x53,(byte)0x30,(byte)0xdb,(byte)0xfd,(byte)0xba,(byte)0x42,(byte)0xa4,(byte)0xb7,(byte)0x67,(byte)0x29,(byte)0x6e,(byte)0xff,(byte)0x64,(byte)0x15,(byte)0xee,(byte)0xa3,(byte)0x2d,(byte)0x8a,(byte)0x7b,(byte)0x2b};
 				assertArrayEquals(expectedHash,((BytesWritable)egthUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans3)})).copyBytes(),"Block 1346406 Transaction 4 hash is correctly calculated");
-				EthereumTransaction trans4 = eTrans.get(4);
+				HiveEthereumTransaction trans4 = EthereumUDFTest.convertToHiveEthereumTransaction(eTrans.get(4));
 				expectedHash = new byte[] {(byte)0xbb,(byte)0x7c,(byte)0xaa,(byte)0x23,(byte)0x38,(byte)0x5a,(byte)0x0f,(byte)0x73,(byte)0x75,(byte)0x3f,(byte)0x9e,(byte)0x28,(byte)0xd8,(byte)0xf0,(byte)0x60,(byte)0x2f,(byte)0xe2,(byte)0xe7,(byte)0x2d,(byte)0x87,(byte)0xe1,(byte)0xe0,(byte)0x95,(byte)0x52,(byte)0x75,(byte)0x28,(byte)0xd1,(byte)0x44,(byte)0x88,(byte)0x5d,(byte)0x6b,(byte)0x51};
 				assertArrayEquals(expectedHash,((BytesWritable)egthUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans4)})).copyBytes(),"Block 1346406 Transaction 5 hash is correctly calculated");
-				EthereumTransaction trans5 = eTrans.get(5);
+				HiveEthereumTransaction trans5 = EthereumUDFTest.convertToHiveEthereumTransaction(eTrans.get(5));
 				expectedHash = new byte[] {(byte)0xbc,(byte)0xde,(byte)0x6f,(byte)0x49,(byte)0x84,(byte)0x2c,(byte)0x6d,(byte)0x73,(byte)0x8d,(byte)0x64,(byte)0x32,(byte)0x8f,(byte)0x78,(byte)0x09,(byte)0xb1,(byte)0xd4,(byte)0x9b,(byte)0xf0,(byte)0xff,(byte)0x3f,(byte)0xfa,(byte)0x46,(byte)0x0f,(byte)0xdd,(byte)0xd2,(byte)0x7f,(byte)0xd4,(byte)0x2b,(byte)0x7a,(byte)0x01,(byte)0xfc,(byte)0x9a};
 				assertArrayEquals(expectedHash,((BytesWritable)egthUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans5)})).copyBytes(),"Block 1346406 Transaction 6 hash is correctly calculated");
 				    
@@ -399,5 +401,28 @@ public class EthereumUDFTest {
 				}
 			}
 
+	  }
+	  
+	  /***
+	   * Helper function to convert EthereumTransaction to HiveEthereumTransaction
+	   * 
+	   * @param transaction
+	   * @return
+	   */
+	  private static HiveEthereumTransaction convertToHiveEthereumTransaction(EthereumTransaction transaction) {
+			HiveEthereumTransaction newTransaction = new HiveEthereumTransaction();
+			newTransaction.setNonce(transaction.getNonce());
+			newTransaction.setValue(HiveDecimal.create(transaction.getValue()));
+			newTransaction.setValueRaw(transaction.getValueRaw());
+			newTransaction.setReceiveAddress(transaction.getReceiveAddress());
+			newTransaction.setGasPrice(HiveDecimal.create(transaction.getGasPrice()));
+			newTransaction.setGasPriceRaw(transaction.getGasPriceRaw());
+			newTransaction.setGasLimit(HiveDecimal.create(transaction.getGasLimit()));
+			newTransaction.setGasLimitRaw(transaction.getGasLimitRaw());
+			newTransaction.setData(transaction.getData());
+			newTransaction.setSig_v(transaction.getSig_v());
+			newTransaction.setSig_r(transaction.getSig_r());
+			newTransaction.setSig_s(transaction.getSig_s());
+			return newTransaction;
 	  }
 }

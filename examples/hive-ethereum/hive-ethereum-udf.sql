@@ -7,12 +7,11 @@
 
 
 
+---the following example shows the from (sendAddress) of a transaction for chain id 1 (main net)
+SELECT hclEthereumGetSendAddress(ethereumTransactions[0],1) FROM EthereumBlockchain LIMIT 1;
 
----the following example shows the from (sendAddress) of a transaction
-SELECT hclEthereumGetSendAddress(ethereumTransactions[0]) FROM EthereumBlockchain LIMIT 1;
-
----the following example shows the from (sendAddress) of a transaction and convert it to a hex string to search in popular Ethereum block explorers
-SELECT hex(hclEthereumGetSendAddress(ethereumTransactions[0])) FROM EthereumBlockchain LIMIT 1;
+---the following example shows the from (sendAddress)  of a transaction for chain id 1 (main net)and convert it to a hex string to search in popular Ethereum block explorers
+SELECT hex(hclEthereumGetSendAddress(ethereumTransactions[0],1)) FROM EthereumBlockchain LIMIT 1;
 
 ---the following example shows the hash of a transaction
 SELECT hclEthereumGetTransactionHash(ethereumTransactions[0]) FROM EthereumBlockchain LIMIT 1;

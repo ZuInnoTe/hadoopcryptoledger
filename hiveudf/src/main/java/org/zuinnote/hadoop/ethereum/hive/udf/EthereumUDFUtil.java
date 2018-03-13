@@ -15,19 +15,13 @@
 **/
 package org.zuinnote.hadoop.ethereum.hive.udf;
 
-import java.math.BigInteger;
+
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.hive.serde2.objectinspector.StructField;
 import org.apache.hadoop.hive.serde2.objectinspector.StructObjectInspector;
-import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectInspectorFactory;
-import org.apache.hadoop.hive.serde2.objectinspector.primitive.WritableBinaryObjectInspector;
-import org.apache.hadoop.hive.serde2.objectinspector.primitive.WritableLongObjectInspector;
-import org.zuinnote.hadoop.bitcoin.format.common.BitcoinTransaction;
-import org.zuinnote.hadoop.bitcoin.hive.datatypes.HiveBitcoinTransaction;
 import org.zuinnote.hadoop.ethereum.format.common.EthereumTransaction;
-import org.zuinnote.hadoop.ethereum.format.common.EthereumUtil;
 import org.zuinnote.hadoop.ethereum.hive.datatypes.HiveEthereumTransaction;
 
 /**
@@ -115,8 +109,8 @@ public class EthereumUDFUtil {
 			result.setGasLimitRaw(transaction.getGasLimitRaw());
 			result.setData(transaction.getData());
 			result.setSig_v(transaction.getSig_v());
-			result.setSig_v(transaction.getSig_r());
-			result.setSig_v(transaction.getSig_s());
+			result.setSig_r(transaction.getSig_r());
+			result.setSig_s(transaction.getSig_s());
 			return result;
 	}
 
