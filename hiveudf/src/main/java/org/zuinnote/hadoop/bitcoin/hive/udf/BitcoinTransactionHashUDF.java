@@ -37,7 +37,7 @@ import org.apache.hadoop.hive.serde2.objectinspector.StructField;
 import org.apache.hadoop.hive.serde2.objectinspector.StructObjectInspector;
 
 import org.zuinnote.hadoop.bitcoin.format.common.*;
-
+import org.zuinnote.hadoop.bitcoin.hive.datatypes.HiveBitcoinTransaction;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
 
@@ -130,8 +130,8 @@ public Object evaluate(DeferredObject[] arguments) throws HiveException {
 		return null;
 	}
 	BitcoinTransaction bitcoinTransaction;
-	if (arguments[0].get() instanceof BitcoinTransaction) { // this happens if the table is in the original file format
-		 bitcoinTransaction = (BitcoinTransaction)arguments[0].get();
+	if (arguments[0].get() instanceof HiveBitcoinTransaction) { // this happens if the table is in the original file format
+		 bitcoinTransaction = BitcoinUDFUtil.convertToBitcoinTransaction((HiveBitcoinTransaction)arguments[0].get());
 	} else { // this happens if the table has been imported into a more optimized analytics format, such as ORC. However, usually we expect that the first case will be used mostly (the hash is generated during extraction from the input format)
 		// check if all bitcointransaction fields are available <struct<version:int,incounter:binary,outcounter:binary,listofinputs:array<struct<prevtransactionhash:binary,previoustxoutindex:bigint,txinscriptlength:binary,txinscript:binary,seqno:bigint>>,listofoutputs:array<struct<value:bigint,txoutscriptlength:binary,txoutscript:binary>>,locktime:int>
 		Object originalObject=arguments[0].get();
@@ -242,6 +242,7 @@ StructObjectInspector listOfOutputsElementObjectInspector = (StructObjectInspect
 	}
 return result;
 }
+
 
 
 }

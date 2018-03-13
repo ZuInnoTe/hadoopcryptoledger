@@ -15,6 +15,8 @@
 **/
 package org.zuinnote.hadoop.ethereum.hive.udf;
 
+import java.math.BigInteger;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.hive.serde2.objectinspector.StructField;
@@ -22,8 +24,11 @@ import org.apache.hadoop.hive.serde2.objectinspector.StructObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectInspectorFactory;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.WritableBinaryObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.WritableLongObjectInspector;
+import org.zuinnote.hadoop.bitcoin.format.common.BitcoinTransaction;
+import org.zuinnote.hadoop.bitcoin.hive.datatypes.HiveBitcoinTransaction;
 import org.zuinnote.hadoop.ethereum.format.common.EthereumTransaction;
 import org.zuinnote.hadoop.ethereum.format.common.EthereumUtil;
+import org.zuinnote.hadoop.ethereum.hive.datatypes.HiveEthereumTransaction;
 
 /**
  * Utility class for Hive UDFs for Ethereum
@@ -51,8 +56,8 @@ public class EthereumUDFUtil {
 	 */
 	public  EthereumTransaction getEthereumTransactionFromObject(Object row) {
 		EthereumTransaction result=null;
-		if (row instanceof EthereumTransaction) { // this is the case if you use the EthereumBlockSerde
-			result=(EthereumTransaction) row;
+		if (row instanceof HiveEthereumTransaction) { // this is the case if you use the EthereumBlockSerde
+			result=EthereumUDFUtil.convertToEthereumTransaction((HiveEthereumTransaction) row);
 		} else { // this is the case if you have imported the EthereumTransaction in any other Hive supported format, such as ORC or Parquet
 			StructField nonceSF=soi.getStructFieldRef("nonce");
 			StructField valueSF=soi.getStructFieldRef("valueRaw");
@@ -91,6 +96,28 @@ public class EthereumUDFUtil {
 			result.setSig_s(sig_s);
 		}
 		return result;
+	}
+	
+	
+	/** 
+	 * Convert HiveEthereumTransaction to Ethereum Transaction
+	 * 
+	 * @param transaction in HiveEthereumTransaction format
+	 * @return transaction in EthereumTransactionFormat
+	 */
+	public static EthereumTransaction convertToEthereumTransaction(HiveEthereumTransaction transaction) {
+			EthereumTransaction result = new EthereumTransaction();
+			// note we set only the raw values, the other ones can be automatically dervied by the EthereumTransaction class if needed. This avoids conversion issues for large numbers
+			result.setNonce(transaction.getNonce());
+			result.setValueRaw(transaction.getValueRaw());
+			result.setReceiveAddress(transaction.getReceiveAddress());
+			result.setGasPriceRaw(transaction.getGasPriceRaw());
+			result.setGasLimitRaw(transaction.getGasLimitRaw());
+			result.setData(transaction.getData());
+			result.setSig_v(transaction.getSig_v());
+			result.setSig_v(transaction.getSig_r());
+			result.setSig_v(transaction.getSig_s());
+			return result;
 	}
 
 }
