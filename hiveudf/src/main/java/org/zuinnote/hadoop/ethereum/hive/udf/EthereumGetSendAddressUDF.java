@@ -27,6 +27,7 @@ import org.apache.hadoop.hive.serde2.objectinspector.StructObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.IntObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectInspectorFactory;
 import org.apache.hadoop.io.BytesWritable;
+import org.apache.hadoop.io.IntWritable;
 import org.zuinnote.hadoop.ethereum.format.common.EthereumTransaction;
 import org.zuinnote.hadoop.ethereum.format.common.EthereumUtil;
 
@@ -65,7 +66,7 @@ public class EthereumGetSendAddressUDF extends GenericUDF {
 			return null;
 		}
 		EthereumTransaction eTrans = this.ethereumUDFUtil.getEthereumTransactionFromObject(arguments[0].get());
-		byte[] sendAddress=EthereumUtil.getSendAddress(eTrans,(int) arguments[1].get());
+		byte[] sendAddress=EthereumUtil.getSendAddress(eTrans, ((IntWritable)arguments[1].get()).get());
 		if (sendAddress==null) {
 			return null;
 		}

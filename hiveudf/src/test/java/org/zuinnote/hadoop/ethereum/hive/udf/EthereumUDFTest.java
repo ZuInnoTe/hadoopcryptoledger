@@ -32,6 +32,7 @@ import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspectorFactory;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectInspectorFactory;
 import org.apache.hadoop.io.BytesWritable;
+import org.apache.hadoop.io.IntWritable;
 import org.junit.jupiter.api.Test;
 import org.apache.hadoop.hive.ql.udf.generic.GenericUDF;
 
@@ -208,22 +209,22 @@ public class EthereumUDFTest {
 				
 				  HiveEthereumTransaction trans0 = EthereumUDFTest.convertToHiveEthereumTransaction(eTrans.get(0));
 			      byte[] expectedSentAddress = new byte[] {(byte)0x39,(byte)0x42,(byte)0x4b,(byte)0xd2,(byte)0x8a,(byte)0x22,(byte)0x23,(byte)0xda,(byte)0x3e,(byte)0x14,(byte)0xbf,(byte)0x79,(byte)0x3c,(byte)0xf7,(byte)0xf8,(byte)0x20,(byte)0x8e,(byte)0xe9,(byte)0x98,(byte)0x0a};
-			      assertArrayEquals(expectedSentAddress,((BytesWritable)egsaUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans0),new GenericUDF.DeferredJavaObject(1)})).copyBytes(),"Block 1346406 Transaction 1 send address is correctly calculated");
+			      assertArrayEquals(expectedSentAddress,((BytesWritable)egsaUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans0),new GenericUDF.DeferredJavaObject(new IntWritable(1))})).copyBytes(),"Block 1346406 Transaction 1 send address is correctly calculated");
 			      HiveEthereumTransaction trans1 = EthereumUDFTest.convertToHiveEthereumTransaction(eTrans.get(1));
 			      expectedSentAddress = new byte[] {(byte)0x4b,(byte)0xb9,(byte)0x60,(byte)0x91,(byte)0xee,(byte)0x9d,(byte)0x80,(byte)0x2e,(byte)0xd0,(byte)0x39,(byte)0xc4,(byte)0xd1,(byte)0xa5,(byte)0xf6,(byte)0x21,(byte)0x6f,(byte)0x90,(byte)0xf8,(byte)0x1b,(byte)0x01};
-			      assertArrayEquals(expectedSentAddress,((BytesWritable)egsaUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans1),new GenericUDF.DeferredJavaObject(1)})).copyBytes(),"Block 1346406 Transaction 2 send address is correctly calculated");
+			      assertArrayEquals(expectedSentAddress,((BytesWritable)egsaUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans1),new GenericUDF.DeferredJavaObject(new IntWritable(1))})).copyBytes(),"Block 1346406 Transaction 2 send address is correctly calculated");
 			      HiveEthereumTransaction trans2 = EthereumUDFTest.convertToHiveEthereumTransaction(eTrans.get(2));
 			      expectedSentAddress = new byte[] {(byte)0x63,(byte)0xa9,(byte)0x97,(byte)0x5b,(byte)0xa3,(byte)0x1b,(byte)0x0b,(byte)0x96,(byte)0x26,(byte)0xb3,(byte)0x43,(byte)0x00,(byte)0xf7,(byte)0xf6,(byte)0x27,(byte)0x14,(byte)0x7d,(byte)0xf1,(byte)0xf5,(byte)0x26};
-			      assertArrayEquals(expectedSentAddress,((BytesWritable)egsaUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans2),new GenericUDF.DeferredJavaObject(1)})).copyBytes(),"Block 1346406 Transaction 3 send address is correctly calculated");
+			      assertArrayEquals(expectedSentAddress,((BytesWritable)egsaUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans2),new GenericUDF.DeferredJavaObject(new IntWritable(1))})).copyBytes(),"Block 1346406 Transaction 3 send address is correctly calculated");
 			      HiveEthereumTransaction trans3 = EthereumUDFTest.convertToHiveEthereumTransaction(eTrans.get(3));
 			      expectedSentAddress = new byte[] {(byte)0x63,(byte)0xa9,(byte)0x97,(byte)0x5b,(byte)0xa3,(byte)0x1b,(byte)0x0b,(byte)0x96,(byte)0x26,(byte)0xb3,(byte)0x43,(byte)0x00,(byte)0xf7,(byte)0xf6,(byte)0x27,(byte)0x14,(byte)0x7d,(byte)0xf1,(byte)0xf5,(byte)0x26};
-			     assertArrayEquals(expectedSentAddress,((BytesWritable)egsaUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans3),new GenericUDF.DeferredJavaObject(1)})).copyBytes(),"Block 1346406 Transaction 4 send address is correctly calculated");
+			     assertArrayEquals(expectedSentAddress,((BytesWritable)egsaUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans3),new GenericUDF.DeferredJavaObject(new IntWritable(1))})).copyBytes(),"Block 1346406 Transaction 4 send address is correctly calculated");
 			      HiveEthereumTransaction trans4 = EthereumUDFTest.convertToHiveEthereumTransaction(eTrans.get(4));
 			      expectedSentAddress = new byte[] {(byte)0x63,(byte)0xa9,(byte)0x97,(byte)0x5b,(byte)0xa3,(byte)0x1b,(byte)0x0b,(byte)0x96,(byte)0x26,(byte)0xb3,(byte)0x43,(byte)0x00,(byte)0xf7,(byte)0xf6,(byte)0x27,(byte)0x14,(byte)0x7d,(byte)0xf1,(byte)0xf5,(byte)0x26};
-			      assertArrayEquals(expectedSentAddress,((BytesWritable)egsaUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans4),new GenericUDF.DeferredJavaObject(1)})).copyBytes(),"Block 1346406 Transaction 5 send address is correctly calculated");
+			      assertArrayEquals(expectedSentAddress,((BytesWritable)egsaUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans4),new GenericUDF.DeferredJavaObject(new IntWritable(1))})).copyBytes(),"Block 1346406 Transaction 5 send address is correctly calculated");
 			      HiveEthereumTransaction trans5 = EthereumUDFTest.convertToHiveEthereumTransaction(eTrans.get(5));
 			      expectedSentAddress = new byte[] {(byte)0x63,(byte)0xa9,(byte)0x97,(byte)0x5b,(byte)0xa3,(byte)0x1b,(byte)0x0b,(byte)0x96,(byte)0x26,(byte)0xb3,(byte)0x43,(byte)0x00,(byte)0xf7,(byte)0xf6,(byte)0x27,(byte)0x14,(byte)0x7d,(byte)0xf1,(byte)0xf5,(byte)0x26};
-			      assertArrayEquals(expectedSentAddress,((BytesWritable)egsaUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans5),new GenericUDF.DeferredJavaObject(1)})).copyBytes(),"Block 1346406 Transaction 6 send address is correctly calculated");
+			      assertArrayEquals(expectedSentAddress,((BytesWritable)egsaUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans5),new GenericUDF.DeferredJavaObject(new IntWritable(1))})).copyBytes(),"Block 1346406 Transaction 6 send address is correctly calculated");
 			      
 		}
 			 finally {
@@ -259,32 +260,32 @@ public class EthereumUDFTest {
 				TestEthereumTransaction trans0 = new TestEthereumTransaction();
 				trans0.set(transOrig0);
 			      byte[] expectedSentAddress = new byte[] {(byte)0x39,(byte)0x42,(byte)0x4b,(byte)0xd2,(byte)0x8a,(byte)0x22,(byte)0x23,(byte)0xda,(byte)0x3e,(byte)0x14,(byte)0xbf,(byte)0x79,(byte)0x3c,(byte)0xf7,(byte)0xf8,(byte)0x20,(byte)0x8e,(byte)0xe9,(byte)0x98,(byte)0x0a};
-			      assertArrayEquals(expectedSentAddress,((BytesWritable)egsaUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans0),new GenericUDF.DeferredJavaObject(1)})).copyBytes(),"Block 1346406 Transaction 1 send address is correctly calculated");
+			      assertArrayEquals(expectedSentAddress,((BytesWritable)egsaUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans0),new GenericUDF.DeferredJavaObject(new IntWritable(1))})).copyBytes(),"Block 1346406 Transaction 1 send address is correctly calculated");
 					EthereumTransaction transOrig1 = eTrans.get(1);
 					TestEthereumTransaction trans1 = new TestEthereumTransaction();
 					trans1.set(transOrig1);
 			      expectedSentAddress = new byte[] {(byte)0x4b,(byte)0xb9,(byte)0x60,(byte)0x91,(byte)0xee,(byte)0x9d,(byte)0x80,(byte)0x2e,(byte)0xd0,(byte)0x39,(byte)0xc4,(byte)0xd1,(byte)0xa5,(byte)0xf6,(byte)0x21,(byte)0x6f,(byte)0x90,(byte)0xf8,(byte)0x1b,(byte)0x01};
-			      assertArrayEquals(expectedSentAddress,((BytesWritable)egsaUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans1),new GenericUDF.DeferredJavaObject(1)})).copyBytes(),"Block 1346406 Transaction 2 send address is correctly calculated");
+			      assertArrayEquals(expectedSentAddress,((BytesWritable)egsaUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans1),new GenericUDF.DeferredJavaObject(new IntWritable(1))})).copyBytes(),"Block 1346406 Transaction 2 send address is correctly calculated");
 					EthereumTransaction transOrig2 = eTrans.get(2);
 					TestEthereumTransaction trans2 = new TestEthereumTransaction();
 					trans2.set(transOrig2);
 			      expectedSentAddress = new byte[] {(byte)0x63,(byte)0xa9,(byte)0x97,(byte)0x5b,(byte)0xa3,(byte)0x1b,(byte)0x0b,(byte)0x96,(byte)0x26,(byte)0xb3,(byte)0x43,(byte)0x00,(byte)0xf7,(byte)0xf6,(byte)0x27,(byte)0x14,(byte)0x7d,(byte)0xf1,(byte)0xf5,(byte)0x26};
-			      assertArrayEquals(expectedSentAddress,((BytesWritable)egsaUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans2),new GenericUDF.DeferredJavaObject(1)})).copyBytes(),"Block 1346406 Transaction 3 send address is correctly calculated");
+			      assertArrayEquals(expectedSentAddress,((BytesWritable)egsaUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans2),new GenericUDF.DeferredJavaObject(new IntWritable(1))})).copyBytes(),"Block 1346406 Transaction 3 send address is correctly calculated");
 					EthereumTransaction transOrig3 = eTrans.get(3);
 					TestEthereumTransaction trans3 = new TestEthereumTransaction();
 					trans3.set(transOrig3);
 			      expectedSentAddress = new byte[] {(byte)0x63,(byte)0xa9,(byte)0x97,(byte)0x5b,(byte)0xa3,(byte)0x1b,(byte)0x0b,(byte)0x96,(byte)0x26,(byte)0xb3,(byte)0x43,(byte)0x00,(byte)0xf7,(byte)0xf6,(byte)0x27,(byte)0x14,(byte)0x7d,(byte)0xf1,(byte)0xf5,(byte)0x26};
-			     assertArrayEquals(expectedSentAddress,((BytesWritable)egsaUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans3),new GenericUDF.DeferredJavaObject(1)})).copyBytes(),"Block 1346406 Transaction 4 send address is correctly calculated");
+			     assertArrayEquals(expectedSentAddress,((BytesWritable)egsaUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans3),new GenericUDF.DeferredJavaObject(new IntWritable(1))})).copyBytes(),"Block 1346406 Transaction 4 send address is correctly calculated");
 					EthereumTransaction transOrig4 = eTrans.get(4);
 					TestEthereumTransaction trans4 = new TestEthereumTransaction();
 					trans4.set(transOrig4);
 			      expectedSentAddress = new byte[] {(byte)0x63,(byte)0xa9,(byte)0x97,(byte)0x5b,(byte)0xa3,(byte)0x1b,(byte)0x0b,(byte)0x96,(byte)0x26,(byte)0xb3,(byte)0x43,(byte)0x00,(byte)0xf7,(byte)0xf6,(byte)0x27,(byte)0x14,(byte)0x7d,(byte)0xf1,(byte)0xf5,(byte)0x26};
-			      assertArrayEquals(expectedSentAddress,((BytesWritable)egsaUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans4),new GenericUDF.DeferredJavaObject(1)})).copyBytes(),"Block 1346406 Transaction 5 send address is correctly calculated");
+			      assertArrayEquals(expectedSentAddress,((BytesWritable)egsaUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans4),new GenericUDF.DeferredJavaObject(new IntWritable(1))})).copyBytes(),"Block 1346406 Transaction 5 send address is correctly calculated");
 					EthereumTransaction transOrig5 = eTrans.get(5);
 					TestEthereumTransaction trans5 = new TestEthereumTransaction();
 					trans5.set(transOrig5);
 			      expectedSentAddress = new byte[] {(byte)0x63,(byte)0xa9,(byte)0x97,(byte)0x5b,(byte)0xa3,(byte)0x1b,(byte)0x0b,(byte)0x96,(byte)0x26,(byte)0xb3,(byte)0x43,(byte)0x00,(byte)0xf7,(byte)0xf6,(byte)0x27,(byte)0x14,(byte)0x7d,(byte)0xf1,(byte)0xf5,(byte)0x26};
-			      assertArrayEquals(expectedSentAddress,((BytesWritable)egsaUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans5),new GenericUDF.DeferredJavaObject(1)})).copyBytes(),"Block 1346406 Transaction 6 send address is correctly calculated");
+			      assertArrayEquals(expectedSentAddress,((BytesWritable)egsaUDF.evaluate(new GenericUDF.DeferredObject[] {new GenericUDF.DeferredJavaObject(trans5),new GenericUDF.DeferredJavaObject(new IntWritable(1))})).copyBytes(),"Block 1346406 Transaction 6 send address is correctly calculated");
 			      
 		}
 			 finally {
