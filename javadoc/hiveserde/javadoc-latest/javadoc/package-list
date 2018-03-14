@@ -1,2 +1,4 @@
+org.zuinnote.hadoop.bitcoin.hive.datatypes
 org.zuinnote.hadoop.bitcoin.hive.serde
+org.zuinnote.hadoop.ethereum.hive.datatypes
 org.zuinnote.hadoop.ethereum.hive.serde
