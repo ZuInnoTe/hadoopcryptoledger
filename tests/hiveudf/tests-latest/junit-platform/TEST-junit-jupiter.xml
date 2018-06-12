@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="JUnit Jupiter" tests="24" skipped="0" failures="0" errors="0" time="0.959" hostname="travis-job-zuinnote-hadoopcryptole-365334711.travisci.net" timestamp="2018-04-11T21:42:14">
+<testsuite name="JUnit Jupiter" tests="24" skipped="0" failures="0" errors="0" time="1.757" hostname="travis-job-zuinnote-hadoopcryptole-391466503.travisci.net" timestamp="2018-06-12T21:16:39">
 <properties>
 <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
 <property name="file.encoding" value="UTF-8"/>
@@ -34,7 +34,7 @@
 "/>
 <property name="os.arch" value="amd64"/>
 <property name="os.name" value="Linux"/>
-<property name="os.version" value="4.4.0-112-generic"/>
+<property name="os.version" value="4.14.12-041412-generic"/>
 <property name="path.separator" value=":"/>
 <property name="sun.arch.data.model" value="64"/>
 <property name="sun.boot.class.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/resources.jar:/usr/lib/jvm/java-8-oracle/jre/lib/rt.jar:/usr/lib/jvm/java-8-oracle/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jsse.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jce.jar:/usr/lib/jvm/java-8-oracle/jre/lib/charsets.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jfr.jar:/usr/lib/jvm/java-8-oracle/jre/classes"/>
@@ -55,55 +55,37 @@
 <property name="user.timezone" value="UTC"/>
 <property name="user.variant" value=""/>
 </properties>
-<testcase name="extractNamecoinFieldUpdate()" classname="org.zuinnote.hadoop.namecoin.hive.udf.NamecoinUDFTest" time="0.238">
-<system-out><![CDATA[
-unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.namecoin.hive.udf.NamecoinUDFTest]/[method:extractNamecoinFieldUpdate()]
-display-name: extractNamecoinFieldUpdate()
-]]></system-out>
-</testcase>
-<testcase name="getNameOperationUDF()" classname="org.zuinnote.hadoop.namecoin.hive.udf.NamecoinUDFTest" time="0.004">
-<system-out><![CDATA[
-unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.namecoin.hive.udf.NamecoinUDFTest]/[method:getNameOperationUDF()]
-display-name: getNameOperationUDF()
-]]></system-out>
-</testcase>
-<testcase name="extractNamecoinFieldFirstUpdate()" classname="org.zuinnote.hadoop.namecoin.hive.udf.NamecoinUDFTest" time="0.001">
-<system-out><![CDATA[
-unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.namecoin.hive.udf.NamecoinUDFTest]/[method:extractNamecoinFieldFirstUpdate()]
-display-name: extractNamecoinFieldFirstUpdate()
-]]></system-out>
-</testcase>
-<testcase name="BitcoinScriptPaymentPatternAnalyzerUDFNotNull()" classname="org.zuinnote.hadoop.bitcoin.hive.udf.BitcoinUDFTest" time="0.003">
+<testcase name="BitcoinScriptPaymentPatternAnalyzerUDFNotNull()" classname="org.zuinnote.hadoop.bitcoin.hive.udf.BitcoinUDFTest" time="0.294">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.hive.udf.BitcoinUDFTest]/[method:BitcoinScriptPaymentPatternAnalyzerUDFNotNull()]
 display-name: BitcoinScriptPaymentPatternAnalyzerUDFNotNull()
 ]]></system-out>
 </testcase>
-<testcase name="BitcoinTransactionHashSegwitUDFObjectInspector()" classname="org.zuinnote.hadoop.bitcoin.hive.udf.BitcoinUDFTest" time="0.07">
+<testcase name="BitcoinTransactionHashSegwitUDFObjectInspector()" classname="org.zuinnote.hadoop.bitcoin.hive.udf.BitcoinUDFTest" time="0.268">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.hive.udf.BitcoinUDFTest]/[method:BitcoinTransactionHashSegwitUDFObjectInspector()]
 display-name: BitcoinTransactionHashSegwitUDFObjectInspector()
 ]]></system-out>
 </testcase>
-<testcase name="BitcoinTransactionHashSegwitUDFWriteable()" classname="org.zuinnote.hadoop.bitcoin.hive.udf.BitcoinUDFTest" time="0.004">
+<testcase name="BitcoinTransactionHashSegwitUDFWriteable()" classname="org.zuinnote.hadoop.bitcoin.hive.udf.BitcoinUDFTest" time="0.005">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.hive.udf.BitcoinUDFTest]/[method:BitcoinTransactionHashSegwitUDFWriteable()]
 display-name: BitcoinTransactionHashSegwitUDFWriteable()
 ]]></system-out>
 </testcase>
-<testcase name="BitcoinScriptPaymentPatternAnalyzerUDFNull()" classname="org.zuinnote.hadoop.bitcoin.hive.udf.BitcoinUDFTest" time="0.007">
+<testcase name="BitcoinScriptPaymentPatternAnalyzerUDFNull()" classname="org.zuinnote.hadoop.bitcoin.hive.udf.BitcoinUDFTest" time="0.012">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.hive.udf.BitcoinUDFTest]/[method:BitcoinScriptPaymentPatternAnalyzerUDFNull()]
 display-name: BitcoinScriptPaymentPatternAnalyzerUDFNull()
 ]]></system-out>
 </testcase>
-<testcase name="BitcoinTransactionHashSegwitUDFInvalidArguments()" classname="org.zuinnote.hadoop.bitcoin.hive.udf.BitcoinUDFTest" time="0.17">
+<testcase name="BitcoinTransactionHashSegwitUDFInvalidArguments()" classname="org.zuinnote.hadoop.bitcoin.hive.udf.BitcoinUDFTest" time="0.287">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.hive.udf.BitcoinUDFTest]/[method:BitcoinTransactionHashSegwitUDFInvalidArguments()]
 display-name: BitcoinTransactionHashSegwitUDFInvalidArguments()
 ]]></system-out>
 </testcase>
-<testcase name="BitcoinTransactionHashUDFNull()" classname="org.zuinnote.hadoop.bitcoin.hive.udf.BitcoinUDFTest" time="0.005">
+<testcase name="BitcoinTransactionHashUDFNull()" classname="org.zuinnote.hadoop.bitcoin.hive.udf.BitcoinUDFTest" time="0.008">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.hive.udf.BitcoinUDFTest]/[method:BitcoinTransactionHashUDFNull()]
 display-name: BitcoinTransactionHashUDFNull()
@@ -127,7 +109,7 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.hive.udf.Bi
 display-name: BitcoinTransactionHashSegwitUDFNull()
 ]]></system-out>
 </testcase>
-<testcase name="BitcoinTransactionHashUDFWriteable()" classname="org.zuinnote.hadoop.bitcoin.hive.udf.BitcoinUDFTest" time="0">
+<testcase name="BitcoinTransactionHashUDFWriteable()" classname="org.zuinnote.hadoop.bitcoin.hive.udf.BitcoinUDFTest" time="0.001">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.hive.udf.BitcoinUDFTest]/[method:BitcoinTransactionHashUDFWriteable()]
 display-name: BitcoinTransactionHashUDFWriteable()
@@ -139,19 +121,19 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.bitcoin.hive.udf.Bi
 display-name: BitcoinTransactionHashUDFInvalidArguments()
 ]]></system-out>
 </testcase>
-<testcase name="EthereumGetChainIdUDFObjectInspector()" classname="org.zuinnote.hadoop.ethereum.hive.udf.EthereumUDFTest" time="0.021">
+<testcase name="EthereumGetChainIdUDFObjectInspector()" classname="org.zuinnote.hadoop.ethereum.hive.udf.EthereumUDFTest" time="0.042">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.hive.udf.EthereumUDFTest]/[method:EthereumGetChainIdUDFObjectInspector()]
 display-name: EthereumGetChainIdUDFObjectInspector()
 ]]></system-out>
 </testcase>
-<testcase name="checkTestDataBlock1346406Available()" classname="org.zuinnote.hadoop.ethereum.hive.udf.EthereumUDFTest" time="0.001">
+<testcase name="checkTestDataBlock1346406Available()" classname="org.zuinnote.hadoop.ethereum.hive.udf.EthereumUDFTest" time="0.004">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.hive.udf.EthereumUDFTest]/[method:checkTestDataBlock1346406Available()]
 display-name: checkTestDataBlock1346406Available()
 ]]></system-out>
 </testcase>
-<testcase name="EthereumGetSendAddressUDFWritable()" classname="org.zuinnote.hadoop.ethereum.hive.udf.EthereumUDFTest" time="0.307">
+<testcase name="EthereumGetSendAddressUDFWritable()" classname="org.zuinnote.hadoop.ethereum.hive.udf.EthereumUDFTest" time="0.613">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.hive.udf.EthereumUDFTest]/[method:EthereumGetSendAddressUDFWritable()]
 display-name: EthereumGetSendAddressUDFWritable()
@@ -163,25 +145,25 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.hive.udf.E
 display-name: EthereumGetChainIdUDFNull()
 ]]></system-out>
 </testcase>
-<testcase name="EthereumGetTransactionHashUDFNull()" classname="org.zuinnote.hadoop.ethereum.hive.udf.EthereumUDFTest" time="0.001">
+<testcase name="EthereumGetTransactionHashUDFNull()" classname="org.zuinnote.hadoop.ethereum.hive.udf.EthereumUDFTest" time="0.003">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.hive.udf.EthereumUDFTest]/[method:EthereumGetTransactionHashUDFNull()]
 display-name: EthereumGetTransactionHashUDFNull()
 ]]></system-out>
 </testcase>
-<testcase name="EthereumGetTransactionHashUDFWritable()" classname="org.zuinnote.hadoop.ethereum.hive.udf.EthereumUDFTest" time="0.002">
+<testcase name="EthereumGetTransactionHashUDFWritable()" classname="org.zuinnote.hadoop.ethereum.hive.udf.EthereumUDFTest" time="0.003">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.hive.udf.EthereumUDFTest]/[method:EthereumGetTransactionHashUDFWritable()]
 display-name: EthereumGetTransactionHashUDFWritable()
 ]]></system-out>
 </testcase>
-<testcase name="EthereumGetChainIdUDFWritable()" classname="org.zuinnote.hadoop.ethereum.hive.udf.EthereumUDFTest" time="0.001">
+<testcase name="EthereumGetChainIdUDFWritable()" classname="org.zuinnote.hadoop.ethereum.hive.udf.EthereumUDFTest" time="0.002">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.hive.udf.EthereumUDFTest]/[method:EthereumGetChainIdUDFWritable()]
 display-name: EthereumGetChainIdUDFWritable()
 ]]></system-out>
 </testcase>
-<testcase name="EthereumGetSendAddressUDFNull()" classname="org.zuinnote.hadoop.ethereum.hive.udf.EthereumUDFTest" time="0">
+<testcase name="EthereumGetSendAddressUDFNull()" classname="org.zuinnote.hadoop.ethereum.hive.udf.EthereumUDFTest" time="0.001">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.hive.udf.EthereumUDFTest]/[method:EthereumGetSendAddressUDFNull()]
 display-name: EthereumGetSendAddressUDFNull()
@@ -193,10 +175,28 @@ unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.hive.udf.E
 display-name: EthereumGetTransactionHashUDFObjectInspector()
 ]]></system-out>
 </testcase>
-<testcase name="EthereumGetSendAddressUDFObjectInspector()" classname="org.zuinnote.hadoop.ethereum.hive.udf.EthereumUDFTest" time="0.032">
+<testcase name="EthereumGetSendAddressUDFObjectInspector()" classname="org.zuinnote.hadoop.ethereum.hive.udf.EthereumUDFTest" time="0.042">
 <system-out><![CDATA[
 unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.ethereum.hive.udf.EthereumUDFTest]/[method:EthereumGetSendAddressUDFObjectInspector()]
 display-name: EthereumGetSendAddressUDFObjectInspector()
+]]></system-out>
+</testcase>
+<testcase name="extractNamecoinFieldUpdate()" classname="org.zuinnote.hadoop.namecoin.hive.udf.NamecoinUDFTest" time="0.004">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.namecoin.hive.udf.NamecoinUDFTest]/[method:extractNamecoinFieldUpdate()]
+display-name: extractNamecoinFieldUpdate()
+]]></system-out>
+</testcase>
+<testcase name="getNameOperationUDF()" classname="org.zuinnote.hadoop.namecoin.hive.udf.NamecoinUDFTest" time="0.001">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.namecoin.hive.udf.NamecoinUDFTest]/[method:getNameOperationUDF()]
+display-name: getNameOperationUDF()
+]]></system-out>
+</testcase>
+<testcase name="extractNamecoinFieldFirstUpdate()" classname="org.zuinnote.hadoop.namecoin.hive.udf.NamecoinUDFTest" time="0">
+<system-out><![CDATA[
+unique-id: [engine:junit-jupiter]/[class:org.zuinnote.hadoop.namecoin.hive.udf.NamecoinUDFTest]/[method:extractNamecoinFieldFirstUpdate()]
+display-name: extractNamecoinFieldFirstUpdate()
 ]]></system-out>
 </testcase>
 <system-out><![CDATA[
