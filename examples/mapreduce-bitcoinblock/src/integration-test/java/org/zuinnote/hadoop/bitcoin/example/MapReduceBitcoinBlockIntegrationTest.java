@@ -184,7 +184,9 @@ private ArrayList<Decompressor> openDecompressors = new ArrayList<>();
          // Let ToolRunner handle generic command-line options
   	int res = ToolRunner.run(miniCluster.getConfig(), new BitcoinBlockCounterDriver(), new String[]{DFS_INPUT_DIR_NAME,DFS_OUTPUT_DIR_NAME}); 
     	// check if successfully executed
-	assertEquals( 0, res,"Successfully executed mapreduce application");
+	// note the following does only work on Linux platforms, other platforms may show issue due to the Hadoop Unit testing framework only supports Linux
+  	// You can remove this test if you work on another platform. The application itself builds and run on a real cluster without any issues.
+  	 assertEquals( 0, res,"Successfully executed mapreduce application");
     	// fetch results
 	List<String> resultLines = readDefaultResults(1);
     	// compare results
