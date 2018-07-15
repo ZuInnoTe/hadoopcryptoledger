@@ -3,7 +3,6 @@ apply plugin: 'maven-publish'
 apply plugin: 'maven'
 apply plugin: 'signing'
 apply plugin: 'jacoco'
-apply plugin: 'org.junit.platform.gradle.plugin'
 
 sourceCompatibility = 1.7
 compileJava.options.encoding = 'UTF-8'
@@ -38,24 +37,6 @@ jacocoTestReport {
     }
 }
 
-
-// Integrate JaCoCo for jUnit5
-project.afterEvaluate {
-    def junitPlatformTestTask = project.tasks.getByName('junitPlatformTest')
-
-    // configure jacoco to analyze the junitPlatformTest task
-    jacoco {
-        applyTo junitPlatformTestTask
-    }
-
-    // create junit platform jacoco task
-    project.task(type: JacocoReport, "junitPlatformJacocoReport",
-            {
-                sourceDirectories = files("./src/main")
-                classDirectories = files("$buildDir/classes/main")
-                executionData junitPlatformTestTask
-            })
-}
 
 
 
@@ -96,8 +77,8 @@ dependencies {
    // log4j2
    provided("org.apache.logging.log4j:log4j-api:2.9.1")
    // test
-    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.1.1'
-	testRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.1.1'
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.2.0'
+	testRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.2.0'
 }
 
 publishing {
@@ -117,6 +98,7 @@ publishing {
 
 test {
     testLogging.showStandardStreams = true
+     useJUnitPlatform()
 }
 
 javadoc.classpath += configurations.provided
