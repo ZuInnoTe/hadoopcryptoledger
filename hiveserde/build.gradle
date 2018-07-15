@@ -41,7 +41,10 @@ jacocoTestReport {
 
 
 
-
+test {
+    testLogging.showStandardStreams = true
+    useJUnitPlatform()
+}
 
 configurations {
 	provided
