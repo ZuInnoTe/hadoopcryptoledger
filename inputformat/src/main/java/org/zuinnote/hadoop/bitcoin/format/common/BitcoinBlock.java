@@ -21,6 +21,8 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 import org.apache.hadoop.io.Writable;
+
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -28,7 +30,7 @@ import java.util.ArrayList;
 * This class is an object storing relevant fields of a Bitcoin Block. 
 */
 
-public class BitcoinBlock implements Writable {
+public class BitcoinBlock implements Serializable, Writable {
 
 
 private int blockSize;
