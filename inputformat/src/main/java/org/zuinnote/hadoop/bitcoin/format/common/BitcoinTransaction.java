@@ -23,11 +23,12 @@ import java.io.IOException;
 import org.apache.commons.io.output.ThresholdingOutputStream;
 import org.apache.hadoop.io.Writable;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 
 
-public class BitcoinTransaction implements Writable {
+public class BitcoinTransaction implements Serializable, Writable {
 
 	
 private int version;
