@@ -15,9 +15,10 @@
 **/
 package org.zuinnote.hadoop.bitcoin.format.common;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class BitcoinAuxPOWBranch {
+public class BitcoinAuxPOWBranch implements Serializable {
 	private byte[] numberOfLinks;
 	private List<byte[]> links;
 	private byte[] branchSideBitmask;

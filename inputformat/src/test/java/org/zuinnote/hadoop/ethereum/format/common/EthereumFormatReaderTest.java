@@ -127,6 +127,17 @@ public class EthereumFormatReaderTest {
 	  }
 	 
 	 @Test
+	  public void checkTestDataBlocks70000007000010Available() {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="eth70000007000010";
+		String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
+		assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
+		File file = new File(fileNameGenesis);
+		assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
+		assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
+	  }
+	 
+	 @Test
 	  public void parseGenesisBlockAsEthereumRawBlockHeap() throws IOException, EthereumBlockReadException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="ethgenesis.bin";
@@ -1635,6 +1646,38 @@ public class EthereumFormatReaderTest {
 			expectedParentHash = new byte[]  {(byte)0xc5,(byte)0x75,(byte)0xa6,(byte)0x40,(byte)0x4f,(byte)0x86,(byte)0xa4,(byte)0xb6,(byte)0x38,(byte)0x32,(byte)0x79,(byte)0x23,(byte)0x26,(byte)0xc5,(byte)0xb0,(byte)0xf6,(byte)0xf2,(byte)0x5e,(byte)0xa9,(byte)0xd8,(byte)0x83,(byte)0x42,(byte)0xf9,(byte)0xf6,(byte)0xf1,(byte)0xe7,(byte)0xed,(byte)0x21,(byte)0xc8,(byte)0x58,(byte)0x02,(byte)0x38};
 			assertArrayEquals( expectedParentHash, eblockHeader.getParentHash(),"Block 3510010 contains a correct 32 byte parent hash");
 
+			} finally {
+			if (ebr!=null) {
+				ebr.close();
+			}
+		}
+	  }
+	 
+	 
+	 @Test
+	  public void parseBlock7000000to7000010AsEthereumBlockHeap() throws IOException, EthereumBlockReadException {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="eth70000007000010";
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		File file = new File(fileNameBlock);
+		boolean direct=false;
+		FileInputStream fin = new FileInputStream(file);
+		EthereumBlockReader ebr = null;
+		try {
+			ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUMBLOCK, this.DEFAULT_BUFFERSIZE,direct);
+			EthereumBlock eblock = ebr.readBlock();
+			EthereumBlockHeader eblockHeader = eblock.getEthereumBlockHeader();
+			List<EthereumTransaction> eTransactions = eblock.getEthereumTransactions();
+			List<EthereumBlockHeader> eUncles = eblock.getUncleHeaders();
+			assertEquals( 38, eTransactions.size(),"Block 7000000 contains 38 transactions");
+			assertEquals(0, eUncles.size(),"Block 7000000 contains 0 uncleHeaders");
+			byte[] expectedParentHash = new byte[]{(byte)0xdd,(byte)0xbc,(byte)0xc7,(byte)0xf0,(byte)0x48,(byte)0xf0,(byte)0x7f,(byte)0x5a,(byte)0x53,(byte)0xaa,(byte)0x8a,(byte)0xb2,(byte)0x8d,(byte)0x58,(byte)0x67,(byte)0x8c,(byte)0x4e,(byte)0xe9,(byte)0xba,(byte)0x02,(byte)0x5e,(byte)0x09,(byte)0xc6,(byte)0xb1,(byte)0xcf,(byte)0x43,(byte)0xdf,(byte)0xdc,(byte)0x37,(byte)0x2b,(byte)0x40,(byte)0x31};
+			assertArrayEquals( expectedParentHash, eblockHeader.getParentHash(),"Block 7000000 contains a correct 32 byte parent hash");
+			eblock = ebr.readBlock();
+			eblockHeader = eblock.getEthereumBlockHeader();
+			eTransactions = eblock.getEthereumTransactions();
+			eUncles = eblock.getUncleHeaders();
+	
 			} finally {
 			if (ebr!=null) {
 				ebr.close();

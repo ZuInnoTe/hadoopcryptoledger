@@ -18,12 +18,13 @@ package org.zuinnote.hadoop.ethereum.format.common;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 
 import org.apache.hadoop.io.Writable;
 
 
-public class EthereumBlock implements Writable {
+public class EthereumBlock implements Writable,Serializable {
 private EthereumBlockHeader ethereumBlockHeader;
 private List<EthereumTransaction> ethereumTransactions;
 private List<EthereumBlockHeader> uncleHeaders;

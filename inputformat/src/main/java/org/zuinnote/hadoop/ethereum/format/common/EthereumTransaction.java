@@ -18,6 +18,7 @@ package org.zuinnote.hadoop.ethereum.format.common;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.io.Serializable;
 import java.math.BigInteger;
 
 import org.apache.hadoop.io.Writable;
@@ -26,7 +27,7 @@ import org.apache.hadoop.io.Writable;
  * 
  *
  */
-public class EthereumTransaction implements Writable {
+public class EthereumTransaction implements Writable,Serializable {
 
 private byte[] nonce;
 private BigInteger value;

@@ -18,6 +18,7 @@ package org.zuinnote.hadoop.ethereum.format.common;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ import org.zuinnote.hadoop.ethereum.format.exception.EthereumBlockReadException;
  * This class parses Ethereum RLP-encoded blocks
  *
  */
-public class EthereumBlockReader {
+public class EthereumBlockReader implements Serializable{
 	
 	private static final Log LOG = LogFactory.getLog(EthereumBlockReader.class.getName());
 	private InputStream in;

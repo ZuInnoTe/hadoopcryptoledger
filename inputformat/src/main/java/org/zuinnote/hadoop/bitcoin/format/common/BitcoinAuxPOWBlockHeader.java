@@ -15,7 +15,9 @@
 **/
 package org.zuinnote.hadoop.bitcoin.format.common;
 
-public class BitcoinAuxPOWBlockHeader {
+import java.io.Serializable;
+
+public class BitcoinAuxPOWBlockHeader implements Serializable {
 	private int version;
 	private byte[] previousBlockHash;
 	private byte[] merkleRoot;

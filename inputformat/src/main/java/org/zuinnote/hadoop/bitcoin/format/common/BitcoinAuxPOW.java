@@ -15,10 +15,11 @@
 **/
 package org.zuinnote.hadoop.bitcoin.format.common;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BitcoinAuxPOW {
+public class BitcoinAuxPOW implements Serializable {
 	private int version;
 	private BitcoinTransaction coinbaseTransaction;
 	private byte[] parentBlockHeaderHash;
