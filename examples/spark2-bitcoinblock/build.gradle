@@ -4,7 +4,7 @@ apply plugin: 'jacoco'
 apply plugin: 'application'
 
 compileJava.options.encoding = 'UTF-8'
-sourceCompatibility = 1.7
+sourceCompatibility = 1.8
 version = '1.0'
 jar {
     manifest {
@@ -39,6 +39,11 @@ configurations {
 	testProvided
 	testIntegrationCompile.extendsFrom testCompile
 	testIntegrationRuntime.extendsFrom testRuntime
+	all {
+	  resolutionStrategy { // use Spark versions instead of Hadoop
+            force 'io.netty:netty-all:4.1.17.Final', 'com.fasterxml.jackson.core:jackson-databind:2.6.7.1'
+        }
+	}
 }
 
 eclipse {
@@ -66,21 +71,22 @@ sourceSets {
 }
 
 dependencies {
-   // hadoop lib for input format
-     provided("org.apache.hadoop:hadoop-client:2.7.0")
-   // hadoop crypto ledger library
-   compile("com.github.zuinnote:hadoopcryptoledger-fileformat:1.2.0")
+
    // spark-core
-    provided("org.apache.spark:spark-core_2.11:2.0.0")
+    provided("org.apache.spark:spark-core_2.11:2.4.4")
    // spark-sql for SparkSession
- provided("org.apache.spark:spark-sql_2.11:2.0.0")
+ provided("org.apache.spark:spark-sql_2.11:2.4.4")
+   // hadoop lib for input format
+     provided("org.apache.hadoop:hadoop-client:2.10.0") 
+   // hadoop crypto ledger library
+   compile("com.github.zuinnote:hadoopcryptoledger-fileformat:1.2.1") 
         // testing
-     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.3.0'
-     testRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.3.0'
-    testIntegrationRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.3.0'
-	testIntegrationRuntime group: 'org.junit.platform', name: 'junit-platform-console', version: '1.3.0'
+     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.5.2'
+     testRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.5.2'
+    testIntegrationRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.5.2'
+	testIntegrationRuntime group: 'org.junit.platform', name: 'junit-platform-console', version: '1.5.2'
     testIntegrationCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1' // need to avoid conflicts with different versions
-    testIntegrationCompile group: 'org.apache.hadoop', name: 'hadoop-minicluster', version: '2.7.0'
+    testIntegrationCompile group: 'org.apache.hadoop', name: 'hadoop-minicluster', version: '2.10.0'  
 }
 
 task testIntegration(type: Test) {

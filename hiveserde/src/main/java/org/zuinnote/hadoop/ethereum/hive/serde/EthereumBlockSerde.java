@@ -39,7 +39,7 @@ import org.zuinnote.hadoop.ethereum.hive.datatypes.HiveEthereumBlock;
 import org.zuinnote.hadoop.ethereum.hive.datatypes.HiveEthereumBlockHeader;
 import org.zuinnote.hadoop.ethereum.hive.datatypes.HiveEthereumTransaction;
 
-public class EthereumBlockSerde extends AbstractDeserializer implements VectorizedSerde {
+public class EthereumBlockSerde extends AbstractDeserializer  {
 	public static final String CONF_MAXBLOCKSIZE=AbstractEthereumRecordReader.CONF_MAXBLOCKSIZE;
 	public static final String CONF_USEDIRECTBUFFER=AbstractEthereumRecordReader.CONF_USEDIRECTBUFFER;
 
@@ -90,16 +90,6 @@ public class EthereumBlockSerde extends AbstractDeserializer implements Vectoriz
 		return null;
 	}
 	
-	@Override
-	public Writable serializeVector(VectorizedRowBatch vrg, ObjectInspector objInspector) throws SerDeException {
-		 throw new UnsupportedOperationException("serializeVector not supported");
-	}
-
-	@Override
-	public void deserializeVector(Object rowBlob, int rowsInBlob, VectorizedRowBatch reuseBatch) throws SerDeException {
-		// nothing to do here
-		
-	}
 	
 	private HiveEthereumBlock convertToHiveEthereumBlock(EthereumBlock block) {
 		HiveEthereumBlockHeader ethereumBlockHeader = new HiveEthereumBlockHeader();

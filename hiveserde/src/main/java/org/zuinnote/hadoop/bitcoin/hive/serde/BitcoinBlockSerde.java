@@ -68,7 +68,7 @@ import org.apache.commons.logging.Log;
  *
  */
 
-public class BitcoinBlockSerde extends AbstractDeserializer implements VectorizedSerde {
+public class BitcoinBlockSerde extends AbstractDeserializer  {
 	public static final String CONF_MAXBLOCKSIZE = AbstractBitcoinRecordReader.CONF_MAXBLOCKSIZE;
 	public static final String CONF_FILTERMAGIC = AbstractBitcoinRecordReader.CONF_FILTERMAGIC;
 	public static final String CONF_USEDIRECTBUFFER = AbstractBitcoinRecordReader.CONF_USEDIRECTBUFFER;
@@ -141,16 +141,7 @@ public class BitcoinBlockSerde extends AbstractDeserializer implements Vectorize
 
 	}
 
-	/** VectorizedSerde **/
-	@Override
-	public void deserializeVector(Object rowBlob, int rowsInBlob, VectorizedRowBatch reuseBatch) throws SerDeException {
-		// nothing to do here
-	}
 
-	@Override
-	public Writable serializeVector(VectorizedRowBatch vrg, ObjectInspector objInspector) throws SerDeException {
-		throw new UnsupportedOperationException("serializeVector not supported");
-	}
 
 	private HiveBitcoinBlock convertToHiveBitcoinBlock(BitcoinBlock block) {
 		// convert to HiveBitcoinBlock
