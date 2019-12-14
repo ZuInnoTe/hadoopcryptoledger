@@ -6,12 +6,12 @@ apply plugin: 'org.owasp.dependencycheck'
 apply plugin: 'info.solidsoft.pitest'
 
 
-sourceCompatibility = 1.7
+sourceCompatibility = 1.8
 compileJava.options.encoding = 'UTF-8'
 
 group = "com.github.zuinnote"
 archivesBaseName = "hadoopcryptoledger-fileformat"
-version = "1.2.0"
+version = "1.2.2"
 
 
 jar {
@@ -100,7 +100,7 @@ publishing {
         maven(MavenPublication) {
             groupId 'com.github.zuinnote'
             artifactId 'hadoopcryptoledger-fileformat'
-            version '1.2.0'
+            version '1.2.2'
 
             from components.java
         }
