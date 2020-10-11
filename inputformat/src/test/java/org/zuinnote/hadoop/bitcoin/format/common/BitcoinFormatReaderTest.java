@@ -26,6 +26,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -363,69 +369,81 @@ public class BitcoinFormatReaderTest {
 
 
     @Test
-    public void parseScriptWitness2BlockAsBitcoinRawBlockHeap() throws FileNotFoundException, IOException, BitcoinBlockReadException {
-        ClassLoader classLoader = getClass().getClassLoader();
-        String fileName = "scriptwitness2.blk";
-        String fileNameBlock = classLoader.getResource("testdata/" + fileName).getFile();
-        File file = new File(fileNameBlock);
+    public void parseScriptWitness2BlockAsBitcoinRawBlockHeap() throws IOException, BitcoinBlockReadException {
         BitcoinBlockReader bbr = null;
-        boolean direct = false;
         try {
-            FileInputStream fin = new FileInputStream(file);
-            bbr = new BitcoinBlockReader(fin, this.DEFAULT_MAXSIZE_BITCOINBLOCK, this.DEFAULT_BUFFERSIZE, this.DEFAULT_MAGIC, direct);
+            bbr = blockReader("scriptwitness2.blk", false);
             ByteBuffer scriptwitnessByteBuffer = bbr.readRawBlock();
             assertFalse(scriptwitnessByteBuffer.isDirect(), "Random ScriptWitness Raw Block is HeapByteBuffer");
             assertEquals(1000039, scriptwitnessByteBuffer.limit(), "Random ScriptWitness Raw Block has a size of 1000039 bytes");
             scriptwitnessByteBuffer = bbr.readRawBlock();
             assertFalse(scriptwitnessByteBuffer.isDirect(), "Random ScriptWitness Raw Block is HeapByteBuffer");
             assertEquals(999312, scriptwitnessByteBuffer.limit(), "Random ScriptWitness Raw Block has a size of 999312 bytes");
-
         } finally {
             if (bbr != null)
                 bbr.close();
         }
     }
 
+    public BitcoinBlockReader blockReader(String fileName, boolean direct) throws IOException, BitcoinBlockReadException {
+        ClassLoader classLoader = getClass().getClassLoader();
+        String fileNameBlock = classLoader.getResource("testdata/" + fileName).getFile();
+        File file = new File(fileNameBlock);
+        BitcoinBlockReader bbr = null;
+        FileInputStream fin = new FileInputStream(file);
+        return new BitcoinBlockReader(fin, this.DEFAULT_MAXSIZE_BITCOINBLOCK, this.DEFAULT_BUFFERSIZE,
+                                                this.DEFAULT_MAGIC, direct);
+    }
+
+    public BitcoinBlockReader genesisBlockReader(boolean direct) throws IOException, BitcoinBlockReadException {
+        return blockReader("genesis.blk", direct);
+    }
 
     @Test
     public void parseGenesisBlockAsBitcoinRawBlockDirect() throws IOException, BitcoinBlockReadException {
-        ClassLoader classLoader = getClass().getClassLoader();
-        String fileName = "genesis.blk";
-        String fileNameBlock = classLoader.getResource("testdata/" + fileName).getFile();
-        File file = new File(fileNameBlock);
         BitcoinBlockReader bbr = null;
-        boolean direct = true;
         try {
-            FileInputStream fin = new FileInputStream(file);
-            bbr = new BitcoinBlockReader(fin, this.DEFAULT_MAXSIZE_BITCOINBLOCK, this.DEFAULT_BUFFERSIZE, this.DEFAULT_MAGIC, direct);
+            bbr = genesisBlockReader(true);
             ByteBuffer genesisByteBuffer = bbr.readRawBlock();
             assertTrue(genesisByteBuffer.isDirect(), "Raw Genesis Block is DirectByteBuffer");
             assertEquals(293, genesisByteBuffer.limit(), "Raw Genesis Block has a size of 293 bytes");
-
         } finally {
-            if (bbr != null)
+            if (bbr != null) {
                 bbr.close();
+            }
+        }
+    }
+
+    public void checkDateField(Calendar expected, Calendar actual, int field) {
+        assertEquals(expected.get(field), actual.get(field));
+    }
+
+    public void checkDate(Date expected, Date actual) {
+        Calendar x = new GregorianCalendar();
+        x.setTime(expected);
+        Calendar y = new GregorianCalendar();
+        y.setTime(expected);
+        Integer[] fields = new Integer[]
+            {Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH, Calendar.HOUR_OF_DAY, Calendar.MINUTE};
+        for(int field : fields) {
+            checkDateField(x, y, field);
         }
     }
 
     @Test
-    public void parseGenesisBlockTestTime() throws IOException {
-        ClassLoader classLoader = getClass().getClassLoader();
-        String fileName = "genesis.blk";
-        String fileNameBlock = classLoader.getResource("testdata/" + fileName).getFile();
-        File file = new File(fileNameBlock);
+    public void parseGenesisBlockTestTime() throws IOException, BitcoinBlockReadException, ParseException {
         BitcoinBlockReader bbr = null;
-        boolean direct = true;
         try {
-            FileInputStream fin = new FileInputStream(file);
-            bbr = new BitcoinBlockReader(fin, this.DEFAULT_MAXSIZE_BITCOINBLOCK, this.DEFAULT_BUFFERSIZE, this.DEFAULT_MAGIC, direct);
-            ByteBuffer genesisByteBuffer = bbr.readRawBlock();
-            assertTrue(genesisByteBuffer.isDirect(), "Raw Genesis Block is DirectByteBuffer");
-            assertEquals(293, genesisByteBuffer.limit(), "Raw Genesis Block has a size of 293 bytes");
-
+            bbr = genesisBlockReader(true);
+            BitcoinBlock genesisBlock = bbr.readBlock();
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd h:m:s");
+            Date genesisDate = format.parse ( "2009-01-03 18:15:05" );
+            Date blockDate = new java.util.Date(genesisBlock.getTime()*1000L);
+            checkDate(genesisDate, blockDate);
         } finally {
-            if (bbr != null)
+            if (bbr != null) {
                 bbr.close();
+            }
         }
     }
 
