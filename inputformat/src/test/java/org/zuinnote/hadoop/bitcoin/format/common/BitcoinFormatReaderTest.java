@@ -49,7 +49,7 @@ public class BitcoinFormatReaderTest {
                 "reqseekversion1.blk", "testnet3genesis.blk", "testnet3version4.blk", "testnet3version4.blk",
                 "multinet.blk", "scriptwitness.blk", "scriptwitness2.blk"};
         for(String fileName: testFiles) {
-            testAvailable(fileName);
+            assertTestFileAvailable(fileName);
         }
     }
 
@@ -217,22 +217,6 @@ public class BitcoinFormatReaderTest {
         }
     }
 
-    public void checkDateField(Calendar expected, Calendar actual, int field) {
-        assertEquals(expected.get(field), actual.get(field));
-    }
-
-    public void checkDate(Date expected, Date actual) {
-        Calendar x = new GregorianCalendar();
-        x.setTime(expected);
-        Calendar y = new GregorianCalendar();
-        y.setTime(actual);
-        Integer[] fields = new Integer[]
-            {Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH, Calendar.HOUR_OF_DAY, Calendar.MINUTE};
-        for(int field : fields) {
-            checkDateField(x, y, field);
-        }
-    }
-
     @Test
     public void parseGenesisBlockTestTime() throws IOException, BitcoinBlockReadException, ParseException {
         BitcoinBlockReader bbr = null;
@@ -242,7 +226,7 @@ public class BitcoinFormatReaderTest {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd h:m:s");
             Date genesisDate = format.parse ( "2009-01-03 18:15:05" );
             Date blockDate = new java.util.Date(genesisBlock.getTime()*1000L);
-            checkDate(genesisDate, blockDate);
+            assertDateFieldsEqual(genesisDate, blockDate);
         } finally {
             if (bbr != null) {
                 bbr.close();
@@ -807,13 +791,6 @@ public class BitcoinFormatReaderTest {
         return Objects.requireNonNull(getClass().getClassLoader().getResource("testdata/" + fileName)).getFile();
     }
 
-    public void testAvailable(String fileName) {
-        String fullFilename = getFullFilename(fileName);
-        File file = new File(fullFilename);
-        assertTrue(file.exists(), "Test Data File \"" + fileName + "\" exists");
-        assertFalse(file.isDirectory(), "Test Data File \"" + fileName + "\" is not a directory");
-    }
-
     public BitcoinBlockReader blockReader(String fileName, boolean direct) throws IOException {
         return blockReader(fileName, direct, DEFAULT_MAGIC);
     }
@@ -826,6 +803,29 @@ public class BitcoinFormatReaderTest {
 
     public BitcoinBlockReader genesisBlockReader(boolean direct) throws IOException {
         return blockReader("genesis.blk", direct);
+    }
+
+    public void assertTestFileAvailable(String fileName) {
+        String fullFilename = getFullFilename(fileName);
+        File file = new File(fullFilename);
+        assertTrue(file.exists(), "Test Data File \"" + fileName + "\" exists");
+        assertFalse(file.isDirectory(), "Test Data File \"" + fileName + "\" is not a directory");
+    }
+
+    public void assertDateFieldEqual(Calendar expected, Calendar actual, int field) {
+        assertEquals(expected.get(field), actual.get(field));
+    }
+
+    public void assertDateFieldsEqual(Date expected, Date actual) {
+        Calendar x = new GregorianCalendar();
+        x.setTime(expected);
+        Calendar y = new GregorianCalendar();
+        y.setTime(actual);
+        Integer[] fields = new Integer[]
+                {Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH, Calendar.HOUR_OF_DAY, Calendar.MINUTE};
+        for(int field : fields) {
+            assertDateFieldEqual(x, y, field);
+        }
     }
 
 }
