@@ -388,7 +388,7 @@ public class BitcoinFormatReaderTest {
 
 
     @Test
-    public void parseGenesisBlockAsBitcoinRawBlockDirect() throws FileNotFoundException, IOException, BitcoinBlockReadException {
+    public void parseGenesisBlockAsBitcoinRawBlockDirect() throws IOException, BitcoinBlockReadException {
         ClassLoader classLoader = getClass().getClassLoader();
         String fileName = "genesis.blk";
         String fileNameBlock = classLoader.getResource("testdata/" + fileName).getFile();
