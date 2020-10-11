@@ -225,7 +225,7 @@ public class BitcoinFormatReaderTest {
             BitcoinBlock genesisBlock = bbr.readBlock();
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd h:m:s");
             Date genesisDate = format.parse ( "2009-01-03 18:15:05" );
-            Date blockDate = new java.util.Date(genesisBlock.getTime()*1000L);
+            Date blockDate = genesisBlock.getDate();
             assertDateFieldsEqual(genesisDate, blockDate);
         } finally {
             if (bbr != null) {
