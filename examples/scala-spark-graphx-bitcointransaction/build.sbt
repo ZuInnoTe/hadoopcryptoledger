@@ -11,7 +11,7 @@ lazy val root = (project in file("."))
 )
  .configs( IntegrationTest )
   .settings( Defaults.itSettings : _*)
- 
+
 
 scalacOptions += "-target:jvm-1.8"
 
@@ -25,11 +25,11 @@ fork  := true
 
 assemblyJarName in assembly := "example-hcl-spark-scala-graphx-bitcointransaction.jar"
 
-libraryDependencies += "com.github.zuinnote" % "hadoopcryptoledger-fileformat" % "1.2.1" % "compile"
+libraryDependencies += "com.github.zuinnote" % "hadoopcryptoledger-fileformat" % "1.3.0" % "compile"
 
-libraryDependencies += "org.apache.spark" %% "spark-core" % "2.4.4" % "provided"
+libraryDependencies += "org.apache.spark" %% "spark-core" % "2.4.7" % "provided"
 
-libraryDependencies += "org.apache.spark" %% "spark-graphx" % "2.4.4" % "provided"
+libraryDependencies += "org.apache.spark" %% "spark-graphx" % "2.4.7" % "provided"
 
 libraryDependencies += "org.apache.hadoop" % "hadoop-client" % "2.7.0" % "provided"
 

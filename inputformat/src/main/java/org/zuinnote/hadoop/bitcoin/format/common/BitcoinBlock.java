@@ -16,29 +16,28 @@
 
 package org.zuinnote.hadoop.bitcoin.format.common;
 
-import java.io.DataInput;
-import java.io.DataOutput;
 import java.io.IOException;
 
-import org.apache.hadoop.io.Writable;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 
+
+
+
 /**
-* This class is an object storing relevant fields of a Bitcoin Block. 
+* This class is an object storing relevant fields of a Bitcoin Block.
 */
+public class BitcoinBlock implements Serializable {
 
-public class BitcoinBlock implements Serializable, Writable {
 
-
-private int blockSize;
+private long blockSize;
 private byte[] magicNo;
-private int version;
-private int time;
+private long version;
+private long time;
 private byte[] bits;
-private int nonce;
+private long nonce;
 private long transactionCounter;
 private byte[] hashPrevBlock;
 private byte[] hashMerkleRoot;
@@ -48,7 +47,7 @@ private BitcoinAuxPOW auxPOW;
 public BitcoinBlock() {
 	this.magicNo=new byte[0];
 	this.bits=new byte[0];
-	this.transactionCounter=0;
+	this.transactionCounter=0L;
 	this.hashPrevBlock=new byte[0];
 	this.hashMerkleRoot=new byte[0];
 	this.transactions=new ArrayList<>();
@@ -56,11 +55,11 @@ public BitcoinBlock() {
 }
 
 
-public int getBlockSize() {
+public long getBlockSize() {
 	return this.blockSize;
 }
 
-public void setBlockSize(int blockSize) {
+public void setBlockSize(long blockSize) {
 	this.blockSize=blockSize;
 }
 
@@ -73,19 +72,19 @@ public void setMagicNo(byte[] magicNo) {
 	this.magicNo=magicNo;
 }
 
-public int getVersion() {
+public long getVersion() {
 	return this.version;
 }
 
-public void setVersion(int version) {
+public void setVersion(long version) {
 	this.version=version;
 }
 
-public int getTime() {
+public long getTime() {
 	return this.time;
 }
 
-public void setTime(int time) {
+public void setTime(long time) {
 	this.time=time;
 }
 
@@ -97,11 +96,11 @@ public void setBits(byte[] bits) {
 	this.bits=bits;
 }
 
-public int getNonce() {
+public long getNonce() {
 	return this.nonce;
 }
 
-public void setNonce(int nonce) {
+public void setNonce(long nonce) {
 	this.nonce=nonce;
 }
 
@@ -161,17 +160,6 @@ public void set(BitcoinBlock newBitcoinBlock) {
 	this.auxPOW=newBitcoinBlock.getAuxPOW();
 }
 
-/** Writable **/
-
-  @Override
-  public void write(DataOutput dataOutput) throws IOException {
-    throw new UnsupportedOperationException("write unsupported");
-  }
-
-  @Override
-  public void readFields(DataInput dataInput) throws IOException {
-    throw new UnsupportedOperationException("readFields unsupported");
-  }
 
 
 

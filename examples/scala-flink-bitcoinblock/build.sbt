@@ -25,16 +25,16 @@ assemblyJarName in assembly := "example-hcl-flink-scala-bitcoinblock.jar"
 fork  := true
 
 
-libraryDependencies += "com.github.zuinnote" % "hadoopcryptoledger-flinkdatasource" % "1.2.1" % "compile"
-libraryDependencies += "com.github.zuinnote" % "hadoopcryptoledger-fileformat" % "1.2.1" % "compile"
-libraryDependencies += "org.apache.flink" %% "flink-scala" % "1.9.0" % "provided" 
+libraryDependencies += "com.github.zuinnote" % "hadoopcryptoledger-flinkdatasource" % "1.3.0" % "compile"
+libraryDependencies += "com.github.zuinnote" % "hadoopcryptoledger-fileformat" % "1.3.0" % "compile"
+libraryDependencies += "org.apache.flink" %% "flink-scala" % "1.12.1" % "provided"
 
-libraryDependencies += "org.apache.flink" % "flink-shaded-hadoop2" % "2.4.1-1.8.2" % "provided"  
 
-// needed for writable serializer 
-libraryDependencies += "org.apache.flink" %% "flink-hadoop-compatibility" % "1.9.0" % "compile" 
+// needed for writable serializer
+libraryDependencies += "org.apache.flink" %% "flink-hadoop-compatibility" % "1.12.1" % "compile"
 
-libraryDependencies += "org.apache.flink" %% "flink-clients" % "1.9.0" % "it" 
+libraryDependencies += "org.apache.flink" % "flink-shaded-hadoop2" % "2.7.5-1.8.3" % "compile"
+libraryDependencies += "org.apache.flink" %% "flink-clients" % "1.12.1" % "it"
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.1.0" % "test,it"
 

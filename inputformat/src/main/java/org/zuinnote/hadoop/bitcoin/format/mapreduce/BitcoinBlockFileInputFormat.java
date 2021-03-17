@@ -32,12 +32,12 @@ import org.apache.commons.logging.Log;
 
 import org.zuinnote.hadoop.bitcoin.format.common.*;
 
-public class BitcoinBlockFileInputFormat extends AbstractBitcoinFileInputFormat<BytesWritable,BitcoinBlock>   {
+public class BitcoinBlockFileInputFormat extends AbstractBitcoinFileInputFormat<BytesWritable,BitcoinBlockWritable>   {
 
 private static final Log LOG = LogFactory.getLog(BitcoinBlockFileInputFormat.class.getName());
 
 @Override
-public RecordReader<BytesWritable,BitcoinBlock> createRecordReader(InputSplit split, TaskAttemptContext ctx) throws IOException {	
+public RecordReader<BytesWritable,BitcoinBlockWritable> createRecordReader(InputSplit split, TaskAttemptContext ctx) throws IOException {	
 	/** Create reader **/
 	try {
 		return new BitcoinBlockRecordReader(ctx.getConfiguration());

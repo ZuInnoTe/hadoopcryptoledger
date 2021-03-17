@@ -23,23 +23,25 @@ import org.apache.hadoop.io.BytesWritable;
 import org.apache.hadoop.mapred.FileSplit;
 import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapred.Reporter;
+
 import org.zuinnote.hadoop.ethereum.format.common.EthereumBlock;
+import org.zuinnote.hadoop.ethereum.format.common.EthereumBlockWritable;
 import org.zuinnote.hadoop.ethereum.format.exception.EthereumBlockReadException;
 
 /**
 
  *
  */
-public class EthereumBlockRecordReader extends AbstractEthereumRecordReader<BytesWritable,EthereumBlock> {
+public class EthereumBlockRecordReader extends AbstractEthereumRecordReader<BytesWritable,EthereumBlockWritable> {
 	private static final Log LOG = LogFactory.getLog(EthereumBlockRecordReader.class.getName());
 	public EthereumBlockRecordReader(FileSplit split, JobConf job, Reporter reporter) throws IOException {
 		super(split,job,reporter);
 	}
-	
+
 
 /**
 *
-* Read a next block. 
+* Read a next block.
 *
 * @param key is a 32 byte array (parentHash)
 * @param value is a deserialized Java object of class EthereumBlock
@@ -47,7 +49,7 @@ public class EthereumBlockRecordReader extends AbstractEthereumRecordReader<Byte
 * @return true if next block is available, false if not
 */
 @Override
-public boolean next(BytesWritable key, EthereumBlock value) throws IOException {
+public boolean next(BytesWritable key, EthereumBlockWritable value) throws IOException {
 	// read all the blocks, if necessary a block overlapping a split
 	while(getFilePosition()<=getEnd()) { // did we already went beyond the split (remote) or do we have no further data left?
 		EthereumBlock dataBlock=null;
@@ -57,7 +59,7 @@ public boolean next(BytesWritable key, EthereumBlock value) throws IOException {
 			LOG.error(e);
 			throw new RuntimeException(e.toString());
 		}
-		if (dataBlock==null) { 
+		if (dataBlock==null) {
 			return false;
 		}
 		byte[] newKey=dataBlock.getEthereumBlockHeader().getParentHash();
@@ -75,8 +77,8 @@ public boolean next(BytesWritable key, EthereumBlock value) throws IOException {
 	}
 
 	@Override
-	public EthereumBlock createValue() {
-		return new EthereumBlock();
+	public EthereumBlockWritable createValue() {
+		return new EthereumBlockWritable();
 	}
 
 }

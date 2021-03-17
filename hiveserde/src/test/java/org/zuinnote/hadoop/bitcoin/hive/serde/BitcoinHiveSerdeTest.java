@@ -33,6 +33,7 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hive.common.type.HiveDecimal;
 import org.junit.jupiter.api.Test;
 import org.zuinnote.hadoop.bitcoin.format.common.BitcoinBlock;
+import org.zuinnote.hadoop.bitcoin.format.common.BitcoinBlockWritable;
 import org.zuinnote.hadoop.bitcoin.format.common.BitcoinBlockReader;
 import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
 import org.zuinnote.hadoop.bitcoin.format.mapred.AbstractBitcoinRecordReader;
@@ -49,7 +50,7 @@ private static final byte[][] DEFAULT_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB4
   public void checkTestDataGenesisBlockAvailable() {
 	ClassLoader classLoader = getClass().getClassLoader();
 	String fileName="genesis.blk";
-	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
+	String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();
 	assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 	File file = new File(fileNameGenesis);
 	assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
@@ -68,9 +69,9 @@ private static final byte[][] DEFAULT_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB4
 	tblProperties.setProperty(BitcoinBlockSerde.CONF_ISSPLITABLE,"true");
 	tblProperties.setProperty(BitcoinBlockSerde.CONF_READAUXPOW,"true");
 	testSerde.initialize(conf,tblProperties);
-	assertEquals(1, conf.getInt(BitcoinBlockSerde.CONF_MAXBLOCKSIZE,2),"MAXBLOCKSIZE set correctly");	
+	assertEquals(1, conf.getInt(BitcoinBlockSerde.CONF_MAXBLOCKSIZE,2),"MAXBLOCKSIZE set correctly");
 	assertEquals("A0A0A0A0", conf.get(BitcoinBlockSerde.CONF_FILTERMAGIC,"B0B0B0B0"),"FILTERMAGIC set correctly");
-	assertTrue(conf.getBoolean(BitcoinBlockSerde.CONF_USEDIRECTBUFFER,false),"USEDIRECTBUFFER set correctly");	
+	assertTrue(conf.getBoolean(BitcoinBlockSerde.CONF_USEDIRECTBUFFER,false),"USEDIRECTBUFFER set correctly");
 	assertTrue(conf.getBoolean(BitcoinBlockSerde.CONF_ISSPLITABLE,false),"ISSPLITABLE set correctly");
 	assertTrue(conf.getBoolean(BitcoinBlockSerde.CONF_READAUXPOW,false),"ISSPLITABLE set correctly");
   }
@@ -81,14 +82,16 @@ private static final byte[][] DEFAULT_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB4
 	// create a BitcoinBlock based on the genesis block test data
 	ClassLoader classLoader = getClass().getClassLoader();
 	String fileName="genesis.blk";
-	String fullFileNameString=classLoader.getResource("testdata/"+fileName).getFile();	
+	String fullFileNameString=classLoader.getResource("testdata/"+fileName).getFile();
 	File file = new File(fullFileNameString);
 	BitcoinBlockReader bbr = null;
 	boolean direct=false;
 	try {
 		FileInputStream fin = new FileInputStream(file);
 		bbr = new BitcoinBlockReader(fin,this.DEFAULT_MAXSIZE_BITCOINBLOCK,this.DEFAULT_BUFFERSIZE,this.DEFAULT_MAGIC,direct);
-		BitcoinBlock theBitcoinBlock = bbr.readBlock();
+		BitcoinBlock readBitcoinBlock = bbr.readBlock();
+    BitcoinBlockWritable theBitcoinBlock = new BitcoinBlockWritable();
+    theBitcoinBlock.set(readBitcoinBlock);
 	// deserialize it
 		Object deserializedObject = testSerde.deserialize(theBitcoinBlock);
 		assertTrue( deserializedObject instanceof HiveBitcoinBlock,"Deserialized Object is of type BitcoinBlock");
@@ -98,17 +101,15 @@ private static final byte[][] DEFAULT_MAGIC = {{(byte)0xF9,(byte)0xBE,(byte)0xB4
 		assertEquals( 1, deserializedBitcoinBlockStruct.getTransactions().get(0).getListOfInputs().size(),"Genesis Block must contain exactly one transaction with one input");
 		assertEquals( 77, deserializedBitcoinBlockStruct.getTransactions().get(0).getListOfInputs().get(0).getTxInScript().length,"Genesis Block must contain exactly one transaction with one input and script length 77");
 		assertEquals( 0, HiveDecimal.create(5000000000L).compareTo(deserializedBitcoinBlockStruct.getTransactions().get(0).getListOfOutputs().get(0).getValue()), "Value must be BigInteger corresponding to 5000000000L");
-		
-		
+
+
 		assertEquals( 1, deserializedBitcoinBlockStruct.getTransactions().get(0).getListOfOutputs().size(),"Genesis Block must contain exactly one transaction with one output");
 		assertEquals( 67, deserializedBitcoinBlockStruct.getTransactions().get(0).getListOfOutputs().get(0).getTxOutScript().length,"Genesis Block must contain exactly one transaction with one output and script length 67");
 	} finally {
-		if (bbr!=null) 
+		if (bbr!=null)
 			bbr.close();
 	}
   }
 
 
-} 
-
-
+}

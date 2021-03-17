@@ -24,7 +24,7 @@ import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
 import java.io.IOException;
 
 
-import org.apache.hadoop.io.BytesWritable; 
+import org.apache.hadoop.io.BytesWritable;
 
 import org.apache.hadoop.conf.Configuration;
 
@@ -35,13 +35,13 @@ import org.apache.commons.logging.Log;
 import org.zuinnote.hadoop.bitcoin.format.common.*;
 
 
-public class BitcoinTransactionRecordReader extends AbstractBitcoinRecordReader<BytesWritable, BitcoinTransaction> {
+public class BitcoinTransactionRecordReader extends AbstractBitcoinRecordReader<BytesWritable, BitcoinTransactionWritable> {
 private static final Log LOG = LogFactory.getLog(BitcoinBlockRecordReader.class.getName());
 
 private int currentTransactionCounterInBlock=0;
 private BitcoinBlock currentBitcoinBlock;
 private BytesWritable currentKey=new BytesWritable();
-private BitcoinTransaction currentValue=new BitcoinTransaction();
+private BitcoinTransactionWritable currentValue=new BitcoinTransactionWritable();
 
 
 
@@ -67,14 +67,14 @@ public BytesWritable getCurrentKey() {
 * @return value is a deserialized Java object of class BitcoinTransaction
 */
 @Override
-public BitcoinTransaction getCurrentValue() {
+public BitcoinTransactionWritable getCurrentValue() {
 	return this.currentValue;
 }
 
 
 /**
 *
-* Read a next block. 
+* Read a next block.
 *
 *
 * @return true if next block is available, false if not

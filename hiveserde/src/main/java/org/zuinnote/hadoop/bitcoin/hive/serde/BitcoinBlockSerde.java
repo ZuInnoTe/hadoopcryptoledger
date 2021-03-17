@@ -56,14 +56,14 @@ import org.apache.commons.logging.Log;
 
 /**
  * Enables access to Bitcoin Blockchain data via Hive tables. Usage:
- * 
+ *
  * Create table BitcoinBlockchain ROW FORMAT SERDE
  * 'org.zuinnote.hadoop.bitcoin.hive.serde.BitcoinBlockSerde' STORED AS
  * INPUTFORMAT
  * 'org.zuinnote.hadoop.bitcoin.format.mapred.BitcoinBlockFileInputFormat'
  * OUTPUTFORMAT 'org.apache.hadoop.mapred.lib.NullOutputFormat' LOCATION
  * '/user/test/bitcoin/input';
- * 
+ *
  * Example structure: describe BitcoinBlockchain
  *
  */
@@ -181,7 +181,7 @@ public class BitcoinBlockSerde extends AbstractDeserializer  {
 					currentCoinbaseTransaction.getListOfInputs(), currentCoinbaseTransaction.getInCounter(),
 					newCoinbaseTransactionOutputList, currentCoinbaseTransaction.getBitcoinScriptWitness(),
 					currentCoinbaseTransaction.getLockTime());
-			newHiveBitcoinAuxPOW = new HiveBitcoinAuxPOW(block.getAuxPOW().getVersion(), newCoinbaseTransaction,
+			newHiveBitcoinAuxPOW = new HiveBitcoinAuxPOW((int)block.getAuxPOW().getVersion(), newCoinbaseTransaction,
 					block.getAuxPOW().getParentBlockHeaderHash(), block.getAuxPOW().getCoinbaseBranch(),
 					block.getAuxPOW().getAuxBlockChainBranch(), block.getAuxPOW().getParentBlockHeader());
 		}

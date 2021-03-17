@@ -45,7 +45,7 @@ private BitcoinUtil() {
 * Converts a signed int to an unsigned (long)
 *
 * @param signedInt signed int that should be interpreted as unsigned
-* 
+*
 * @return long corresponding to signed int
 *
 */
@@ -100,7 +100,7 @@ public static byte[] convertBigIntegerToByteArray(BigInteger bigIntegerToConvert
 	 int removeSign=0;
 	 if ((tempResult.length>1) && (tempResult[0]==0)) { // remove sign
 		removeSign=1;
-	 } 
+	 }
 	 byte[] reverseTempResult = BitcoinUtil.reverseByteArray(tempResult);
 	 for (int i=0;i<result.length;i++) {
 		 if (i<reverseTempResult.length-removeSign) {
@@ -117,7 +117,7 @@ public static byte[] convertBigIntegerToByteArray(BigInteger bigIntegerToConvert
 * Converts a variable length integer (https://en.bitcoin.it/wiki/Protocol_documentation#Variable_length_integer) from a ByteBuffer to byte array
 *
 * @param byteBuffer Bytebuffer where to read from the variable length integer
-* 
+*
 * @return byte[] of the variable length integer (including marker)
 *
 */
@@ -138,21 +138,21 @@ public static byte[] convertVarIntByteBufferToByteArray(ByteBuffer byteBuffer) {
 * Converts a variable length integer (https://en.bitcoin.it/wiki/Protocol_documentation#Variable_length_integer) from a ByteBuffer to long
 *
 * @param byteBuffer Bytebuffer where to read from the variable length integer
-* 
+*
 * @return long corresponding to variable length integer. Please note that it is signed long and not unsigned long as int the Bitcoin specification. Should be in practice not relevant.
 *
 */
 public static long convertVarIntByteBufferToLong(ByteBuffer byteBuffer) {
 	byte[] varIntByteArray=convertVarIntByteBufferToByteArray(byteBuffer);
 	return getVarInt(varIntByteArray);
-	
+
 }
 
 /**
 * Converts a variable length integer (https://en.bitcoin.it/wiki/Protocol_documentation#Variable_length_integer) to BigInteger
 *
 * @param varInt byte array containing variable length integer
-* 
+*
 * @return BigInteger corresponding to variable length integer
 *
 */
@@ -167,7 +167,7 @@ public static BigInteger getVarIntBI(byte[] varInt) {
 		return new BigInteger(new byte[] {(byte) unsignedByte});
 	}
 	int intSize=0;
-	if (unsignedByte==0xFD) { 
+	if (unsignedByte==0xFD) {
 		intSize=3;
 	}
 	else if (unsignedByte==0xFE) {
@@ -184,7 +184,7 @@ public static BigInteger getVarIntBI(byte[] varInt) {
 * Converts a variable length integer (https://en.bitcoin.it/wiki/Protocol_documentation#Variable_length_integer) to long
 *
 * @param varInt byte array containing variable length integer
-* 
+*
 * @return long corresponding to variable length integer
 *
 */
@@ -199,7 +199,7 @@ public static long getVarInt(byte[] varInt) {
 		return unsignedByte;
 	}
 	int intSize=0;
-	if (unsignedByte==0xFD) { 
+	if (unsignedByte==0xFD) {
 		intSize=3;
 	}
 	else if (unsignedByte==0xFE) {
@@ -226,7 +226,7 @@ public static long getVarInt(byte[] varInt) {
 * Determines size of a variable length integer (https://en.bitcoin.it/wiki/Protocol_documentation#Variable_length_integer)
 *
 * @param firstByteVarInt first byte of the variable integeer
-* 
+*
 * @return byte with the size of the variable int (either 2, 3, 5 or 9) - does include the marker!
 *
 */
@@ -249,8 +249,8 @@ public static byte getVarIntSize(byte firstByteVarInt) {
 /**
 * Reads a size from a reversed byte order, such as block size in the block header
 *
-* @param byteSize byte array with a length of exactly 4 
-* 
+* @param byteSize byte array with a length of exactly 4
+*
 * @return size, returns 0 in case of invalid block size
 *
 */
@@ -312,7 +312,7 @@ public static String convertByteArrayToHexString(byte[] byteArray) {
 /**
 * Converts an int to a date
 *
-* @param dateInt timestamp in integer format 
+* @param dateInt timestamp in integer format
 *
 * @return Date corresponding to dateInt
 *
@@ -324,7 +324,7 @@ public static Date convertIntToDate(int dateInt) {
 
 /**
 * Compares two Bitcoin magics
-* 
+*
 * @param magic1 first magic
 * @param magic2 second magics
 *
@@ -341,7 +341,7 @@ public static boolean compareMagics (byte[] magic1,byte[] magic2) {
 			 return false;
 		}
 	}
-	return true;	
+	return true;
 
 }
 
@@ -363,8 +363,8 @@ public static boolean compareMagics (byte[] magic1,byte[] magic2) {
 public static byte[] getTransactionHash(BitcoinTransaction transaction) throws IOException{
 	// convert transaction to byte array
 	ByteArrayOutputStream transactionBAOS = new ByteArrayOutputStream();
-	
-	byte[] version = reverseByteArray(convertIntToByteArray(transaction.getVersion()));
+
+	byte[] version = reverseByteArray(convertIntToByteArray((int)transaction.getVersion()));
 	transactionBAOS.write(version);
 	byte[] inCounter = transaction.getInCounter();
 	transactionBAOS.write(inCounter);
@@ -378,11 +378,11 @@ public static byte[] getTransactionHash(BitcoinTransaction transaction) throws I
 	byte[] outCounter = transaction.getOutCounter();
 	transactionBAOS.write(outCounter);
 	for (int j=0;j<transaction.getListOfOutputs().size();j++) {
-		transactionBAOS.write(convertBigIntegerToByteArray(transaction.getListOfOutputs().get(j).getValue(),8));		
+		transactionBAOS.write(convertBigIntegerToByteArray(transaction.getListOfOutputs().get(j).getValue(),8));
 		transactionBAOS.write(transaction.getListOfOutputs().get(j).getTxOutScriptLength());
 		transactionBAOS.write(transaction.getListOfOutputs().get(j).getTxOutScript());
-	}	
-	byte[] lockTime=reverseByteArray(convertIntToByteArray(transaction.getLockTime()));
+	}
+	byte[] lockTime=reverseByteArray(convertIntToByteArray((int)transaction.getLockTime()));
 	transactionBAOS.write(lockTime);
 	byte[] transactionByteArray= transactionBAOS.toByteArray();
 	byte[] firstRoundHash;
@@ -416,8 +416,8 @@ public static byte[] getTransactionHash(BitcoinTransaction transaction) throws I
 public static byte[] getTransactionHashSegwit(BitcoinTransaction transaction) throws IOException{
 	// convert transaction to byte array
 	ByteArrayOutputStream transactionBAOS = new ByteArrayOutputStream();
-	
-	byte[] version = reverseByteArray(convertIntToByteArray(transaction.getVersion()));
+
+	byte[] version = reverseByteArray(convertIntToByteArray((int)transaction.getVersion()));
 	transactionBAOS.write(version);
 	// check if segwit
 	boolean segwit=false;
@@ -425,7 +425,7 @@ public static byte[] getTransactionHashSegwit(BitcoinTransaction transaction) th
 		segwit=true;
 		// we still need to check the case that all witness script stack items for all input transactions are of size 0 => traditional transaction hash calculation
 		// cf. https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki
-			// A non-witness program (defined hereinafter) txin MUST be associated with an empty witness field, represented by a 0x00. If all txins are not witness program, a transaction's wtxid is equal to its txid. 
+			// A non-witness program (defined hereinafter) txin MUST be associated with an empty witness field, represented by a 0x00. If all txins are not witness program, a transaction's wtxid is equal to its txid.
 		boolean emptyWitness=true;
 		for (int k=0;k<transaction.getBitcoinScriptWitness().size();k++) {
 			BitcoinScriptWitnessItem currentItem = transaction.getBitcoinScriptWitness().get(k);
@@ -455,7 +455,7 @@ public static byte[] getTransactionHashSegwit(BitcoinTransaction transaction) th
 	byte[] outCounter = transaction.getOutCounter();
 	transactionBAOS.write(outCounter);
 	for (int j=0;j<transaction.getListOfOutputs().size();j++) {
-		transactionBAOS.write(convertBigIntegerToByteArray(transaction.getListOfOutputs().get(j).getValue(),8));		
+		transactionBAOS.write(convertBigIntegerToByteArray(transaction.getListOfOutputs().get(j).getValue(),8));
 		transactionBAOS.write(transaction.getListOfOutputs().get(j).getTxOutScriptLength());
 		transactionBAOS.write(transaction.getListOfOutputs().get(j).getTxOutScript());
 	}
@@ -469,7 +469,7 @@ public static byte[] getTransactionHashSegwit(BitcoinTransaction transaction) th
 			}
 		}
 	}
-	byte[] lockTime=reverseByteArray(convertIntToByteArray(transaction.getLockTime()));
+	byte[] lockTime=reverseByteArray(convertIntToByteArray((int)transaction.getLockTime()));
 	transactionBAOS.write(lockTime);
 	byte[] transactionByteArray= transactionBAOS.toByteArray();
 	byte[] firstRoundHash;

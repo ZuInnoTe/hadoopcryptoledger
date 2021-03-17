@@ -26,18 +26,18 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
-* This class is an object storing relevant fields of a Bitcoin Block. 
+* This class is an object storing relevant fields of a Bitcoin Block.
 */
 
 public class HiveBitcoinBlock implements Writable {
 
 
-private int blockSize;
+private long blockSize;
 private byte[] magicNo;
-private int version;
-private int time;
+private long version;
+private long time;
 private byte[] bits;
-private int nonce;
+private long nonce;
 private long transactionCounter;
 private byte[] hashPrevBlock;
 private byte[] hashMerkleRoot;
@@ -55,11 +55,11 @@ public HiveBitcoinBlock() {
 }
 
 
-public int getBlockSize() {
+public long getBlockSize() {
 	return this.blockSize;
 }
 
-public void setBlockSize(int blockSize) {
+public void setBlockSize(long blockSize) {
 	this.blockSize=blockSize;
 }
 
@@ -72,19 +72,19 @@ public void setMagicNo(byte[] magicNo) {
 	this.magicNo=magicNo;
 }
 
-public int getVersion() {
+public long getVersion() {
 	return this.version;
 }
 
-public void setVersion(int version) {
+public void setVersion(long version) {
 	this.version=version;
 }
 
-public int getTime() {
+public long getTime() {
 	return this.time;
 }
 
-public void setTime(int time) {
+public void setTime(long time) {
 	this.time=time;
 }
 
@@ -96,11 +96,11 @@ public void setBits(byte[] bits) {
 	this.bits=bits;
 }
 
-public int getNonce() {
+public long getNonce() {
 	return this.nonce;
 }
 
-public void setNonce(int nonce) {
+public void setNonce(long nonce) {
 	this.nonce=nonce;
 }
 

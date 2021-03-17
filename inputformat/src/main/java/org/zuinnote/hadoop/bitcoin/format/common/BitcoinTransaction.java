@@ -16,22 +16,20 @@
 
 package org.zuinnote.hadoop.bitcoin.format.common;
 
-import java.io.DataInput;
-import java.io.DataOutput;
 import java.io.IOException;
 
 import org.apache.commons.io.output.ThresholdingOutputStream;
-import org.apache.hadoop.io.Writable;
+
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 
 
-public class BitcoinTransaction implements Serializable, Writable {
+public class BitcoinTransaction implements Serializable {
 
-	
-private int version;
+
+private long version;
 private byte marker;
 private byte flag;
 private byte[] inCounter;
@@ -39,7 +37,7 @@ private byte[] outCounter;
 private List<BitcoinTransactionInput> listOfInputs;
 private List<BitcoinTransactionOutput> listOfOutputs;
 private List<BitcoinScriptWitnessItem> listOfScriptWitnessItem;
-private int lockTime;
+private long lockTime;
 
 public BitcoinTransaction() {
 	this.version=0;
@@ -55,7 +53,7 @@ public BitcoinTransaction() {
 
 /***
  * Creates a traditional Bitcoin Transaction without ScriptWitness
- * 
+ *
  * @param version
  * @param inCounter
  * @param listOfInputs
@@ -63,7 +61,7 @@ public BitcoinTransaction() {
  * @param listOfOutputs
  * @param lockTime
  */
-public BitcoinTransaction(int version, byte[] inCounter, List<BitcoinTransactionInput> listOfInputs, byte[] outCounter, List<BitcoinTransactionOutput> listOfOutputs, int lockTime) {
+public BitcoinTransaction(long version, byte[] inCounter, List<BitcoinTransactionInput> listOfInputs, byte[] outCounter, List<BitcoinTransactionOutput> listOfOutputs, long lockTime) {
 
 	this.marker=1;
 	this.flag=0;
@@ -79,7 +77,7 @@ public BitcoinTransaction(int version, byte[] inCounter, List<BitcoinTransaction
 
 /**
  * Creates a Bitcoin Transaction with Segwitness
- * 
+ *
  * @param marker
  * @param flag
  * @param version
@@ -90,7 +88,7 @@ public BitcoinTransaction(int version, byte[] inCounter, List<BitcoinTransaction
  * @param listOfScriptWitnessItem
  * @param lockTime
  */
-public BitcoinTransaction(byte marker, byte flag, int version, byte[] inCounter, List<BitcoinTransactionInput> listOfInputs, byte[] outCounter, List<BitcoinTransactionOutput> listOfOutputs, List<BitcoinScriptWitnessItem> listOfScriptWitnessItem, int lockTime) {
+public BitcoinTransaction(byte marker, byte flag, long version, byte[] inCounter, List<BitcoinTransactionInput> listOfInputs, byte[] outCounter, List<BitcoinTransactionOutput> listOfOutputs, List<BitcoinScriptWitnessItem> listOfScriptWitnessItem, long lockTime) {
 	this.marker=marker;
 	this.flag=flag;
 	this.version=version;
@@ -102,7 +100,7 @@ public BitcoinTransaction(byte marker, byte flag, int version, byte[] inCounter,
 	this.lockTime=lockTime;
 }
 
-public int getVersion() {
+public long getVersion() {
 	return this.version;
 }
 
@@ -134,7 +132,7 @@ public List<BitcoinScriptWitnessItem> getBitcoinScriptWitness() {
 	return this.listOfScriptWitnessItem;
 }
 
-public int getLockTime() {
+public long getLockTime() {
 	return this.lockTime;
 }
 
@@ -148,19 +146,9 @@ public void set(BitcoinTransaction newTransaction) {
 	this.listOfOutputs=newTransaction.getListOfOutputs();
 	this.listOfScriptWitnessItem=newTransaction.getBitcoinScriptWitness();
 	this.lockTime=newTransaction.getLockTime();
-	
+
 }
 
-/** Writable **/
 
-  @Override
-  public void write(DataOutput dataOutput) throws IOException {
-    throw new UnsupportedOperationException("write unsupported");
-  }
-
-  @Override
-  public void readFields(DataInput dataInput) throws IOException {
-    throw new UnsupportedOperationException("readFields unsupported");
-  }
 
 }

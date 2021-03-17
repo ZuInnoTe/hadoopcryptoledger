@@ -21,7 +21,7 @@ import java.io.IOException;
 import org.zuinnote.hadoop.bitcoin.format.exception.HadoopCryptoLedgerConfigurationException;
 import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
 
-import org.apache.hadoop.io.BytesWritable; 
+import org.apache.hadoop.io.BytesWritable;
 import org.apache.hadoop.conf.Configuration;
 
 import org.apache.commons.logging.LogFactory;
@@ -34,10 +34,10 @@ import org.zuinnote.hadoop.bitcoin.format.common.*;
 *
 */
 
-public class BitcoinBlockRecordReader extends AbstractBitcoinRecordReader<BytesWritable, BitcoinBlock>  {
+public class BitcoinBlockRecordReader extends AbstractBitcoinRecordReader<BytesWritable, BitcoinBlockWritable>  {
 private static final Log LOG = LogFactory.getLog(BitcoinBlockRecordReader.class.getName());
 private BytesWritable currentKey=new BytesWritable();
-private BitcoinBlock currentValue=new BitcoinBlock();
+private BitcoinBlockWritable currentValue=new BitcoinBlockWritable();
 
 public BitcoinBlockRecordReader(Configuration conf) throws HadoopCryptoLedgerConfigurationException {
 	super(conf);
@@ -61,7 +61,7 @@ public BytesWritable getCurrentKey() {
 * @return is a deserialized Java object of class BitcoinBlock
 */
 @Override
-public BitcoinBlock getCurrentValue() {
+public BitcoinBlockWritable getCurrentValue() {
 	return this.currentValue;
 }
 
@@ -69,7 +69,7 @@ public BitcoinBlock getCurrentValue() {
 
 /**
 *
-* Read a next block. 
+* Read a next block.
 *
 *
 * @return true if next block is available, false if not
@@ -81,11 +81,11 @@ public boolean nextKeyValue() throws IOException {
 		BitcoinBlock dataBlock=null;
 		try {
 			dataBlock=getBbr().readBlock();
-			
+
 		} catch (BitcoinBlockReadException e) {
 			// log
 			LOG.error(e);
-		}	
+		}
 		if (dataBlock==null) {
 			return false;
 		}

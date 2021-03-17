@@ -19,7 +19,9 @@ import java.io.IOException;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.BytesWritable;
+
 import org.zuinnote.hadoop.ethereum.format.common.EthereumBlock;
+import org.zuinnote.hadoop.ethereum.format.common.EthereumBlockWritable;
 import org.zuinnote.hadoop.ethereum.format.exception.EthereumBlockReadException;
 import org.zuinnote.hadoop.ethereum.format.mapreduce.AbstractEthereumRecordReader;
 import org.apache.commons.logging.Log;
@@ -27,21 +29,21 @@ import org.apache.commons.logging.LogFactory;
 /**
  *
  */
-public class EthereumBlockRecordReader extends AbstractEthereumRecordReader<BytesWritable,EthereumBlock>{
+public class EthereumBlockRecordReader extends AbstractEthereumRecordReader<BytesWritable,EthereumBlockWritable>{
 
 
 	private static final Log LOG = LogFactory.getLog(EthereumBlockRecordReader.class.getName());
 	private BytesWritable currentKey=new BytesWritable();
-	private EthereumBlock currentValue=new EthereumBlock();
-	
+	private EthereumBlockWritable currentValue=new EthereumBlockWritable();
+
 	public EthereumBlockRecordReader(Configuration conf) {
 		super(conf);
 	}
-	
+
 
 	/**
 	*
-	* Read a next block. 
+	* Read a next block.
 	*
 	*
 	* @return true if next block is available, false if not
@@ -60,7 +62,7 @@ public class EthereumBlockRecordReader extends AbstractEthereumRecordReader<Byte
 			if (dataBlock==null) {
 				return false;
 			}
-		
+
 			byte[] newKey=dataBlock.getEthereumBlockHeader().getParentHash();
 			this.currentKey.set(newKey,0,newKey.length);
 			this.currentValue.set(dataBlock);
@@ -75,12 +77,12 @@ public class EthereumBlockRecordReader extends AbstractEthereumRecordReader<Byte
 	*
 	* @return key is a 32byte array (parentHash)
 	*/
-	
+
 	@Override
 	public BytesWritable getCurrentKey() throws IOException, InterruptedException {
 		return this.currentKey;
 	}
-	
+
 	/**
 	*
 	*  get current value after calling next()
@@ -89,7 +91,7 @@ public class EthereumBlockRecordReader extends AbstractEthereumRecordReader<Byte
 	*/
 
 	@Override
-	public EthereumBlock getCurrentValue() throws IOException, InterruptedException {
+	public EthereumBlockWritable getCurrentValue() throws IOException, InterruptedException {
 		return this.currentValue;
 	}
 

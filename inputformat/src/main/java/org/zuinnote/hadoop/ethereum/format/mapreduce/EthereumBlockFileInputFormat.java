@@ -21,16 +21,16 @@ import org.apache.hadoop.io.BytesWritable;
 import org.apache.hadoop.mapreduce.InputSplit;
 import org.apache.hadoop.mapreduce.RecordReader;
 import org.apache.hadoop.mapreduce.TaskAttemptContext;
-import org.zuinnote.hadoop.ethereum.format.common.EthereumBlock;
+import org.zuinnote.hadoop.ethereum.format.common.EthereumBlockWritable;
 
 /**
 
  *
  */
-public class EthereumBlockFileInputFormat extends AbstractEthereumFileInputFormat<BytesWritable,EthereumBlock>{
+public class EthereumBlockFileInputFormat extends AbstractEthereumFileInputFormat<BytesWritable,EthereumBlockWritable>{
 
 	@Override
-	public RecordReader<BytesWritable, EthereumBlock> createRecordReader(InputSplit split, TaskAttemptContext ctx)
+	public RecordReader<BytesWritable, EthereumBlockWritable> createRecordReader(InputSplit split, TaskAttemptContext ctx)
 			throws IOException {
 		/** Create reader **/
 		return new EthereumBlockRecordReader(ctx.getConfiguration());

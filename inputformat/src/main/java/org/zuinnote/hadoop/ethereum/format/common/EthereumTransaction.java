@@ -15,19 +15,16 @@
 **/
 package org.zuinnote.hadoop.ethereum.format.common;
 
-import java.io.DataInput;
-import java.io.DataOutput;
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigInteger;
 
-import org.apache.hadoop.io.Writable;
 
 /**
- * 
+ *
  *
  */
-public class EthereumTransaction implements Writable,Serializable {
+public class EthereumTransaction implements Serializable {
 
 private byte[] nonce;
 private BigInteger value;
@@ -47,15 +44,7 @@ public EthereumTransaction() {
 	// please use setter to set the data
 }
 
-@Override
-public void write(DataOutput out) throws IOException {
-	   throw new UnsupportedOperationException("write unsupported");	
-}
 
-@Override
-public void readFields(DataInput in) throws IOException {
-	   throw new UnsupportedOperationException("readFields unsupported");
-}
 
 public byte[] getNonce() {
 	return nonce;

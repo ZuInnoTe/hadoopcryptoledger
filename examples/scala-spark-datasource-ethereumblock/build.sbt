@@ -1,5 +1,5 @@
 
- 
+
 import sbt._
 import Keys._
 import scala._
@@ -12,7 +12,7 @@ lazy val root = (project in file("."))
 )
  .configs( IntegrationTest )
   .settings( Defaults.itSettings : _*)
- 
+
 
 
 crossScalaVersions := Seq( "2.11.10")
@@ -33,13 +33,13 @@ assemblyMergeStrategy in assembly := {
  case x => MergeStrategy.first
 }
 
-libraryDependencies += "com.github.zuinnote" %% "spark-hadoopcryptoledger-ds" % "1.2.1" % "compile"
+libraryDependencies += "com.github.zuinnote" %% "spark-hadoopcryptoledger-ds" % "1.3.0" % "compile"
 // needed for enriched EthereumBlocks
-libraryDependencies += "org.bouncycastle" % "bcprov-ext-jdk15on" % "1.64" % "compile"
+libraryDependencies += "org.bouncycastle" % "bcprov-ext-jdk15on" % "1.68" % "compile"
 
-libraryDependencies += "org.apache.spark" %% "spark-core" % "2.4.4" % "provided"
+libraryDependencies += "org.apache.spark" %% "spark-core" % "2.4.7" % "provided"
 
-libraryDependencies += "org.apache.spark" %% "spark-sql" % "2.4.4" % "provided"
+libraryDependencies += "org.apache.spark" %% "spark-sql" % "2.4.7" % "provided"
 
 libraryDependencies += "org.apache.hadoop" % "hadoop-client" % "2.7.0" % "provided"
 
@@ -54,5 +54,3 @@ libraryDependencies += "org.apache.hadoop" % "hadoop-common" % "2.7.0" % "it" cl
 libraryDependencies += "org.apache.hadoop" % "hadoop-hdfs" % "2.7.0" % "it" classifier "" classifier "tests"
 
 libraryDependencies += "org.apache.hadoop" % "hadoop-minicluster" % "2.7.0" % "it"
-
-

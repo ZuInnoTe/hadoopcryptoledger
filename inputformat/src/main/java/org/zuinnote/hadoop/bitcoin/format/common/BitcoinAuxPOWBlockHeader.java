@@ -18,15 +18,15 @@ package org.zuinnote.hadoop.bitcoin.format.common;
 import java.io.Serializable;
 
 public class BitcoinAuxPOWBlockHeader implements Serializable {
-	private int version;
+	private long version;
 	private byte[] previousBlockHash;
 	private byte[] merkleRoot;
-	private int time;
+	private long time;
 	private byte[] bits;
-	private int nonce;
-	
-	
-	public BitcoinAuxPOWBlockHeader(int version, byte[] previousBlockHash, byte[] merkleRoot, int time, byte[] bits, int nonce) {
+	private long nonce;
+
+
+	public BitcoinAuxPOWBlockHeader(long version, byte[] previousBlockHash, byte[] merkleRoot, long time, byte[] bits, long nonce) {
 		this.version=version;
 		this.previousBlockHash=previousBlockHash;
 		this.merkleRoot=merkleRoot;
@@ -34,8 +34,8 @@ public class BitcoinAuxPOWBlockHeader implements Serializable {
 		this.bits=bits;
 		this.nonce=nonce;
 	}
-	
-	public int getVersion() {
+
+	public long getVersion() {
 		return version;
 	}
 
@@ -47,7 +47,7 @@ public class BitcoinAuxPOWBlockHeader implements Serializable {
 		return merkleRoot;
 	}
 
-	public int getTime() {
+	public long getTime() {
 		return time;
 	}
 
@@ -55,7 +55,7 @@ public class BitcoinAuxPOWBlockHeader implements Serializable {
 		return bits;
 	}
 
-	public int getNonce() {
+	public long getNonce() {
 		return nonce;
 	}
 

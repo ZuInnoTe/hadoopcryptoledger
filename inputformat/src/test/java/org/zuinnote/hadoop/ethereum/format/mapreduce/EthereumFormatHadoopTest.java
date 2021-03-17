@@ -44,6 +44,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 
+import org.zuinnote.hadoop.ethereum.format.common.EthereumBlockWritable;
 import org.zuinnote.hadoop.ethereum.format.common.EthereumBlock;
 import org.zuinnote.hadoop.ethereum.format.common.EthereumBlockHeader;
 import org.zuinnote.hadoop.ethereum.format.exception.EthereumBlockReadException;
@@ -175,7 +176,7 @@ public class EthereumFormatHadoopTest {
 		assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
 		assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
 	}
-	
+
 	@Test
 	public void checkTestDataBlock403419() {
 		ClassLoader classLoader = getClass().getClassLoader();
@@ -211,11 +212,11 @@ public class EthereumFormatHadoopTest {
 		List<InputSplit> splits = format.getSplits(job);
 		TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
 		assertEquals( 1, splits.size(),"Only one split generated for genesis block");
-		RecordReader<BytesWritable, EthereumBlock> reader = format.createRecordReader(splits.get(0), context);
+		RecordReader<BytesWritable, EthereumBlockWritable> reader = format.createRecordReader(splits.get(0), context);
 		assertNotNull( reader,"Format returned  null RecordReader");
 		reader.initialize(splits.get(0),context);
 		BytesWritable key = new BytesWritable();
-		EthereumBlock block = new EthereumBlock();
+		EthereumBlockWritable block = new EthereumBlockWritable();
 		assertTrue( reader.nextKeyValue(),"Input Split for genesis block contains at least one block");
 		key=reader.getCurrentKey();
 		block=reader.getCurrentValue();
@@ -238,11 +239,11 @@ public class EthereumFormatHadoopTest {
 		List<InputSplit> splits = format.getSplits(job);
 		TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
 		assertEquals( 1, splits.size(),"Only one split generated for block 403419");
-		RecordReader<BytesWritable, EthereumBlock> reader = format.createRecordReader(splits.get(0), context);
+		RecordReader<BytesWritable, EthereumBlockWritable> reader = format.createRecordReader(splits.get(0), context);
 		assertNotNull( reader,"Format returned  null RecordReader");
 		reader.initialize(splits.get(0),context);
 		BytesWritable key = new BytesWritable();
-		EthereumBlock block = new EthereumBlock();
+		EthereumBlockWritable block = new EthereumBlockWritable();
 		assertTrue( reader.nextKeyValue(),"Input Split for block 403419 contains at least one block");
 		key=reader.getCurrentKey();
 		block=reader.getCurrentValue();
@@ -276,11 +277,11 @@ public class EthereumFormatHadoopTest {
 		List<InputSplit> splits = format.getSplits(job);
 		TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
 		assertEquals( 1, splits.size(),"Only one split generated for block 447533");
-		RecordReader<BytesWritable, EthereumBlock> reader = format.createRecordReader(splits.get(0), context);
+		RecordReader<BytesWritable, EthereumBlockWritable> reader = format.createRecordReader(splits.get(0), context);
 		assertNotNull( reader,"Format returned  null RecordReader");
 		reader.initialize(splits.get(0),context);
 		BytesWritable key = new BytesWritable();
-		EthereumBlock block = new EthereumBlock();
+		EthereumBlockWritable block = new EthereumBlockWritable();
 		assertTrue( reader.nextKeyValue(),"Input Split for block 403419 contains at least one block");
 		key=reader.getCurrentKey();
 		block=reader.getCurrentValue();
@@ -314,11 +315,11 @@ public class EthereumFormatHadoopTest {
 		List<InputSplit> splits = format.getSplits(job);
 		TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
 		assertEquals( 1, splits.size(),"Only one split generated for block 1");
-		RecordReader<BytesWritable, EthereumBlock> reader = format.createRecordReader(splits.get(0), context);
+		RecordReader<BytesWritable, EthereumBlockWritable> reader = format.createRecordReader(splits.get(0), context);
 		assertNotNull( reader,"Format returned  null RecordReader");
 		reader.initialize(splits.get(0),context);
 		BytesWritable key = new BytesWritable();
-		EthereumBlock block = new EthereumBlock();
+		EthereumBlockWritable block = new EthereumBlockWritable();
 		assertTrue( reader.nextKeyValue(),"Input Split for block 1 contains at least one block");
 		key=reader.getCurrentKey();
 		block=reader.getCurrentValue();
@@ -341,11 +342,11 @@ public class EthereumFormatHadoopTest {
 		List<InputSplit> splits = format.getSplits(job);
 		TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
 		assertEquals( 1, splits.size(),"Only one split generated for block 1346406");
-		RecordReader<BytesWritable, EthereumBlock> reader = format.createRecordReader(splits.get(0), context);
+		RecordReader<BytesWritable, EthereumBlockWritable> reader = format.createRecordReader(splits.get(0), context);
 		assertNotNull( reader,"Format returned  null RecordReader");
 		reader.initialize(splits.get(0),context);
 		BytesWritable key = new BytesWritable();
-		EthereumBlock block = new EthereumBlock();
+		EthereumBlockWritable block = new EthereumBlockWritable();
 		assertTrue( reader.nextKeyValue(),"Input Split for block 1346406 contains at least one block");
 		key=reader.getCurrentKey();
 		block=reader.getCurrentValue();
@@ -368,11 +369,11 @@ public class EthereumFormatHadoopTest {
 		List<InputSplit> splits = format.getSplits(job);
 		TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
 		assertEquals( 1, splits.size(),"Only one split generated for block 3346406");
-		RecordReader<BytesWritable, EthereumBlock> reader = format.createRecordReader(splits.get(0), context);
+		RecordReader<BytesWritable, EthereumBlockWritable> reader = format.createRecordReader(splits.get(0), context);
 		assertNotNull( reader,"Format returned  null RecordReader");
 		reader.initialize(splits.get(0),context);
 		BytesWritable key = new BytesWritable();
-		EthereumBlock block = new EthereumBlock();
+		EthereumBlockWritable block = new EthereumBlockWritable();
 		assertTrue( reader.nextKeyValue(),"Input Split for block 3346406 contains at least one block");
 		key=reader.getCurrentKey();
 		block=reader.getCurrentValue();
@@ -395,11 +396,11 @@ public class EthereumFormatHadoopTest {
 		List<InputSplit> splits = format.getSplits(job);
 		TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
 		assertEquals( 1, splits.size(),"Only one split generated for block 0..10");
-		RecordReader<BytesWritable, EthereumBlock> reader = format.createRecordReader(splits.get(0), context);
+		RecordReader<BytesWritable, EthereumBlockWritable> reader = format.createRecordReader(splits.get(0), context);
 		assertNotNull( reader,"Format returned  null RecordReader");
 		reader.initialize(splits.get(0),context);
 		BytesWritable key = new BytesWritable();
-		EthereumBlock block = new EthereumBlock();
+		EthereumBlockWritable block = new EthereumBlockWritable();
 		int count=0;
 		while (count<11) {
 			if (reader.nextKeyValue()) {
@@ -426,11 +427,11 @@ public class EthereumFormatHadoopTest {
 		List<InputSplit> splits = format.getSplits(job);
 		TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
 		assertEquals( 1, splits.size(),"Only one split generated for block 3510000 .. 3510010");
-		RecordReader<BytesWritable, EthereumBlock> reader = format.createRecordReader(splits.get(0), context);
+		RecordReader<BytesWritable, EthereumBlockWritable> reader = format.createRecordReader(splits.get(0), context);
 		assertNotNull( reader,"Format returned  null RecordReader");
 		reader.initialize(splits.get(0),context);
 		BytesWritable key = new BytesWritable();
-		EthereumBlock block = new EthereumBlock();
+		EthereumBlockWritable block = new EthereumBlockWritable();
 		int count=0;
 		while (count<11) {
 			if (reader.nextKeyValue()) {
@@ -457,11 +458,11 @@ public class EthereumFormatHadoopTest {
 		List<InputSplit> splits = format.getSplits(job);
 		TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
 		assertEquals( 1, splits.size(),"Only one split generated for block 1346406");
-		RecordReader<BytesWritable, EthereumBlock> reader = format.createRecordReader(splits.get(0), context);
+		RecordReader<BytesWritable, EthereumBlockWritable> reader = format.createRecordReader(splits.get(0), context);
 		assertNotNull( reader,"Format returned  null RecordReader");
 		reader.initialize(splits.get(0),context);
 		BytesWritable key = new BytesWritable();
-		EthereumBlock block = new EthereumBlock();
+		EthereumBlockWritable block = new EthereumBlockWritable();
 		assertTrue( reader.nextKeyValue(),"Input Split for block 1346406 contains at least one block");
 		key=reader.getCurrentKey();
 		block=reader.getCurrentValue();
@@ -484,11 +485,11 @@ public class EthereumFormatHadoopTest {
 		List<InputSplit> splits = format.getSplits(job);
 		TaskAttemptContext context = new TaskAttemptContextImpl(conf, new TaskAttemptID());
 		assertEquals( 1, splits.size(),"Only one split generated for block 1346406");
-		RecordReader<BytesWritable, EthereumBlock> reader = format.createRecordReader(splits.get(0), context);
+		RecordReader<BytesWritable, EthereumBlockWritable> reader = format.createRecordReader(splits.get(0), context);
 		assertNotNull( reader,"Format returned  null RecordReader");
 		reader.initialize(splits.get(0),context);
 		BytesWritable key = new BytesWritable();
-		EthereumBlock block = new EthereumBlock();
+		EthereumBlockWritable block = new EthereumBlockWritable();
 		assertTrue( reader.nextKeyValue(),"Input Split for block 1346406 contains at least one block");
 		key=reader.getCurrentKey();
 		block=reader.getCurrentValue();

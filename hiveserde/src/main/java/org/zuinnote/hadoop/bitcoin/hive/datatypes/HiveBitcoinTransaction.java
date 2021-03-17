@@ -31,8 +31,8 @@ import java.util.ArrayList;
 
 public class HiveBitcoinTransaction implements Writable {
 
-	
-private int version;
+
+private long version;
 private byte marker;
 private byte flag;
 private byte[] inCounter;
@@ -40,7 +40,7 @@ private byte[] outCounter;
 private List<BitcoinTransactionInput> listOfInputs;
 private List<HiveBitcoinTransactionOutput> listOfOutputs;
 private List<BitcoinScriptWitnessItem> listOfScriptWitnessItem;
-private int lockTime;
+private long lockTime;
 
 public HiveBitcoinTransaction() {
 	this.version=0;
@@ -56,7 +56,7 @@ public HiveBitcoinTransaction() {
 
 /***
  * Creates a traditional Bitcoin Transaction without ScriptWitness
- * 
+ *
  * @param version
  * @param inCounter
  * @param listOfInputs
@@ -64,7 +64,7 @@ public HiveBitcoinTransaction() {
  * @param listOfOutputs
  * @param lockTime
  */
-public HiveBitcoinTransaction(int version, byte[] inCounter, List<BitcoinTransactionInput> listOfInputs, byte[] outCounter, List<HiveBitcoinTransactionOutput> listOfOutputs, int lockTime) {
+public HiveBitcoinTransaction(long version, byte[] inCounter, List<BitcoinTransactionInput> listOfInputs, byte[] outCounter, List<HiveBitcoinTransactionOutput> listOfOutputs, long lockTime) {
 
 	this.marker=1;
 	this.flag=0;
@@ -80,7 +80,7 @@ public HiveBitcoinTransaction(int version, byte[] inCounter, List<BitcoinTransac
 
 /**
  * Creates a Bitcoin Transaction with Segwitness
- * 
+ *
  * @param marker
  * @param flag
  * @param version
@@ -91,7 +91,7 @@ public HiveBitcoinTransaction(int version, byte[] inCounter, List<BitcoinTransac
  * @param listOfScriptWitnessItem
  * @param lockTime
  */
-public HiveBitcoinTransaction(byte marker, byte flag, int version, byte[] inCounter, List<BitcoinTransactionInput> listOfInputs, byte[] outCounter, List<HiveBitcoinTransactionOutput> listOfOutputs, List<BitcoinScriptWitnessItem> listOfScriptWitnessItem, int lockTime) {
+public HiveBitcoinTransaction(byte marker, byte flag, long version, byte[] inCounter, List<BitcoinTransactionInput> listOfInputs, byte[] outCounter, List<HiveBitcoinTransactionOutput> listOfOutputs, List<BitcoinScriptWitnessItem> listOfScriptWitnessItem, long lockTime) {
 	this.marker=marker;
 	this.flag=flag;
 	this.version=version;
@@ -103,7 +103,7 @@ public HiveBitcoinTransaction(byte marker, byte flag, int version, byte[] inCoun
 	this.lockTime=lockTime;
 }
 
-public int getVersion() {
+public long getVersion() {
 	return this.version;
 }
 
@@ -135,7 +135,7 @@ public List<BitcoinScriptWitnessItem> getBitcoinScriptWitness() {
 	return this.listOfScriptWitnessItem;
 }
 
-public int getLockTime() {
+public long getLockTime() {
 	return this.lockTime;
 }
 
@@ -149,7 +149,7 @@ public void set(HiveBitcoinTransaction newTransaction) {
 	this.listOfOutputs=newTransaction.getListOfOutputs();
 	this.listOfScriptWitnessItem=newTransaction.getBitcoinScriptWitness();
 	this.lockTime=newTransaction.getLockTime();
-	
+
 }
 
 /** Writable **/

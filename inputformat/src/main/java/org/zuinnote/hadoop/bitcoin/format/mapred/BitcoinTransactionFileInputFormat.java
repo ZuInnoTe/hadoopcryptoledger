@@ -34,19 +34,19 @@ import org.apache.commons.logging.Log;
 
 import org.zuinnote.hadoop.bitcoin.format.common.*;
 
-public class BitcoinTransactionFileInputFormat extends AbstractBitcoinFileInputFormat<BytesWritable,BitcoinTransaction>   {
+public class BitcoinTransactionFileInputFormat extends AbstractBitcoinFileInputFormat<BytesWritable,BitcoinTransactionWritable>   {
 
 private static final Log LOGFI = LogFactory.getLog(BitcoinTransactionFileInputFormat.class.getName());
 
 @Override
-public RecordReader<BytesWritable,BitcoinTransaction> getRecordReader(InputSplit split, JobConf job, Reporter reporter) throws IOException {
+public RecordReader<BytesWritable,BitcoinTransactionWritable> getRecordReader(InputSplit split, JobConf job, Reporter reporter) throws IOException {
 	/** Create reader **/
 	try {
 		return new BitcoinTransactionRecordReader( (FileSplit) split,job,reporter);
 	} catch (HadoopCryptoLedgerConfigurationException|BitcoinBlockReadException e) {
 		// log
 		LOGFI.error(e);
-	} 
+	}
 	return null;
 }
 

@@ -41,18 +41,18 @@ public abstract class AbstractBitcoinFlinkInputFormat<E> extends FileInputFormat
 	private boolean useDirectBuffer;
 	private boolean readAuxPOW;
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -4661705676237973665L;
-	
+
 	public AbstractBitcoinFlinkInputFormat() throws HadoopCryptoLedgerConfigurationException {
 		this(AbstractBitcoinRecordReader.DEFAULT_MAXSIZE_BITCOINBLOCK,AbstractBitcoinRecordReader.DEFAULT_MAGIC,AbstractBitcoinRecordReader.DEFAULT_USEDIRECTBUFFER);
 	}
-	
+
 	public AbstractBitcoinFlinkInputFormat(int maxSizeBitcoinBlock, String specificMagicStr, boolean useDirectBuffer) throws HadoopCryptoLedgerConfigurationException {
 		this(maxSizeBitcoinBlock,specificMagicStr,useDirectBuffer,false);
 	}
-	
+
 	public AbstractBitcoinFlinkInputFormat(int maxSizeBitcoinBlock, String specificMagicStr, boolean useDirectBuffer, boolean readAuxPOW) throws HadoopCryptoLedgerConfigurationException {
 		this.unsplittable=true;
 		this.maxSizeBitcoinBlock=maxSizeBitcoinBlock;
@@ -70,14 +70,14 @@ public abstract class AbstractBitcoinFlinkInputFormat<E> extends FileInputFormat
 		}
 		this.readAuxPOW=readAuxPOW;
 	}
-	
+
 	/*
 	 * Reads data supplied by Flink with @see org.zuinnote.hadoop.bitcoin.format.common.BitcoinBlockReader
-	 * 
+	 *
 	 * (non-Javadoc)
 	 * @see org.apache.flink.api.common.io.FileInputFormat#open(org.apache.flink.core.fs.FileInputSplit)
 	 */
-	
+
 	@Override
 	public void open(FileInputSplit split) throws IOException {
 		super.open(split);
@@ -86,16 +86,16 @@ public abstract class AbstractBitcoinFlinkInputFormat<E> extends FileInputFormat
 		bbr = new BitcoinBlockReader(this.stream,this.maxSizeBitcoinBlock,1,this.specificMagicArray,this.useDirectBuffer,this.readAuxPOW);
 	}
 
-	
-	
+
+
 	/*
 	 * Returns the BitcoinBlockReader used to parse this stream
-	 * 
+	 *
 	 * @return BitcoinBlockReader
-	 * 
+	 *
 	 */
 	public BitcoinBlockReader getBbr() {
 		return this.bbr;
 	}
-	
+
 }

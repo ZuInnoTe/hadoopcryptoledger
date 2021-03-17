@@ -22,7 +22,7 @@ import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
 
 import java.io.IOException;
 
-import org.apache.hadoop.io.BytesWritable; 
+import org.apache.hadoop.io.BytesWritable;
 
 import org.apache.hadoop.mapred.FileSplit;
 import org.apache.hadoop.mapred.JobConf;
@@ -37,7 +37,7 @@ import org.zuinnote.hadoop.bitcoin.format.common.*;
 *
 */
 
-public class BitcoinBlockRecordReader extends AbstractBitcoinRecordReader<BytesWritable, BitcoinBlock>  {
+public class BitcoinBlockRecordReader extends AbstractBitcoinRecordReader<BytesWritable, BitcoinBlockWritable>  {
 private static final Log LOG = LogFactory.getLog(BitcoinBlockRecordReader.class.getName());
 
 
@@ -63,15 +63,15 @@ public BytesWritable createKey() {
 * @return value
 */
 @Override
-public BitcoinBlock createValue() {
-	return new BitcoinBlock();
+public BitcoinBlockWritable createValue() {
+	return new BitcoinBlockWritable();
 }
 
 
 
 /**
 *
-* Read a next block. 
+* Read a next block.
 *
 * @param key is a 64 byte array (hashMerkleRoot and prevHashBlock)
 * @param value is a deserialized Java object of class BitcoinBlock
@@ -79,18 +79,18 @@ public BitcoinBlock createValue() {
 * @return true if next block is available, false if not
 */
 @Override
-public boolean next(BytesWritable key, BitcoinBlock value) throws IOException {
+public boolean next(BytesWritable key, BitcoinBlockWritable value) throws IOException {
 	// read all the blocks, if necessary a block overlapping a split
 	while(getFilePosition()<=getEnd()) { // did we already went beyond the split (remote) or do we have no further data left?
 		BitcoinBlock dataBlock=null;
 		try {
 			dataBlock=getBbr().readBlock();
-			
+
 		} catch (BitcoinBlockReadException e) {
 			// log
 			LOG.error(e);
-		}	
-		if (dataBlock==null) { 
+		}
+		if (dataBlock==null) {
 			return false;
 		}
 		byte[] hashMerkleRoot=dataBlock.getHashMerkleRoot();

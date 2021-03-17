@@ -9,11 +9,32 @@ compileJava.options.encoding = 'UTF-8'
 
 group = "com.github.zuinnote"
 archivesBaseName = "hadoopcryptoledger-hiveudf"
-version = "1.2.1"
+version = "1.3.0"
 
 
 
 
+repositories {
+  mavenCentral()
+  mavenLocal()
+    jcenter()
+    // workaround for certain dependencies of hive-exec
+    maven {
+      url "http://conjars.org/repo"
+    }
+}
+
+
+buildscript {
+repositories {
+
+    jcenter()
+}
+
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:6.1.0'
+    }
+}
 
 jacocoTestReport {
     reports {
@@ -72,21 +93,21 @@ sourceSets {
 
 dependencies {
    // hadoop lib for driver
-     provided("org.apache.hadoop:hadoop-client:2.7.0")
+     provided("org.apache.hadoop:hadoop-client:3.3.0")
        // hadoop crypto ledger library
-   compile("com.github.zuinnote:hadoopcryptoledger-fileformat:1.2.1")
-   compile("com.github.zuinnote:hadoopcryptoledger-hiveserde:1.2.1")
+   compile("com.github.zuinnote:hadoopcryptoledger-fileformat:1.3.0")
+   compile("com.github.zuinnote:hadoopcryptoledger-hiveserde:1.3.0")
    // we need to mandatory add the BC library
-     provided("org.bouncycastle:bcprov-ext-jdk15on:1.64")
+     provided("org.bouncycastle:bcprov-ext-jdk15on:1.68")
     // hive serde API
-   provided("org.apache.hive:hive-serde:2.3.6")
-   provided("org.apache.hive:hive-exec:2.3.6")
+   provided("org.apache.hive:hive-serde:3.1.2")
+   provided("org.apache.hive:hive-exec:3.1.2")
    // log4j2
-   provided("org.apache.logging.log4j:log4j-api:2.12.1")
+   provided("org.apache.logging.log4j:log4j-api:2.14.0")
    // test
-    testRuntime("org.apache.hive:hive-serde:2.3.6")
-    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.5.2'
-	testRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.5.2'
+    testRuntime("org.apache.hive:hive-serde:3.1.2")
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.7.1'
+	testRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.7.1'
 }
 
 jar {
@@ -96,8 +117,8 @@ jar {
     }
 
     baseName = 'hadoopcryptoledger-hiveudf'
- 
-    
+
+
 }
 
 javadoc.classpath += configurations.provided

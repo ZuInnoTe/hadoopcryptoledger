@@ -23,7 +23,7 @@ import org.zuinnote.hadoop.bitcoin.format.exception.BitcoinBlockReadException;
 import java.io.IOException;
 
 
-import org.apache.hadoop.io.BytesWritable; 
+import org.apache.hadoop.io.BytesWritable;
 
 
 import org.apache.hadoop.mapred.FileSplit;
@@ -34,7 +34,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.commons.logging.Log;
 import org.zuinnote.hadoop.bitcoin.format.common.*;
 
-public class BitcoinTransactionRecordReader extends AbstractBitcoinRecordReader<BytesWritable, BitcoinTransaction> {
+public class BitcoinTransactionRecordReader extends AbstractBitcoinRecordReader<BytesWritable, BitcoinTransactionWritable> {
 private static final Log LOG = LogFactory.getLog(BitcoinBlockRecordReader.class.getName());
 
 private int currentTransactionCounterInBlock=0;
@@ -64,14 +64,14 @@ public BytesWritable createKey() {
 * @return value
 */
 @Override
-public BitcoinTransaction createValue() {
-	return new BitcoinTransaction();
+public BitcoinTransactionWritable createValue() {
+	return new BitcoinTransactionWritable();
 }
 
 
 /**
 *
-* Read a next block. 
+* Read a next block.
 *
 * @param key is a 68 byte array (hashMerkleRoot, prevHashBlock, transActionCounter)
 * @param value is a deserialized Java object of class BitcoinBlock
@@ -79,7 +79,7 @@ public BitcoinTransaction createValue() {
 * @return true if next block is available, false if not
 */
 @Override
-public boolean next(BytesWritable key, BitcoinTransaction value) throws IOException {
+public boolean next(BytesWritable key, BitcoinTransactionWritable value) throws IOException {
 	// read all the blocks, if necessary a block overlapping a split
 	while(getFilePosition()<=getEnd()) { // did we already went beyond the split (remote) or do we have no further data left?
 		if ((currentBitcoinBlock==null) || (currentBitcoinBlock.getTransactions().size()==currentTransactionCounterInBlock)){

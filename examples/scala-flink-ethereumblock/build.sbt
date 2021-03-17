@@ -27,18 +27,17 @@ fork  := true
 
 
 
-libraryDependencies += "com.github.zuinnote" % "hadoopcryptoledger-flinkdatasource" % "1.2.1" % "compile"
-libraryDependencies += "com.github.zuinnote" % "hadoopcryptoledger-fileformat" % "1.2.1" % "compile"
+libraryDependencies += "com.github.zuinnote" % "hadoopcryptoledger-flinkdatasource" % "1.3.0" % "compile"
+libraryDependencies += "com.github.zuinnote" % "hadoopcryptoledger-fileformat" % "1.3.0" % "compile"
 // needed for certain functionality related to Ethereum in EthereumUtil
-libraryDependencies += "org.bouncycastle" % "bcprov-ext-jdk15on" % "1.64" % "compile"
-libraryDependencies += "org.apache.flink" %% "flink-scala" % "1.9.0" % "provided" 
+libraryDependencies += "org.bouncycastle" % "bcprov-ext-jdk15on" % "1.68" % "compile"
+libraryDependencies += "org.apache.flink" %% "flink-scala" % "1.12.1" % "provided"
 
-libraryDependencies += "org.apache.flink" % "flink-shaded-hadoop2" % "2.4.1-1.8.2" % "provided"  
 
-// needed for writable serializer 
-libraryDependencies += "org.apache.flink" %% "flink-hadoop-compatibility" % "1.9.0" % "compile" 
+// needed for writable serializer
+libraryDependencies += "org.apache.flink" %% "flink-hadoop-compatibility" % "1.12.1" % "compile"
 
-libraryDependencies += "org.apache.flink" %% "flink-clients" % "1.9.0" % "it" 
+libraryDependencies += "org.apache.flink" %% "flink-clients" % "1.12.1" % "it"
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.1" % "test,it"
 

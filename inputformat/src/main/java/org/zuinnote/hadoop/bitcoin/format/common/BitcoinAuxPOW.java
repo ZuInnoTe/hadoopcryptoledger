@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BitcoinAuxPOW implements Serializable {
-	private int version;
+	private long version;
 	private BitcoinTransaction coinbaseTransaction;
 	private byte[] parentBlockHeaderHash;
 	private BitcoinAuxPOWBranch coinbaseBranch;
@@ -29,17 +29,17 @@ public class BitcoinAuxPOW implements Serializable {
 
 	/*
 	 * Creates an empy AuxPOW object in case the feature is not used (e.g. in the main Bitcoin blockchain)
-	 * 
+	 *
 	 */
 	public BitcoinAuxPOW() {
-		this.version=0;
+		this.version=0L;
 		this.coinbaseTransaction=null;
 		this.coinbaseBranch=null;
 		this.auxBlockChainBranch=null;
 		this.parentBlockHeader=null;
 	}
-	
-	public BitcoinAuxPOW(int version, BitcoinTransaction coinbaseTransaction, byte[] parentBlockHeaderHash, BitcoinAuxPOWBranch coinbaseBranch, BitcoinAuxPOWBranch auxBlockChainBranch, BitcoinAuxPOWBlockHeader parentBlockHeader) {
+
+	public BitcoinAuxPOW(long version, BitcoinTransaction coinbaseTransaction, byte[] parentBlockHeaderHash, BitcoinAuxPOWBranch coinbaseBranch, BitcoinAuxPOWBranch auxBlockChainBranch, BitcoinAuxPOWBlockHeader parentBlockHeader) {
 		this.version=version;
 		this.coinbaseTransaction=coinbaseTransaction;
 		this.parentBlockHeaderHash=parentBlockHeaderHash;
@@ -47,8 +47,8 @@ public class BitcoinAuxPOW implements Serializable {
 		this.auxBlockChainBranch=auxBlockChainBranch;
 		this.parentBlockHeader=parentBlockHeader;
 	}
-	
-	public int getVersion() {
+
+	public long getVersion() {
 		return version;
 	}
 

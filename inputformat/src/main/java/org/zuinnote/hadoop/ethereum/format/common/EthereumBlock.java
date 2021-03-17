@@ -15,16 +15,12 @@
 **/
 package org.zuinnote.hadoop.ethereum.format.common;
 
-import java.io.DataInput;
-import java.io.DataOutput;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
-import org.apache.hadoop.io.Writable;
 
-
-public class EthereumBlock implements Writable,Serializable {
+public class EthereumBlock implements Serializable {
 private EthereumBlockHeader ethereumBlockHeader;
 private List<EthereumTransaction> ethereumTransactions;
 private List<EthereumBlockHeader> uncleHeaders;
@@ -33,7 +29,7 @@ private List<EthereumBlockHeader> uncleHeaders;
 
 
 public EthereumBlock() {
-	
+
 }
 
 public EthereumBlock(EthereumBlockHeader ethereumBlockHeader,  List<EthereumTransaction> ethereumTransactions, List<EthereumBlockHeader> uncleHeaders) {
@@ -63,15 +59,6 @@ public void set(EthereumBlock newBlock) {
 	this.ethereumTransactions=newBlock.getEthereumTransactions();
 }
 
-@Override
-public void write(DataOutput out) throws IOException {
-	   throw new UnsupportedOperationException("write unsupported");	
-}
-
-@Override
-public void readFields(DataInput in) throws IOException {
-	   throw new UnsupportedOperationException("readFields unsupported");
-}
 
 
 }
