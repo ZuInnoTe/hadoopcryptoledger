@@ -30,7 +30,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.zuinnote.hadoop.bitcoin.format.common.BitcoinBlock;
+import org.zuinnote.hadoop.bitcoin.format.common.BitcoinBlockWritable;
 import org.zuinnote.hadoop.bitcoin.format.common.BitcoinTransaction;
 
 public class Spark2BitcoinBlockCounterTest  {
@@ -38,7 +38,7 @@ public class Spark2BitcoinBlockCounterTest  {
 
    @BeforeAll
     public static void oneTimeSetUp() {
-     
+
     }
 
     @AfterAll
@@ -57,7 +57,7 @@ public class Spark2BitcoinBlockCounterTest  {
     @Test
     public void mapNoOfTransaction() {
 	Spark2BitcoinBlockCounter sparkTransformator = new Spark2BitcoinBlockCounter();
-	  BitcoinBlock testBlock = new BitcoinBlock();
+	  BitcoinBlockWritable testBlock = new BitcoinBlockWritable();
 	  BitcoinTransaction testTransaction = new BitcoinTransaction();
 	  ArrayList<BitcoinTransaction> testTransactionList = new ArrayList<BitcoinTransaction>();
 	  testTransactionList.add(testTransaction);
@@ -73,6 +73,6 @@ public class Spark2BitcoinBlockCounterTest  {
 	Long transactionCountB = new Long(2);
 	assertEquals((long)3,(long)sparkTransformator.reduceSumUpTransactions(transactionCountA,transactionCountB),"Transaction count should sum up to 3");
     }
-    
+
 
 }

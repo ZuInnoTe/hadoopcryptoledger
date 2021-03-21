@@ -24,7 +24,7 @@ import org.apache.hadoop.fs.Path
 import org.apache.hadoop.mapreduce._
 import org.apache.hadoop.io._
 
-import org.zuinnote.hadoop.ethereum.format.common.EthereumBlock
+import org.zuinnote.hadoop.ethereum.format.common.EthereumBlockWritable
 import org.zuinnote.hadoop.ethereum.format.mapreduce.EthereumBlockFileInputFormat
 
 /**
@@ -44,14 +44,14 @@ object SparkScalaEthereumBlockCounter {
 
 
      def jobTotalNumOfTransactions(sc: SparkContext, hadoopConf: Configuration, inputFile: String, outputFile: String): Unit = {
-	val ethereumBlocksRDD = sc.newAPIHadoopFile(inputFile, classOf[EthereumBlockFileInputFormat], classOf[BytesWritable], classOf[EthereumBlock], hadoopConf)
+	val ethereumBlocksRDD = sc.newAPIHadoopFile(inputFile, classOf[EthereumBlockFileInputFormat], classOf[BytesWritable], classOf[EthereumBlockWritable], hadoopConf)
 	val totalCount=transform(ethereumBlocksRDD)
     	// write results to HDFS
 	totalCount.repartition(1).saveAsTextFile(outputFile)
-	
+
 	}
 
-	def transform(ethereumBlocksRDD: RDD[(BytesWritable,EthereumBlock)]): RDD[(String,Int)] = {
+	def transform(ethereumBlocksRDD: RDD[(BytesWritable,EthereumBlockWritable)]): RDD[(String,Int)] = {
 		// extract the no transactions / block (map)
    		val noOfTransactionPair = ethereumBlocksRDD.map(hadoopKeyValueTuple => ("No of transactions: ",hadoopKeyValueTuple._2.getEthereumTransactions().size()))
 		// reduce total count
@@ -62,5 +62,3 @@ object SparkScalaEthereumBlockCounter {
 
 
  }
-
-

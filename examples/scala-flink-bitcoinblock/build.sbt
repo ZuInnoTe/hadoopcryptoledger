@@ -31,9 +31,7 @@ libraryDependencies += "org.apache.flink" %% "flink-scala" % "1.12.1" % "provide
 
 
 // needed for writable serializer
-libraryDependencies += "org.apache.flink" %% "flink-hadoop-compatibility" % "1.12.1" % "compile"
 
-libraryDependencies += "org.apache.flink" % "flink-shaded-hadoop2" % "2.7.5-1.8.3" % "compile"
 libraryDependencies += "org.apache.flink" %% "flink-clients" % "1.12.1" % "it"
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.1.0" % "test,it"

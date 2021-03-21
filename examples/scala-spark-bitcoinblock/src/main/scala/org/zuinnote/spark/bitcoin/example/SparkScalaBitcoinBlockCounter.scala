@@ -44,14 +44,14 @@ object SparkScalaBitcoinBlockCounter {
 
 
      def jobTotalNumOfTransactions(sc: SparkContext, hadoopConf: Configuration, inputFile: String, outputFile: String): Unit = {
-	val bitcoinBlocksRDD = sc.newAPIHadoopFile(inputFile, classOf[BitcoinBlockFileInputFormat], classOf[BytesWritable], classOf[BitcoinBlock], hadoopConf)
+	val bitcoinBlocksRDD = sc.newAPIHadoopFile(inputFile, classOf[BitcoinBlockFileInputFormat], classOf[BytesWritable], classOf[BitcoinBlockWritable], hadoopConf)
 	val totalCount=transform(bitcoinBlocksRDD)
     	// write results to HDFS
 	totalCount.repartition(1).saveAsTextFile(outputFile)
-	
+
 	}
 
-	def transform(bitcoinBlocksRDD: RDD[(BytesWritable,BitcoinBlock)]): RDD[(String,Int)] = {
+	def transform(bitcoinBlocksRDD: RDD[(BytesWritable,BitcoinBlockWritable)]): RDD[(String,Int)] = {
 		// extract the no transactions / block (map)
    		val noOfTransactionPair = bitcoinBlocksRDD.map(hadoopKeyValueTuple => ("No of transactions: ",hadoopKeyValueTuple._2.getTransactions().size()))
 		// reduce total count
@@ -62,5 +62,3 @@ object SparkScalaBitcoinBlockCounter {
 
 
  }
-
-

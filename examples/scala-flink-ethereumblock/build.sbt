@@ -34,8 +34,6 @@ libraryDependencies += "org.bouncycastle" % "bcprov-ext-jdk15on" % "1.68" % "com
 libraryDependencies += "org.apache.flink" %% "flink-scala" % "1.12.1" % "provided"
 
 
-// needed for writable serializer
-libraryDependencies += "org.apache.flink" %% "flink-hadoop-compatibility" % "1.12.1" % "compile"
 
 libraryDependencies += "org.apache.flink" %% "flink-clients" % "1.12.1" % "it"
 

@@ -39,7 +39,7 @@ object SparkScalaNamecoinBlockCounter {
 	val hadoopConf = new Configuration()
 	// Namecoin network magic
 	 hadoopConf.set("hadoopcryptoledger.bitcoinblockinputformat.filter.magic","F9BEB4FE")
-	 // Namecoin auxpow 
+	 // Namecoin auxpow
 	 hadoopConf.set("hadoopcryptoledger.bitcoinblockinputformat.readauxpow","true")
 	jobTotalNumOfTransactions(sc,hadoopConf,args(0),args(1))
 	sc.stop()
@@ -47,14 +47,14 @@ object SparkScalaNamecoinBlockCounter {
 
 
      def jobTotalNumOfTransactions(sc: SparkContext, hadoopConf: Configuration, inputFile: String, outputFile: String): Unit = {
-	val bitcoinBlocksRDD = sc.newAPIHadoopFile(inputFile, classOf[BitcoinBlockFileInputFormat], classOf[BytesWritable], classOf[BitcoinBlock], hadoopConf)
+	val bitcoinBlocksRDD = sc.newAPIHadoopFile(inputFile, classOf[BitcoinBlockFileInputFormat], classOf[BytesWritable], classOf[BitcoinBlockWritable], hadoopConf)
 	val totalCount=transform(bitcoinBlocksRDD)
     	// write results to HDFS
 	totalCount.repartition(1).saveAsTextFile(outputFile)
-	
+
 	}
 
-	def transform(bitcoinBlocksRDD: RDD[(BytesWritable,BitcoinBlock)]): RDD[(String,Int)] = {
+	def transform(bitcoinBlocksRDD: RDD[(BytesWritable,BitcoinBlockWritable)]): RDD[(String,Int)] = {
 		// extract the no transactions / block (map)
    		val noOfTransactionPair = bitcoinBlocksRDD.map(hadoopKeyValueTuple => ("No of transactions: ",hadoopKeyValueTuple._2.getTransactions().size()))
 		// reduce total count
@@ -65,5 +65,3 @@ object SparkScalaNamecoinBlockCounter {
 
 
  }
-
-
