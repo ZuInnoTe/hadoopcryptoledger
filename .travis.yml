@@ -9,7 +9,7 @@ language: java
 script:
 - jdk_switcher use openjdk8
 - ./gradlew clean
-- travis_wait ./gradlew build
+- ./gradlew build
 - ./gradlew test
 - ./gradlew integrationTest
 - sonar-scanner -Dsonar.login=$SONAR_HCL
@@ -18,3 +18,8 @@ after_success:
 - .travis/publish-junitreport.sh
 - .travis/publish-pitest.sh
 - .travis/publish-owaspdependency.sh
+
+cache:
+  directories:
+  - $HOME/.gradle/caches/
+  - $HOME/.gradle/wrapper/
