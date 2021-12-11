@@ -45,7 +45,8 @@ public class EthereumBlockCounterDriver extends Configured implements Tool {
  }      
         
  public int run(String[] args) throws Exception {
-        Job job = Job.getInstance(getConf(),"example-hadoop-ethereum-transactioncounter-job");
+	Job job = Job.getInstance();
+	job.setJobName("example-hadoop-ethereum-transactioncounter-job");
    	job.setJarByClass(EthereumBlockCounterDriver.class);
     	job.setMapOutputKeyClass(Text.class);
     	job.setMapOutputValueClass(IntWritable.class);

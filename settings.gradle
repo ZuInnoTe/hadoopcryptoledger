@@ -1,1 +1,1 @@
-include 'inputformat', 'hiveserde', 'hiveudf', 'flinkdatasource', 'presto-connector','examples:mapreduce-bitcoinblock', 'examples:mapreduce-bitcointransaction', 'examples:spark-bitcoinblock', 'examples:spark2-bitcoinblock', 'examples:mapreduce-ethereumblock'
+include 'inputformat', 'hiveserde', 'hiveudf', 'flinkdatasource','examples:mapreduce-bitcoinblock', 'examples:mapreduce-bitcointransaction', 'examples:spark-bitcoinblock', 'examples:spark2-bitcoinblock', 'examples:mapreduce-ethereumblock'

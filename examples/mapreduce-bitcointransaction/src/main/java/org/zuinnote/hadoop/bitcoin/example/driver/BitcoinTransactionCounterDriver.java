@@ -47,7 +47,8 @@ public class BitcoinTransactionCounterDriver extends Configured implements Tool 
  }
 
  public int run(String[] args) throws Exception {
-    Job job = Job.getInstance(getConf(),"example-hadoop-bitcoin-transactioncounter-job");
+   Job job = Job.getInstance();
+   job.setJobName("example-hadoop-bitcoin-transactioncounter-job");
     job.setJarByClass(BitcoinTransactionCounterDriver.class);
     job.setMapOutputKeyClass(Text.class);
     job.setMapOutputValueClass(IntWritable.class);

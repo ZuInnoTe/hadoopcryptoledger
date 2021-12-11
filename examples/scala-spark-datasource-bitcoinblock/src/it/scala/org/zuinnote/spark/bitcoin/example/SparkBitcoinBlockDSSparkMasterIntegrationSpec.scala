@@ -55,9 +55,12 @@ import org.apache.spark.sql.SQLContext
 import org.apache.spark.sql.functions._
 
 import scala.collection.mutable.ArrayBuffer
-import org.scalatest.{FlatSpec, BeforeAndAfterAll, GivenWhenThen, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec;
+import org.scalatest._
+import matchers.should._
+import org.scalatest.{ BeforeAndAfterAll, GivenWhenThen }
 
-class SparkBitcoinBlockDSSparkMasterIntegrationSpec extends FlatSpec with BeforeAndAfterAll with GivenWhenThen with Matchers {
+class SparkBitcoinBlockDSSparkMasterIntegrationSpec extends AnyFlatSpec with BeforeAndAfterAll with GivenWhenThen with Matchers {
  
 private var sc: SparkContext = _
 private var sqlContext: SQLContext = _
@@ -115,6 +118,7 @@ override def beforeAll(): Unit = {
  	val sparkConf = new SparkConf()
       .setMaster("local[2]")
       .setAppName(this.getClass.getSimpleName)
+	  .set( "spark.driver.host", "localhost" )
 	sc = new SparkContext(sparkConf)
 	sqlContext = new SQLContext(sc)
  }

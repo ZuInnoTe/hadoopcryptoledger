@@ -22,11 +22,14 @@ package org.zuinnote.spark.ethereum.example
 
 import java.util.ArrayList
 
+import org.scalatest.flatspec.AnyFlatSpec;
+import org.scalatest._
+import matchers.should._
+import org.scalatest.{ BeforeAndAfterAll, GivenWhenThen }
 
-import org.scalatest.{FlatSpec, BeforeAndAfterAll, GivenWhenThen, Matchers}
 
 
-class SparkEthereumBlockDSSpec extends FlatSpec with BeforeAndAfterAll with GivenWhenThen with Matchers  {
+class SparkEthereumBlockDSSpec extends AnyFlatSpec with BeforeAndAfterAll with GivenWhenThen with Matchers  {
 
 
 override def beforeAll(): Unit = {

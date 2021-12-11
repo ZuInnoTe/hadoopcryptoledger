@@ -51,9 +51,12 @@ import org.apache.hadoop.io.compress.SplitCompressionInputStream
 import org.apache.flink.api.scala.ExecutionEnvironment
 
 import scala.collection.mutable.ArrayBuffer
-import org.scalatest.{FlatSpec, BeforeAndAfterAll, GivenWhenThen, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec;
+import org.scalatest._
+import matchers.should._
+import org.scalatest.{ BeforeAndAfterAll, GivenWhenThen }
 
-class FlinkBitcoinBlockCounterFlinkMasterIntegrationSpec extends FlatSpec with BeforeAndAfterAll with GivenWhenThen with Matchers {
+class FlinkBitcoinBlockCounterFlinkMasterIntegrationSpec extends AnyFlatSpec with BeforeAndAfterAll with GivenWhenThen with Matchers {
  
 
 private val appName: String = "example-scalaflinkbitcoinblockcounter-integrationtest"

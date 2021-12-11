@@ -122,7 +122,7 @@ private ArrayList<Decompressor> openDecompressors = new ArrayList<>();
  	 dfsCluster = builder.numDataNodes(NOOFDATANODES).build();
 	conf.set("fs.defaultFS", dfsCluster.getFileSystem().getUri().toString()); 
 	// create Spark Context
-	SparkConf sparkConf = new SparkConf().setAppName(appName).setMaster(master);
+	SparkConf sparkConf = new SparkConf().setAppName(appName).setMaster(master).set( "spark.driver.host", "localhost" );
       	sc = new JavaSparkContext(sparkConf); 
     }
 

@@ -51,9 +51,12 @@ import org.apache.hadoop.io.compress.SplitCompressionInputStream
 
 import org.apache.spark.{SparkConf, SparkContext}
 import scala.collection.mutable.ArrayBuffer
-import org.scalatest.{FlatSpec, BeforeAndAfterAll, GivenWhenThen, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec;
+import org.scalatest._
+import matchers.should._
+import org.scalatest.{ BeforeAndAfterAll, GivenWhenThen }
 
-class SparkLitecoinBlockCounterSparkMasterIntegrationSpec extends FlatSpec with BeforeAndAfterAll with GivenWhenThen with Matchers {
+class SparkLitecoinBlockCounterSparkMasterIntegrationSpec extends AnyFlatSpec with BeforeAndAfterAll with GivenWhenThen with Matchers {
  
 private var sc: SparkContext = _
 private val master: String = "local[2]"
@@ -110,6 +113,7 @@ override def beforeAll(): Unit = {
  	val sparkConf = new SparkConf()
       .setMaster("local[2]")
       .setAppName(this.getClass.getSimpleName)
+	  .set( "spark.driver.host", "localhost" )
 	sc = new SparkContext(sparkConf)
  }
 
