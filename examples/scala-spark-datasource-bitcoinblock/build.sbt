@@ -32,7 +32,7 @@ assemblyMergeStrategy in assembly := {
  case x => MergeStrategy.first
 }
 
-libraryDependencies += "com.github.zuinnote" %% "spark-hadoopcryptoledger-ds" % "1.3.0" % "compile"
+libraryDependencies += "com.github.zuinnote" %% "spark-hadoopcryptoledger-ds" % "1.3.1" % "compile"
 
 libraryDependencies += "org.apache.spark" %% "spark-core" % "2.4.7" % "provided"
 
@@ -41,7 +41,7 @@ libraryDependencies += "org.apache.spark" %% "spark-sql" % "2.4.7" % "provided"
 libraryDependencies += "org.apache.hadoop" % "hadoop-client" % "2.7.0" % "provided"
 
 
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.1.0" % "test,it"
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.10" % "test,it"
 
 libraryDependencies += "javax.servlet" % "javax.servlet-api" % "3.0.1" % "it"
 

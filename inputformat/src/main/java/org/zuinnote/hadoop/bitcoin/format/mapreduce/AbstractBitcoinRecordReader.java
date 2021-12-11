@@ -59,7 +59,7 @@ public static final boolean DEFAULT_READAUXPOW=false;
 private static final Log LOG = LogFactory.getLog(AbstractBitcoinRecordReader.class.getName());
 
 private int bufferSize=0;
-private int maxSizeBitcoinBlock=0; 
+private int maxSizeBitcoinBlock=0;
 private boolean useDirectBuffer=false;
 private boolean readAuxPOW=false;
 private String specificMagic="";
@@ -79,7 +79,7 @@ private BitcoinBlockReader bbr;
 /**
 * Creates an Abstract Record Reader for Bitcoin blocks
 * @param conf Configuration:
-* io.file.buffer.size: Size of in-memory  specified in the given Configuration. If io.file.buffer.size is not specified the default buffersize (maximum size of a bitcoin block) will be used. The configuration hadoopcryptoledger.bitcoinblockinputformat.filter.magic allows specifying the magic identifier of the block. The magic is a comma-separated list of Hex-values (e.g. F9BEB4D9,FABFB5DA,0B110907,0B110907). The default magic is always F9BEB4D9. One needs to specify at least one magic, otherwise it will be difficult to find blocks in splits. Furthermore, one may specify hadoopcryptoledger.bitcoinblockinputformat.maxblocksize, which defines the maximum size a bitcoin block may have. By default it is 8M). If you want to experiment with performance using DirectByteBuffer instead of HeapByteBuffer you can use "hadoopcryptoledeger.bitcoinblockinputformat.usedirectbuffer" (default: false). Note that it might have some unwanted consequences such as circumwenting Yarn memory management. The option is experimental and might be removed in future versions. 
+* io.file.buffer.size: Size of in-memory  specified in the given Configuration. If io.file.buffer.size is not specified the default buffersize (maximum size of a bitcoin block) will be used. The configuration hadoopcryptoledger.bitcoinblockinputformat.filter.magic allows specifying the magic identifier of the block. The magic is a comma-separated list of Hex-values (e.g. F9BEB4D9,FABFB5DA,0B110907,0B110907). The default magic is always F9BEB4D9. One needs to specify at least one magic, otherwise it will be difficult to find blocks in splits. Furthermore, one may specify hadoopcryptoledger.bitcoinblockinputformat.maxblocksize, which defines the maximum size a bitcoin block may have. By default it is 8M). If you want to experiment with performance using DirectByteBuffer instead of HeapByteBuffer you can use "hadoopcryptoledeger.bitcoinblockinputformat.usedirectbuffer" (default: false). Note that it might have some unwanted consequences such as circumwenting Yarn memory management. The option is experimental and might be removed in future versions.
 *
 * @throws org.zuinnote.hadoop.bitcoin.format.exception.HadoopCryptoLedgerConfigurationException in case of an invalid HadoopCryptoLedger-specific configuration of the inputformat
 *
@@ -89,7 +89,7 @@ public AbstractBitcoinRecordReader(Configuration conf) throws HadoopCryptoLedger
   	this.maxSizeBitcoinBlock=conf.getInt(AbstractBitcoinRecordReader.CONF_MAXBLOCKSIZE,AbstractBitcoinRecordReader.DEFAULT_MAXSIZE_BITCOINBLOCK);
 	this.bufferSize=conf.getInt(AbstractBitcoinRecordReader.CONF_BUFFERSIZE,AbstractBitcoinRecordReader.DEFAULT_BUFFERSIZE);
 	this.specificMagic=conf.get(AbstractBitcoinRecordReader.CONF_FILTERMAGIC);
-	// we need to provide at least 
+	// we need to provide at least
 	if ((this.specificMagic==null) || (this.specificMagic.length()==0)) {
  this.specificMagic=AbstractBitcoinRecordReader.DEFAULT_MAGIC;
 	}
@@ -103,7 +103,7 @@ public AbstractBitcoinRecordReader(Configuration conf) throws HadoopCryptoLedger
 				}
 				specificMagicByteArray[i]=currentMagicNo;
 		}
-	}	
+	}
 	this.useDirectBuffer=conf.getBoolean(AbstractBitcoinRecordReader.CONF_USEDIRECTBUFFER,AbstractBitcoinRecordReader.DEFAULT_USEDIRECTBUFFER);
 	this.readAuxPOW=conf.getBoolean(AbstractBitcoinRecordReader.CONF_READAUXPOW,AbstractBitcoinRecordReader.DEFAULT_READAUXPOW);
 }
@@ -133,7 +133,7 @@ public void initialize(InputSplit split, TaskAttemptContext context) throws IOEx
       if (isCompressedInput()) { // decompress
       	decompressor = CodecPool.getDecompressor(codec);
       	if (codec instanceof SplittableCompressionCodec) {
-		
+
         	final SplitCompressionInputStream cIn =((SplittableCompressionCodec)codec).createInputStream(fileIn, decompressor, start, end,SplittableCompressionCodec.READ_MODE.CONTINUOUS);
 				bbr = new BitcoinBlockReader(cIn, this.maxSizeBitcoinBlock,this.bufferSize,this.specificMagicByteArray,this.useDirectBuffer,this.readAuxPOW);
 		start = cIn.getAdjustedStart();
@@ -145,7 +145,7 @@ public void initialize(InputSplit split, TaskAttemptContext context) throws IOEx
       }
     } else {
       fileIn.seek(start);
-      bbr = new BitcoinBlockReader(fileIn, this.maxSizeBitcoinBlock,this.bufferSize,this.specificMagicByteArray,this.useDirectBuffer,readAuxPOW);  
+      bbr = new BitcoinBlockReader(fileIn, this.maxSizeBitcoinBlock,this.bufferSize,this.specificMagicByteArray,this.useDirectBuffer,readAuxPOW);
       filePosition = fileIn;
     }
     // seek to block start (for the case a block overlaps a split)
@@ -154,7 +154,7 @@ public void initialize(InputSplit split, TaskAttemptContext context) throws IOEx
     } catch (BitcoinBlockReadException bbre) {
 		LOG.error("Error reading Bitcoin blockchhain data");
 		LOG.error(bbre);
-    } 
+    }
 }
 
 

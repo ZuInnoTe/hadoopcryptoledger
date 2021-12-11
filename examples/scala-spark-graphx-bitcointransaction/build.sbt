@@ -25,7 +25,7 @@ fork  := true
 
 assemblyJarName in assembly := "example-hcl-spark-scala-graphx-bitcointransaction.jar"
 
-libraryDependencies += "com.github.zuinnote" % "hadoopcryptoledger-fileformat" % "1.3.0" % "compile"
+libraryDependencies += "com.github.zuinnote" % "hadoopcryptoledger-fileformat" % "1.3.1" % "compile"
 
 libraryDependencies += "org.apache.spark" %% "spark-core" % "2.4.7" % "provided"
 
@@ -43,4 +43,4 @@ libraryDependencies += "org.apache.hadoop" % "hadoop-hdfs" % "2.7.0" % "it" clas
 libraryDependencies += "org.apache.hadoop" % "hadoop-minicluster" % "2.7.0" % "it"
 
 
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.1.0" % "test,it"
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.10" % "test,it"
