@@ -116,13 +116,13 @@ dependencies {
      compileOnly("org.apache.hadoop:hadoop-common:3.3.0")
    compileOnly("org.apache.hadoop:hadoop-mapreduce-client-common:3.3.0")
    // log4j2
-   compileOnly("org.apache.logging.log4j:log4j-api:2.15.0")
+   compileOnly("org.apache.logging.log4j:log4j-api:2.16.0")
    // test
       // hadoop libraries
    testImplementation("org.apache.hadoop:hadoop-common:3.3.0")
    testImplementation("org.apache.hadoop:hadoop-mapreduce-client-common:3.3.0")
    // log4j2
-   testCompileOnly("org.apache.logging.log4j:log4j-api:2.15.0")
+   testCompileOnly("org.apache.logging.log4j:log4j-api:2.16.0")
    // bouncycastle
        testImplementation("org.bouncycastle:bcprov-ext-jdk15on:1.70")
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.8.2'
