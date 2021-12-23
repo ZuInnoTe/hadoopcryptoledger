@@ -25,7 +25,7 @@ assemblyJarName in assembly := "example-hcl-spark-scala-ethereumblock.jar"
 fork  := true
 
 
-libraryDependencies += "com.github.zuinnote" % "hadoopcryptoledger-fileformat" % "1.3.1" % "compile"
+libraryDependencies += "com.github.zuinnote" % "hadoopcryptoledger-fileformat" % "1.3.2" % "compile"
 
 // needed for certain functionality related to Ethereum in EthereumUtil
 libraryDependencies += "org.bouncycastle" % "bcprov-ext-jdk15on" % "1.70" % "compile"

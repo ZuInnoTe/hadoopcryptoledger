@@ -26,7 +26,7 @@ fork  := true
 
 
 
-libraryDependencies += "com.github.zuinnote" % "hadoopcryptoledger-fileformat" % "1.3.1" % "compile"
+libraryDependencies += "com.github.zuinnote" % "hadoopcryptoledger-fileformat" % "1.3.2" % "compile"
 
 libraryDependencies += "org.apache.spark" %% "spark-core" % "1.6.3" % "provided"
 
