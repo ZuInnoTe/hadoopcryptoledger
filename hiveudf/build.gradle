@@ -47,6 +47,7 @@ repositories {
 }
 
 test {
+    systemProperty "java.awt.headless", "true"
     testLogging.showStandardStreams = true
     useJUnitPlatform()
 }

@@ -105,6 +105,7 @@ shadowJar {
 
 
 task testIntegration(type: Test) {
+    systemProperty "java.awt.headless", "true"
     testClassesDirs = sourceSets.testIntegration.output.classesDirs
     classpath = sourceSets.testIntegration.runtimeClasspath
     useJUnitPlatform()

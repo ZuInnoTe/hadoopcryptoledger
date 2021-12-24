@@ -86,6 +86,7 @@ task sourcesJar(type: Jar) {
 }
 
 test {
+    systemProperty "java.awt.headless", "true"
     testLogging.showStandardStreams = true
     useJUnitPlatform()
 }
