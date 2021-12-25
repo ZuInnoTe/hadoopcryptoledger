@@ -23,6 +23,7 @@ compileJava.options.encoding = 'UTF-8'
 group = "com.github.zuinnote"
 archivesBaseName = "hadoopcryptoledger-hiveserde"
 version = "1.3.2"
+ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 
 repositories {
   mavenCentral()
@@ -59,11 +60,35 @@ test {
     useJUnitPlatform()
 }
 
+
 configurations {
 	provided
 	integrationTestCompile.extendsFrom testCompile
     	integrationTestRuntime.extendsFrom testRuntime
 }
+
+javadoc.classpath += configurations.provided
+
+task hadoopCryptoLedgerJavaDocs(type: Jar) {
+  classifier = 'javadoc'
+  from javadoc
+}
+
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives hadoopCryptoLedgerJavaDocs, sourcesJar
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
 
 eclipse {
 
@@ -86,6 +111,19 @@ sourceSets {
     }
 }
 
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId 'com.github.zuinnote'
+            artifactId 'hadoopcryptoledger-hiveserde'
+            version '1.3.2'
+
+            from components.java
+        }
+    }
+}
+
+
 dependencies {
    // hadoop lib for driver
      compileOnly("org.apache.hadoop:hadoop-client:3.3.0")
@@ -106,31 +144,4 @@ dependencies {
 }
 
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            groupId 'com.github.zuinnote'
-            artifactId 'hadoopcryptoledger-hiveserde'
-            version '1.3.2'
 
-            from components.java
-        }
-    }
-}
-
-javadoc.classpath += configurations.provided
-
-task hadoopCryptoLedgerJavaDocs(type: Jar) {
-  classifier = 'javadoc'
-  from javadoc
-}
-
-
-task sourcesJar(type: Jar) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
-
-artifacts {
-    archives hadoopCryptoLedgerJavaDocs, sourcesJar
-}
