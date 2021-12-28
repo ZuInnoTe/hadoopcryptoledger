@@ -49,8 +49,8 @@ libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.10" % "test,it"
 
 libraryDependencies += "javax.servlet" % "javax.servlet-api" % "3.0.1" % "it"
 
-libraryDependencies += "org.apache.logging.log4j" % "log4j-api" % "2.17.0" % "test"
-libraryDependencies += "org.apache.logging.log4j" % "log4j-api" % "2.17.0" % "it"
+libraryDependencies += "org.apache.logging.log4j" % "log4j-api" % "2.17.1" % "test"
+libraryDependencies += "org.apache.logging.log4j" % "log4j-api" % "2.17.1" % "it"
 libraryDependencies += "org.apache.hadoop" % "hadoop-common" % "2.7.0" % "it" classifier "" classifier "tests"
 
 libraryDependencies += "org.apache.hadoop" % "hadoop-hdfs" % "2.7.0" % "it" classifier "" classifier "tests"
