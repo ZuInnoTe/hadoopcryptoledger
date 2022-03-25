@@ -1,18 +1,18 @@
 /**
-* Copyright 2017 ZuInnoTe (Jörn Franke) <zuinnote@gmail.com>
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*    http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-**/
+ * Copyright 2017 ZuInnoTe (Jörn Franke) <zuinnote@gmail.com>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ **/
 
 package org.zuinnote.hadoop.ethereum.format.common;
 
@@ -47,101 +47,101 @@ public class EthereumFormatReaderTest {
 	static final int DEFAULT_MAXSIZE_ETHEREUMBLOCK=1 * 1024 * 1024;
 	private static final Log LOG = LogFactory.getLog(EthereumFormatReaderTest.class.getName());
 	public static int CHAIN_ID=1;
-	
-	 @Test
-	  public void checkTestDataGenesisBlockAvailable() {
+
+	@Test
+	public void checkTestDataGenesisBlockAvailable() {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="ethgenesis.bin";
-		String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();
 		assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 		File file = new File(fileNameGenesis);
 		assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
 		assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
-	  }
-	 
-	 @Test
-	  public void checkTestDataBlock1Available() {
+	}
+
+	@Test
+	public void checkTestDataBlock1Available() {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="eth1.bin";
-		String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();
 		assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 		File file = new File(fileNameGenesis);
 		assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
 		assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
-	  }
-	 
-	 @Test
-	  public void checkTestDataBlock1346406Available() {
+	}
+
+	@Test
+	public void checkTestDataBlock1346406Available() {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="eth1346406.bin";
-		String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();
 		assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 		File file = new File(fileNameGenesis);
 		assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
 		assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
-	  }
-	 
-	 @Test
-	  public void checkTestDataBlock3346406Available() {
+	}
+
+	@Test
+	public void checkTestDataBlock3346406Available() {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="eth3346406.bin";
-		String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();
 		assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 		File file = new File(fileNameGenesis);
 		assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
 		assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
-	  }
-	 
-	 @Test
-	  public void checkTestDataBlock0to10Available() {
+	}
+
+	@Test
+	public void checkTestDataBlock0to10Available() {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="eth0to10.bin";
-		String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();
 		assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 		File file = new File(fileNameGenesis);
 		assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
 		assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
-	  }
-	 
-	 @Test
-	  public void checkTestDataBlock351000to3510010Available() {
+	}
+
+	@Test
+	public void checkTestDataBlock351000to3510010Available() {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="eth351000to3510010.bin";
-		String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();
 		assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 		File file = new File(fileNameGenesis);
 		assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
 		assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
-	  }
-	 
-	 
-	 @Test
-	  public void checkTestDataBlock4800251Available() {
+	}
+
+
+	@Test
+	public void checkTestDataBlock4800251Available() {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="eth4800251.bin";
-		String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();
 		assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 		File file = new File(fileNameGenesis);
 		assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
 		assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
-	  }
-	 
-	 @Test
-	  public void checkTestDataBlocks70000007000010Available() {
+	}
+
+	@Test
+	public void checkTestDataBlocks70000007000010Available() {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="eth70000007000010";
-		String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameGenesis=classLoader.getResource("testdata/"+fileName).getFile();
 		assertNotNull(fileNameGenesis,"Test Data File \""+fileName+"\" is not null in resource path");
 		File file = new File(fileNameGenesis);
 		assertTrue( file.exists(),"Test Data File \""+fileName+"\" exists");
 		assertFalse( file.isDirectory(),"Test Data File \""+fileName+"\" is not a directory");
-	  }
-	 
-	 @Test
-	  public void parseGenesisBlockAsEthereumRawBlockHeap() throws IOException, EthereumBlockReadException {
+	}
+
+	@Test
+	public void parseGenesisBlockAsEthereumRawBlockHeap() throws IOException, EthereumBlockReadException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="ethgenesis.bin";
-		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
 		File file = new File(fileNameBlock);
 		boolean direct=false;
 		FileInputStream fin = new FileInputStream(file);
@@ -156,13 +156,13 @@ public class EthereumFormatReaderTest {
 				ebr.close();
 			}
 		}
-	  }
-	 
-	 @Test
-	  public void parseGenesisBlockAsEthereumRawBlockDirect() throws IOException, EthereumBlockReadException {
+	}
+
+	@Test
+	public void parseGenesisBlockAsEthereumRawBlockDirect() throws IOException, EthereumBlockReadException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="ethgenesis.bin";
-		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
 		File file = new File(fileNameBlock);
 		boolean direct=true;
 		FileInputStream fin = new FileInputStream(file);
@@ -177,13 +177,13 @@ public class EthereumFormatReaderTest {
 				ebr.close();
 			}
 		}
-	  }
-	 
-	 @Test
-	  public void parseBlockOneAsEthereumRawBlockHeap() throws IOException, EthereumBlockReadException {
+	}
+
+	@Test
+	public void parseBlockOneAsEthereumRawBlockHeap() throws IOException, EthereumBlockReadException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="eth1.bin";
-		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
 		File file = new File(fileNameBlock);
 		boolean direct=false;
 		FileInputStream fin = new FileInputStream(file);
@@ -198,13 +198,13 @@ public class EthereumFormatReaderTest {
 				ebr.close();
 			}
 		}
-	  }
-	 
-	 @Test
-	  public void parseBlockOneAsEthereumRawBlockDirect() throws IOException, EthereumBlockReadException {
+	}
+
+	@Test
+	public void parseBlockOneAsEthereumRawBlockDirect() throws IOException, EthereumBlockReadException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="eth1.bin";
-		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
 		File file = new File(fileNameBlock);
 		boolean direct=true;
 		FileInputStream fin = new FileInputStream(file);
@@ -219,13 +219,13 @@ public class EthereumFormatReaderTest {
 				ebr.close();
 			}
 		}
-	  }
-	 
-	 @Test
-	  public void parseBlock1346406AsEthereumRawBlockHeap() throws IOException, EthereumBlockReadException {
+	}
+
+	@Test
+	public void parseBlock1346406AsEthereumRawBlockHeap() throws IOException, EthereumBlockReadException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="eth1346406.bin";
-		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
 		File file = new File(fileNameBlock);
 		boolean direct=false;
 		FileInputStream fin = new FileInputStream(file);
@@ -240,13 +240,13 @@ public class EthereumFormatReaderTest {
 				ebr.close();
 			}
 		}
-	  }
-	 
-	 @Test
-	  public void parseBlock1346406AsEthereumRawBlockDirect() throws IOException, EthereumBlockReadException {
+	}
+
+	@Test
+	public void parseBlock1346406AsEthereumRawBlockDirect() throws IOException, EthereumBlockReadException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="eth1346406.bin";
-		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
 		File file = new File(fileNameBlock);
 		boolean direct=true;
 		FileInputStream fin = new FileInputStream(file);
@@ -261,13 +261,13 @@ public class EthereumFormatReaderTest {
 				ebr.close();
 			}
 		}
-	  }
-	 
-	 @Test
-	  public void parseBlock3346406AsEthereumRawBlockHeap() throws IOException, EthereumBlockReadException {
+	}
+
+	@Test
+	public void parseBlock3346406AsEthereumRawBlockHeap() throws IOException, EthereumBlockReadException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="eth3346406.bin";
-		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
 		File file = new File(fileNameBlock);
 		boolean direct=false;
 		FileInputStream fin = new FileInputStream(file);
@@ -282,13 +282,13 @@ public class EthereumFormatReaderTest {
 				ebr.close();
 			}
 		}
-	  }
-	 
-	 @Test
-	  public void parseBlock3346406AsEthereumRawBlockDirect() throws IOException, EthereumBlockReadException {
+	}
+
+	@Test
+	public void parseBlock3346406AsEthereumRawBlockDirect() throws IOException, EthereumBlockReadException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="eth3346406.bin";
-		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
 		File file = new File(fileNameBlock);
 		boolean direct=true;
 		FileInputStream fin = new FileInputStream(file);
@@ -303,13 +303,13 @@ public class EthereumFormatReaderTest {
 				ebr.close();
 			}
 		}
-	  }
-	 
-	 @Test
-	  public void parseBlock0to10AsEthereumRawBlockHeap() throws IOException, EthereumBlockReadException {
+	}
+
+	@Test
+	public void parseBlock0to10AsEthereumRawBlockHeap() throws IOException, EthereumBlockReadException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="eth0to10.bin";
-		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
 		File file = new File(fileNameBlock);
 		boolean direct=false;
 		FileInputStream fin = new FileInputStream(file);
@@ -344,13 +344,13 @@ public class EthereumFormatReaderTest {
 				ebr.close();
 			}
 		}
-	  }
-	 
-	 @Test
-	  public void parseBlock0to10AsEthereumRawBlockDirect() throws IOException, EthereumBlockReadException {
+	}
+
+	@Test
+	public void parseBlock0to10AsEthereumRawBlockDirect() throws IOException, EthereumBlockReadException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="eth0to10.bin";
-		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
 		File file = new File(fileNameBlock);
 		boolean direct=true;
 		FileInputStream fin = new FileInputStream(file);
@@ -385,13 +385,13 @@ public class EthereumFormatReaderTest {
 				ebr.close();
 			}
 		}
-	  }
-	 
-	 @Test
-	  public void parseBlock35100to351010AsEthereumRawBlockHeap() throws IOException, EthereumBlockReadException {
+	}
+
+	@Test
+	public void parseBlock35100to351010AsEthereumRawBlockHeap() throws IOException, EthereumBlockReadException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="eth351000to3510010.bin";
-		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
 		File file = new File(fileNameBlock);
 		boolean direct=false;
 		FileInputStream fin = new FileInputStream(file);
@@ -426,14 +426,14 @@ public class EthereumFormatReaderTest {
 				ebr.close();
 			}
 		}
-	  }
-	 
-	 
-	 @Test
-	  public void parseBlock35100to351010AsEthereumRawBlockDirect() throws IOException, EthereumBlockReadException {
+	}
+
+
+	@Test
+	public void parseBlock35100to351010AsEthereumRawBlockDirect() throws IOException, EthereumBlockReadException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="eth351000to3510010.bin";
-		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
 		File file = new File(fileNameBlock);
 		boolean direct=true;
 		FileInputStream fin = new FileInputStream(file);
@@ -468,13 +468,13 @@ public class EthereumFormatReaderTest {
 				ebr.close();
 			}
 		}
-	  }
-	 
-	 @Test
-	  public void parseGenesisBlockAsEthereumBlockHeap() throws IOException, EthereumBlockReadException, ParseException {
+	}
+
+	@Test
+	public void parseGenesisBlockAsEthereumBlockHeap() throws IOException, EthereumBlockReadException, ParseException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="ethgenesis.bin";
-		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
 		File file = new File(fileNameBlock);
 		boolean direct=false;
 		FileInputStream fin = new FileInputStream(file);
@@ -499,7 +499,7 @@ public class EthereumFormatReaderTest {
 			byte[] expectedStateRoot= new byte[] {(byte) 0xD7,(byte) 0xF8,(byte) 0x97,0x4F,(byte) 0xB5,(byte) 0xAC,0x78,(byte) 0xD9,(byte) 0xAC,0x09,(byte) 0x9B,(byte) 0x9A,(byte) 0xD5,0x01,(byte) 0x8B,(byte) 0xED,(byte) 0xC2,(byte) 0xCE,0x0A,0x72,(byte) 0xDA,(byte) 0xD1,(byte) 0x82,0x7A,0x17,0x09,(byte) 0xDA,0x30,0x58,0x0F,0x05,0x44};
 			assertArrayEquals(expectedStateRoot,eblockHeader.getStateRoot(),"Genesis block contains a correct 32 byte stateroot");
 			byte[] expectedTxTrieRoot= new byte[] {0x56,(byte) 0xE8,0x1F,0x17,0x1B,(byte) 0xCC,0x55,(byte) 0xA6,(byte) 0xFF,(byte) 0x83,0x45,(byte) 0xE6,(byte) 0x92,(byte) 0xC0,(byte) 0xF8,0x6E,0x5B,0x48,(byte) 0xE0,0x1B,(byte) 0x99,0x6C,(byte) 0xAD,(byte) 0xC0,0x01,0x62,0x2F,(byte) 0xB5,(byte) 0xE3,0x63,(byte) 0xB4,0x21};
-			assertArrayEquals(expectedTxTrieRoot,eblockHeader.getTxTrieRoot(),"Genesis block contains a correct 32 byte txTrieRoot");	
+			assertArrayEquals(expectedTxTrieRoot,eblockHeader.getTxTrieRoot(),"Genesis block contains a correct 32 byte txTrieRoot");
 			byte[] expectedReceiptTrieRoot=new byte[] {0x56,(byte) 0xE8,0x1F,0x17,0x1B,(byte) 0xCC,0x55,(byte) 0xA6,(byte) 0xFF,(byte) 0x83,0x45,(byte) 0xE6,(byte) 0x92,(byte) 0xC0,(byte) 0xF8,0x6E,0x5B,0x48,(byte) 0xE0,0x1B,(byte) 0x99,0x6C,(byte) 0xAD,(byte) 0xC0,0x01,0x62,0x2F,(byte) 0xB5,(byte) 0xE3,0x63,(byte) 0xB4,0x21};
 			assertArrayEquals(expectedReceiptTrieRoot,eblockHeader.getReceiptTrieRoot(),"Genesis block contains a correct 32 byte ReceiptTrieRoot");
 			byte[] expectedLogsBloom = new byte[] {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
@@ -524,15 +524,15 @@ public class EthereumFormatReaderTest {
 				ebr.close();
 			}
 		}
-	  }
-	 
+	}
 
-	 
-	 @Test
-	  public void parseGenesisBlockAsEthereumBlockDirect() throws IOException, EthereumBlockReadException, ParseException {
+
+
+	@Test
+	public void parseGenesisBlockAsEthereumBlockDirect() throws IOException, EthereumBlockReadException, ParseException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="ethgenesis.bin";
-		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
 		File file = new File(fileNameBlock);
 		boolean direct=true;
 		FileInputStream fin = new FileInputStream(file);
@@ -557,7 +557,7 @@ public class EthereumFormatReaderTest {
 			byte[] expectedStateRoot= new byte[] {(byte) 0xD7,(byte) 0xF8,(byte) 0x97,0x4F,(byte) 0xB5,(byte) 0xAC,0x78,(byte) 0xD9,(byte) 0xAC,0x09,(byte) 0x9B,(byte) 0x9A,(byte) 0xD5,0x01,(byte) 0x8B,(byte) 0xED,(byte) 0xC2,(byte) 0xCE,0x0A,0x72,(byte) 0xDA,(byte) 0xD1,(byte) 0x82,0x7A,0x17,0x09,(byte) 0xDA,0x30,0x58,0x0F,0x05,0x44};
 			assertArrayEquals(expectedStateRoot,eblockHeader.getStateRoot(),"Genesis block contains a correct 32 byte stateroot");
 			byte[] expectedTxTrieRoot= new byte[] {0x56,(byte) 0xE8,0x1F,0x17,0x1B,(byte) 0xCC,0x55,(byte) 0xA6,(byte) 0xFF,(byte) 0x83,0x45,(byte) 0xE6,(byte) 0x92,(byte) 0xC0,(byte) 0xF8,0x6E,0x5B,0x48,(byte) 0xE0,0x1B,(byte) 0x99,0x6C,(byte) 0xAD,(byte) 0xC0,0x01,0x62,0x2F,(byte) 0xB5,(byte) 0xE3,0x63,(byte) 0xB4,0x21};
-			assertArrayEquals(expectedTxTrieRoot,eblockHeader.getTxTrieRoot(),"Genesis block contains a correct 32 byte txTrieRoot");	
+			assertArrayEquals(expectedTxTrieRoot,eblockHeader.getTxTrieRoot(),"Genesis block contains a correct 32 byte txTrieRoot");
 			byte[] expectedReceiptTrieRoot=new byte[] {0x56,(byte) 0xE8,0x1F,0x17,0x1B,(byte) 0xCC,0x55,(byte) 0xA6,(byte) 0xFF,(byte) 0x83,0x45,(byte) 0xE6,(byte) 0x92,(byte) 0xC0,(byte) 0xF8,0x6E,0x5B,0x48,(byte) 0xE0,0x1B,(byte) 0x99,0x6C,(byte) 0xAD,(byte) 0xC0,0x01,0x62,0x2F,(byte) 0xB5,(byte) 0xE3,0x63,(byte) 0xB4,0x21};
 			assertArrayEquals(expectedReceiptTrieRoot,eblockHeader.getReceiptTrieRoot(),"Genesis block contains a correct 32 byte ReceiptTrieRoot");
 			byte[] expectedLogsBloom = new byte[] {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
@@ -582,13 +582,13 @@ public class EthereumFormatReaderTest {
 				ebr.close();
 			}
 		}
-	  }
-	 
-	 @Test
-	  public void parseBlockOneAsEthereumBlockHeap() throws IOException, EthereumBlockReadException, ParseException {
+	}
+
+	@Test
+	public void parseBlockOneAsEthereumBlockHeap() throws IOException, EthereumBlockReadException, ParseException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="eth1.bin";
-		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
 		File file = new File(fileNameBlock);
 		boolean direct=false;
 		FileInputStream fin = new FileInputStream(file);
@@ -602,7 +602,7 @@ public class EthereumFormatReaderTest {
 			assertEquals( 0, eTransactions.size(),"Block contains 0 transactions");
 			assertEquals(0, eUncles.size(),"Block contains 0 uncleHeaders");
 			byte[] expectedParentHash = new byte[] {(byte) 0xD4,(byte) 0xE5,0x67,0x40,(byte) 0xF8,0x76,(byte) 0xAE,(byte) 0xF8,(byte) 0xC0,0x10,(byte) 0xB8,0x6A,0x40,(byte) 0xD5,(byte) 0xF5,0x67,0x45,(byte) 0xA1,0x18,(byte) 0xD0,(byte) 0x90,0x6A,0x34,(byte) 0xE6,(byte) 0x9A,(byte) 0xEC,(byte) 0x8C,0x0D,(byte) 0xB1,(byte) 0xCB,(byte) 0x8F,(byte) 0xA3};
-			
+
 			assertArrayEquals( expectedParentHash, eblockHeader.getParentHash(),"Block contains a correct 32 byte parent hash");
 			byte[] expectedUncleHash = new byte[] {(byte) 0x1D,(byte) 0xCC,0x4D,(byte) 0xE8,(byte) 0xDE, (byte) 0xC7,(byte) 0x5D,
 					(byte) 0x7A,(byte) 0xAB,(byte) 0x85,(byte) 0xB5,(byte) 0x67,(byte) 0xB6,(byte) 0xCC,(byte) 0xD4,
@@ -614,7 +614,7 @@ public class EthereumFormatReaderTest {
 			byte[] expectedStateRoot= new byte[] {(byte)0xD6,(byte)0x7E,(byte)0x4D,(byte)0x45,(byte)0x03,(byte)0x43,(byte)0x04,(byte)0x64,(byte)0x25,(byte)0xAE,(byte)0x42,(byte)0x71,(byte)0x47,(byte)0x43,(byte)0x53,(byte)0x85,(byte)0x7A,(byte)0xB8,(byte)0x60,(byte)0xDB,(byte)0xC0,(byte)0xA1,(byte)0xDD,(byte)0xE6,(byte)0x4B,(byte)0x41,(byte)0xB5,(byte)0xCD,(byte)0x3A,(byte)0x53,(byte)0x2B,(byte)0xF3};
 			assertArrayEquals(expectedStateRoot,eblockHeader.getStateRoot(),"Block contains a correct 32 byte stateroot");
 			byte[] expectedTxTrieRoot= new byte[] {0x56,(byte) 0xE8,0x1F,0x17,0x1B,(byte) 0xCC,0x55,(byte) 0xA6,(byte) 0xFF,(byte) 0x83,0x45,(byte) 0xE6,(byte) 0x92,(byte) 0xC0,(byte) 0xF8,0x6E,0x5B,0x48,(byte) 0xE0,0x1B,(byte) 0x99,0x6C,(byte) 0xAD,(byte) 0xC0,0x01,0x62,0x2F,(byte) 0xB5,(byte) 0xE3,0x63,(byte) 0xB4,0x21};
-			assertArrayEquals(expectedTxTrieRoot,eblockHeader.getTxTrieRoot(),"Block contains a correct 32 byte txTrieRoot");	
+			assertArrayEquals(expectedTxTrieRoot,eblockHeader.getTxTrieRoot(),"Block contains a correct 32 byte txTrieRoot");
 			byte[] expectedReceiptTrieRoot=new byte[] {0x56,(byte) 0xE8,0x1F,0x17,0x1B,(byte) 0xCC,0x55,(byte) 0xA6,(byte) 0xFF,(byte) 0x83,0x45,(byte) 0xE6,(byte) 0x92,(byte) 0xC0,(byte) 0xF8,0x6E,0x5B,0x48,(byte) 0xE0,0x1B,(byte) 0x99,0x6C,(byte) 0xAD,(byte) 0xC0,0x01,0x62,0x2F,(byte) 0xB5,(byte) 0xE3,0x63,(byte) 0xB4,0x21};
 			assertArrayEquals(expectedReceiptTrieRoot,eblockHeader.getReceiptTrieRoot(),"Block contains a correct 32 byte ReceiptTrieRoot");
 			byte[] expectedLogsBloom = new byte[] {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
@@ -644,76 +644,89 @@ public class EthereumFormatReaderTest {
 				ebr.close();
 			}
 		}
-	  }
-	 
-	 @Test
-	  public void parseBlockOneAsEthereumBlockDirect() throws IOException, EthereumBlockReadException, ParseException {
-			ClassLoader classLoader = getClass().getClassLoader();
-			String fileName="eth1.bin";
-			String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
-			File file = new File(fileNameBlock);
-			boolean direct=true;
-			FileInputStream fin = new FileInputStream(file);
-			EthereumBlockReader ebr = null;
-			try {
-				ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUMBLOCK, this.DEFAULT_BUFFERSIZE,direct);
-				EthereumBlock eblock = ebr.readBlock();
-				EthereumBlockHeader eblockHeader = eblock.getEthereumBlockHeader();
-				List<EthereumTransaction> eTransactions = eblock.getEthereumTransactions();
-				List<EthereumBlockHeader> eUncles = eblock.getUncleHeaders();
-				assertEquals( 0, eTransactions.size(),"Block contains 0 transactions");
-				assertEquals(0, eUncles.size(),"Block contains 0 uncleHeaders");
-				byte[] expectedParentHash = new byte[] {(byte) 0xD4,(byte) 0xE5,0x67,0x40,(byte) 0xF8,0x76,(byte) 0xAE,(byte) 0xF8,(byte) 0xC0,0x10,(byte) 0xB8,0x6A,0x40,(byte) 0xD5,(byte) 0xF5,0x67,0x45,(byte) 0xA1,0x18,(byte) 0xD0,(byte) 0x90,0x6A,0x34,(byte) 0xE6,(byte) 0x9A,(byte) 0xEC,(byte) 0x8C,0x0D,(byte) 0xB1,(byte) 0xCB,(byte) 0x8F,(byte) 0xA3};
-				
-				assertArrayEquals( expectedParentHash, eblockHeader.getParentHash(),"Block contains a correct 32 byte parent hash");
-				byte[] expectedUncleHash = new byte[] {(byte) 0x1D,(byte) 0xCC,0x4D,(byte) 0xE8,(byte) 0xDE, (byte) 0xC7,(byte) 0x5D,
-						(byte) 0x7A,(byte) 0xAB,(byte) 0x85,(byte) 0xB5,(byte) 0x67,(byte) 0xB6,(byte) 0xCC,(byte) 0xD4,
-						0x1A,(byte) 0xD3,(byte)0x12, 0x45,0x1B,(byte) 0x94,(byte) 0x8A,0x74,0x13,(byte) 0xF0,
-						(byte) 0xA1,0x42,(byte) 0xFD,0x40,(byte) 0xD4,(byte) 0x93,0x47};
-				assertArrayEquals( expectedUncleHash, eblockHeader.getUncleHash(),"Block contains a correct 32 byte uncle hash");
-				byte[] expectedCoinbase = new byte[] {(byte)0x05,(byte)0xA5,(byte)0x6E,(byte)0x2D,(byte)0x52,(byte)0xC8,(byte)0x17,(byte)0x16,(byte)0x18,(byte)0x83,(byte)0xF5,(byte)0x0C,(byte)0x44,(byte)0x1C,(byte)0x32,(byte)0x28,(byte)0xCF,(byte)0xE5,(byte)0x4D,(byte)0x9F};
-				assertArrayEquals(expectedCoinbase,eblockHeader.getCoinBase(),"Block contains a correct  20 byte coinbase");
-				byte[] expectedStateRoot= new byte[] {(byte)0xD6,(byte)0x7E,(byte)0x4D,(byte)0x45,(byte)0x03,(byte)0x43,(byte)0x04,(byte)0x64,(byte)0x25,(byte)0xAE,(byte)0x42,(byte)0x71,(byte)0x47,(byte)0x43,(byte)0x53,(byte)0x85,(byte)0x7A,(byte)0xB8,(byte)0x60,(byte)0xDB,(byte)0xC0,(byte)0xA1,(byte)0xDD,(byte)0xE6,(byte)0x4B,(byte)0x41,(byte)0xB5,(byte)0xCD,(byte)0x3A,(byte)0x53,(byte)0x2B,(byte)0xF3};
-				assertArrayEquals(expectedStateRoot,eblockHeader.getStateRoot(),"Block contains a correct 32 byte stateroot");
-				byte[] expectedTxTrieRoot= new byte[] {0x56,(byte) 0xE8,0x1F,0x17,0x1B,(byte) 0xCC,0x55,(byte) 0xA6,(byte) 0xFF,(byte) 0x83,0x45,(byte) 0xE6,(byte) 0x92,(byte) 0xC0,(byte) 0xF8,0x6E,0x5B,0x48,(byte) 0xE0,0x1B,(byte) 0x99,0x6C,(byte) 0xAD,(byte) 0xC0,0x01,0x62,0x2F,(byte) 0xB5,(byte) 0xE3,0x63,(byte) 0xB4,0x21};
-				assertArrayEquals(expectedTxTrieRoot,eblockHeader.getTxTrieRoot(),"Block contains a correct 32 byte txTrieRoot");	
-				byte[] expectedReceiptTrieRoot=new byte[] {0x56,(byte) 0xE8,0x1F,0x17,0x1B,(byte) 0xCC,0x55,(byte) 0xA6,(byte) 0xFF,(byte) 0x83,0x45,(byte) 0xE6,(byte) 0x92,(byte) 0xC0,(byte) 0xF8,0x6E,0x5B,0x48,(byte) 0xE0,0x1B,(byte) 0x99,0x6C,(byte) 0xAD,(byte) 0xC0,0x01,0x62,0x2F,(byte) 0xB5,(byte) 0xE3,0x63,(byte) 0xB4,0x21};
-				assertArrayEquals(expectedReceiptTrieRoot,eblockHeader.getReceiptTrieRoot(),"Block contains a correct 32 byte ReceiptTrieRoot");
-				byte[] expectedLogsBloom = new byte[] {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
-				assertArrayEquals( expectedLogsBloom, eblockHeader.getLogsBloom(),"Block contains a 256 byte log bloom consisting only of 0x00");
-				byte[] expectedDifficulty = new byte[] {0x03,(byte) 0xFF,(byte) 0x80,0x00,0x00};
-				assertArrayEquals( expectedDifficulty, eblockHeader.getDifficulty(),"Block contains a correct 5 byte difficulty");
-				DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss z");
-				String expectedDTStr = "30-07-2015 15:26:28 UTC";
-				long expectedTimestamp = format.parse(expectedDTStr).getTime() / 1000;
-				//1438269988
-				assertEquals(expectedTimestamp, eblockHeader.getTimestamp(),"Block contains a timestamp of "+expectedDTStr);
-				long expectedNumber = 1L;
-				assertEquals( BigInteger.valueOf(expectedNumber), eblockHeader.getNumber(),"Block contains a number 1");
-				byte[] expectedGasLimit = new byte[] {0x13,(byte) 0x88};
-				assertArrayEquals( expectedGasLimit, eblockHeader.getGasLimitRaw(),"Block contains a correct 2 byte gas limit");
-				long expectedGasUsed = 0L;
-				assertEquals( BigInteger.valueOf(expectedGasUsed), eblockHeader.getGasUsed(),"Block contains a gas used of  0");
-				byte[] expectedMixHash= new byte[] {(byte)0x96,(byte)0x9B,(byte)0x90,(byte)0x0D,(byte)0xE2,(byte)0x7B,(byte)0x6A,(byte)0xC6,(byte)0xA6,(byte)0x77,(byte)0x42,(byte)0x36,(byte)0x5D,(byte)0xD6,(byte)0x5F,(byte)0x55,(byte)0xA0,(byte)0x52,(byte)0x6C,(byte)0x41,(byte)0xFD,(byte)0x18,(byte)0xE1,(byte)0xB1,(byte)0x6F,(byte)0x1A,(byte)0x12,(byte)0x15,(byte)0xC2,(byte)0xE6,(byte)0x6F,(byte)0x59};
-				assertArrayEquals( expectedMixHash, eblockHeader.getMixHash(),"Block contains a correct 32 byte mix hash");
-				byte[] expectedExtraData= new byte[] {(byte)0x47,(byte)0x65,(byte)0x74,(byte)0x68,(byte)0x2F,(byte)0x76,(byte)0x31,(byte)0x2E,(byte)0x30,(byte)0x2E,(byte)0x30,(byte)0x2F,(byte)0x6C,(byte)0x69,(byte)0x6E,(byte)0x75,(byte)0x78,(byte)0x2F,(byte)0x67,(byte)0x6F,(byte)0x31,(byte)0x2E,(byte)0x34,(byte)0x2E,(byte)0x32};
-				// corresponds to Geth/v1.0.0/linux/go1.4.2
-				assertArrayEquals( expectedExtraData, eblockHeader.getExtraData(),"Block contains correct 32 byte extra data");
-				byte[] expectedNonce = new byte[] {(byte)0x53,(byte)0x9B,(byte)0xD4,(byte)0x97,(byte)0x9F,(byte)0xEF,(byte)0x1E,(byte)0xC4};
-				assertArrayEquals( expectedNonce, eblockHeader.getNonce(),"Block contains a correct 8 byte nonce");
-			} finally {
-				if (ebr!=null) {
-					ebr.close();
-				}
-			}
-	  }
+	}
 
-	 
-	 @Test
-	  public void parseBlock1346406AsEthereumBlockHeap() throws IOException, EthereumBlockReadException, ParseException {
+	@Test
+	public void parseBlockOneAsEthereumBlockDirect() throws IOException, EthereumBlockReadException, ParseException {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="eth1.bin";
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
+		File file = new File(fileNameBlock);
+		boolean direct=true;
+		FileInputStream fin = new FileInputStream(file);
+		EthereumBlockReader ebr = null;
+		try {
+			ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUMBLOCK, this.DEFAULT_BUFFERSIZE,direct);
+			EthereumBlock eblock = ebr.readBlock();
+			EthereumBlockHeader eblockHeader = eblock.getEthereumBlockHeader();
+			List<EthereumTransaction> eTransactions = eblock.getEthereumTransactions();
+			List<EthereumBlockHeader> eUncles = eblock.getUncleHeaders();
+			assertEquals( 0, eTransactions.size(),"Block contains 0 transactions");
+			assertEquals(0, eUncles.size(),"Block contains 0 uncleHeaders");
+			byte[] expectedParentHash = new byte[] {(byte) 0xD4,(byte) 0xE5,0x67,0x40,(byte) 0xF8,0x76,(byte) 0xAE,(byte) 0xF8,(byte) 0xC0,0x10,(byte) 0xB8,0x6A,0x40,(byte) 0xD5,(byte) 0xF5,0x67,0x45,(byte) 0xA1,0x18,(byte) 0xD0,(byte) 0x90,0x6A,0x34,(byte) 0xE6,(byte) 0x9A,(byte) 0xEC,(byte) 0x8C,0x0D,(byte) 0xB1,(byte) 0xCB,(byte) 0x8F,(byte) 0xA3};
+
+			assertArrayEquals( expectedParentHash, eblockHeader.getParentHash(),"Block contains a correct 32 byte parent hash");
+			byte[] expectedUncleHash = new byte[] {(byte) 0x1D,(byte) 0xCC,0x4D,(byte) 0xE8,(byte) 0xDE, (byte) 0xC7,(byte) 0x5D,
+					(byte) 0x7A,(byte) 0xAB,(byte) 0x85,(byte) 0xB5,(byte) 0x67,(byte) 0xB6,(byte) 0xCC,(byte) 0xD4,
+					0x1A,(byte) 0xD3,(byte)0x12, 0x45,0x1B,(byte) 0x94,(byte) 0x8A,0x74,0x13,(byte) 0xF0,
+					(byte) 0xA1,0x42,(byte) 0xFD,0x40,(byte) 0xD4,(byte) 0x93,0x47};
+			assertArrayEquals( expectedUncleHash, eblockHeader.getUncleHash(),"Block contains a correct 32 byte uncle hash");
+			byte[] expectedCoinbase = new byte[] {(byte)0x05,(byte)0xA5,(byte)0x6E,(byte)0x2D,(byte)0x52,(byte)0xC8,(byte)0x17,(byte)0x16,(byte)0x18,(byte)0x83,(byte)0xF5,(byte)0x0C,(byte)0x44,(byte)0x1C,(byte)0x32,(byte)0x28,(byte)0xCF,(byte)0xE5,(byte)0x4D,(byte)0x9F};
+			assertArrayEquals(expectedCoinbase,eblockHeader.getCoinBase(),"Block contains a correct  20 byte coinbase");
+			byte[] expectedStateRoot= new byte[] {(byte)0xD6,(byte)0x7E,(byte)0x4D,(byte)0x45,(byte)0x03,(byte)0x43,(byte)0x04,(byte)0x64,(byte)0x25,(byte)0xAE,(byte)0x42,(byte)0x71,(byte)0x47,(byte)0x43,(byte)0x53,(byte)0x85,(byte)0x7A,(byte)0xB8,(byte)0x60,(byte)0xDB,(byte)0xC0,(byte)0xA1,(byte)0xDD,(byte)0xE6,(byte)0x4B,(byte)0x41,(byte)0xB5,(byte)0xCD,(byte)0x3A,(byte)0x53,(byte)0x2B,(byte)0xF3};
+			assertArrayEquals(expectedStateRoot,eblockHeader.getStateRoot(),"Block contains a correct 32 byte stateroot");
+			byte[] expectedTxTrieRoot= new byte[] {0x56,(byte) 0xE8,0x1F,0x17,0x1B,(byte) 0xCC,0x55,(byte) 0xA6,(byte) 0xFF,(byte) 0x83,0x45,(byte) 0xE6,(byte) 0x92,(byte) 0xC0,(byte) 0xF8,0x6E,0x5B,0x48,(byte) 0xE0,0x1B,(byte) 0x99,0x6C,(byte) 0xAD,(byte) 0xC0,0x01,0x62,0x2F,(byte) 0xB5,(byte) 0xE3,0x63,(byte) 0xB4,0x21};
+			assertArrayEquals(expectedTxTrieRoot,eblockHeader.getTxTrieRoot(),"Block contains a correct 32 byte txTrieRoot");
+			byte[] expectedReceiptTrieRoot=new byte[] {0x56,(byte) 0xE8,0x1F,0x17,0x1B,(byte) 0xCC,0x55,(byte) 0xA6,(byte) 0xFF,(byte) 0x83,0x45,(byte) 0xE6,(byte) 0x92,(byte) 0xC0,(byte) 0xF8,0x6E,0x5B,0x48,(byte) 0xE0,0x1B,(byte) 0x99,0x6C,(byte) 0xAD,(byte) 0xC0,0x01,0x62,0x2F,(byte) 0xB5,(byte) 0xE3,0x63,(byte) 0xB4,0x21};
+			assertArrayEquals(expectedReceiptTrieRoot,eblockHeader.getReceiptTrieRoot(),"Block contains a correct 32 byte ReceiptTrieRoot");
+			byte[] expectedLogsBloom = new byte[] {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+			assertArrayEquals( expectedLogsBloom, eblockHeader.getLogsBloom(),"Block contains a 256 byte log bloom consisting only of 0x00");
+			byte[] expectedDifficulty = new byte[] {0x03,(byte) 0xFF,(byte) 0x80,0x00,0x00};
+			assertArrayEquals( expectedDifficulty, eblockHeader.getDifficulty(),"Block contains a correct 5 byte difficulty");
+			DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss z");
+			String expectedDTStr = "30-07-2015 15:26:28 UTC";
+			long expectedTimestamp = format.parse(expectedDTStr).getTime() / 1000;
+			//1438269988
+			assertEquals(expectedTimestamp, eblockHeader.getTimestamp(),"Block contains a timestamp of "+expectedDTStr);
+			long expectedNumber = 1L;
+			assertEquals( BigInteger.valueOf(expectedNumber), eblockHeader.getNumber(),"Block contains a number 1");
+			byte[] expectedGasLimit = new byte[] {0x13,(byte) 0x88};
+			assertArrayEquals( expectedGasLimit, eblockHeader.getGasLimitRaw(),"Block contains a correct 2 byte gas limit");
+			long expectedGasUsed = 0L;
+			assertEquals( BigInteger.valueOf(expectedGasUsed), eblockHeader.getGasUsed(),"Block contains a gas used of  0");
+			byte[] expectedMixHash= new byte[] {(byte)0x96,(byte)0x9B,(byte)0x90,(byte)0x0D,(byte)0xE2,(byte)0x7B,(byte)0x6A,(byte)0xC6,(byte)0xA6,(byte)0x77,(byte)0x42,(byte)0x36,(byte)0x5D,(byte)0xD6,(byte)0x5F,(byte)0x55,(byte)0xA0,(byte)0x52,(byte)0x6C,(byte)0x41,(byte)0xFD,(byte)0x18,(byte)0xE1,(byte)0xB1,(byte)0x6F,(byte)0x1A,(byte)0x12,(byte)0x15,(byte)0xC2,(byte)0xE6,(byte)0x6F,(byte)0x59};
+			assertArrayEquals( expectedMixHash, eblockHeader.getMixHash(),"Block contains a correct 32 byte mix hash");
+			byte[] expectedExtraData= new byte[] {(byte)0x47,(byte)0x65,(byte)0x74,(byte)0x68,(byte)0x2F,(byte)0x76,(byte)0x31,(byte)0x2E,(byte)0x30,(byte)0x2E,(byte)0x30,(byte)0x2F,(byte)0x6C,(byte)0x69,(byte)0x6E,(byte)0x75,(byte)0x78,(byte)0x2F,(byte)0x67,(byte)0x6F,(byte)0x31,(byte)0x2E,(byte)0x34,(byte)0x2E,(byte)0x32};
+			// corresponds to Geth/v1.0.0/linux/go1.4.2
+			assertArrayEquals( expectedExtraData, eblockHeader.getExtraData(),"Block contains correct 32 byte extra data");
+			byte[] expectedNonce = new byte[] {(byte)0x53,(byte)0x9B,(byte)0xD4,(byte)0x97,(byte)0x9F,(byte)0xEF,(byte)0x1E,(byte)0xC4};
+			assertArrayEquals( expectedNonce, eblockHeader.getNonce(),"Block contains a correct 8 byte nonce");
+		} finally {
+			if (ebr!=null) {
+				ebr.close();
+			}
+		}
+	}
+	//CHANGE 1
+	@Test
+	public void parseBlock1346406AsEthereumBlockHeap() throws IOException, EthereumBlockReadException, ParseException {
+		//EthereumBlockReader ebr = null;
+		//try {
+		parseBlock1346406AsEthereumBlockHeapBlockChecks();
+		parseBlock1346406AsEthereumBlockHeapTransactionChecks0to2();
+		parseBlock1346406AsEthereumBlockHeapTransactionChecks3to5();
+
+//		} finally {
+//			if (ebr!=null) {
+//				ebr.close();
+//			}
+//		}
+	}
+	@Test
+	public void parseBlock1346406AsEthereumBlockHeapBlockChecks() throws IOException, EthereumBlockReadException, ParseException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="eth1346406.bin";
-		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
 		File file = new File(fileNameBlock);
 		boolean direct=false;
 		FileInputStream fin = new FileInputStream(file);
@@ -724,10 +737,11 @@ public class EthereumFormatReaderTest {
 			EthereumBlockHeader eblockHeader = eblock.getEthereumBlockHeader();
 			List<EthereumTransaction> eTransactions = eblock.getEthereumTransactions();
 			List<EthereumBlockHeader> eUncles = eblock.getUncleHeaders();
+
 			assertEquals( 6, eTransactions.size(),"Block contains 6 transactions");
 			assertEquals(0, eUncles.size(),"Block contains 0 uncleHeaders");
 			byte[] expectedParentHash = new byte[] {(byte)0xBA,(byte)0x6D,(byte)0xD2,(byte)0x60,(byte)0x12,(byte)0xB3,(byte)0x71,(byte)0x90,(byte)0x48,(byte)0xF3,(byte)0x16,(byte)0xC6,(byte)0xED,(byte)0xB3,(byte)0x34,(byte)0x9B,(byte)0xDF,(byte)0xBD,(byte)0x61,(byte)0x31,(byte)0x9F,(byte)0xA9,(byte)0x7C,(byte)0x61,(byte)0x6A,(byte)0x61,(byte)0x31,(byte)0x18,(byte)0xA1,(byte)0xAF,(byte)0x30,(byte)0x67};
-			
+
 			assertArrayEquals( expectedParentHash, eblockHeader.getParentHash(),"Block contains a correct 32 byte parent hash");
 			byte[] expectedUncleHash = new byte[] {(byte) 0x1D,(byte) 0xCC,0x4D,(byte) 0xE8,(byte) 0xDE, (byte) 0xC7,(byte) 0x5D,
 					(byte) 0x7A,(byte) 0xAB,(byte) 0x85,(byte) 0xB5,(byte) 0x67,(byte) 0xB6,(byte) 0xCC,(byte) 0xD4,
@@ -739,13 +753,13 @@ public class EthereumFormatReaderTest {
 			byte[] expectedStateRoot= new byte[] {(byte)0x21,(byte)0xBA,(byte)0x88,(byte)0x6F,(byte)0xD2,(byte)0x6F,(byte)0x17,(byte)0xB4,(byte)0x01,(byte)0xF5,(byte)0x39,(byte)0x20,(byte)0x15,(byte)0x33,(byte)0x10,(byte)0xB6,(byte)0x93,(byte)0x9B,(byte)0xAD,(byte)0x8A,(byte)0x5F,(byte)0xC3,(byte)0xBF,(byte)0x8C,(byte)0x50,(byte)0x5C,(byte)0x55,(byte)0x6D,(byte)0xDB,(byte)0xAF,(byte)0xBC,(byte)0x5C};
 			assertArrayEquals(expectedStateRoot,eblockHeader.getStateRoot(),"Block contains a correct 32 byte stateroot");
 			byte[] expectedTxTrieRoot= new byte[] {(byte)0xB3,(byte)0xCB,(byte)0xC7,(byte)0xF0,(byte)0xD7,(byte)0x87,(byte)0xE5,(byte)0x7D,(byte)0x93,(byte)0x70,(byte)0xB8,(byte)0x02,(byte)0xAB,(byte)0x94,(byte)0x5E,(byte)0x21,(byte)0x99,(byte)0x1C,(byte)0x3E,(byte)0x12,(byte)0x7D,(byte)0x70,(byte)0x12,(byte)0x0C,(byte)0x37,(byte)0xE9,(byte)0xFD,(byte)0xAE,(byte)0x3E,(byte)0xF3,(byte)0xEB,(byte)0xFC};
-			assertArrayEquals(expectedTxTrieRoot,eblockHeader.getTxTrieRoot(),"Block contains a correct 32 byte txTrieRoot");	
+			assertArrayEquals(expectedTxTrieRoot,eblockHeader.getTxTrieRoot(),"Block contains a correct 32 byte txTrieRoot");
 			byte[] expectedReceiptTrieRoot=new byte[] {(byte)0x9B,(byte)0xCE,(byte)0x71,(byte)0x32,(byte)0xF5,(byte)0x2D,(byte)0x4D,(byte)0x45,(byte)0xA8,(byte)0xA2,(byte)0x47,(byte)0x48,(byte)0x47,(byte)0x86,(byte)0xC7,(byte)0x0B,(byte)0xB2,(byte)0xE6,(byte)0x39,(byte)0x59,(byte)0xC8,(byte)0x56,(byte)0x1B,(byte)0x3A,(byte)0xBF,(byte)0xD4,(byte)0xE7,(byte)0x22,(byte)0xE6,(byte)0x00,(byte)0x6A,(byte)0x27};
 			assertArrayEquals(expectedReceiptTrieRoot,eblockHeader.getReceiptTrieRoot(),"Block contains a correct 32 byte ReceiptTrieRoot");
 			byte[] expectedLogsBloom = new byte[] {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
 			assertArrayEquals( expectedLogsBloom, eblockHeader.getLogsBloom(),"Block contains a 256 byte log bloom consisting only of 0x00");
 			byte[] expectedDifficulty = new byte[] {0x19,(byte) 0xFF,(byte) 0x9E,(byte) 0xC4,0x35,(byte) 0xE0};
-	
+
 			assertArrayEquals( expectedDifficulty, eblockHeader.getDifficulty(),"Block contains a correct 5 byte difficulty");
 			DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss z");
 			String expectedDTStr = "16-04-2016 09:34:29 UTC";
@@ -754,7 +768,7 @@ public class EthereumFormatReaderTest {
 			assertEquals(expectedTimestamp, eblockHeader.getTimestamp(),"Block contains a timestamp of "+expectedDTStr);
 			long expectedNumber = 1346406L;
 			assertEquals( BigInteger.valueOf(expectedNumber), eblockHeader.getNumber(),"Block contains a number 1346406");
-			byte[] expectedGasLimit = new byte[] {0x47,(byte) 0xE7,(byte) 0xC4}; 
+			byte[] expectedGasLimit = new byte[] {0x47,(byte) 0xE7,(byte) 0xC4};
 			assertArrayEquals( expectedGasLimit, eblockHeader.getGasLimitRaw(),"Block contains a correct 3 byte gas limit");
 			long expectedGasUsed = 126000L;
 			assertEquals( BigInteger.valueOf(expectedGasUsed), eblockHeader.getGasUsed(),"Block contains a gas used of  126000");
@@ -765,6 +779,24 @@ public class EthereumFormatReaderTest {
 			assertArrayEquals( expectedExtraData, eblockHeader.getExtraData(),"Block contains correct 24 byte extra data");
 			byte[] expectedNonce = new byte[] {(byte)0xFF,(byte)0x7C,(byte)0x7A,(byte)0xEE,(byte)0x0E,(byte)0x88,(byte)0xC5,(byte)0x2D};
 			assertArrayEquals( expectedNonce, eblockHeader.getNonce(),"Block contains a correct 8 byte nonce");
+		} finally {
+			if (ebr!=null) {
+				ebr.close();
+			}
+		}
+	}
+	@Test
+	public void parseBlock1346406AsEthereumBlockHeapTransactionChecks0to2() throws IOException, EthereumBlockReadException {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="eth1346406.bin";
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
+		File file = new File(fileNameBlock);
+		boolean direct=false;
+		FileInputStream fin = new FileInputStream(file);
+		EthereumBlockReader ebr = null;
+		try {
+			ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUMBLOCK, this.DEFAULT_BUFFERSIZE,direct);
+			EthereumBlock eblock = ebr.readBlock();
 			// check transactions
 			// 1st transaction
 			int transactNum=0;
@@ -777,7 +809,7 @@ public class EthereumFormatReaderTest {
 			byte[] expected1stReceiveAddress = new byte[] {(byte)0x1E,(byte)0x75,(byte)0xF0,(byte)0x2A,(byte)0x6E,(byte)0x9F,(byte)0xF4,(byte)0xFF,(byte)0x16,(byte)0x33,(byte)0x38,(byte)0x25,(byte)0xD9,(byte)0x09,(byte)0xBB,(byte)0x03,(byte)0x33,(byte)0x06,(byte)0xB7,(byte)0x8B};
 			assertArrayEquals(expected1stReceiveAddress, eblock.getEthereumTransactions().get(transactNum).getReceiveAddress(),"Transaction 1 has a correct receive address");
 			byte[] expected1stValue = new byte[] {0x0E,(byte) 0xD5,(byte) 0xDA,(byte) 0xBC,(byte) 0x91,0x7D,(byte) 0xAC,0x00};
-			assertArrayEquals(expected1stValue, eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 1 has a correct value");	
+			assertArrayEquals(expected1stValue, eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 1 has a correct value");
 			byte[] expected1stData = new byte[] {};
 			assertArrayEquals(expected1stData, eblock.getEthereumTransactions().get(transactNum).getData(),"Transaction 1 has a correct data");
 			byte[] expected1stsigv = new byte[] {0x1B};
@@ -787,7 +819,7 @@ public class EthereumFormatReaderTest {
 			byte[] expected1stsigs = new byte[] {(byte)0x0A,(byte)0x31,(byte)0x3F,(byte)0x35,(byte)0x60,(byte)0x32,(byte)0x37,(byte)0x56,(byte)0xB7,(byte)0x28,(byte)0x5F,(byte)0x62,(byte)0x38,(byte)0x51,(byte)0x86,(byte)0x05,(byte)0x82,(byte)0x1A,(byte)0x2B,(byte)0xEE,(byte)0x03,(byte)0x7D,(byte)0xEA,(byte)0x8F,(byte)0x09,(byte)0x22,(byte)0x66,(byte)0x20,(byte)0x89,(byte)0x03,(byte)0x74,(byte)0x59};
 			assertArrayEquals(expected1stsigs, eblock.getEthereumTransactions().get(transactNum).getSig_s(),"Transaction 1 has a correct sigs");
 			// 2nd transaction
-		    transactNum=1;
+			transactNum=1;
 			byte[] expected2ndNonce = new byte[] {(byte) 0xff,(byte) 0xD7};
 			assertArrayEquals(expected2ndNonce, eblock.getEthereumTransactions().get(transactNum).getNonce(),"Transaction 2 has a correct nonce");
 			byte[] expected2ndGasPrice = new byte[] {0x04,(byte) 0xA8,0x17,(byte) 0xC8,0x00};
@@ -797,8 +829,8 @@ public class EthereumFormatReaderTest {
 			byte[] expected2ndReceiveAddress = new byte[] {(byte)0x54,(byte)0x67,(byte)0xFA,(byte)0xBD,(byte)0x30,(byte)0xEB,(byte)0x61,(byte)0xA1,(byte)0x84,(byte)0x61,(byte)0xD1,(byte)0x53,(byte)0xD8,(byte)0xC6,(byte)0xFF,(byte)0xB1,(byte)0x9D,(byte)0xD4,(byte)0x7A,(byte)0x25};
 			assertArrayEquals(expected2ndReceiveAddress, eblock.getEthereumTransactions().get(transactNum).getReceiveAddress(),"Transaction 2 has a correct receive address");
 			byte[] expected2ndValue = new byte[] {0x46,(byte) 0xEC,(byte) 0x2C,(byte) 0x96,(byte) 0x05,0x0B,(byte) 0x18,0x00};
-	
-			assertArrayEquals(expected2ndValue, eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 2 has a correct value");	
+
+			assertArrayEquals(expected2ndValue, eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 2 has a correct value");
 			byte[] expected2ndData = new byte[] {};
 			assertArrayEquals(expected2ndData, eblock.getEthereumTransactions().get(transactNum).getData(),"Transaction 2 has a correct data");
 			byte[] expected2ndsigv = new byte[] {0x1B};
@@ -809,7 +841,7 @@ public class EthereumFormatReaderTest {
 			assertArrayEquals(expected2ndsigs, eblock.getEthereumTransactions().get(transactNum).getSig_s(),"Transaction 2 has a correct sigs");
 
 			// 3rd transaction
-		    transactNum=2;
+			transactNum=2;
 			byte[] expected3rdNonce = new byte[] {0x02,(byte) 0xD7,(byte) 0xDD};
 			assertArrayEquals(expected3rdNonce, eblock.getEthereumTransactions().get(transactNum).getNonce(),"Transaction 3 has a correct nonce");
 			byte[] expected3rdGasPrice = new byte[] {0x04,(byte) 0xA8,0x17,(byte) 0xC8,0x00};
@@ -819,7 +851,7 @@ public class EthereumFormatReaderTest {
 			byte[] expected3rdReceiveAddress = new byte[] {(byte)0xB4,(byte)0xD0,(byte)0xCA,(byte)0x2B,(byte)0x7E,(byte)0x4C,(byte)0xB1,(byte)0xE0,(byte)0x61,(byte)0x0D,(byte)0x02,(byte)0x15,(byte)0x4A,(byte)0x10,(byte)0x16,(byte)0x3A,(byte)0xB0,(byte)0xF4,(byte)0x2E,(byte)0x65};
 			assertArrayEquals(expected3rdReceiveAddress, eblock.getEthereumTransactions().get(transactNum).getReceiveAddress(),"Transaction 3 has a correct receive address");
 			byte[] expected3rdValue = new byte[] {(byte) 0x29,(byte) 0x73,(byte) 0xCD,(byte) 0x62,0x4F,(byte) 0x70,0x00};
-			assertArrayEquals(expected3rdValue, eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 3 has a correct value");	
+			assertArrayEquals(expected3rdValue, eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 3 has a correct value");
 			byte[] expected3rdData = new byte[] {};
 			assertArrayEquals(expected3rdData, eblock.getEthereumTransactions().get(transactNum).getData(),"Transaction 3 has a correct data");
 			byte[] expected3rdsigv = new byte[] {0x1C};
@@ -829,8 +861,29 @@ public class EthereumFormatReaderTest {
 			byte[] expected3rdsigs = new byte[] {(byte)0x24,(byte)0x34,(byte)0x48,(byte)0x64,(byte)0xEB,(byte)0x6A,(byte)0x60,(byte)0xC6,(byte)0x6F,(byte)0xB5,(byte)0xDA,(byte)0xED,(byte)0x02,(byte)0xB5,(byte)0x63,(byte)0x52,(byte)0xE8,(byte)0x17,(byte)0x42,(byte)0x16,(byte)0xB8,(byte)0xA2,(byte)0xD3,(byte)0x33,(byte)0xB7,(byte)0xF3,(byte)0x32,(byte)0xFF,(byte)0x6B,(byte)0xA0,(byte)0x69,(byte)0x9C};
 			assertArrayEquals(expected3rdsigs, eblock.getEthereumTransactions().get(transactNum).getSig_s(),"Transaction 3 has a correct sigs");
 
+
+
+		} finally {
+			if (ebr!=null) {
+				ebr.close();
+			}
+		}
+	}
+	@Test
+	public void parseBlock1346406AsEthereumBlockHeapTransactionChecks3to5() throws IOException, EthereumBlockReadException {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="eth1346406.bin";
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
+		File file = new File(fileNameBlock);
+		boolean direct=false;
+		FileInputStream fin = new FileInputStream(file);
+		EthereumBlockReader ebr = null;
+		try {
+			ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUMBLOCK, this.DEFAULT_BUFFERSIZE,direct);
+			EthereumBlock eblock = ebr.readBlock();
+			// check transactions
 			// 4th transaction
-		    transactNum=3;
+			int transactNum=3;
 			byte[] expected4thNonce = new byte[] {0x02,(byte) 0xD7,(byte) 0xDE};
 			assertArrayEquals(expected4thNonce, eblock.getEthereumTransactions().get(transactNum).getNonce(),"Transaction 4 has a correct nonce");
 			byte[] expected4thGasPrice = new byte[] {0x04,(byte) 0xA8,0x17,(byte) 0xC8,0x00};
@@ -840,7 +893,7 @@ public class EthereumFormatReaderTest {
 			byte[] expected4thReceiveAddress = new byte[] {(byte)0x1F,(byte)0x57,(byte)0xF8,(byte)0x26,(byte)0xCA,(byte)0xF5,(byte)0x94,(byte)0xF7,(byte)0xA8,(byte)0x37,(byte)0xD9,(byte)0xFC,(byte)0x09,(byte)0x24,(byte)0x56,(byte)0x87,(byte)0x0A,(byte)0x28,(byte)0x93,(byte)0x65};
 			assertArrayEquals(expected4thReceiveAddress, eblock.getEthereumTransactions().get(transactNum).getReceiveAddress(),"Transaction 4 has a correct receive address");
 			byte[] expected4thValue = new byte[] {0x01,(byte) 0xD1,(byte) 0x4C,(byte) 0xAC,(byte) 0xFB,0x05,(byte) 0xC4,0x00};
-			assertArrayEquals(expected4thValue, eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 4 has a correct value");	
+			assertArrayEquals(expected4thValue, eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 4 has a correct value");
 			byte[] expected4thData = new byte[] {};
 			assertArrayEquals(expected4thData, eblock.getEthereumTransactions().get(transactNum).getData(),"Transaction 4 has a correct data");
 			byte[] expected4thsigv = new byte[] {0x1B};
@@ -851,7 +904,7 @@ public class EthereumFormatReaderTest {
 			assertArrayEquals(expected4thsigs, eblock.getEthereumTransactions().get(transactNum).getSig_s(),"Transaction 4 has a correct sigs");
 
 			// 5th transaction
-		    transactNum=4;
+			transactNum=4;
 			byte[] expected5thNonce = new byte[] {0x02,(byte) 0xD7,(byte) 0xDF};
 			assertArrayEquals(expected5thNonce, eblock.getEthereumTransactions().get(transactNum).getNonce(),"Transaction 5 has a correct nonce");
 			byte[] expected5thGasPrice = new byte[] {0x04,(byte) 0xA8,0x17,(byte) 0xC8,0x00};
@@ -861,7 +914,7 @@ public class EthereumFormatReaderTest {
 			byte[] expected5thReceiveAddress = new byte[] {(byte)0x1F,(byte)0x57,(byte)0xF8,(byte)0x26,(byte)0xCA,(byte)0xF5,(byte)0x94,(byte)0xF7,(byte)0xA8,(byte)0x37,(byte)0xD9,(byte)0xFC,(byte)0x09,(byte)0x24,(byte)0x56,(byte)0x87,(byte)0x0A,(byte)0x28,(byte)0x93,(byte)0x65};
 			assertArrayEquals(expected5thReceiveAddress, eblock.getEthereumTransactions().get(transactNum).getReceiveAddress(),"Transaction 5 has a correct receive address");
 			byte[] expected5thValue = new byte[] {0x02,(byte) 0x02,(byte) 0x05,(byte) 0x26,(byte) 0x47,(byte) 0xC0,(byte) 0xF0,0x00};
-			assertArrayEquals(expected5thValue, eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 5 has a correct value");	
+			assertArrayEquals(expected5thValue, eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 5 has a correct value");
 			byte[] expected5thData = new byte[] {};
 			assertArrayEquals(expected5thData, eblock.getEthereumTransactions().get(transactNum).getData(),"Transaction 5 has a correct data");
 			byte[] expected5thsigv = new byte[] {0x1C};
@@ -872,7 +925,7 @@ public class EthereumFormatReaderTest {
 			assertArrayEquals(expected5thsigs, eblock.getEthereumTransactions().get(transactNum).getSig_s(),"Transaction 5 has a correct sigs");
 
 			// 6th transaction
-		    transactNum=5;
+			transactNum=5;
 			byte[] expected6thNonce = new byte[] {0x02,(byte) 0xD7,(byte) 0xE0};
 			assertArrayEquals(expected6thNonce, eblock.getEthereumTransactions().get(transactNum).getNonce(),"Transaction 6 has a correct nonce");
 			byte[] expected6thGasPrice = new byte[] {0x04,(byte) 0xA8,0x17,(byte) 0xC8,0x00};
@@ -882,7 +935,7 @@ public class EthereumFormatReaderTest {
 			byte[] expected6thReceiveAddress = new byte[] {(byte)0x1F,(byte)0x57,(byte)0xF8,(byte)0x26,(byte)0xCA,(byte)0xF5,(byte)0x94,(byte)0xF7,(byte)0xA8,(byte)0x37,(byte)0xD9,(byte)0xFC,(byte)0x09,(byte)0x24,(byte)0x56,(byte)0x87,(byte)0x0A,(byte)0x28,(byte)0x93,(byte)0x65};
 			assertArrayEquals(expected6thReceiveAddress, eblock.getEthereumTransactions().get(transactNum).getReceiveAddress(),"Transaction 6 has a correct receive address");
 			byte[] expected6thValue = new byte[] {0x01,(byte) 0xFE,(byte) 0x81,(byte) 0xC4,(byte) 0xB6,(byte) 0xA0,(byte) 0xD0,0x00};
-			assertArrayEquals(expected6thValue, eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 6 has a correct value");	
+			assertArrayEquals(expected6thValue, eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 6 has a correct value");
 			byte[] expected6thData = new byte[] {};
 			assertArrayEquals(expected6thData, eblock.getEthereumTransactions().get(transactNum).getData(),"Transaction 6 has a correct data");
 			byte[] expected6thsigv = new byte[] {0x1C};
@@ -892,19 +945,24 @@ public class EthereumFormatReaderTest {
 			byte[] expected6thsigs = new byte[] {(byte)0x08,(byte)0xA3,(byte)0xB9,(byte)0xA4,(byte)0x5D,(byte)0x83,(byte)0x1A,(byte)0xC4,(byte)0xAD,(byte)0x37,(byte)0x9D,(byte)0x14,(byte)0xF0,(byte)0xAE,(byte)0x3C,(byte)0x03,(byte)0xC8,(byte)0x73,(byte)0x1C,(byte)0xB4,(byte)0x4D,(byte)0x8A,(byte)0x79,(byte)0xAC,(byte)0xD4,(byte)0xCD,(byte)0x6C,(byte)0xEA,(byte)0x1B,(byte)0x54,(byte)0x80,(byte)0x02};
 			assertArrayEquals(expected6thsigs, eblock.getEthereumTransactions().get(transactNum).getSig_s(),"Transaction 6 has a correct sigs");
 
-			
 		} finally {
 			if (ebr!=null) {
 				ebr.close();
 			}
 		}
-	  }
-	 
-	 @Test
-	  public void parseBlock1346406AsEthereumBlockDirect() throws IOException, EthereumBlockReadException, ParseException {
+	}
+	//Change 2
+	@Test
+	public void parseBlock1346406AsEthereumBlockDirect() throws IOException, EthereumBlockReadException, ParseException {
+		parseBlock1346406AsEthereumBlockDirectBlockChecks();
+		parseBlock1346406AsEthereumBlockDirectTransactionChecks0to2();
+		parseBlock1346406AsEthereumBlockDirectTransactionChecks3to5();
+	}
+	@Test
+	public void parseBlock1346406AsEthereumBlockDirectBlockChecks() throws IOException, EthereumBlockReadException, ParseException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="eth1346406.bin";
-		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
 		File file = new File(fileNameBlock);
 		boolean direct=true;
 		FileInputStream fin = new FileInputStream(file);
@@ -918,7 +976,7 @@ public class EthereumFormatReaderTest {
 			assertEquals( 6, eTransactions.size(),"Block contains 6 transactions");
 			assertEquals(0, eUncles.size(),"Block contains 0 uncleHeaders");
 			byte[] expectedParentHash = new byte[] {(byte)0xBA,(byte)0x6D,(byte)0xD2,(byte)0x60,(byte)0x12,(byte)0xB3,(byte)0x71,(byte)0x90,(byte)0x48,(byte)0xF3,(byte)0x16,(byte)0xC6,(byte)0xED,(byte)0xB3,(byte)0x34,(byte)0x9B,(byte)0xDF,(byte)0xBD,(byte)0x61,(byte)0x31,(byte)0x9F,(byte)0xA9,(byte)0x7C,(byte)0x61,(byte)0x6A,(byte)0x61,(byte)0x31,(byte)0x18,(byte)0xA1,(byte)0xAF,(byte)0x30,(byte)0x67};
-			
+
 			assertArrayEquals( expectedParentHash, eblockHeader.getParentHash(),"Block contains a correct 32 byte parent hash");
 			byte[] expectedUncleHash = new byte[] {(byte) 0x1D,(byte) 0xCC,0x4D,(byte) 0xE8,(byte) 0xDE, (byte) 0xC7,(byte) 0x5D,
 					(byte) 0x7A,(byte) 0xAB,(byte) 0x85,(byte) 0xB5,(byte) 0x67,(byte) 0xB6,(byte) 0xCC,(byte) 0xD4,
@@ -930,13 +988,13 @@ public class EthereumFormatReaderTest {
 			byte[] expectedStateRoot= new byte[] {(byte)0x21,(byte)0xBA,(byte)0x88,(byte)0x6F,(byte)0xD2,(byte)0x6F,(byte)0x17,(byte)0xB4,(byte)0x01,(byte)0xF5,(byte)0x39,(byte)0x20,(byte)0x15,(byte)0x33,(byte)0x10,(byte)0xB6,(byte)0x93,(byte)0x9B,(byte)0xAD,(byte)0x8A,(byte)0x5F,(byte)0xC3,(byte)0xBF,(byte)0x8C,(byte)0x50,(byte)0x5C,(byte)0x55,(byte)0x6D,(byte)0xDB,(byte)0xAF,(byte)0xBC,(byte)0x5C};
 			assertArrayEquals(expectedStateRoot,eblockHeader.getStateRoot(),"Block contains a correct 32 byte stateroot");
 			byte[] expectedTxTrieRoot= new byte[] {(byte)0xB3,(byte)0xCB,(byte)0xC7,(byte)0xF0,(byte)0xD7,(byte)0x87,(byte)0xE5,(byte)0x7D,(byte)0x93,(byte)0x70,(byte)0xB8,(byte)0x02,(byte)0xAB,(byte)0x94,(byte)0x5E,(byte)0x21,(byte)0x99,(byte)0x1C,(byte)0x3E,(byte)0x12,(byte)0x7D,(byte)0x70,(byte)0x12,(byte)0x0C,(byte)0x37,(byte)0xE9,(byte)0xFD,(byte)0xAE,(byte)0x3E,(byte)0xF3,(byte)0xEB,(byte)0xFC};
-			assertArrayEquals(expectedTxTrieRoot,eblockHeader.getTxTrieRoot(),"Block contains a correct 32 byte txTrieRoot");	
+			assertArrayEquals(expectedTxTrieRoot,eblockHeader.getTxTrieRoot(),"Block contains a correct 32 byte txTrieRoot");
 			byte[] expectedReceiptTrieRoot=new byte[] {(byte)0x9B,(byte)0xCE,(byte)0x71,(byte)0x32,(byte)0xF5,(byte)0x2D,(byte)0x4D,(byte)0x45,(byte)0xA8,(byte)0xA2,(byte)0x47,(byte)0x48,(byte)0x47,(byte)0x86,(byte)0xC7,(byte)0x0B,(byte)0xB2,(byte)0xE6,(byte)0x39,(byte)0x59,(byte)0xC8,(byte)0x56,(byte)0x1B,(byte)0x3A,(byte)0xBF,(byte)0xD4,(byte)0xE7,(byte)0x22,(byte)0xE6,(byte)0x00,(byte)0x6A,(byte)0x27};
 			assertArrayEquals(expectedReceiptTrieRoot,eblockHeader.getReceiptTrieRoot(),"Block contains a correct 32 byte ReceiptTrieRoot");
 			byte[] expectedLogsBloom = new byte[] {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
 			assertArrayEquals( expectedLogsBloom, eblockHeader.getLogsBloom(),"Block contains a 256 byte log bloom consisting only of 0x00");
 			byte[] expectedDifficulty = new byte[] {0x19,(byte) 0xFF,(byte) 0x9E,(byte) 0xC4,0x35,(byte) 0xE0};
-	
+
 			assertArrayEquals( expectedDifficulty, eblockHeader.getDifficulty(),"Block contains a correct 5 byte difficulty");
 			DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss z");
 			String expectedDTStr = "16-04-2016 09:34:29 UTC";
@@ -945,7 +1003,7 @@ public class EthereumFormatReaderTest {
 			assertEquals(expectedTimestamp, eblockHeader.getTimestamp(),"Block contains a timestamp of "+expectedDTStr);
 			long expectedNumber = 1346406L;
 			assertEquals( BigInteger.valueOf(expectedNumber), eblockHeader.getNumber(),"Block contains a number 1346406");
-			byte[] expectedGasLimit = new byte[] {0x47,(byte) 0xE7,(byte) 0xC4}; 
+			byte[] expectedGasLimit = new byte[] {0x47,(byte) 0xE7,(byte) 0xC4};
 			assertArrayEquals( expectedGasLimit, eblockHeader.getGasLimitRaw(),"Block contains a correct 3 byte gas limit");
 			long expectedGasUsed = 126000L;
 			assertEquals( BigInteger.valueOf(expectedGasUsed), eblockHeader.getGasUsed(),"Block contains a gas used of  126000");
@@ -956,6 +1014,24 @@ public class EthereumFormatReaderTest {
 			assertArrayEquals( expectedExtraData, eblockHeader.getExtraData(),"Block contains correct 24 byte extra data");
 			byte[] expectedNonce = new byte[] {(byte)0xFF,(byte)0x7C,(byte)0x7A,(byte)0xEE,(byte)0x0E,(byte)0x88,(byte)0xC5,(byte)0x2D};
 			assertArrayEquals( expectedNonce, eblockHeader.getNonce(),"Block contains a correct 8 byte nonce");
+		} finally {
+			if (ebr!=null) {
+				ebr.close();
+			}
+		}
+	}
+	@Test
+	public void parseBlock1346406AsEthereumBlockDirectTransactionChecks0to2() throws IOException, EthereumBlockReadException {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="eth1346406.bin";
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
+		File file = new File(fileNameBlock);
+		boolean direct=true;
+		FileInputStream fin = new FileInputStream(file);
+		EthereumBlockReader ebr = null;
+		try {
+			ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUMBLOCK, this.DEFAULT_BUFFERSIZE,direct);
+			EthereumBlock eblock = ebr.readBlock();
 			// check transactions
 			// 1st transaction
 			int transactNum=0;
@@ -968,7 +1044,7 @@ public class EthereumFormatReaderTest {
 			byte[] expected1stReceiveAddress = new byte[] {(byte)0x1E,(byte)0x75,(byte)0xF0,(byte)0x2A,(byte)0x6E,(byte)0x9F,(byte)0xF4,(byte)0xFF,(byte)0x16,(byte)0x33,(byte)0x38,(byte)0x25,(byte)0xD9,(byte)0x09,(byte)0xBB,(byte)0x03,(byte)0x33,(byte)0x06,(byte)0xB7,(byte)0x8B};
 			assertArrayEquals(expected1stReceiveAddress, eblock.getEthereumTransactions().get(transactNum).getReceiveAddress(),"Transaction 1 has a correct receive address");
 			byte[] expected1stValue = new byte[] {0x0E,(byte) 0xD5,(byte) 0xDA,(byte) 0xBC,(byte) 0x91,0x7D,(byte) 0xAC,0x00};
-			assertArrayEquals(expected1stValue,eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 1 has a correct value");	
+			assertArrayEquals(expected1stValue,eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 1 has a correct value");
 			byte[] expected1stData = new byte[] {};
 			assertArrayEquals(expected1stData, eblock.getEthereumTransactions().get(transactNum).getData(),"Transaction 1 has a correct data");
 			byte[] expected1stsigv = new byte[] {0x1B};
@@ -978,7 +1054,7 @@ public class EthereumFormatReaderTest {
 			byte[] expected1stsigs = new byte[] {(byte)0x0A,(byte)0x31,(byte)0x3F,(byte)0x35,(byte)0x60,(byte)0x32,(byte)0x37,(byte)0x56,(byte)0xB7,(byte)0x28,(byte)0x5F,(byte)0x62,(byte)0x38,(byte)0x51,(byte)0x86,(byte)0x05,(byte)0x82,(byte)0x1A,(byte)0x2B,(byte)0xEE,(byte)0x03,(byte)0x7D,(byte)0xEA,(byte)0x8F,(byte)0x09,(byte)0x22,(byte)0x66,(byte)0x20,(byte)0x89,(byte)0x03,(byte)0x74,(byte)0x59};
 			assertArrayEquals(expected1stsigs, eblock.getEthereumTransactions().get(transactNum).getSig_s(),"Transaction 1 has a correct sigs");
 			// 2nd transaction
-		    transactNum=1;
+			transactNum=1;
 			byte[] expected2ndNonce = new byte[] {(byte) 0xff,(byte) 0xD7};
 			assertArrayEquals(expected2ndNonce, eblock.getEthereumTransactions().get(transactNum).getNonce(),"Transaction 2 has a correct nonce");
 			byte[] expected2ndGasPrice = new byte[] {0x04,(byte) 0xA8,0x17,(byte) 0xC8,0x00};
@@ -988,8 +1064,8 @@ public class EthereumFormatReaderTest {
 			byte[] expected2ndReceiveAddress = new byte[] {(byte)0x54,(byte)0x67,(byte)0xFA,(byte)0xBD,(byte)0x30,(byte)0xEB,(byte)0x61,(byte)0xA1,(byte)0x84,(byte)0x61,(byte)0xD1,(byte)0x53,(byte)0xD8,(byte)0xC6,(byte)0xFF,(byte)0xB1,(byte)0x9D,(byte)0xD4,(byte)0x7A,(byte)0x25};
 			assertArrayEquals(expected2ndReceiveAddress, eblock.getEthereumTransactions().get(transactNum).getReceiveAddress(),"Transaction 2 has a correct receive address");
 			byte[] expected2ndValue = new byte[] {0x46,(byte) 0xEC,(byte) 0x2C,(byte) 0x96,(byte) 0x05,0x0B,(byte) 0x18,0x00};
-	
-			assertArrayEquals(expected2ndValue, eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 2 has a correct value");	
+
+			assertArrayEquals(expected2ndValue, eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 2 has a correct value");
 			byte[] expected2ndData = new byte[] {};
 			assertArrayEquals(expected2ndData, eblock.getEthereumTransactions().get(transactNum).getData(),"Transaction 2 has a correct data");
 			byte[] expected2ndsigv = new byte[] {0x1B};
@@ -1000,7 +1076,7 @@ public class EthereumFormatReaderTest {
 			assertArrayEquals(expected2ndsigs, eblock.getEthereumTransactions().get(transactNum).getSig_s(),"Transaction 2 has a correct sigs");
 
 			// 3rd transaction
-		    transactNum=2;
+			transactNum=2;
 			byte[] expected3rdNonce = new byte[] {0x02,(byte) 0xD7,(byte) 0xDD};
 			assertArrayEquals(expected3rdNonce, eblock.getEthereumTransactions().get(transactNum).getNonce(),"Transaction 3 has a correct nonce");
 			byte[] expected3rdGasPrice = new byte[] {0x04,(byte) 0xA8,0x17,(byte) 0xC8,0x00};
@@ -1010,7 +1086,7 @@ public class EthereumFormatReaderTest {
 			byte[] expected3rdReceiveAddress = new byte[] {(byte)0xB4,(byte)0xD0,(byte)0xCA,(byte)0x2B,(byte)0x7E,(byte)0x4C,(byte)0xB1,(byte)0xE0,(byte)0x61,(byte)0x0D,(byte)0x02,(byte)0x15,(byte)0x4A,(byte)0x10,(byte)0x16,(byte)0x3A,(byte)0xB0,(byte)0xF4,(byte)0x2E,(byte)0x65};
 			assertArrayEquals(expected3rdReceiveAddress, eblock.getEthereumTransactions().get(transactNum).getReceiveAddress(),"Transaction 3 has a correct receive address");
 			byte[] expected3rdValue = new byte[] {(byte) 0x29,(byte) 0x73,(byte) 0xCD,(byte) 0x62,0x4F,(byte) 0x70,0x00};
-			assertArrayEquals(expected3rdValue, eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 3 has a correct value");	
+			assertArrayEquals(expected3rdValue, eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 3 has a correct value");
 			byte[] expected3rdData = new byte[] {};
 			assertArrayEquals(expected3rdData, eblock.getEthereumTransactions().get(transactNum).getData(),"Transaction 3 has a correct data");
 			byte[] expected3rdsigv = new byte[] {0x1C};
@@ -1019,9 +1095,27 @@ public class EthereumFormatReaderTest {
 			assertArrayEquals(expected3rdsigr, eblock.getEthereumTransactions().get(transactNum).getSig_r(),"Transaction 3 has a correct sigr");
 			byte[] expected3rdsigs = new byte[] {(byte)0x24,(byte)0x34,(byte)0x48,(byte)0x64,(byte)0xEB,(byte)0x6A,(byte)0x60,(byte)0xC6,(byte)0x6F,(byte)0xB5,(byte)0xDA,(byte)0xED,(byte)0x02,(byte)0xB5,(byte)0x63,(byte)0x52,(byte)0xE8,(byte)0x17,(byte)0x42,(byte)0x16,(byte)0xB8,(byte)0xA2,(byte)0xD3,(byte)0x33,(byte)0xB7,(byte)0xF3,(byte)0x32,(byte)0xFF,(byte)0x6B,(byte)0xA0,(byte)0x69,(byte)0x9C};
 			assertArrayEquals(expected3rdsigs, eblock.getEthereumTransactions().get(transactNum).getSig_s(),"Transaction 3 has a correct sigs");
+		} finally {
+			if (ebr!=null) {
+				ebr.close();
+			}
+		}
+	}
+	@Test
+	public void parseBlock1346406AsEthereumBlockDirectTransactionChecks3to5() throws IOException, EthereumBlockReadException {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String fileName="eth1346406.bin";
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
+		File file = new File(fileNameBlock);
+		boolean direct=true;
+		FileInputStream fin = new FileInputStream(file);
+		EthereumBlockReader ebr = null;
+		try {
+			ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUMBLOCK, this.DEFAULT_BUFFERSIZE,direct);
+			EthereumBlock eblock = ebr.readBlock();
 
 			// 4th transaction
-		    transactNum=3;
+			int transactNum=3;
 			byte[] expected4thNonce = new byte[] {0x02,(byte) 0xD7,(byte) 0xDE};
 			assertArrayEquals(expected4thNonce, eblock.getEthereumTransactions().get(transactNum).getNonce(),"Transaction 4 has a correct nonce");
 			byte[] expected4thGasPrice = new byte[] {0x04,(byte) 0xA8,0x17,(byte) 0xC8,0x00};
@@ -1031,7 +1125,7 @@ public class EthereumFormatReaderTest {
 			byte[] expected4thReceiveAddress = new byte[] {(byte)0x1F,(byte)0x57,(byte)0xF8,(byte)0x26,(byte)0xCA,(byte)0xF5,(byte)0x94,(byte)0xF7,(byte)0xA8,(byte)0x37,(byte)0xD9,(byte)0xFC,(byte)0x09,(byte)0x24,(byte)0x56,(byte)0x87,(byte)0x0A,(byte)0x28,(byte)0x93,(byte)0x65};
 			assertArrayEquals(expected4thReceiveAddress, eblock.getEthereumTransactions().get(transactNum).getReceiveAddress(),"Transaction 4 has a correct receive address");
 			byte[] expected4thValue = new byte[] {0x01,(byte) 0xD1,(byte) 0x4C,(byte) 0xAC,(byte) 0xFB,0x05,(byte) 0xC4,0x00};
-			assertArrayEquals(expected4thValue, eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 4 has a correct value");	
+			assertArrayEquals(expected4thValue, eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 4 has a correct value");
 			byte[] expected4thData = new byte[] {};
 			assertArrayEquals(expected4thData, eblock.getEthereumTransactions().get(transactNum).getData(),"Transaction 4 has a correct data");
 			byte[] expected4thsigv = new byte[] {0x1B};
@@ -1042,7 +1136,7 @@ public class EthereumFormatReaderTest {
 			assertArrayEquals(expected4thsigs, eblock.getEthereumTransactions().get(transactNum).getSig_s(),"Transaction 4 has a correct sigs");
 
 			// 5th transaction
-		    transactNum=4;
+			transactNum=4;
 			byte[] expected5thNonce = new byte[] {0x02,(byte) 0xD7,(byte) 0xDF};
 			assertArrayEquals(expected5thNonce, eblock.getEthereumTransactions().get(transactNum).getNonce(),"Transaction 5 has a correct nonce");
 			byte[] expected5thGasPrice = new byte[] {0x04,(byte) 0xA8,0x17,(byte) 0xC8,0x00};
@@ -1052,7 +1146,7 @@ public class EthereumFormatReaderTest {
 			byte[] expected5thReceiveAddress = new byte[] {(byte)0x1F,(byte)0x57,(byte)0xF8,(byte)0x26,(byte)0xCA,(byte)0xF5,(byte)0x94,(byte)0xF7,(byte)0xA8,(byte)0x37,(byte)0xD9,(byte)0xFC,(byte)0x09,(byte)0x24,(byte)0x56,(byte)0x87,(byte)0x0A,(byte)0x28,(byte)0x93,(byte)0x65};
 			assertArrayEquals(expected5thReceiveAddress, eblock.getEthereumTransactions().get(transactNum).getReceiveAddress(),"Transaction 5 has a correct receive address");
 			byte[] expected5thValue = new byte[] {0x02,(byte) 0x02,(byte) 0x05,(byte) 0x26,(byte) 0x47,(byte) 0xC0,(byte) 0xF0,0x00};
-			assertArrayEquals(expected5thValue, eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 5 has a correct value");	
+			assertArrayEquals(expected5thValue, eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 5 has a correct value");
 			byte[] expected5thData = new byte[] {};
 			assertArrayEquals(expected5thData, eblock.getEthereumTransactions().get(transactNum).getData(),"Transaction 5 has a correct data");
 			byte[] expected5thsigv = new byte[] {0x1C};
@@ -1063,7 +1157,7 @@ public class EthereumFormatReaderTest {
 			assertArrayEquals(expected5thsigs, eblock.getEthereumTransactions().get(transactNum).getSig_s(),"Transaction 5 has a correct sigs");
 
 			// 6th transaction
-		    transactNum=5;
+			transactNum=5;
 			byte[] expected6thNonce = new byte[] {0x02,(byte) 0xD7,(byte) 0xE0};
 			assertArrayEquals(expected6thNonce, eblock.getEthereumTransactions().get(transactNum).getNonce(),"Transaction 6 has a correct nonce");
 			byte[] expected6thGasPrice = new byte[] {0x04,(byte) 0xA8,0x17,(byte) 0xC8,0x00};
@@ -1073,7 +1167,7 @@ public class EthereumFormatReaderTest {
 			byte[] expected6thReceiveAddress = new byte[] {(byte)0x1F,(byte)0x57,(byte)0xF8,(byte)0x26,(byte)0xCA,(byte)0xF5,(byte)0x94,(byte)0xF7,(byte)0xA8,(byte)0x37,(byte)0xD9,(byte)0xFC,(byte)0x09,(byte)0x24,(byte)0x56,(byte)0x87,(byte)0x0A,(byte)0x28,(byte)0x93,(byte)0x65};
 			assertArrayEquals(expected6thReceiveAddress, eblock.getEthereumTransactions().get(transactNum).getReceiveAddress(),"Transaction 6 has a correct receive address");
 			byte[] expected6thValue = new byte[] {0x01,(byte) 0xFE,(byte) 0x81,(byte) 0xC4,(byte) 0xB6,(byte) 0xA0,(byte) 0xD0,0x00};
-			assertArrayEquals(expected6thValue, eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 6 has a correct value");	
+			assertArrayEquals(expected6thValue, eblock.getEthereumTransactions().get(transactNum).getValueRaw(),"Transaction 6 has a correct value");
 			byte[] expected6thData = new byte[] {};
 			assertArrayEquals(expected6thData, eblock.getEthereumTransactions().get(transactNum).getData(),"Transaction 6 has a correct data");
 			byte[] expected6thsigv = new byte[] {0x1C};
@@ -1083,20 +1177,20 @@ public class EthereumFormatReaderTest {
 			byte[] expected6thsigs = new byte[] {(byte)0x08,(byte)0xA3,(byte)0xB9,(byte)0xA4,(byte)0x5D,(byte)0x83,(byte)0x1A,(byte)0xC4,(byte)0xAD,(byte)0x37,(byte)0x9D,(byte)0x14,(byte)0xF0,(byte)0xAE,(byte)0x3C,(byte)0x03,(byte)0xC8,(byte)0x73,(byte)0x1C,(byte)0xB4,(byte)0x4D,(byte)0x8A,(byte)0x79,(byte)0xAC,(byte)0xD4,(byte)0xCD,(byte)0x6C,(byte)0xEA,(byte)0x1B,(byte)0x54,(byte)0x80,(byte)0x02};
 			assertArrayEquals(expected6thsigs, eblock.getEthereumTransactions().get(transactNum).getSig_s(),"Transaction 6 has a correct sigs");
 
-			
+
 		} finally {
 			if (ebr!=null) {
 				ebr.close();
 			}
 		}
-	  }
-	 
-	 
-	 @Test
-	  public void parseBlock3346406AsEthereumBlockHeap() throws IOException, EthereumBlockReadException, ParseException {
+	}
+
+
+	@Test
+	public void parseBlock3346406AsEthereumBlockHeap() throws IOException, EthereumBlockReadException, ParseException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="eth3346406.bin";
-		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
 		File file = new File(fileNameBlock);
 		boolean direct=false;
 		FileInputStream fin = new FileInputStream(file);
@@ -1110,7 +1204,7 @@ public class EthereumFormatReaderTest {
 			assertEquals( 7, eTransactions.size(),"Block contains 7 transactions");
 			assertEquals(0, eUncles.size(),"Block contains 0 uncleHeaders");
 			byte[] expectedParentHash = new byte[] {(byte)0xD6,(byte)0x56,(byte)0x18,(byte)0x93,(byte)0x7D,(byte)0x7E,(byte)0xC3,(byte)0x21,(byte)0x18,(byte)0x50,(byte)0x09,(byte)0x69,(byte)0xF8,(byte)0xA7,(byte)0xCF,(byte)0xDC,(byte)0xFA,(byte)0xC9,(byte)0x99,(byte)0xF7,(byte)0xCF,(byte)0x80,(byte)0x40,(byte)0x48,(byte)0x84,(byte)0xC0,(byte)0xEF,(byte)0xF8,(byte)0xB8,(byte)0x3B,(byte)0x14,(byte)0xB1};
-			
+
 			assertArrayEquals( expectedParentHash, eblockHeader.getParentHash(),"Block contains a correct 32 byte parent hash");
 			byte[] expectedUncleHash = new byte[] {(byte) 0x1D,(byte) 0xCC,0x4D,(byte) 0xE8,(byte) 0xDE, (byte) 0xC7,(byte) 0x5D,
 					(byte) 0x7A,(byte) 0xAB,(byte) 0x85,(byte) 0xB5,(byte) 0x67,(byte) 0xB6,(byte) 0xCC,(byte) 0xD4,
@@ -1122,7 +1216,7 @@ public class EthereumFormatReaderTest {
 			byte[] expectedStateRoot= new byte[] {(byte)0x52,(byte)0x71,(byte)0x93,(byte)0x64,(byte)0xE4,(byte)0x2D,(byte)0xDA,(byte)0x68,(byte)0xAA,(byte)0x74,(byte)0x9E,(byte)0xAE,(byte)0x89,(byte)0x07,(byte)0xF3,(byte)0x1C,(byte)0xFD,(byte)0xF2,(byte)0x9F,(byte)0x00,(byte)0x2A,(byte)0x27,(byte)0x29,(byte)0xA9,(byte)0x68,(byte)0x73,(byte)0x96,(byte)0x40,(byte)0x6B,(byte)0x8A,(byte)0x9C,(byte)0xB2};
 			assertArrayEquals(expectedStateRoot,eblockHeader.getStateRoot(),"Block contains a correct 32 byte stateroot");
 			byte[] expectedTxTrieRoot= new byte[] {(byte)0x0E,(byte)0x8D,(byte)0x0C,(byte)0xB8,(byte)0x17,(byte)0xEE,(byte)0x96,(byte)0x39,(byte)0x50,(byte)0x13,(byte)0x68,(byte)0x1D,(byte)0x2E,(byte)0x60,(byte)0x56,(byte)0xC5,(byte)0x4F,(byte)0x41,(byte)0x3E,(byte)0xBB,(byte)0xA1,(byte)0x5F,(byte)0x32,(byte)0x14,(byte)0x0D,(byte)0x9A,(byte)0xCB,(byte)0xAA,(byte)0xB2,(byte)0x90,(byte)0xF6,(byte)0x8F};
-			assertArrayEquals(expectedTxTrieRoot,eblockHeader.getTxTrieRoot(),"Block contains a correct 32 byte txTrieRoot");	
+			assertArrayEquals(expectedTxTrieRoot,eblockHeader.getTxTrieRoot(),"Block contains a correct 32 byte txTrieRoot");
 			byte[] expectedReceiptTrieRoot=new byte[] {(byte)0xD6,(byte)0x8D,(byte)0x99,(byte)0x09,(byte)0x02,(byte)0x7C,(byte)0x74,(byte)0x5B,(byte)0xDB,(byte)0x26,(byte)0xB4,(byte)0x5E,(byte)0xE9,(byte)0x87,(byte)0xD4,(byte)0xFB,(byte)0xAE,(byte)0x8E,(byte)0x29,(byte)0xD5,(byte)0x95,(byte)0xDB,(byte)0x2B,(byte)0x4A,(byte)0x0A,(byte)0x72,(byte)0x83,(byte)0x96,(byte)0xEA,(byte)0x00,(byte)0x12,(byte)0x79};
 			assertArrayEquals(expectedReceiptTrieRoot,eblockHeader.getReceiptTrieRoot(),"Block contains a correct 32 byte ReceiptTrieRoot");
 			byte[] expectedLogsBloom = new byte[] {(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x80,(byte)0x00,(byte)0x00,(byte)0x02,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x08,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x10,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x02,(byte)0x80,(byte)0x00,(byte)0x04,(byte)0x02,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x08,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x41,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x02,(byte)0x80,(byte)0x28,(byte)0x20,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x10,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x88,(byte)0x00,(byte)0x00,(byte)0x04,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x00,(byte)0x08,(byte)0x40,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x08,(byte)0x08,(byte)0x00,(byte)0x01,(byte)0x10,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x04,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x40,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x80,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x12,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x10,(byte)0x00,(byte)0x00,(byte)0x04,(byte)0x00,(byte)0xA0,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x10,(byte)0x00,(byte)0x10,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x80,(byte)0x00,(byte)0xC0,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x02,(byte)0x40,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x10,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x90,(byte)0x01,(byte)0x10,(byte)0x02,(byte)0x00,(byte)0x00,(byte)0x04,(byte)0x10,(byte)0x00,(byte)0x00,(byte)0x02,(byte)0x00,(byte)0x00,(byte)0x10,(byte)0x10,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x04,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x50,(byte)0x80,(byte)0x00,(byte)0x00,(byte)0x80,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x10,(byte)0x00,(byte)0x00,(byte)0x02,(byte)0x40,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x20,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x50,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x80,(byte)0x00,(byte)0x00};
@@ -1146,22 +1240,22 @@ public class EthereumFormatReaderTest {
 			byte[] expectedExtraData= new byte[] {(byte)0x65,(byte)0x74,(byte)0x68,(byte)0x65,(byte)0x72,(byte)0x6D,(byte)0x69,(byte)0x6E,(byte)0x65,(byte)0x20,(byte)0x2D,(byte)0x20,(byte)0x41,(byte)0x53,(byte)0x49,(byte)0x41,(byte)0x31};
 			// corresponds to ethermine - ASIA1
 			assertArrayEquals( expectedExtraData, eblockHeader.getExtraData(),"Block contains correct 24 byte extra data");
-		
+
 			byte[] expectedNonce = new byte[] {(byte)0x4F,(byte)0x3C,(byte)0xCB,(byte)0x40,(byte)0x06,(byte)0x0A,(byte)0xC5,(byte)0x97};
 			assertArrayEquals( expectedNonce, eblockHeader.getNonce(),"Block contains a correct 8 byte nonce");
 			// skip individual transaction check
-			
+
 		} finally {
 			if (ebr!=null) {
 				ebr.close();
 			}
 		}
-	  }
-	 @Test
-	  public void parseBlock3346406AsEthereumBlockDirect() throws IOException, EthereumBlockReadException, ParseException {
+	}
+	@Test
+	public void parseBlock3346406AsEthereumBlockDirect() throws IOException, EthereumBlockReadException, ParseException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="eth3346406.bin";
-		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
 		File file = new File(fileNameBlock);
 		boolean direct=true;
 		FileInputStream fin = new FileInputStream(file);
@@ -1175,7 +1269,7 @@ public class EthereumFormatReaderTest {
 			assertEquals( 7, eTransactions.size(),"Block contains 7 transactions");
 			assertEquals(0, eUncles.size(),"Block contains 0 uncleHeaders");
 			byte[] expectedParentHash = new byte[] {(byte)0xD6,(byte)0x56,(byte)0x18,(byte)0x93,(byte)0x7D,(byte)0x7E,(byte)0xC3,(byte)0x21,(byte)0x18,(byte)0x50,(byte)0x09,(byte)0x69,(byte)0xF8,(byte)0xA7,(byte)0xCF,(byte)0xDC,(byte)0xFA,(byte)0xC9,(byte)0x99,(byte)0xF7,(byte)0xCF,(byte)0x80,(byte)0x40,(byte)0x48,(byte)0x84,(byte)0xC0,(byte)0xEF,(byte)0xF8,(byte)0xB8,(byte)0x3B,(byte)0x14,(byte)0xB1};
-			
+
 			assertArrayEquals( expectedParentHash, eblockHeader.getParentHash(),"Block contains a correct 32 byte parent hash");
 			byte[] expectedUncleHash = new byte[] {(byte) 0x1D,(byte) 0xCC,0x4D,(byte) 0xE8,(byte) 0xDE, (byte) 0xC7,(byte) 0x5D,
 					(byte) 0x7A,(byte) 0xAB,(byte) 0x85,(byte) 0xB5,(byte) 0x67,(byte) 0xB6,(byte) 0xCC,(byte) 0xD4,
@@ -1187,7 +1281,7 @@ public class EthereumFormatReaderTest {
 			byte[] expectedStateRoot= new byte[] {(byte)0x52,(byte)0x71,(byte)0x93,(byte)0x64,(byte)0xE4,(byte)0x2D,(byte)0xDA,(byte)0x68,(byte)0xAA,(byte)0x74,(byte)0x9E,(byte)0xAE,(byte)0x89,(byte)0x07,(byte)0xF3,(byte)0x1C,(byte)0xFD,(byte)0xF2,(byte)0x9F,(byte)0x00,(byte)0x2A,(byte)0x27,(byte)0x29,(byte)0xA9,(byte)0x68,(byte)0x73,(byte)0x96,(byte)0x40,(byte)0x6B,(byte)0x8A,(byte)0x9C,(byte)0xB2};
 			assertArrayEquals(expectedStateRoot,eblockHeader.getStateRoot(),"Block contains a correct 32 byte stateroot");
 			byte[] expectedTxTrieRoot= new byte[] {(byte)0x0E,(byte)0x8D,(byte)0x0C,(byte)0xB8,(byte)0x17,(byte)0xEE,(byte)0x96,(byte)0x39,(byte)0x50,(byte)0x13,(byte)0x68,(byte)0x1D,(byte)0x2E,(byte)0x60,(byte)0x56,(byte)0xC5,(byte)0x4F,(byte)0x41,(byte)0x3E,(byte)0xBB,(byte)0xA1,(byte)0x5F,(byte)0x32,(byte)0x14,(byte)0x0D,(byte)0x9A,(byte)0xCB,(byte)0xAA,(byte)0xB2,(byte)0x90,(byte)0xF6,(byte)0x8F};
-			assertArrayEquals(expectedTxTrieRoot,eblockHeader.getTxTrieRoot(),"Block contains a correct 32 byte txTrieRoot");	
+			assertArrayEquals(expectedTxTrieRoot,eblockHeader.getTxTrieRoot(),"Block contains a correct 32 byte txTrieRoot");
 			byte[] expectedReceiptTrieRoot=new byte[] {(byte)0xD6,(byte)0x8D,(byte)0x99,(byte)0x09,(byte)0x02,(byte)0x7C,(byte)0x74,(byte)0x5B,(byte)0xDB,(byte)0x26,(byte)0xB4,(byte)0x5E,(byte)0xE9,(byte)0x87,(byte)0xD4,(byte)0xFB,(byte)0xAE,(byte)0x8E,(byte)0x29,(byte)0xD5,(byte)0x95,(byte)0xDB,(byte)0x2B,(byte)0x4A,(byte)0x0A,(byte)0x72,(byte)0x83,(byte)0x96,(byte)0xEA,(byte)0x00,(byte)0x12,(byte)0x79};
 			assertArrayEquals(expectedReceiptTrieRoot,eblockHeader.getReceiptTrieRoot(),"Block contains a correct 32 byte ReceiptTrieRoot");
 			byte[] expectedLogsBloom = new byte[] {(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x80,(byte)0x00,(byte)0x00,(byte)0x02,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x08,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x10,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x02,(byte)0x80,(byte)0x00,(byte)0x04,(byte)0x02,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x08,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x41,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x02,(byte)0x80,(byte)0x28,(byte)0x20,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x10,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x88,(byte)0x00,(byte)0x00,(byte)0x04,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x00,(byte)0x08,(byte)0x40,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x08,(byte)0x08,(byte)0x00,(byte)0x01,(byte)0x10,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x04,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x40,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x80,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x12,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x10,(byte)0x00,(byte)0x00,(byte)0x04,(byte)0x00,(byte)0xA0,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x10,(byte)0x00,(byte)0x10,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x80,(byte)0x00,(byte)0xC0,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x02,(byte)0x40,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x10,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x90,(byte)0x01,(byte)0x10,(byte)0x02,(byte)0x00,(byte)0x00,(byte)0x04,(byte)0x10,(byte)0x00,(byte)0x00,(byte)0x02,(byte)0x00,(byte)0x00,(byte)0x10,(byte)0x10,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x04,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x50,(byte)0x80,(byte)0x00,(byte)0x00,(byte)0x80,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x10,(byte)0x00,(byte)0x00,(byte)0x02,(byte)0x40,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x20,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x50,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x80,(byte)0x00,(byte)0x00};
@@ -1211,23 +1305,23 @@ public class EthereumFormatReaderTest {
 			byte[] expectedExtraData= new byte[] {(byte)0x65,(byte)0x74,(byte)0x68,(byte)0x65,(byte)0x72,(byte)0x6D,(byte)0x69,(byte)0x6E,(byte)0x65,(byte)0x20,(byte)0x2D,(byte)0x20,(byte)0x41,(byte)0x53,(byte)0x49,(byte)0x41,(byte)0x31};
 			// corresponds to ethermine - ASIA1
 			assertArrayEquals( expectedExtraData, eblockHeader.getExtraData(),"Block contains correct 24 byte extra data");
-		
+
 			byte[] expectedNonce = new byte[] {(byte)0x4F,(byte)0x3C,(byte)0xCB,(byte)0x40,(byte)0x06,(byte)0x0A,(byte)0xC5,(byte)0x97};
 			assertArrayEquals( expectedNonce, eblockHeader.getNonce(),"Block contains a correct 8 byte nonce");
 			// skip individual transaction check
-			
+
 		} finally {
 			if (ebr!=null) {
 				ebr.close();
 			}
 		}
-	  }
-	 
-	 @Test
-	  public void parseBlock0to10AsEthereumBlockHeap() throws IOException, EthereumBlockReadException {
+	}
+
+	@Test
+	public void parseBlock0to10AsEthereumBlockHeap() throws IOException, EthereumBlockReadException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="eth0to10.bin";
-		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
 		File file = new File(fileNameBlock);
 		boolean direct=false;
 		FileInputStream fin = new FileInputStream(file);
@@ -1240,7 +1334,7 @@ public class EthereumFormatReaderTest {
 			List<EthereumBlockHeader> eUncles = eblock.getUncleHeaders();
 			assertEquals( 0, eTransactions.size(),"Block 0 contains 0 transactions");
 			assertEquals(0, eUncles.size(),"Block 0 contains 0 uncleHeaders");
-			byte[] expectedParentHash = new byte[] {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};		
+			byte[] expectedParentHash = new byte[] {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
 			assertArrayEquals( expectedParentHash, eblockHeader.getParentHash(),"Block 0 contains a correct 32 byte parent hash");
 			eblock = ebr.readBlock();
 			eblockHeader = eblock.getEthereumBlockHeader();
@@ -1323,18 +1417,18 @@ public class EthereumFormatReaderTest {
 			expectedParentHash = new byte[]  {(byte)0x99,(byte)0x7e,(byte)0x47,(byte)0xbf,(byte)0x4c,(byte)0xac,(byte)0x50,(byte)0x9c,(byte)0x62,(byte)0x77,(byte)0x53,(byte)0xc0,(byte)0x63,(byte)0x85,(byte)0xac,(byte)0x86,(byte)0x66,(byte)0x41,(byte)0xec,(byte)0x6f,(byte)0x88,(byte)0x37,(byte)0x34,(byte)0xff,(byte)0x79,(byte)0x44,(byte)0x41,(byte)0x10,(byte)0x00,(byte)0xdc,(byte)0x57,(byte)0x6e};
 			assertArrayEquals( expectedParentHash, eblockHeader.getParentHash(),"Block 10 contains a correct 32 byte parent hash");
 
-			} finally {
+		} finally {
 			if (ebr!=null) {
 				ebr.close();
 			}
 		}
-	  }
-	 
-	 @Test
-	  public void parseBlock0to10AsEthereumBlockDirect() throws IOException, EthereumBlockReadException {
+	}
+
+	@Test
+	public void parseBlock0to10AsEthereumBlockDirect() throws IOException, EthereumBlockReadException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="eth0to10.bin";
-		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
 		File file = new File(fileNameBlock);
 		boolean direct=true;
 		FileInputStream fin = new FileInputStream(file);
@@ -1347,7 +1441,7 @@ public class EthereumFormatReaderTest {
 			List<EthereumBlockHeader> eUncles = eblock.getUncleHeaders();
 			assertEquals( 0, eTransactions.size(),"Block 0 contains 0 transactions");
 			assertEquals(0, eUncles.size(),"Block 0 contains 0 uncleHeaders");
-			byte[] expectedParentHash = new byte[] {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};		
+			byte[] expectedParentHash = new byte[] {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
 			assertArrayEquals( expectedParentHash, eblockHeader.getParentHash(),"Block 0 contains a correct 32 byte parent hash");
 			eblock = ebr.readBlock();
 			eblockHeader = eblock.getEthereumBlockHeader();
@@ -1430,19 +1524,18 @@ public class EthereumFormatReaderTest {
 			expectedParentHash = new byte[]  {(byte)0x99,(byte)0x7e,(byte)0x47,(byte)0xbf,(byte)0x4c,(byte)0xac,(byte)0x50,(byte)0x9c,(byte)0x62,(byte)0x77,(byte)0x53,(byte)0xc0,(byte)0x63,(byte)0x85,(byte)0xac,(byte)0x86,(byte)0x66,(byte)0x41,(byte)0xec,(byte)0x6f,(byte)0x88,(byte)0x37,(byte)0x34,(byte)0xff,(byte)0x79,(byte)0x44,(byte)0x41,(byte)0x10,(byte)0x00,(byte)0xdc,(byte)0x57,(byte)0x6e};
 			assertArrayEquals( expectedParentHash, eblockHeader.getParentHash(),"Block 10 contains a correct 32 byte parent hash");
 
-			} finally {
+		} finally {
 			if (ebr!=null) {
 				ebr.close();
 			}
 		}
-	  }
-	 
-	 
-	 @Test
-	  public void parseBlock3510000to3510010AsEthereumBlockHeap() throws IOException, EthereumBlockReadException {
+	}
+
+	@Test
+	public void parseBlock3510000to3510010AsEthereumBlockHeap() throws IOException, EthereumBlockReadException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="eth351000to3510010.bin";
-		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
 		File file = new File(fileNameBlock);
 		boolean direct=false;
 		FileInputStream fin = new FileInputStream(file);
@@ -1455,7 +1548,7 @@ public class EthereumFormatReaderTest {
 			List<EthereumBlockHeader> eUncles = eblock.getUncleHeaders();
 			assertEquals( 15, eTransactions.size(),"Block 3510000 contains 15 transactions");
 			assertEquals(0, eUncles.size(),"Block 3510000 contains 0 uncleHeaders");
-			byte[] expectedParentHash = new byte[] {(byte)0x63,(byte)0x74,(byte)0x6f,(byte)0x5b,(byte)0xcf,(byte)0xa3,(byte)0xab,(byte)0x25,(byte)0xda,(byte)0xcf,(byte)0x01,(byte)0xd8,(byte)0x89,(byte)0x50,(byte)0xdc,(byte)0x06,(byte)0x55,(byte)0x6b,(byte)0x8f,(byte)0xd9,(byte)0x30,(byte)0xd6,(byte)0xff,(byte)0xa3,(byte)0x01,(byte)0x31,(byte)0xd7,(byte)0xfe,(byte)0xe6,(byte)0xe1,(byte)0x58,(byte)0x5e};		
+			byte[] expectedParentHash = new byte[] {(byte)0x63,(byte)0x74,(byte)0x6f,(byte)0x5b,(byte)0xcf,(byte)0xa3,(byte)0xab,(byte)0x25,(byte)0xda,(byte)0xcf,(byte)0x01,(byte)0xd8,(byte)0x89,(byte)0x50,(byte)0xdc,(byte)0x06,(byte)0x55,(byte)0x6b,(byte)0x8f,(byte)0xd9,(byte)0x30,(byte)0xd6,(byte)0xff,(byte)0xa3,(byte)0x01,(byte)0x31,(byte)0xd7,(byte)0xfe,(byte)0xe6,(byte)0xe1,(byte)0x58,(byte)0x5e};
 			assertArrayEquals( expectedParentHash, eblockHeader.getParentHash(),"Block 3510000 contains a correct 32 byte parent hash");
 			eblock = ebr.readBlock();
 			eblockHeader = eblock.getEthereumBlockHeader();
@@ -1538,19 +1631,18 @@ public class EthereumFormatReaderTest {
 			expectedParentHash = new byte[]  {(byte)0xc5,(byte)0x75,(byte)0xa6,(byte)0x40,(byte)0x4f,(byte)0x86,(byte)0xa4,(byte)0xb6,(byte)0x38,(byte)0x32,(byte)0x79,(byte)0x23,(byte)0x26,(byte)0xc5,(byte)0xb0,(byte)0xf6,(byte)0xf2,(byte)0x5e,(byte)0xa9,(byte)0xd8,(byte)0x83,(byte)0x42,(byte)0xf9,(byte)0xf6,(byte)0xf1,(byte)0xe7,(byte)0xed,(byte)0x21,(byte)0xc8,(byte)0x58,(byte)0x02,(byte)0x38};
 			assertArrayEquals( expectedParentHash, eblockHeader.getParentHash(),"Block 3510010 contains a correct 32 byte parent hash");
 
-			} finally {
+		} finally {
 			if (ebr!=null) {
 				ebr.close();
 			}
 		}
-	  }
-	 
-	 
-	 @Test
-	  public void parseBlock3510000to3510010AsEthereumBlockDirect() throws IOException, EthereumBlockReadException {
+	}
+
+	@Test
+	public void parseBlock3510000to3510010AsEthereumBlockDirect() throws IOException, EthereumBlockReadException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="eth351000to3510010.bin";
-		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
 		File file = new File(fileNameBlock);
 		boolean direct=true;
 		FileInputStream fin = new FileInputStream(file);
@@ -1563,7 +1655,7 @@ public class EthereumFormatReaderTest {
 			List<EthereumBlockHeader> eUncles = eblock.getUncleHeaders();
 			assertEquals( 15, eTransactions.size(),"Block 3510000 contains 15 transactions");
 			assertEquals(0, eUncles.size(),"Block 3510000 contains 0 uncleHeaders");
-			byte[] expectedParentHash = new byte[] {(byte)0x63,(byte)0x74,(byte)0x6f,(byte)0x5b,(byte)0xcf,(byte)0xa3,(byte)0xab,(byte)0x25,(byte)0xda,(byte)0xcf,(byte)0x01,(byte)0xd8,(byte)0x89,(byte)0x50,(byte)0xdc,(byte)0x06,(byte)0x55,(byte)0x6b,(byte)0x8f,(byte)0xd9,(byte)0x30,(byte)0xd6,(byte)0xff,(byte)0xa3,(byte)0x01,(byte)0x31,(byte)0xd7,(byte)0xfe,(byte)0xe6,(byte)0xe1,(byte)0x58,(byte)0x5e};		
+			byte[] expectedParentHash = new byte[] {(byte)0x63,(byte)0x74,(byte)0x6f,(byte)0x5b,(byte)0xcf,(byte)0xa3,(byte)0xab,(byte)0x25,(byte)0xda,(byte)0xcf,(byte)0x01,(byte)0xd8,(byte)0x89,(byte)0x50,(byte)0xdc,(byte)0x06,(byte)0x55,(byte)0x6b,(byte)0x8f,(byte)0xd9,(byte)0x30,(byte)0xd6,(byte)0xff,(byte)0xa3,(byte)0x01,(byte)0x31,(byte)0xd7,(byte)0xfe,(byte)0xe6,(byte)0xe1,(byte)0x58,(byte)0x5e};
 			assertArrayEquals( expectedParentHash, eblockHeader.getParentHash(),"Block 3510000 contains a correct 32 byte parent hash");
 			eblock = ebr.readBlock();
 			eblockHeader = eblock.getEthereumBlockHeader();
@@ -1646,19 +1738,19 @@ public class EthereumFormatReaderTest {
 			expectedParentHash = new byte[]  {(byte)0xc5,(byte)0x75,(byte)0xa6,(byte)0x40,(byte)0x4f,(byte)0x86,(byte)0xa4,(byte)0xb6,(byte)0x38,(byte)0x32,(byte)0x79,(byte)0x23,(byte)0x26,(byte)0xc5,(byte)0xb0,(byte)0xf6,(byte)0xf2,(byte)0x5e,(byte)0xa9,(byte)0xd8,(byte)0x83,(byte)0x42,(byte)0xf9,(byte)0xf6,(byte)0xf1,(byte)0xe7,(byte)0xed,(byte)0x21,(byte)0xc8,(byte)0x58,(byte)0x02,(byte)0x38};
 			assertArrayEquals( expectedParentHash, eblockHeader.getParentHash(),"Block 3510010 contains a correct 32 byte parent hash");
 
-			} finally {
+		} finally {
 			if (ebr!=null) {
 				ebr.close();
 			}
 		}
-	  }
-	 
-	 
-	 @Test
-	  public void parseBlock7000000to7000010AsEthereumBlockHeap() throws IOException, EthereumBlockReadException {
+	}
+
+
+	@Test
+	public void parseBlock7000000to7000010AsEthereumBlockHeap() throws IOException, EthereumBlockReadException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="eth70000007000010";
-		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
 		File file = new File(fileNameBlock);
 		boolean direct=false;
 		FileInputStream fin = new FileInputStream(file);
@@ -1677,19 +1769,19 @@ public class EthereumFormatReaderTest {
 			eblockHeader = eblock.getEthereumBlockHeader();
 			eTransactions = eblock.getEthereumTransactions();
 			eUncles = eblock.getUncleHeaders();
-	
-			} finally {
+
+		} finally {
 			if (ebr!=null) {
 				ebr.close();
 			}
 		}
-	  }
-	 
-	 @Test
-	  public void issue46ParseBlock4800251AsEthereumBlockHeap() throws IOException, EthereumBlockReadException, ParseException {
+	}
+
+	@Test
+	public void issue46ParseBlock4800251AsEthereumBlockHeap() throws IOException, EthereumBlockReadException, ParseException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="eth4800251.bin";
-		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
 		File file = new File(fileNameBlock);
 		boolean direct=false;
 		FileInputStream fin = new FileInputStream(file);
@@ -1700,26 +1792,26 @@ public class EthereumFormatReaderTest {
 			EthereumBlockHeader eblockHeader = eblock.getEthereumBlockHeader();
 			List<EthereumTransaction> eTransactions = eblock.getEthereumTransactions();
 			List<EthereumBlockHeader> eUncles = eblock.getUncleHeaders();
-	
+
 			for (EthereumTransaction currentTransaction: eTransactions) {
 				assertTrue(currentTransaction.getGasLimit().compareTo(BigInteger.ZERO)>=0, "Gas limit is positive");
-	
+
 				assertTrue(currentTransaction.getGasPrice().compareTo(BigInteger.ZERO)>=0, "Gas price is positive");
-	
+
 			}
 		}finally {
 			if (ebr!=null) {
 				ebr.close();
 			}
-	 	}
-	 }
-	 
-	 
-	 @Test
-	  public void issue47ParseBlock4800251AsEthereumBlockHeap() throws IOException, EthereumBlockReadException, ParseException {
+		}
+	}
+
+
+	@Test
+	public void issue47ParseBlock4800251AsEthereumBlockHeap() throws IOException, EthereumBlockReadException, ParseException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="eth4800251.bin";
-		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
 		File file = new File(fileNameBlock);
 		boolean direct=false;
 		FileInputStream fin = new FileInputStream(file);
@@ -1732,19 +1824,19 @@ public class EthereumFormatReaderTest {
 			List<EthereumBlockHeader> eUncles = eblock.getUncleHeaders();
 			EthereumTransaction trans3 = eTransactions.get(2);
 			assertEquals("B271DFFD8A06F0D2D4DB04DFDB3708C7CFA4F8797E57FC35B18507FA617EA4DE",EthereumUtil.convertByteArrayToHexString(EthereumUtil.getTransactionHash(trans3)),"Transaction 3 has correct hash");
-			
+
 		}finally {
 			if (ebr!=null) {
 				ebr.close();
 			}
-	 	}
-	 }
-	 
-	 @Test
-	  public void issue48ParseBlock4800251AsEthereumBlockHeap() throws IOException, EthereumBlockReadException, ParseException {
+		}
+	}
+
+	@Test
+	public void issue48ParseBlock4800251AsEthereumBlockHeap() throws IOException, EthereumBlockReadException, ParseException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String fileName="eth4800251.bin";
-		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();	
+		String fileNameBlock=classLoader.getResource("testdata/"+fileName).getFile();
 		File file = new File(fileNameBlock);
 		boolean direct=false;
 		FileInputStream fin = new FileInputStream(file);
@@ -1757,12 +1849,12 @@ public class EthereumFormatReaderTest {
 			List<EthereumBlockHeader> eUncles = eblock.getUncleHeaders();
 			EthereumTransaction trans1 = eTransactions.get(0); // this one has a v of 0x25 (37) which indicates EIP-155
 			assertEquals("6EB53062EF576DF1C4EB5CA326B866590571BCBD",EthereumUtil.convertByteArrayToHexString(EthereumUtil.getSendAddress(trans1,EthereumFormatReaderTest.CHAIN_ID)),"Transaction 1 has correct sendAddress");
-			
+
 		}finally {
 			if (ebr!=null) {
 				ebr.close();
 			}
-	 	}
-	 }
+		}
+	}
 
 }
