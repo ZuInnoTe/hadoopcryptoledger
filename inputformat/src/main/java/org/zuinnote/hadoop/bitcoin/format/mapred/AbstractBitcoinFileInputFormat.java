@@ -35,11 +35,10 @@ import org.apache.hadoop.mapred.Reporter;
 
 
 public abstract class AbstractBitcoinFileInputFormat<K,V> extends FileInputFormat<K,V> implements JobConfigurable  {
-public static final String CONF_ISSPLITABLE=org.zuinnote.hadoop.bitcoin.format.mapreduce.AbstractBitcoinFileInputFormat.CONF_ISSPLITABLE;
-public static final boolean DEFAULT_ISSPLITABLE=org.zuinnote.hadoop.bitcoin.format.mapreduce.AbstractBitcoinFileInputFormat.DEFAULT_ISSPLITABLE;
+public static final String CONF_IS_SPLITTABLE =org.zuinnote.hadoop.bitcoin.format.mapreduce.AbstractBitcoinFileInputFormat.CONF_IS_SPLITTABLE;
+public static final boolean DEFAULT_IS_SPLITTABLE=org.zuinnote.hadoop.bitcoin.format.mapreduce.AbstractBitcoinFileInputFormat.DEFAULT_IS_SPLITTABLE;
 
-
-private boolean isSplitable=DEFAULT_ISSPLITABLE;
+private boolean isSplittable =DEFAULT_IS_SPLITTABLE;
 private CompressionCodecFactory compressionCodecs = null;
 
 @Override
@@ -49,7 +48,7 @@ public abstract RecordReader<K,V> getRecordReader(InputSplit split, JobConf job,
 @Override
 public void configure(JobConf conf) {
     this.compressionCodecs = new CompressionCodecFactory(conf);
-    this.isSplitable=conf.getBoolean(AbstractBitcoinFileInputFormat.CONF_ISSPLITABLE,AbstractBitcoinFileInputFormat.DEFAULT_ISSPLITABLE);
+    this.isSplittable =conf.getBoolean(AbstractBitcoinFileInputFormat.CONF_IS_SPLITTABLE,AbstractBitcoinFileInputFormat.DEFAULT_IS_SPLITTABLE);
 }
 
 /**
@@ -59,7 +58,7 @@ public void configure(JobConf conf) {
 */
 @Override
   protected boolean isSplitable(FileSystem fs, Path file) {
-    if (!(this.isSplitable)) {
+    if (!(this.isSplittable)) {
 		return false;
     }
     final CompressionCodec codec = compressionCodecs.getCodec(file);

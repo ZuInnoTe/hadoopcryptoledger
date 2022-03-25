@@ -33,9 +33,8 @@ import org.apache.hadoop.mapreduce.TaskAttemptContext;
 
 
 public abstract class AbstractBitcoinFileInputFormat<K,V> extends FileInputFormat<K,V>   {
-public static final String CONF_ISSPLITABLE="hadoopcryptoledeger.bitcoinblockinputformat.issplitable";
-public static final boolean DEFAULT_ISSPLITABLE=false;
-
+public static final String CONF_IS_SPLITTABLE ="hadoopcryptoledeger.bitcoinblockinputformat.issplitable";
+public static final boolean DEFAULT_IS_SPLITTABLE =false;
 
 
 @Override
@@ -49,7 +48,7 @@ public abstract RecordReader<K,V> createRecordReader(InputSplit split, TaskAttem
 
 @Override
   protected boolean isSplitable(JobContext context, Path file) {
-    boolean isSplitable=context.getConfiguration().getBoolean(AbstractBitcoinFileInputFormat.CONF_ISSPLITABLE,AbstractBitcoinFileInputFormat.DEFAULT_ISSPLITABLE);
+    boolean isSplitable=context.getConfiguration().getBoolean(AbstractBitcoinFileInputFormat.CONF_IS_SPLITTABLE,AbstractBitcoinFileInputFormat.DEFAULT_IS_SPLITTABLE);
     if (!(isSplitable)) {
 		return false;
     }   
@@ -59,8 +58,5 @@ public abstract RecordReader<K,V> createRecordReader(InputSplit split, TaskAttem
     }
     return codec instanceof SplittableCompressionCodec;
   }
-
-
-
 
 }

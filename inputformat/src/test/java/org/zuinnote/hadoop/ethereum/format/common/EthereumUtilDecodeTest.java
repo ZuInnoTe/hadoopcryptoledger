@@ -31,7 +31,7 @@ public class EthereumUtilDecodeTest {
 
 	public final static byte[] TEST_RLP_ELEMENT_INT_1024 = new byte[] {(byte) 0x82,0x04,0x00};
 	public final static byte[] TEST_RLP_LIST_SET3 = new byte[] {(byte) 0xc7,(byte) 0xc0,(byte) 0xc1,(byte) 0xc0,(byte) 0xc3,(byte) 0xc0,(byte) 0xc1,(byte) 0xc0};
-	public final static byte[] TEST_RLP_LIST_LARGELIST = new byte[] {(byte) 0xf8,0x50,(byte) 0xb8,0x4E, 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+	public final static byte[] TEST_RLP_LIST_LARGE_LIST = new byte[] {(byte) 0xf8,0x50,(byte) 0xb8,0x4E, 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
 
    @Test
    public void decodeRLPElementString() {
@@ -131,7 +131,7 @@ public class EthereumUtilDecodeTest {
    
    @Test
    public void decodeRLPElementLargeString() {
-	   ByteBuffer wrapper = ByteBuffer.wrap(EthereumUtilDecodeTest.TEST_RLP_LIST_LARGELIST);
+	   ByteBuffer wrapper = ByteBuffer.wrap(EthereumUtilDecodeTest.TEST_RLP_LIST_LARGE_LIST);
 	   RLPObject elementObject = EthereumUtil.rlpDecodeNextItem(wrapper);
 	   RLPList list = (RLPList)elementObject;
 	   assertEquals(1,list.getRlpList().size(),"List contains one object");

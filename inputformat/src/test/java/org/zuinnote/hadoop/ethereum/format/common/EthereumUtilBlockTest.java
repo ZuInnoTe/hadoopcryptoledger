@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class EthereumUtilBlockTest {
 	static final int DEFAULT_BUFFERSIZE=64*1024;
-	static final int DEFAULT_MAXSIZE_ETHEREUMBLOCK=1 * 1024 * 1024;
+	static final int DEFAULT_MAXSIZE_ETHEREUM_BLOCK =1 * 1024 * 1024;
 	public final static int CHAIN_ID=1;
 
 	@Test
@@ -53,7 +53,7 @@ public class EthereumUtilBlockTest {
 		FileInputStream fin = new FileInputStream(file);
 		EthereumBlockReader ebr = null;
 		try {
-			ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUMBLOCK, this.DEFAULT_BUFFERSIZE,direct);
+			ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUM_BLOCK, this.DEFAULT_BUFFERSIZE,direct);
 			EthereumBlock eblock = ebr.readBlock();
 			List<EthereumTransaction> eTrans = eblock.getEthereumTransactions();
 			EthereumTransaction trans0 = eTrans.get(0);
@@ -85,7 +85,7 @@ public class EthereumUtilBlockTest {
 		FileInputStream fin = new FileInputStream(file);
 		EthereumBlockReader ebr = null;
 		try {
-			ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUMBLOCK, this.DEFAULT_BUFFERSIZE,direct);
+			ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUM_BLOCK, this.DEFAULT_BUFFERSIZE,direct);
 			EthereumBlock eblock = ebr.readBlock();
 			List<EthereumTransaction> eTrans = eblock.getEthereumTransactions();
 			EthereumTransaction trans0 = eTrans.get(0);
@@ -123,7 +123,7 @@ public class EthereumUtilBlockTest {
 		FileInputStream fin = new FileInputStream(file);
 		EthereumBlockReader ebr = null;
 		try {
-			ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUMBLOCK, this.DEFAULT_BUFFERSIZE,direct);
+			ebr = new EthereumBlockReader(fin,this.DEFAULT_MAXSIZE_ETHEREUM_BLOCK, this.DEFAULT_BUFFERSIZE,direct);
 			EthereumBlock eblock = ebr.readBlock();
 			List<EthereumTransaction> eTrans = eblock.getEthereumTransactions();
 			EthereumTransaction trans0 = eTrans.get(0);
